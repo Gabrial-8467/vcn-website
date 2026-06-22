@@ -49,14 +49,14 @@ const hero = computed(() =>
 }
 
 .video-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  z-index: 1;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  z-index: 1 !important;
 }
 
 .hero-bg-image {
@@ -146,11 +146,27 @@ const hero = computed(() =>
   white-space: nowrap;
 }
 
+.hero-btn::after {
+  content: "→";
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
 .hero-btn:hover {
   background: var(--vcn-primary, #5e6c1f);
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  padding-right: 55px;
+}
+
+.hero-btn:hover::after {
+  opacity: 1;
+  right: 20px;
 }
 
 /* ==========================================
@@ -211,57 +227,30 @@ const hero = computed(() =>
     margin-top: calc((var(--top-header-height, 24px) + 55px) / 2);
   }
   .hero-content h1 {
-    font-size: 2.8rem;
-    margin-bottom: 1.3rem;
-  }
-  .hero-content p {
-    font-size: 1.25rem;
-    margin-bottom: 1.8rem;
-    line-height: 1.6;
-  }
-  .hero-btn {
-    padding: 15px 40px;
-    font-size: 1.1rem;
-  }
-}
-
-/* Mobile portrait (381px – 575px) */
-@media (max-width: 575px) and (min-width: 381px) {
-  .hero-section {
-    height: 100vh !important;
-    height: 100dvh !important;
-    min-height: 550px !important;
-  }
-  .hero-content {
-    max-width: 94%;
-    padding: 0 20px;
-    margin-top: calc((var(--top-header-height, 24px) + 50px) / 2);
-  }
-  .hero-content h1 {
     font-size: 2.4rem;
     margin-bottom: 1.1rem;
-    line-height: 1.15;
+    line-height: 1.25;
   }
   .hero-content p {
-    font-size: 1.18rem;
+    font-size: 1.1rem;
     margin-bottom: 1.6rem;
     line-height: 1.55;
   }
   .hero-btn {
-    padding: 14px 36px;
+    padding: 12px 36px;
     font-size: 1.05rem;
   }
 }
 
-/* Extra-small mobile (≤ 380px — e.g. iPhone SE) */
-@media (max-width: 380px) {
+/* Extra-small mobile (≤ 575px) */
+@media (max-width: 575px) {
   .hero-section {
     height: 100vh !important;
     height: 100dvh !important;
     min-height: 500px !important;
   }
   .hero-content {
-    max-width: 96%;
+    max-width: 94%;
     padding: 0 16px;
     margin-top: calc((var(--top-header-height, 22px) + 48px) / 2);
   }
@@ -272,12 +261,12 @@ const hero = computed(() =>
     line-height: 1.18;
   }
   .hero-content p {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-bottom: 1.4rem;
     line-height: 1.5;
   }
   .hero-btn {
-    padding: 13px 32px;
+    padding: 11px 32px;
     font-size: 0.98rem;
   }
 }

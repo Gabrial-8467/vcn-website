@@ -124,35 +124,7 @@ p {
   color: var(--vcn-footer);
 }
 
-/* ========== HERO SECTION ========== */
-.hero-section {
-  height: 100vh;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
 
-.video-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.4) 100%);
-  z-index: 2;
-}
 
 /* ========== DESKTOP NAVBAR ========== */
 .navbar {
@@ -1146,90 +1118,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   }
 }
 
-/* ========== HERO CONTENT ========== */
-.hero-content {
-  position: absolute;
-  top: 60%;
-  left: 0;
-  transform: translateY(-50%);
-  z-index: 3;
 
-  max-width: 650px;
-  padding: 0 5%;
-}
-
-.practitioners.hero-content {
-  position: absolute;
-  top: 80%;
-  left: 0;
-  transform: translateY(-50%);
-  z-index: 3;
-
-  padding: 0 5%;
-}
-
-.practitioners.hero-content h1 {
-  font-size: 3.2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  letter-spacing: -1px;
-  color: white;
-}
-
-.hero-content h1 {
-  font-size: 3.2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  letter-spacing: -1px;
-  color: white;
-}
-
-.hero-content p {
-  font-size: 1.3rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 400;
-}
-
-.hero-btn {
-  display: inline-block;
-  padding: 16px 40px;
-  background: white;
-  color: var(--vcn-primary);
-  text-decoration: none;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-btn::after {
-  content: "→";
-  position: absolute;
-  right: 25px;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
-.hero-btn:hover {
-  background: var(--vcn-white);
-  color: var(--vcn-primary);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  padding-right: 55px;
-}
-
-.hero-btn:hover::after {
-  opacity: 1;
-  right: 20px;
-}
 
 /* Demo Content */
 .content-section {
@@ -1271,37 +1160,6 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     display: none;
   }
 
-  .hero-content h1 {
-    font-size: 2rem;
-  }
-
-  .hero-content p {
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-section {
-    height: 100vh;
-  }
-
-  .hero-content {
-    max-width: 90%;
-    padding: 0 20px;
-  }
-
-  .hero-content h1 {
-    font-size: 1.5rem;
-  }
-
-  .hero-content p {
-    font-size: 1rem;
-  }
-
-  .hero-btn {
-    padding: 14px 32px;
-    font-size: 1rem;
-  }
 }
 
 /* ========== CO-BIOTICS SECTION ========== */
@@ -14022,239 +13880,7 @@ video {
   height: auto !important;
 }
 
-/* ==========================================================================
-   HERO SECTION - ALL BREAKPOINTS
-   ========================================================================== */
 
-/* Extra Small: 320px - 480px */
-@media (max-width: 480px) {
-  .hero-section {
-    height: 70vh !important;
-    min-height: 500px !important;
-  }
-
-  .video-bg {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .hero-content {
-    padding: 0 15px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    max-width: 90% !important;
-  }
-
-  .hero-content h1 {
-    font-size: 1.4rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 0.8rem !important;
-  }
-
-  .hero-content p {
-    font-size: 0.85rem !important;
-    line-height: 1.4 !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .hero-btn {
-    padding: 10px 24px !important;
-    font-size: 0.85rem !important;
-  }
-}
-
-/* Small Mobile: 481px - 576px */
-@media (min-width: 481px) and (max-width: 576px) {
-  .hero-section {
-    height: 75vh !important;
-    min-height: 550px !important;
-  }
-
-  .video-bg {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .hero-content {
-    padding: 0 20px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    max-width: 90% !important;
-  }
-
-  .hero-content h1 {
-    font-size: 1.6rem !important;
-    line-height: 1.25 !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .hero-content p {
-    font-size: 0.9rem !important;
-    line-height: 1.45 !important;
-  }
-}
-
-/* Tablet Portrait: 577px - 768px */
-@media (min-width: 577px) and (max-width: 768px) {
-  .hero-section {
-    height: 80vh !important;
-    min-height: 600px !important;
-  }
-
-  .video-bg {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .hero-content {
-    padding: 0 30px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    max-width: 85% !important;
-  }
-
-  .hero-content h1 {
-    font-size: 1.8rem !important;
-    line-height: 1.25 !important;
-  }
-
-  .hero-content p {
-    font-size: 0.95rem !important;
-  }
-}
-
-/* Tablet Landscape: 769px - 992px */
-@media (min-width: 769px) and (max-width: 992px) {
-  .hero-section {
-    height: 85vh !important;
-    min-height: 650px !important;
-  }
-
-  .video-bg {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .hero-content {
-    padding: 0 40px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    max-width: 80% !important;
-  }
-
-  .hero-content h1 {
-    font-size: 2rem !important;
-    line-height: 1.2 !important;
-  }
-
-  .hero-content p {
-    font-size: 1rem !important;
-  }
-}
-
-/* Laptop: 993px - 1200px */
-@media (min-width: 993px) and (max-width: 1200px) {
-  .hero-section {
-    height: 90vh !important;
-    min-height: 700px !important;
-  }
-
-  .video-bg {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .hero-content {
-    padding: 0 50px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    max-width: 75% !important;
-  }
-
-  .hero-content h1 {
-    font-size: 2.2rem !important;
-    line-height: 1.2 !important;
-  }
-
-  .hero-content p {
-    font-size: 1.05rem !important;
-  }
-}
-
-/* Desktop: 1201px - 1400px */
-@media (min-width: 1201px) and (max-width: 1400px) {
-  .hero-section {
-    height: 95vh !important;
-    min-height: 750px !important;
-  }
-
-  .video-bg {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .hero-content {
-    max-width: 70% !important;
-  }
-
-  .hero-content h1 {
-    font-size: 2.4rem !important;
-  }
-
-  .hero-content p {
-    font-size: 1.1rem !important;
-  }
-}
-
-/* Large Desktop: 1400px+ */
-@media (min-width: 1401px) {
-  .hero-section {
-    height: 100vh !important;
-  }
-
-  .video-bg {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .hero-content {
-    max-width: 65% !important;
-  }
-
-  .hero-content h1 {
-    font-size: 2.6rem !important;
-  }
-
-  .hero-content p {
-    font-size: 1.15rem !important;
-  }
-}
-
-/* Short height screens */
-@media (max-height: 800px) and (min-width: 768px) {
-  .hero-section {
-    min-height: 600px;
-  }
-
-  .hero-content {
-    top: 52% !important;
-  }
-
-  .hero-content h1 {
-    font-size: 1.8rem !important;
-  }
-
-  .hero-content p {
-    font-size: 0.95rem !important;
-  }
-}
 
 /* ==========================================================================
    NAVBAR RESPONSIVE
@@ -14284,7 +13910,6 @@ video {
    ========================================================================== */
 
 /* Adjust section spacing for better visual separation */
-.hero-section,
 .vcn-cobiotics-section,
 .vcn-whole-body-section,
 .vcn-probiotic-info-section,
@@ -14360,7 +13985,6 @@ video {
 
 @media (max-width: 576px) {
 
-  .hero-section,
   .vcn-whole-body-section,
   .vcn-cobiotics-section,
   .vcn-probiotic-info-section,
@@ -14520,7 +14144,6 @@ video {
   left: 0 !important;
   right: 0 !important;
   height: 50px !important;
-  background: rgba(30, 30, 30, 0.98) !important; /* Solid cover background */
   border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
   display: flex !important;
   align-items: center !important;
