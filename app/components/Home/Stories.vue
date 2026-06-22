@@ -183,8 +183,7 @@ watch(storyCards, () => {
                   <div class="card-header">
                   </div>
                   <div class="card-body">
-                    <p class="card-quote">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi voluptate
-                      distinctio beatae illum quas odit."</p>
+                    <p class="card-quote">"VCN is reimagining modern wellness by using breakthrough scientific innovation to deliver targeted, natural relief."</p>
                   </div>
                   <div class="card-footer">
                     <span class="card-logo fast-company">FAST COMPANY</span>
@@ -205,8 +204,7 @@ watch(storyCards, () => {
                   <div class="card-header">
                   </div>
                   <div class="card-body">
-                    <p class="card-quote">"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis dicta
-                      architecto dolores aut fuga magnam nobis sunt officiis rerum sequi."</p>
+                    <p class="card-quote">"Backed by rigorous clinical science, VCN is redefining the longevity and health market."</p>
                   </div>
                   <div class="card-footer">
                     <span class="card-logo forbes">Forbes</span>
@@ -226,8 +224,7 @@ watch(storyCards, () => {
                   <div class="card-header">
                   </div>
                   <div class="card-body">
-                    <p class="card-quote">"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi voluptate distinctio
-                      beatae illum quas odit."</p>
+                    <p class="card-quote">"After years of searching, the premium wellness solutions from VCN finally gave me my energy and life back."</p>
                   </div>
                 </div>
               </div>
