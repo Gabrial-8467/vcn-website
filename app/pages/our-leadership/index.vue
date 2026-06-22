@@ -41,7 +41,7 @@
                   <h2 class="section-title">
                     {{ leadership.boardSection.title }}
                   </h2>
-                  <div class="section-title-line"></div>
+                  <!-- <div class="section-title-line"></div> -->
                 </div>
 
                 <div class="team-grid">
@@ -370,23 +370,31 @@ const closeBio = () => {
 
 /* Section Header */
 .section-header {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   position: relative;
+  text-align: start;
+  justify-content: start;
 }
 
 .section-title {
-  font-size: 36px;
+  font-size: 2.25rem;
   font-weight: 700;
   color: #1a4d2e;
   margin-bottom: 12px;
 }
 
-.section-title-line {
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* .section-title-line {
   width: 50px;
   height: 3px;
   background: #b89047;
   border-radius: 2px;
-}
+} */
 
 /* Board Section */
 .board-section {

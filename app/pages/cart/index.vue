@@ -21,29 +21,62 @@
 
         <!-- Cart Items -->
         <div v-for="item in cartStore.items" :key="item.id" class="cart-item-wrapper row align-items-center">
-          <div class="col-lg-6 d-flex align-items-center gap-3">
-            <img :src="item.image" :alt="item.name" class="cart-product-image"
+          <!-- Desktop Layout (hidden on mobile) -->
+          <div class="d-none d-lg-flex col-lg-12 row align-items-center w-100 m-0 p-0">
+            <div class="col-lg-6 d-flex align-items-center gap-3">
+              <img :src="item.image" :alt="item.name" class="cart-product-image"
+                @error="$event.target.src = '/img/products/img1.png'" />
+              <div class="cart-product-details">
+                <div class="cart-product-name">{{ item.name }}</div>
+                <div class="cart-product-subscription">{{ item.subscription }}</div>
+              </div>
+            </div>
+            <div class="col-lg-3 text-center">
+              <div class="cart-quantity-control">
+                <button class="cart-qty-button" @click="handleDecrement(item.id)">−</button>
+                <div class="cart-qty-display">{{ item.quantity }}</div>
+                <button class="cart-qty-button" @click="handleIncrement(item.id)">+</button>
+              </div>
+            </div>
+            <div class="col-lg-3 text-end">
+              <div class="cart-item-price">
+                <span v-if="item.mrp" class="cart-item-mrp">₹{{ (item.mrp * item.quantity).toFixed(2) }}</span>
+                ₹{{ (item.price * item.quantity).toFixed(2) }}
+              </div>
+              <button class="cart-remove-btn" @click="cartStore.removeFromCart(item.id)">
+                {{ cart.cartItem.removeButton }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile Layout (hidden on desktop) -->
+          <div class="d-lg-none cart-item-mobile-container w-100">
+            <img :src="item.image" :alt="item.name" class="cart-product-image-mobile"
               @error="$event.target.src = '/img/products/img1.png'" />
-            <div class="cart-product-details">
-              <div class="cart-product-name">{{ item.name }}</div>
-              <div class="cart-product-subscription">{{ item.subscription }}</div>
+            <div class="cart-product-info-mobile">
+              <div class="cart-product-header-mobile">
+                <div class="cart-product-name-mobile">{{ item.name }}</div>
+              </div>
+              <div class="cart-product-subscription-mobile">{{ item.subscription }}</div>
+              
+              <!-- Remove button/link on mobile
+              <button class="cart-remove-btn-mobile" @click="cartStore.removeFromCart(item.id)">
+                {{ cart.cartItem.removeButton }}
+              </button> -->
+
+              <div class="cart-product-actions-mobile">
+                <div class="cart-item-price-mobile">
+                  <!-- <span v-if="item.mrp" class="cart-item-mrp-mobile">₹{{ (item.mrp * item.quantity).toFixed(2) }}</span> -->
+                  <span class="cart-current-price-mobile">₹{{ (item.price * item.quantity).toFixed(2) }}</span>
+                </div>
+                
+                <div class="cart-quantity-control-mobile">
+                  <button class="cart-qty-button-mobile" @click="handleDecrement(item.id)">−</button>
+                  <div class="cart-qty-display-mobile">{{ item.quantity }}</div>
+                  <button class="cart-qty-button-mobile" @click="handleIncrement(item.id)">+</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-3 text-center mt-3 mt-lg-0">
-            <div class="cart-quantity-control">
-              <button class="cart-qty-button" @click="handleDecrement(item.id)">−</button>
-              <div class="cart-qty-display">{{ item.quantity }}</div>
-              <button class="cart-qty-button" @click="handleIncrement(item.id)">+</button>
-            </div>
-          </div>
-          <div class="col-lg-3 text-end mt-3 mt-lg-0">
-            <div class="cart-item-price">
-              <span v-if="item.mrp" class="cart-item-mrp">₹{{ (item.mrp * item.quantity).toFixed(2) }}</span>
-              ₹{{ (item.price * item.quantity).toFixed(2) }}
-            </div>
-            <button class="cart-remove-btn" @click="cartStore.removeFromCart(item.id)">
-              {{ cart.cartItem.removeButton }}
-            </button>
           </div>
         </div>
       </div>
@@ -52,18 +85,51 @@
         <!-- Recommendations -->
         <h2 class="cart-recommendations-title">{{ cart.recommendations.heading }}</h2>
 
-        <div class="row g-4">
+        <!-- Recommendations Grid for Desktop -->
+        <div class="d-none d-md-flex row g-4">
           <div v-for="product in recommendedProducts" :key="product.id" class="col-md-4">
             <div class="cart-product-card">
-              <img :src="product.image" :alt="product.name" class="cart-suggested-image" />
-              <div class="cart-suggested-name">{{ product.name }}</div>
-              <div class="cart-suggested-description">{{ product.description }}</div>
-              <div class="cart-price-wrapper">
-                <span class="cart-current-price">₹{{ product.currentPrice }}</span>
-                <span class="cart-original-price">₹{{ product.originalPrice }}</span>
-                <button @click="addRecommendedProduct(product)" class="cart-add-btn">
-                  {{cart.recommendations.addButton}}
-                </button>
+              <div class="cart-suggested-image-wrapper">
+                <img :src="product.image" :alt="product.name" class="cart-suggested-image" />
+              </div>
+              <div class="cart-suggested-content">
+                <div class="cart-suggested-name">{{ product.name }}</div>
+                <div class="cart-suggested-description">{{ product.description }}</div>
+                <div class="cart-price-wrapper">
+                  <div class="cart-price-column">
+                    <span class="cart-current-price">₹{{ product.currentPrice }}</span>
+                    <span class="cart-original-price">₹{{ product.originalPrice }}</span>
+                  </div>
+                  <button @click="addRecommendedProduct(product)" class="cart-add-btn">
+                    {{cart.recommendations.addButton}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendations Swiper for Mobile -->
+        <div class="d-md-none swiper cart-suggested-swiper">
+          <div class="swiper-wrapper">
+            <div v-for="product in recommendedProducts" :key="product.id" class="swiper-slide">
+              <div class="cart-product-card">
+                <div class="cart-suggested-image-wrapper">
+                  <img :src="product.image" :alt="product.name" class="cart-suggested-image" />
+                </div>
+                <div class="cart-suggested-content">
+                  <div class="cart-suggested-name">{{ product.name }}</div>
+                  <div class="cart-suggested-description">{{ product.description }}</div>
+                  <div class="cart-price-wrapper">
+                    <div class="cart-price-column">
+                      <span class="cart-current-price">₹{{ product.currentPrice }}</span>
+                      <span class="cart-original-price">₹{{ product.originalPrice }}</span>
+                    </div>
+                    <button @click="addRecommendedProduct(product)" class="cart-add-btn">
+                      {{cart.recommendations.addButton}}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -120,7 +186,7 @@
 import { useCartStore } from '~/stores/cart'
 import { useProductStore } from '~/stores/product'
 import { useAuthCart } from '~/composables/useAuthCart'
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick, computed } from 'vue'
 import { useCmsStore } from '~/stores/cms'
 
 const cmsStore = useCmsStore()
@@ -231,6 +297,38 @@ const recommendedProducts = computed(() => {
   })
 })
 
+const swiperInstance = ref(null)
+
+const initSwiper = () => {
+  if (typeof window === 'undefined' || !window.Swiper) {
+    setTimeout(initSwiper, 100)
+    return
+  }
+
+  const container = document.querySelector('.cart-suggested-swiper')
+  if (!container) return
+
+  if (swiperInstance.value) {
+    swiperInstance.value.destroy(true, true)
+    swiperInstance.value = null
+  }
+
+  swiperInstance.value = new window.Swiper('.cart-suggested-swiper', {
+    slidesPerView: 1.05,
+    spaceBetween: 12,
+    breakpoints: {
+      480: {
+        slidesPerView: 1.2,
+        spaceBetween: 16
+      },
+      576: {
+        slidesPerView: 1.5,
+        spaceBetween: 16
+      }
+    }
+  })
+}
+
 // Initialize cart data on mount
 onMounted(async () => {
   // Initialize cart based on auth state
@@ -243,6 +341,19 @@ onMounted(async () => {
 
   // Sync with backend API (load server cart and merge with local)
   await cartStore.loadFromBackend()
+
+  if (process.client) {
+    nextTick(() => {
+      initSwiper()
+    })
+  }
+})
+
+onBeforeUnmount(() => {
+  if (swiperInstance.value) {
+    swiperInstance.value.destroy(true, true)
+    swiperInstance.value = null
+  }
 })
 
 const addRecommendedProduct = async (product) => {
@@ -354,5 +465,320 @@ useHead({
   color: #999;
   font-size: 0.9em;
   margin-right: 8px;
+}
+
+/* Suggested products custom wrapper styles for desktop */
+.cart-product-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  justify-content: space-between !important;
+  padding: 20px !important;
+  background-color: #f8f8f8 !important;
+  border: 1px solid #f0f0f0 !important;
+  border-radius: 12px !important;
+  transition: box-shadow 0.3s !important;
+}
+
+.cart-suggested-image-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 180px !important; /* Uniform height for desktop images */
+  margin-bottom: 20px !important;
+  border-radius: 8px !important;
+  padding: 10px !important;
+  background-color: transparent !important;
+}
+
+.cart-suggested-image {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+}
+
+.cart-suggested-content {
+  padding: 0;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-suggested-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--vcn-footer);
+  margin-bottom: 5px;
+}
+
+.cart-suggested-description {
+  font-size: 13px;
+  color: var(--vcn-footer);
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.cart-price-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-top: auto !important; /* Push price and button to the bottom of the card */
+  width: 100% !important;
+}
+
+.cart-price-column {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+/* Swiper styling */
+.cart-suggested-swiper {
+  width: 100% !important;
+  padding-bottom: 10px !important;
+}
+
+.cart-suggested-swiper .swiper-slide {
+  height: auto !important;
+}
+
+/* Mobile responsive horizontal layout */
+@media (max-width: 991.98px) {
+  .cart-item-wrapper {
+    padding: 16px 0 !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .cart-item-mobile-container {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .cart-product-image-mobile {
+    width: 130px !important;
+    height: 140px !important;
+    object-fit: contain !important;
+    /* border-radius: 8px !important; */
+    /* background-color: #f8f9fa !important; */
+    /* border: 1px solid #f0f0f0 !important; */
+    /* padding: 8px !important; */
+    flex-shrink: 0 !important;
+  }
+
+  .cart-product-info-mobile {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .cart-product-header-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .cart-product-name-mobile {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: var(--vcn-footer) !important;
+    line-height: 1.3 !important;
+  }
+
+  .cart-product-subscription-mobile {
+    font-size: 13px !important;
+    color: #666 !important;
+    margin-top: 4px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .cart-remove-btn-mobile {
+    background: none !important;
+    border: none !important;
+    color: #dc3545 !important;
+    font-size: 13px !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    text-align: left !important;
+    margin-top: 2px !important;
+    margin-bottom: 12px !important;
+    width: fit-content !important;
+  }
+
+  .cart-remove-btn-mobile:hover {
+    color: #c82333 !important;
+  }
+
+  .cart-product-actions-mobile {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+  }
+
+  .cart-item-price-mobile {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .cart-current-price-mobile {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: var(--vcn-footer) !important;
+    line-height: 1.2 !important;
+  }
+
+  .cart-item-mrp-mobile {
+    text-decoration: line-through !important;
+    color: #999 !important;
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+  }
+
+  .cart-quantity-control-mobile {
+    display: flex !important;
+    align-items: center !important;
+    border: 1px solid #ddd !important;
+    border-radius: 24px !important;
+    background: white !important;
+    padding: 3px 6px !important;
+  }
+
+  .cart-qty-button-mobile {
+    background: none !important;
+    border: none !important;
+    width: 28px !important;
+    height: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: var(--vcn-footer) !important;
+    cursor: pointer !important;
+  }
+
+  .cart-qty-display-mobile {
+    width: 28px !important;
+    text-align: center !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--vcn-footer) !important;
+  }
+
+  .cart-product-card {
+    display: flex !important;
+    flex-direction: row !important;
+    text-align: left !important;
+    padding: 16px !important;
+    gap: 16px !important;
+    align-items: center !important;
+    background-color: #f8f8f8 !important;
+    border: 1px solid #f0f0f0 !important;
+    border-radius: 12px !important;
+    height: auto !important; /* Overrides desktop height */
+  }
+
+  .cart-suggested-image-wrapper {
+    width: 120px !important;
+    height: 145px !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+    border-radius: 8px !important;
+    padding: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .cart-suggested-image {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  .cart-suggested-content {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+
+  .cart-suggested-name {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    margin-bottom: 4px !important;
+    color: var(--vcn-footer) !important;
+  }
+
+  .cart-suggested-description {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 8px !important;
+    color: #666 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 5 !important;
+    line-clamp: 5;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .cart-price-wrapper {
+    display: flex !important;
+    width: 100% !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    gap: 10px !important;
+  }
+
+  .cart-price-column {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+  }
+
+  .cart-current-price {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    margin-right: 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  .cart-original-price {
+    font-size: 12px !important;
+    margin-right: 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  .cart-add-btn {
+    padding: 8px 22px !important;
+    font-size: 13px !important;
+    border-radius: 20px !important;
+    margin-top: 0 !important;
+    flex-shrink: 0 !important;
+    font-weight: 600 !important;
+  }
 }
 </style>
