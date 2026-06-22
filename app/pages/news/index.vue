@@ -251,8 +251,148 @@ useHead({
 /* MOBILE */
 
 @media (max-width: 768px) {
+  .sidebar-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .product-detail-section {
+    margin-top: 0 !important;
+  }
+  
+  .product-detail-section .container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .product-detail-section .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .col-md-9 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .news-content {
+    padding: 0;
+    background: #fff;
+  }
+
+  .news-hero {
+    margin-bottom: 0;
+  }
+
+  .news-banner {
+    border-radius: 0;
+    width: 100%;
+    display: block;
+  }
+
+  .hero-title {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    background: #e5f7d5; /* Light green background */
+    padding: 15px 10px;
+    border-radius: 0;
+    text-align: center;
+    width: 100%;
+    margin-top: -1px;
+  }
+
+  .hero-title h1 {
+    font-size: 24px;
+    color: #1d593f; /* Dark green text */
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .media-heading {
+    margin: 25px 0 20px 0;
+    text-align: center;
+  }
+
+  .media-heading h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .year-tabs {
+    display: flex;
+    justify-content: space-around;
+    background: #f8f9fa;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0;
+    gap: 0;
+  }
+
+  .year-tabs button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 15px;
+    color: #495057;
+    border-bottom: 3px solid transparent;
+    font-weight: normal;
+    text-align: center;
+  }
+
+  .year-tabs .active {
+    border-bottom: 3px solid #e30613;
+    font-weight: 700;
+    color: #212529;
+  }
+
   .news-grid {
     grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 0 15px 30px 15px;
+  }
+
+  .news-card {
+    display: flex;
+    gap: 15px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    align-items: center;
+    border: 1px solid #f1f5f9;
+  }
+
+  .news-logo {
+    width: 90px;
+    height: 90px;
+    font-size: 40px;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+
+  .news-info {
+    flex-grow: 1;
+    text-align: left;
+  }
+
+  .news-date {
+    font-size: 12px;
+    color: #888;
+  }
+
+  .news-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #1a202c;
+    margin: 4px 0 6px 0;
+  }
+
+  .news-source {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
   }
 }
 </style>

@@ -65,7 +65,7 @@
                     :alt="careers.overview.culture.title"
                   >
 
-                  <div>
+                  <div class="culture-card-body">
                     <h3>
                       {{ careers.overview.culture.title }}
                     </h3>
@@ -73,6 +73,8 @@
                     <p>
                       {{ careers.overview.culture.description }}
                     </p>
+
+                    <NuxtLink to="/our-journey" class="read-more-link-inline">Read More</NuxtLink>
                   </div>
 
                 </div>
@@ -123,38 +125,72 @@
             </div>
 
             <!-- CULTURE TAB -->
-            <div v-if="activeTab === 'culture'">
-
-              <section class="articles">
-
-                <h2>
-                  {{ careers.cultureTab.heading }}
-                </h2>
-
-                <div
-                  v-for="(article, index) in careers.cultureTab.articles"
-                  :key="index"
-                  class="article-card"
-                >
-
-                  <div class="article-icon">
-                    {{ article.icon }}
-                  </div>
-
-                  <div>
-                    <span>
-                      {{ article.date }}
-                    </span>
-
-                    <h4>
-                      {{ article.title }}
-                    </h4>
-                  </div>
-
+            <div v-if="activeTab === 'culture'" class="culture-tab-content">
+              <!-- Culture Intro Section -->
+              <section class="culture-intro">
+                <h2>Culture at VCN</h2>
+                
+                <p>For years, our core values and fundamentals have guided the way we work, grow, and care for one another.</p>
+                
+                <p>Our core fundamentals — <strong>Freedom, Family, Hope, and Reward</strong> — keep us focused on what matters most. Alongside them, our values — <strong>partnership, personal worth, responsibility, and integrity</strong> — shape the way we work, lead, and care for one another.</p>
+                
+                <p>At VCN, we inspire people to live their best and that starts with our people. We offer the <strong>Freedom</strong> to grow, the spirit of <strong>Family</strong> that brings meaning to your work, the <strong>Hope</strong> of a better future, and the <strong>Reward</strong> that comes from meaningful progress.</p>
+                
+                <!-- Expandable text area -->
+                <div v-show="isCultureExpanded" class="culture-expanded-paragraphs">
+                  <p>We take pride in serving our partners, customers, communities, and each other. Every individual contributes to our journey, and together we create progress that we can all be proud of. We take care of our people and create an environment where contributions are valued, and achievements are celebrated. We also support long-term learning and growth, and learning tools that empower you to chart your own unique path.</p>
+                  
+                  <p>Our culture comes alive in everyday moments — celebrating festivals, milestones, and achievements, or simply pausing to connect and smile. These moments create a sense of belonging and strengthen us as one VCN family.</p>
+                </div>
+                
+                <!-- Paragraph 6 with fade preview when collapsed -->
+                <p :class="{ 'fade-text': !isCultureExpanded }">
+                  What unites us is simple: we hire good people, and we nurture their passion{{ isCultureExpanded ? '.' : '...' }}
+                </p>
+                
+                <div class="read-more-wrapper">
+                  <button @click="isCultureExpanded = !isCultureExpanded" class="read-more-btn-outline">
+                    {{ isCultureExpanded ? 'READ LESS' : 'READ MORE' }}
+                  </button>
                 </div>
 
+                <div class="tags-section">
+                  <span class="tags-label">Tags:</span>
+                  <div class="tags-container">
+                    <span class="tag">#careers</span>
+                    <span class="tag">#culture-at-vcn</span>
+                  </div>
+                </div>
               </section>
 
+              <!-- RELATED ARTICLES -->
+              <section class="articles">
+                <h2>{{ careers.cultureTab.heading }}</h2>
+
+                <div class="articles-grid">
+                  <div
+                    v-for="(article, index) in careers.cultureTab.articles"
+                    :key="index"
+                    class="article-card"
+                  >
+                    <div class="article-icon">
+                      {{ article.icon }}
+                    </div>
+
+                    <div class="article-info">
+                      <span class="article-date">
+                        {{ article.date }}
+                      </span>
+                      <h4 class="article-title">
+                        {{ article.title }}
+                      </h4>
+                      <p class="article-source">
+                        VCN Wellness
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
 
           </div>
@@ -171,6 +207,7 @@ import { useCmsApi } from '~/composables/useCmsApi'
 
 const cmsStore = useCmsStore()
 const { getCmsImageUrl } = useCmsApi()
+const isCultureExpanded = ref(false)
 
 // Fetch page sections from API during SSR/routing
 await useAsyncData('careers-cms', () => cmsStore.fetchSectionsBySlug('careers'))
@@ -369,6 +406,14 @@ useHead({
   border-radius: 8px;
 }
 
+.read-more-link-inline {
+  display: inline-block;
+  margin-top: 10px;
+  color: #111;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 
 /* VP */
 
@@ -403,7 +448,94 @@ useHead({
 }
 
 
-/* ARTICLES */
+/* ARTICLES / CULTURE TAB */
+
+.culture-tab-content {
+  padding: 10px;
+}
+
+.culture-intro {
+  margin-bottom: 40px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+}
+
+.culture-intro h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.culture-intro p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.fade-text {
+  color: #999 !important;
+  opacity: 0.6;
+}
+
+.read-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.read-more-btn-outline {
+  background: transparent;
+  border: 2px solid #000;
+  color: #000;
+  padding: 10px 28px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.read-more-btn-outline:hover {
+  background: #000;
+  color: #fff;
+}
+
+.tags-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.tags-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tags-container {
+  display: flex;
+  gap: 10px;
+}
+
+.tag {
+  background: #eef2f6;
+  color: #475569;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
 
 .article-card {
   display: flex;
@@ -426,15 +558,398 @@ useHead({
   font-size: 24px;
 }
 
-@media(max-width:768px) {
+.article-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 4px 0 0 0;
+}
+
+.article-date {
+  font-size: 13px;
+  color: #777;
+}
+
+.article-source {
+  font-size: 13px;
+  color: #555;
+  margin-top: 4px;
+}
+
+
+/* MOBILE LAYOUT OVERRIDES */
+
+@media (max-width: 768px) {
+  .sidebar-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .product-detail-section {
+    margin-top: 0 !important;
+  }
+  
+  .product-detail-section .container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .product-detail-section .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .col-md-9 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .careers-content {
+    padding: 0;
+    background: #fff;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    background: #f8f9fa;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0;
+    gap: 0;
+  }
+
+  .tabs button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 15px;
+    color: #495057;
+    border-bottom: 3px solid transparent;
+    font-weight: normal;
+    text-align: center;
+  }
+
+  .tabs .active {
+    border-bottom: 3px solid #e30613;
+    font-weight: 700;
+    color: #212529;
+  }
+
+  /* OVERVIEW TAB HERO */
+  .hero-sectioning {
+    margin-bottom: 30px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .hero-img {
+    border-radius: 0;
+  }
+
+  .hero-card {
+    background: #f4eac6; /* Original light yellow background */
+    padding: 30px 20px;
+  }
+
+  .hero-card h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 15px;
+  }
+
+  .hero-card p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555; /* Original text color */
+    margin-bottom: 15px;
+  }
+
+  .primary-btn {
+    background: #e5c87b; /* Original gold/yellow background */
+    border: none;
+    color: #000;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: all 0.2s;
+  }
+
+  /* CULTURE SECTION */
+  .culture-section {
+    padding: 0 15px;
+    margin-bottom: 30px;
+  }
+
+  .culture-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 15px;
+  }
 
   .culture-card {
     flex-direction: column;
+    background: #eaf3e5; /* Original light green background */
+    padding: 25px;
+    border-radius: 10px;
+    gap: 0;
+    box-shadow: none;
+  }
+
+  .culture-card img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .culture-card-body {
+    padding: 20px 0 0 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .culture-card-body h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .culture-card-body h3::after {
+    content: " 🎓";
+    font-size: 1.25rem;
+    margin-left: 6px;
+  }
+
+  .culture-card-body p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 15px;
+  }
+
+  .read-more-link-inline {
+    display: inline-block;
+    color: #111 !important;
+    font-weight: 600;
+    text-decoration: underline !important;
+    font-size: 14px;
+  }
+
+  /* VP SECTION */
+  .vp-section {
+    padding: 0 15px;
+    margin-bottom: 40px;
+  }
+
+  .vp-section h2 {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    color: #111;
+    margin-bottom: 25px;
+    line-height: 1.25;
   }
 
   .vp-card {
     flex-direction: column;
+    background: #fff; /* Original white card background */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06); /* Original shadow */
+    padding: 25px 20px;
+    border-radius: 10px;
+    gap: 0;
   }
 
+  .vp-profile {
+    width: 100%;
+    background: transparent; /* Remove custom pinkish background */
+    padding: 0 0 20px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vp-profile img {
+    width: 90px; /* Original profile image size */
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+  }
+
+  .vp-profile h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 4px;
+  }
+
+  .vp-profile span {
+    font-size: 14px;
+    color: #777; /* Original designation color */
+  }
+
+  .vp-message {
+    padding: 0;
+  }
+
+  .vp-message p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #555;
+    margin-bottom: 15px;
+  }
+
+  /* CULTURE TAB CONTENT */
+  .culture-tab-content {
+    padding: 0;
+  }
+
+  .culture-intro {
+    padding: 0 15px 30px 15px;
+    border-bottom: 1px solid #eee;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .culture-intro h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  .culture-intro p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 18px;
+  }
+
+  .culture-intro strong {
+    font-weight: 700;
+    color: #111;
+  }
+
+  .culture-intro .fade-text {
+    color: #aaa;
+  }
+
+  .read-more-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0 35px 0;
+  }
+
+  .read-more-btn-outline {
+    background: transparent;
+    border: 2px solid #111;
+    color: #111;
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+
+  .tags-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .tags-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .tags-container {
+    display: flex;
+    gap: 8px;
+  }
+
+  .tag {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* RELATED ARTICLES */
+  .articles {
+    padding: 30px 15px;
+    background: #f8f9fa;
+  }
+
+  .articles h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 20px;
+  }
+
+  .articles-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .article-card {
+    display: flex;
+    gap: 15px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    align-items: center;
+    border: 1px solid #f1f5f9;
+  }
+
+  .article-icon {
+    width: 90px;
+    height: 90px;
+    font-size: 40px;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+
+  .article-info {
+    flex-grow: 1;
+    text-align: left;
+  }
+
+  .article-date {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .article-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #1a202c;
+    margin: 0 0 6px 0;
+  }
+
+  .article-source {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+  }
 }
 </style>
