@@ -109,13 +109,15 @@
         <!-- Dynamic Products -->
         <div v-for="(product, index) in bundleProducts" :key="product.id" class="col-md-6">
           <div class="product-card">
-            <div class="product-image-wrapper">
-              <span v-if="index === 2" class="product-badge">NEW</span>
+            <span v-if="index === 2" class="product-badge">NEW</span>
+            <NuxtLink :to="`/product-details/${product.slug}`" class="product-image-wrapper">
               <img :src="getProductImage(product)" :alt="product.name" class="product-image" />
-            </div>
+            </NuxtLink>
             <div class="product-content">
-              <span class="product-label">AGE 18+</span>
-              <h3 class="product-title">{{ product.name }}</h3>
+              <span class="product-label">{{ product.label || 'AGE 18+' }}</span>
+              <h3 class="product-title">
+                <NuxtLink :to="`/product-details/${product.slug}`">{{ product.name }}</NuxtLink>
+              </h3>
               <p class="product-description" v-html="product.description || 'Premium product for your wellness needs.'">
               </p>
               <div class="product-price">
@@ -126,13 +128,7 @@
               <div class="product-actions">
                 <NuxtLink :to="`/product-details/${product.slug}`" class="btn-learn">Learn More</NuxtLink>
                 <ClientOnly>
-                  <a v-if="!getCartItem(product.id)" href="#" @click.prevent="addToCart(product)" class="btn-cart">Add
-                    to Cart</a>
-                  <div v-else class="qty-box">
-                    <button class="qty-btn minus" @click="cartStore.decrementQuantity(product.id)">−</button>
-                    <span class="qty-value">{{ getCartItem(product.id)?.quantity || 1 }}</span>
-                    <button class="qty-btn plus" @click="cartStore.incrementQuantity(product.id)">+</button>
-                  </div>
+                  <a href="#" @click.prevent="addToCart(product)" class="btn-cart">Add to Cart</a>
                 </ClientOnly>
               </div>
             </div>
@@ -466,5 +462,188 @@ const addToCart = async (product) => {
   font-weight: 600;
   min-width: 20px;
   text-align: center;
+}
+
+.product-title :deep(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-title :deep(a:hover) {
+  color: inherit;
+}
+
+/* Ensure consistent product image sizes and alignment */
+.product-image-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 280px !important; /* Increased height */
+  width: 245px !important;  /* Increased width */
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
+  border-radius: 12px !important;
+}
+
+.product-image {
+  max-width: 100% !important; /* Increased to fill container */
+  max-height: 100% !important; /* Increased to fill container */
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  transition: transform 0.3s ease !important;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05) !important;
+}
+
+.product-badge {
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;
+  z-index: 5 !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .product-card {
+    flex-direction: row !important;
+    text-align: left !important;
+    padding: 16px !important;
+    gap: 16px !important;
+    align-items: center !important;
+  }
+
+  .product-image-wrapper {
+    width: 145px !important;
+    height: 175px !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+    /* background: #ffffff !important; */
+    border-radius: 12px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+  }
+
+  .product-image {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+  }
+
+  .product-content {
+    flex: 1 !important;
+    align-items: flex-start !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Badge styling */
+  .product-badge {
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    transform: none !important;
+    background: #4a5d4a !important; /* Match dark green badge background */
+    color: #ffffff !important;
+    font-size: 11px !important;
+    padding: 3px 9px !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    z-index: 5 !important;
+  }
+
+  .product-label {
+    align-self: flex-start !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-size: 11px !important;
+    padding: 2px 8px !important;
+    border-radius: 12px !important;
+    margin-bottom: 6px !important;
+    border: 1px solid #d0d0d0 !important;
+    background: #ffffff !important;
+  }
+
+  .product-title {
+    font-size: 16px !important;
+    margin-bottom: 4px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+  }
+
+  .product-description {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 8px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 5 !important;
+    line-clamp: 5;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .product-price {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .product-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  /* Learn More Button */
+  .product-actions .btn-learn {
+    background: #1e3322 !important; /* Dark green background from design */
+    color: #ffffff !important;
+    padding: 6px 14px !important;
+    border-radius: 20px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    text-align: center !important;
+  }
+
+  /* Add to Cart link */
+  .product-actions .btn-cart {
+    background: none !important;
+    border: none !important;
+    color: #1e3322 !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+    display: inline-block !important;
+  }
+
+  /* Quantity controls if item is in cart */
+  .product-actions .qty-box {
+    padding: 4px 8px !important;
+    border-radius: 20px !important;
+    gap: 2px !important;
+  }
+
+  .product-actions .qty-btn {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 12px !important;
+  }
+
+  .product-actions .qty-value {
+    font-size: 12px !important;
+    min-width: 15px !important;
+  }
 }
 </style>
