@@ -3,12 +3,13 @@
     <section class="approach-hero-section">
         
         <div class="container-fluid">
-            <div class="row">
+            <div class="row g-5">
                 <div class="col-lg-4">
-                    <h3>VCNLabs</h3>
+              
+                   <h1 class="about-title mt-3">VCNLabs</h1>
                 </div>
                 <div class="col-lg-8">
-                    <p>The science of probiotics demands precision. In collaboration with leading scientists and research partners from around the world, we develop research-backed probiotics for outcomes across gastrointestinal, dermatological, oral, pediatric, and nutritional health.</p>
+                    <p class='about-description'>The science of probiotics demands precision. In collaboration with leading scientists and research partners from around the world, we develop research-backed probiotics for outcomes across gastrointestinal, dermatological, oral, pediatric, and nutritional health.</p>
                 </div>
             </div>
         </div>
