@@ -7,7 +7,7 @@
         <div class="empty-cart-message">
           <h3>{{ cart.emptyCart.heading }}</h3>
           <p class="text-center">{{ cart.emptyCart.description }}</p>
-          <a href="/all-products" class="btn-learn">{{ cart.emptyCart.buttonText }}</a>
+          <NuxtLink to="/all-products" class="btn-learn">{{ cart.emptyCart.buttonText }}</NuxtLink>
         </div>
       </div>
 
@@ -174,7 +174,7 @@
 
           <!-- Checkout Button -->
           <div class="cart-checkout-btn">
-            <a :href="cart.checkoutButton.link" class="btn">{{ cart.checkoutButton.text }}</a>
+            <NuxtLink :to="cart.checkoutButton.link" class="btn">{{ cart.checkoutButton.text }}</NuxtLink>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@
 
           <ul class="desktop-nav">
             <li class="nav-item dropdown">
-              <NuxtLink class="nav-link" to="/all-products">Shop</NuxtLink>
+              <NuxtLink class="nav-link" to="">Shop</NuxtLink>
               <ul class="dropdown-menu">
                 <!-- Scrollable product list -->
                 <li class="dropdown-products-scroll">
@@ -53,7 +53,7 @@
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <NuxtLink class="nav-link" to="#">Science</NuxtLink>
+              <NuxtLink class="nav-link" to="">Science</NuxtLink>
               <ul class="dropdown-menu">
                 <li>
                   <NuxtLink class="dropdown-item" to="/all-products">
@@ -107,7 +107,7 @@
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <NuxtLink class="nav-link" to="/about-us">About Us</NuxtLink>
+              <NuxtLink class="nav-link" to="">About Us</NuxtLink>
               <ul class="dropdown-menu">
                 <li>
                   <NuxtLink class="dropdown-item" to="/vcn-R-D">
@@ -251,11 +251,11 @@
           <div class="dropdown-content" id="scienceAccordion">
             <div class="dropdown-menu-mobile">
 
-              <NuxtLink class="dropdown-item" to="/our-leadership">
+              <NuxtLink class="dropdown-item" to="/all-products">
                 <img src="/img/drop-down/abput us.png" alt="VCN Labs" />
                 <strong>V-Gano</strong>
               </NuxtLink>
-              <NuxtLink class="dropdown-item" to="/book-consultancy">
+              <NuxtLink class="dropdown-item" to="/all-products">
                 <img src="/img/image/vcnlabs.png" alt="VCN Labs" />
                 <strong>V-Veda</strong>
               </NuxtLink>
@@ -293,7 +293,7 @@
 
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import RegistrationForm from '@/components/RegistrationForm.vue'
 import { useCartStore } from '~/stores/cart'
 import { useAuthCart } from '~/composables/useAuthCart'
@@ -311,6 +311,30 @@ const { getFromEndpoint } = useApi()
 // Auth cart composable
 const { authState, initializeCart } = useAuthCart()
 
+const route = useRoute()
+
+// Close mobile menu helper
+const closeMobileMenu = () => {
+  if (process.client) {
+    const navbarContent = document.getElementById('navbarContent')
+    const body = document.body
+    if (navbarContent) {
+      navbarContent.classList.remove('show')
+    }
+    body.classList.remove('menu-open')
+    body.style.overflow = ''
+    
+    // Close all accordions too
+    document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'))
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'))
+  }
+}
+
+// Watch route changes to close mobile menu automatically
+watch(() => route.fullPath, () => {
+  closeMobileMenu()
+})
+
 // Initialize cart data on mount
 onMounted(() => {
   // Initialize cart based on auth state (non-blocking)
@@ -323,6 +347,19 @@ onMounted(() => {
 
   // Fetch products for shop dropdown (non-blocking)
   fetchShopProducts()
+
+  // Close mobile menu when clicking any navigation link inside it
+  if (process.client) {
+    const mobileMenu = document.getElementById('navbarContent')
+    if (mobileMenu) {
+      mobileMenu.addEventListener('click', (e) => {
+        const link = e.target.closest('a')
+        if (link && link.getAttribute('href') !== '#') {
+          closeMobileMenu()
+        }
+      })
+    }
+  }
 })
 
 // Registration form state
@@ -409,6 +446,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+a, .nav-link, .dropdown-item, .login-link, .navbar-brand {
+  cursor: pointer !important;
+}
+
 /* Cart page specific navbar link colors */
 body.cart-page .desktop-nav .nav-link,
 body.cart-page .desktop-nav a,
