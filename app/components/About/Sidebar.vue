@@ -45,7 +45,7 @@ onUnmounted(() => {
 <template>
   <div class="about-sidebar-wrapper">
     <!-- Desktop Sidebar (hidden on mobile) -->
-    <div class="desktop-sidebar d-none d-md-block">
+    <div class="desktop-sidebar d-none d-lg-block">
       <div class="sidebar-inner">
         <NuxtLink v-for="item in sidebar" :key="item.link" class="menu-item" :to="item.link" active-class="active">
           {{ item.title }}
@@ -54,7 +54,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Mobile Dropdown (visible on mobile only) -->
-    <div class="mobile-sidebar-dropdown d-md-none">
+    <div class="mobile-sidebar-dropdown d-lg-none">
       <div class="sidebar-dropdown-header" @click.stop="toggleDropdown">
         <span class="active-title-text">{{ activeItem.title }}</span>
         <svg class="chevron-icon" :class="{ open: isOpen }" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

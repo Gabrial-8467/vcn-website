@@ -10,12 +10,14 @@
 
         <!-- HTML -->
         <div class="d-lg-none d-flex align-items-center">
-          <NuxtLink to="/cart" class="mobile-cart">
-            Cart
-            <ClientOnly>
-              <span v-if="cartStore.cartCount > 0" class="cart-count-badge">{{ cartStore.cartCount }}</span>
-            </ClientOnly>
-          </NuxtLink>
+          <div class="mobile-cart-wrapper">
+            <NuxtLink to="/cart" class="mobile-cart">
+              Cart
+              <ClientOnly>
+                <span v-if="cartStore.cartCount > 0" class="cart-count-badge">{{ cartStore.cartCount }}</span>
+              </ClientOnly>
+            </NuxtLink>
+          </div>
           <button class="custom-navbar-toggler" type="button" onclick="toggleMenu()" aria-label="Toggle menu">
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
@@ -494,17 +496,36 @@ body.checkout-page .navbar.scrolled .login-link {
 }
 
 /* Mobile only elements */
-.mobile-cart {
-  color: var(--vcn-mobile);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  margin-right: 15px;
-  transition: color 0.3s ease;
+.mobile-cart-wrapper {
+  background-color: #ffffff !important;
+  border-radius: 30px !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-right: 15px !important;
 }
 
-.mobile-cart:hover {
-  color: #2d5a3f;
+.mobile-cart-wrapper .mobile-cart {
+  color: #1d4503 !important;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600 !important;
+  margin-right: 0 !important;
+  transition: color 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mobile-cart-wrapper .mobile-cart:hover {
+  color: #2d5a3f !important;
+}
+
+.mobile-cart-wrapper .cart-count-badge {
+  background: #1d4503 !important;
+  color: #ffffff !important;
 }
 
 /* Custom Navbar Toggler */
