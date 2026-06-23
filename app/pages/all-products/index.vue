@@ -33,28 +33,58 @@
 
             <!-- Content -->
             <div class="col-lg-8">
-              <div class="vcn-whole-body-product-badges">
+              <!-- Mobile only badge & price row -->
+              <div class="d-flex justify-content-between align-items-center w-100 mb-3 d-lg-none">
+                <div class="vcn-whole-body-product-badges m-0 p-0" style="width: auto !important; box-shadow: none !important;">
+                  <span v-if="product.isNew" class="vcn-whole-body-badge vcn-whole-body-badge-new">NEW</span>
+                  <span v-if="allProducts.labels.bestseller" class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{ allProducts.labels.bestseller }}</span>
+                  <span v-if="product.label" class="vcn-whole-body-badge vcn-whole-body-badge-new">{{ product.label }}</span>
+                </div>
+                <div class="vcn-product-price m-0 p-0" style="width: auto !important;">
+                  <span class="price-current">₹{{ getProductPricing(product).price }}</span>
+                  <span v-if="getProductPricing(product).oldPrice" class="price-old text-decoration-line-through text-white-50 ms-2" style="font-size: 0.85em; opacity: 0.6;">₹{{ getProductPricing(product).oldPrice }}</span>
+                </div>
+              </div>
+
+              <!-- Desktop only badges -->
+              <div class="vcn-whole-body-product-badges d-none d-lg-flex">
                 <span v-if="product.isNew" class="vcn-whole-body-badge vcn-whole-body-badge-new">NEW</span>
                 <span v-if="allProducts.labels.bestseller" class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{ allProducts.labels.bestseller }}</span>
                 <span v-if="product.label" class="vcn-whole-body-badge vcn-whole-body-badge-new">{{ product.label }}</span>
               </div>
+
               <h2 class="vcn-product-title">{{ product.name }}</h2>
               <p class="vcn-product-description"
                 v-html="product.description || 'Premium product for your wellness needs'">
               </p>
-              <div class="vcn-product-price">₹{{ getProductPricing(product).price }}</div>
+
+              <!-- Desktop only price -->
+              <div class="vcn-product-price d-none d-lg-block">₹{{ getProductPricing(product).price }}</div>
+
               <div class="vcn-product-buttons">
-                <a :href="`/product-details/${product.slug}`" class="vcn-btn-secondary">
+                <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-btn-secondary">
                   {{ allProducts.btn.learnMore }}
-                </a>
+                </NuxtLink>
+              </div>
+            </div>
+
+            <!-- Right Sidebar Card on Small Screen (inside product card) -->
+            <div class="col-12 px-0 d-lg-none mt-4">
+              <div class="vcn-image-section">
+                <img :src="allProducts.sidebarCard.image" :alt="allProducts.sidebarCard.text" class="vcn-bg-image" />
+                <div class="vcn-image-overlay">
+                  <p class="vcn-image-text">
+                    {{ allProducts.sidebarCard.text }}
+                  </p>
+                </div>
               </div>
             </div>
 
           </div>
         </div>
 
-        <!-- Right Image Section -->
-        <div class="col-lg-3">
+        <!-- Right Image Section (Desktop Only) -->
+        <div class="col-lg-3 d-none d-lg-block">
           <div class="vcn-image-section h-100">
             <img :src="allProducts.sidebarCard.image" :alt="allProducts.sidebarCard.text" class="vcn-bg-image" />
 
@@ -78,9 +108,11 @@ import { ref, onMounted, computed } from 'vue'
 import { useCmsStore } from '~/stores/cms'
 import { useCmsApi } from '~/composables/useCmsApi'
 import { useProductStore } from '~/stores/product'
+import { useCartStore } from '~/stores/cart'
 
 const cmsStore = useCmsStore()
 const { getCmsImageUrl } = useCmsApi()
+const cartStore = useCartStore()
 
 // Fetch page sections from API during SSR/routing
 await useAsyncData('products-cms', () => cmsStore.fetchSectionsBySlug('products'))
@@ -155,6 +187,27 @@ const handleImageError = (event, product) => {
   console.error(`Failed to load image for product ${product.id}:`, event)
   event.target.src = '/img/products/img1.png'
 }
+
+// Get cart item helper
+const getCartItem = (productId) => {
+  return cartStore.getItemById(productId)
+}
+
+const addToCart = async (product) => {
+  const pricing = getProductPricing(product)
+  const defaultVariant = product.variants?.find(v => v.isDefault) || product.variants?.[0]
+  const variantId = defaultVariant?.id || product.id
+
+  await cartStore.addToCart({
+    id: product.id,
+    name: product.name,
+    price: parseFloat(pricing.price).toFixed(2),
+    mrp: pricing.oldPrice ? parseFloat(pricing.oldPrice).toFixed(2) : null,
+    image: getPrimaryImage(product),
+    subscription: 'One-time purchase',
+    variantId: variantId
+  })
+}
 </script>
 
 <style scoped>
@@ -166,6 +219,157 @@ const handleImageError = (event, product) => {
 @media (max-width: 991px) {
   .vcn-breadcrumb-container {
     margin-top: -140px !important;
+  }
+
+  .vcn-product-section {
+    padding: 30px 10px !important;
+  }
+
+  .vcn-product-card {
+    background: var(--vcn-primary) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 20px !important;
+    padding: 16px !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .vcn-product-bottle {
+    max-height: 280px !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  /* Badge styling overrides on mobile */
+  .vcn-whole-body-badge {
+    border-radius: 9999px !important;
+    background: transparent !important;
+    border: 1px solid #ffffff !important;
+    color: #ffffff !important;
+    padding: 4px 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    box-shadow: none !important;
+    letter-spacing: normal !important;
+  }
+
+  /* Price overrides on mobile */
+  .d-lg-none .vcn-product-price {
+    display: flex !important;
+    align-items: center !important;
+    font-size: 20px !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+  }
+
+  /* Title overrides on mobile */
+  .vcn-product-title {
+    font-size: 26px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin-top: 10px !important;
+    margin-bottom: 12px !important;
+    text-align: left !important;
+  }
+
+  /* Description overrides on mobile */
+  .vcn-product-description {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin-bottom: 20px !important;
+    text-align: left !important;
+  }
+
+  /* Buttons overrides on mobile */
+  .vcn-product-buttons {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 15px !important;
+    margin-bottom: 25px !important;
+  }
+
+  .vcn-btn-secondary {
+    background: #ffffff !important;
+    color: #1d4503 !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    padding: 12px 28px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    display: inline-block !important;
+    flex: 0 0 auto !important;
+  }
+
+  .vcn-btn-primary {
+    background: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    text-decoration: underline !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    padding: 10px 0 !important;
+    box-shadow: none !important;
+  }
+
+  .qty-box {
+    background: transparent !important;
+    border: 1px solid #ffffff !important;
+    border-radius: 30px !important;
+    padding: 5px 12px !important;
+  }
+
+  .qty-btn, .qty-value {
+    color: #ffffff !important;
+  }
+
+  /* Sidebar section horizontal banner card overrides on mobile */
+  .vcn-image-section {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    padding: 15px !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    height: auto !important;
+    width: 100% !important;
+    position: relative !important;
+    margin-top: 20px !important;
+  }
+
+  .vcn-image-section .vcn-bg-image {
+    width: 90px !important;
+    height: 90px !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: contain !important;
+    border-radius: 12px !important;
+    position: static !important;
+    flex-shrink: 0 !important;
+    background-color: transparent !important;
+  }
+
+  .vcn-image-section .vcn-image-overlay {
+    position: static !important;
+    background: none !important;
+    padding: 0 !important;
+    flex: 1 !important;
+    text-align: left !important;
+    display: block !important;
+  }
+
+  .vcn-image-section .vcn-image-text {
+    font-size: 14px !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding-right: 15px !important;
+    text-align: left !important;
   }
 }
 
@@ -211,5 +415,43 @@ const handleImageError = (event, product) => {
     margin-bottom: 10px;
     gap: 4px;
   }
+}
+
+.cart-box {
+  width: auto !important;
+  display: inline-flex !important;
+}
+
+.qty-box {
+  width: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #1e331e !important;
+  border-radius: 30px !important;
+  padding: 6px 15px !important;
+}
+
+.qty-btn {
+  font-size: 16px !important;
+  font-weight: bold !important;
+  background: none !important;
+  border: none !important;
+  color: #1e331e !important;
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.qty-value {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #1e331e !important;
+  min-width: 15px !important;
+  text-align: center !important;
 }
 </style>
