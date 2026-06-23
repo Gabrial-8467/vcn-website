@@ -33,7 +33,7 @@
       <div class="vcn-human-right-content">
         <div class="video-container" id="videoContainer">
           <div class="vcn-human-image-wrapper" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
-            <video id="myVideo" muted loop autoplay playsinline preload="auto" class="vcn-human-main-image"></video>
+            <video id="myVideo" ref="myVideo" muted loop autoplay playsinline preload="none" class="vcn-human-main-image"></video>
             <!-- <img src="/img/image/skelton.png" class="vcn-human-main-image" /> -->
           </div>
         </div>
@@ -95,20 +95,29 @@ export default {
 
     // Disease cards from CMS items, fallback to hardcoded
     const diseaseCards = computed(() => {
-      const items = section.value?.items || []
-      if (items.length > 0) {
-        return items.map(item => ({
-          title: item.title || 'Disease',
-          image: getCmsImageUrl(item.image, ''),
-          link: item.extraData?.link || item.config?.link || '/bundle-details'
-        }))
-      }
-      return [
+      const fallback = [
         { title: 'Acidity', image: '/img/image/acidty.png', link: '/bundle-details' },
         { title: 'Thyroid', image: '/img/image/thyroid.png', link: '/bundle-details' },
         { title: 'Diabetes', image: '/img/image/diabetes.png', link: '/bundle-details' },
         { title: 'Fatty Liver', image: '/img/image/liver.png', link: '/bundle-details' }
       ]
+
+      const rawItems = section.value?.items || []
+      const items = rawItems.filter(item => item && item.title && item.title.trim() !== '')
+
+      if (items.length > 0) {
+        return items.map(item => {
+          const fallbackItem = fallback.find(
+            fb => fb.title.trim().toLowerCase() === item.title?.trim().toLowerCase()
+          )
+          return {
+            title: item.title,
+            image: getCmsImageUrl(item.image || item.extraData?.image, '') || fallbackItem?.image || '/img/image/acidty.png',
+            link: item.buttonLink || item.extraData?.link || item.config?.link || fallbackItem?.link || '/bundle-details'
+          }
+        })
+      }
+      return fallback
     })
 
     return {
@@ -128,9 +137,95 @@ export default {
       isBundlesActive: false
     };
   },
+  created() {
+    this.hls = null;
+    this.observer = null;
+    this.hlsInitialized = false;
+  },
+  beforeUnmount() {
+    // Ensure overflow is restored if component is destroyed while overlay open
+    if (process?.client) {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
+    }
+
+    // Disconnect observer
+    if (this.observer) {
+      this.observer.disconnect();
+      this.observer = null;
+    }
+
+    // Destroy HLS instance to prevent memory leaks and redundant network requests
+    if (this.hls) {
+      try {
+        this.hls.destroy();
+      } catch (err) {
+        console.error('Error destroying HLS instance:', err);
+      }
+      this.hls = null;
+    }
+
+    // Clean up video element source to stop native stream fetching (especially in Safari)
+    const video = this.$refs.myVideo;
+    if (video) {
+      try {
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+      } catch (err) {
+        console.error('Error resetting native video element source:', err);
+      }
+    }
+  },
+  mounted() {
+    const video = this.$refs.myVideo;
+
+    if (!video) return;
+
+    video.muted = true;
+    video.playsInline = true;
+    video.autoplay = true;
+
+    const videoSrc =
+      "https://stream.mux.com/87tnV011w6GkwNzl7dxntQSNhpcVSJNgSQaqlj3iLTK00.m3u8?redundant_streams=true";
+
+    // Setup intersection observer to lazy-load video when visible in viewport
+    if (process.client && 'IntersectionObserver' in window) {
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Enter viewport: start loading and play
+            if (!this.hlsInitialized) {
+              this.initHls(video, videoSrc);
+            } else {
+              if (this.hls) {
+                this.hls.startLoad();
+              }
+              video.play().catch(() => {});
+            }
+          } else {
+            // Exit viewport: pause and stop loading segments to save bandwidth and API calls
+            if (this.hlsInitialized) {
+              video.pause();
+              if (this.hls) {
+                this.hls.stopLoad();
+              }
+            }
+          }
+        });
+      }, { threshold: 0.1 });
+
+      this.observer.observe(video);
+    } else {
+      // Fallback if IntersectionObserver not supported
+      this.initHls(video, videoSrc);
+    }
+  },
   methods: {
     cleanUrl(url) {
-      return url.replace(/&/g, '');
+      if (!url) return '';
+      return typeof url === 'string' ? url.replace(/&/g, '') : url;
     },
     openBundles() {
       this.isBundlesActive = true;
@@ -149,45 +244,29 @@ export default {
         document.documentElement.style.overflow = '';
         document.documentElement.style.height = '';
       }
-    }
-  },
-  beforeUnmount() {
-    // Ensure overflow is restored if component is destroyed while overlay open
-    if (process?.client) {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.height = '';
-    }
-  },
-  mounted() {
-    const video = document.getElementById("myVideo");
+    },
+    initHls(video, videoSrc) {
+      if (this.hlsInitialized) return;
 
-    if (!video) return;
+      if (Hls.isSupported()) {
+        this.hls = new Hls({
+          autoStartLoad: true,
+        });
 
-    const videoSrc =
-      "https://stream.mux.com/87tnV011w6GkwNzl7dxntQSNhpcVSJNgSQaqlj3iLTK00.m3u8?redundant_streams=true";
+        this.hls.loadSource(videoSrc);
+        this.hls.attachMedia(video);
 
-    video.muted = true;
-    video.playsInline = true;
-    video.autoplay = true;
-
-    if (Hls.isSupported()) {
-      const hls = new Hls({
-        autoStartLoad: true,
-      });
-
-      hls.loadSource(videoSrc);
-      hls.attachMedia(video);
-
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch(() => { });
-      });
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      // Safari (iOS / macOS)
-      video.src = videoSrc;
-      video.addEventListener("loadedmetadata", () => {
-        video.play().catch(() => { });
-      });
+        this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play().catch(() => { });
+        });
+      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        // Safari (iOS / macOS)
+        video.src = videoSrc;
+        video.addEventListener("loadedmetadata", () => {
+          video.play().catch(() => { });
+        });
+      }
+      this.hlsInitialized = true;
     }
   },
 };

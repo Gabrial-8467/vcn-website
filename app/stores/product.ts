@@ -86,9 +86,9 @@ export const useProductStore = defineStore('product', {
 
   actions: {
     // Fetch all products
-    async fetchProducts() {
+    async fetchProducts(force = false) {
       // Return early if already loaded
-      if (this.products.length > 0) {
+      if (this.products.length > 0 && !force) {
         return { success: true }
       }
 
