@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+/* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Nata+Sans:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap'); */
 
 :root {
   --vcn-primary: #5E6C1F;
@@ -34,12 +35,11 @@ a {
 }
 
 body {
-  font-family: var(--vcn-font);
+  /* font-family: "Outfit", sans-serif; */
   overflow-x: hidden;
 }
 
 p {
-  font-family: var(--vcn-font);
   font-size: 1.2rem;
   text-align: justify;
 }
@@ -3481,7 +3481,7 @@ body.home-page main {
   gap: 20px;
   max-width: 600px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
 }
 
 .bundle-image img {
@@ -4057,7 +4057,7 @@ body.home-page main {
 }
 
 .review-card {
-  font-family: "Inter", sans-serif;
+  /* font-family: "Inter", sans-serif; */
   padding: 15px 0;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -6732,7 +6732,7 @@ body.home-page main {
   letter-spacing: -0.5px;
   font-weight: 600;
   margin: 0;
-  font-family: inherit;
+  /* font-family: inherit; */
   color: var(--vcn-footer);
 }
 
@@ -6927,7 +6927,7 @@ body.home-page main {
   background: transparent;
   padding: 2px 8px;
   font-size: clamp(0.85rem, 2vw, 0.9rem);
-  font-family: inherit;
+  /* font-family: inherit; */
   min-width: 100px;
   outline: none;
 }
@@ -6970,7 +6970,7 @@ body.home-page main {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 0.95rem;
-  font-family: inherit;
+  /* font-family: inherit; */
   outline: none;
   transition: border-color 0.3s;
 }
@@ -6985,7 +6985,7 @@ body.home-page main {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 0.95rem;
-  font-family: inherit;
+  /* font-family: inherit; */
   min-height: 100px;
   resize: vertical;
   outline: none;
@@ -7118,7 +7118,7 @@ body.home-page main {
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.2s;
-  font-family: inherit;
+  /* font-family: inherit; */
 }
 
 .faq-toggle-icon {
@@ -8477,7 +8477,7 @@ body.home-page main {
   font-size: 14px;
   border: 1px solid #d0d0d0;
   border-radius: 4px;
-  font-family: inherit;
+  /* font-family: inherit; */
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -8502,7 +8502,7 @@ body.home-page main {
   border: 1px solid #d0d0d0;
   border-radius: 4px;
   background: white;
-  font-family: inherit;
+  /* font-family: inherit; */
   cursor: pointer;
   appearance: none;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -8529,7 +8529,7 @@ body.home-page main {
   font-size: 14px;
   border: 1px solid #d0d0d0;
   border-radius: 4px;
-  font-family: inherit;
+  /* font-family: inherit; */
   min-height: 120px;
   resize: vertical;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -10662,7 +10662,7 @@ body.home-page main {
 }
 
 .signature {
-  font-family: "Brush Script MT", cursive;
+  /* font-family: "Brush Script MT", cursive; */
   font-size: 3.5em;
   color: var(--vcn-footer);
   margin-bottom: 20px;
@@ -12439,7 +12439,7 @@ body.home-page main {
 /* ========== BASE STYLES ========== */
 .refer-earn-page {
   background: #ffffff;
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; */
   color: #2c3e50;
   line-height: 1.6;
   overflow-x: hidden;

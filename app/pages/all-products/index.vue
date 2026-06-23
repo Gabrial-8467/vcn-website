@@ -114,8 +114,27 @@ const cmsStore = useCmsStore()
 const { getCmsImageUrl } = useCmsApi()
 const cartStore = useCartStore()
 
-// Fetch page sections from API during SSR/routing
-await useAsyncData('products-cms', () => cmsStore.fetchSectionsBySlug('products'))
+// Fetch page sections and products from API during SSR/routing safely
+await useAsyncData('products-cms', async () => {
+  const config = useRuntimeConfig()
+  const apiBaseUrl = config.public.apiBaseUrl
+  
+  // Clear any existing global page state to prevent section bleeding across page transitions
+  cmsStore.clearPage()
+  
+  if (apiBaseUrl && (apiBaseUrl.startsWith('http://') || apiBaseUrl.startsWith('https://'))) {
+    try {
+      await Promise.all([
+        cmsStore.fetchSectionsBySlug('products'),
+        productStore.fetchProducts()
+      ])
+    } catch (err) {
+      console.error('Failed to fetch CMS sections and products for products page:', err)
+    }
+  }
+}, {
+  getCachedData: () => null // Force execution on every route navigation to keep the Pinia store in sync
+})
 
 const allProducts = computed(() => {
   const sections = cmsStore.currentPage?.sections || []
@@ -169,8 +188,19 @@ const productStore = useProductStore()
 const products = computed(() => productStore.allProducts)
 const error = computed(() => productStore.error)
 
-// Fetch products immediately (non-blocking)
-productStore.fetchProducts()
+// Fetch products safely if not already loaded (non-blocking fallback)
+const fetchProductsSafely = async () => {
+  const config = useRuntimeConfig()
+  const apiBaseUrl = config.public.apiBaseUrl
+  if (apiBaseUrl && (apiBaseUrl.startsWith('http://') || apiBaseUrl.startsWith('https://'))) {
+    try {
+      await productStore.fetchProducts()
+    } catch (err) {
+      console.error('Failed to fetch products safely:', err)
+    }
+  }
+}
+fetchProductsSafely()
 
 // Helper function to get product pricing - use store getter
 const getProductPricing = (product) => {

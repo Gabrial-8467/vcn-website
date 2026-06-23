@@ -6,8 +6,24 @@ import { useCmsApi } from '~/composables/useCmsApi'
 const cmsStore = useCmsStore()
 const { getCmsImageUrl } = useCmsApi()
 
-// Fetch page sections from API during SSR/routing
-await useAsyncData('our-journey-cms', () => cmsStore.fetchSectionsBySlug('our-journey'))
+// Fetch page sections from API during SSR/routing safely
+await useAsyncData('our-journey-cms', async () => {
+  const config = useRuntimeConfig()
+  const apiBaseUrl = config.public.apiBaseUrl
+  
+  // Clear any existing global page state to prevent section bleeding across page transitions
+  cmsStore.clearPage()
+  
+  if (apiBaseUrl && (apiBaseUrl.startsWith('http://') || apiBaseUrl.startsWith('https://'))) {
+    try {
+      await cmsStore.fetchSectionsBySlug('our-journey')
+    } catch (err) {
+      console.error('Failed to fetch CMS sections for our-journey:', err)
+    }
+  }
+}, {
+  getCachedData: () => null // Force execution on every route navigation to keep the Pinia store in sync
+})
 
 const journey = computed(() => {
   const sections = cmsStore.currentPage?.sections || []
