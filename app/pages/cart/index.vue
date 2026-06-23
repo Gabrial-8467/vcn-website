@@ -398,6 +398,13 @@ useHead({
 </script>
 
 <style scoped>
+@media (max-width: 991.98px) {
+  .cart-main-wrapper {
+    padding-top: 90px !important;
+    padding-bottom: 40px !important;
+  }
+}
+
 .empty-cart-message {
   text-align: center;
   padding: 60px 20px;

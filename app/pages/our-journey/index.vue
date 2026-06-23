@@ -72,7 +72,7 @@ useHead({
 
 
 <template>
-  <section class="product-detail-section  mt-3">
+  <section class="product-detail-section mt-3">
     <div class="container-fluid">
       <div class="row">
         <!-- Left Sidebar Navigation -->
@@ -146,7 +146,7 @@ useHead({
 
 .journey-hero h1 {
   font-size: 2.2rem;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 15px;
   color: #000000; /* heading color set to black */
 }
@@ -162,9 +162,7 @@ useHead({
 
 /* TIMELINE NAVIGATION */
 .timeline-nav-container {
-  border-top: 1px solid #eaeaea;
   border-bottom: 1px solid #eaeaea;
-  padding: 15px 0;
   margin-bottom: 40px;
   background: #ffffff;
 }
@@ -186,29 +184,47 @@ useHead({
   font-weight: 600;
   cursor: pointer;
   color: #666; /* original grey color */
-  padding: 5px 15px;
+  padding: 15px 15px;
   transition: all 0.2s ease;
   position: relative;
   font-family: inherit;
+  border-bottom: 2px solid transparent;
 }
 
 .timeline-nav button:hover {
-  color: #45663c; /* original green color */
+  color: #111827;
 }
 
 .timeline-nav button.active {
-  color: #45663c; /* original green color */
+  color: #111827;
   font-weight: 700;
+  border-bottom: 2px solid #c75a50; /* reddish/coral active border-bottom from screenshot */
 }
 
 /* CARD / CONTENT */
 .milestone-card {
   background: #ffffff;
-  padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   border: 1px solid #f3f4f6;
   margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.milestone-image-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.milestone-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.milestone-info {
+  padding: 30px;
 }
 
 .milestone-info h2 {
@@ -231,18 +247,20 @@ useHead({
   line-height: 1.7;
 }
 
-/* MOBILE */
+/* MOBILE styling matching the screenshot */
 @media (max-width: 768px) {
   .journey-container {
     padding: 0;
   }
   .journey-hero {
     padding: 55px 15px;
+    border-radius: 0; /* flat/straight edges */
+    margin-bottom: 25px;
   }
   .hero-img {
     max-width: 100%;
     margin-bottom: 20px;
-    border-radius: 8px;
+    border-radius: 0; /* flat/straight image corners */
   }
   .journey-hero h1 {
     font-size: 1.8rem;
@@ -253,6 +271,7 @@ useHead({
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
+    margin-bottom: 25px;
   }
   .timeline-nav-container::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
@@ -267,10 +286,20 @@ useHead({
   .timeline-nav button {
     flex-shrink: 0;
     font-size: 1.1rem;
-    padding: 5px 10px;
+    padding: 12px 5px;
+  }
+  
+  .timeline-content {
+    padding: 0 15px; /* instates side padding for card container on mobile layout */
   }
   .milestone-card {
-    padding: 20px 15px;
+    border-radius: 8px;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 20px;
+  }
+  .milestone-info {
+    padding: 20px 0;
   }
 }
 </style>

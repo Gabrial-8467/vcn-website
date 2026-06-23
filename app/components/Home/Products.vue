@@ -32,30 +32,37 @@
                     <div class="row">
                         <div v-for="(product, index) in products" :key="product.id"
                             class="col-lg-3 col-md-6 col-sm-6 col-6" data-aos="fade-up" data-aos-duration="600">
-                            <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-whole-body-product-card-link">
+                            
                                 <div class="vcn-whole-body-product-card" @mouseenter="handleMouseEnter(index)"
                                     @mouseleave="handleMouseLeave(index)">
                                     <div class="vcn-whole-body-product-badges">
                                         <span v-if="index === 0"
-                                            class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{ productsSection.productCard.badges.bestseller }}</span>
-                                        <span v-else
-                                            class="vcn-whole-body-badge vcn-whole-body-badge-new">{{ productsSection.productCard.badges.new }}</span>
+                                            class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{
+                                                productsSection.productCard.badges.bestseller }}</span>
+                                        <span v-else class="vcn-whole-body-badge vcn-whole-body-badge-new">{{
+                                            productsSection.productCard.badges.new }}</span>
                                     </div>
-                                    <span
-                                        class="vcn-whole-body-product-label">{{ productsSection.productCard.productLabel }}</span>
-                                    <h3 class="vcn-whole-body-product-title">{{ product.name }}</h3>
-                                    <div class="vcn-whole-body-product-image">
-                                        <img class="product-img" :src="getPrimaryImage(product)" :alt="product.name"
-                                            loading="lazy" @error="handleImageError($event)" />
-                                        <video :ref="el => { if (el) videoRefs[index] = el }" class="product-video"
-                                            muted loop playsinline preload="auto">
-                                            <source :src="productsSection.productCard.video" type="video/mp4" />
-                                        </video>
-                                    </div>
-                                    <NuxtLink :to="`/product-details/${product.slug}`"
-                                        class="vcn-whole-body-shop-btn">{{ productsSection.productCard.shopButtonText }}</NuxtLink>
+                                    <span class="vcn-whole-body-product-label">{{
+                                        productsSection.productCard.productLabel }}</span>
+                                    <h3 class="vcn-whole-body-product-title">
+                                        <NuxtLink :to="`/product-details/${product.slug}`">
+                                            {{ product.name }}
+                                        </NuxtLink>
+                                    </h3>
+                                    <NuxtLink :to="`/product-details/${product.slug}`">
+                                        <div class="vcn-whole-body-product-image">
+                                            <img class="product-img" :src="getPrimaryImage(product)" :alt="product.name"
+                                                loading="lazy" @error="handleImageError($event)" />
+
+                                            <video :ref="el => { if (el) videoRefs[index] = el }" class="product-video"
+                                                muted loop playsinline preload="auto">
+                                                <source :src="productsSection.productCard.video" type="video/mp4" />
+                                            </video>
+                                        </div>
+                                    </NuxtLink>
+                                    <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-whole-body-shop-btn">
+                                        {{ productsSection.productCard.shopButtonText }}</NuxtLink>
                                 </div>
-                            </NuxtLink>
                         </div>
                     </div>
                 </div>
@@ -144,6 +151,10 @@ if (productStore.products.length === 0) {
 
 <style scoped>
 /* Big Screen Styles (Defaults) */
+.vcn-whole-body-product-title a {
+    color: var(--vcn-white) !important;
+}
+
 .vcn-whole-body-subtitle {
     font-size: 1.1rem !important;
     /* reduce subtitle font size a little bit */
@@ -192,6 +203,7 @@ if (productStore.products.length === 0) {
     .vcn-whole-body-section {
         padding: 40px 0 !important;
         /* side padding is now 0 */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
     }
 
     .vcn-whole-body-section>.container-fluid {
@@ -211,19 +223,25 @@ if (productStore.products.length === 0) {
     }
 
     .vcn-whole-body-product-card {
-        padding: 15px 12px !important; /* increased padding to make card taller */
+        padding: 8px 8px !important;
+        /* reduced padding to make card shorter */
         margin-bottom: 0 !important;
         /* let row gutters handle vertical gaps */
     }
 
     .vcn-whole-body-product-badges {
-        margin-bottom: 10px !important; /* increased margin to make card taller */
+        margin-bottom: 6px !important;
+        /* reduced margin to make card shorter */
     }
 
     .vcn-whole-body-product-image {
-        max-width: 165px !important; /* increased size of images on mobile */
+        width: 195px !important;
+        height: 195px !important;
+        max-width: 100% !important;
+        /* increased size of images on mobile */
         aspect-ratio: 1 / 1 !important;
-        margin: 12px auto !important; /* increased margin to make card taller */
+        margin: 6px auto !important;
+        /* reduced margin to make card shorter */
     }
 
     .vcn-whole-body-badge {
@@ -238,10 +256,18 @@ if (productStore.products.length === 0) {
     }
 
     .vcn-whole-body-product-title {
-        font-size: 1.15rem !important;
-        /* increased product name size */
-        margin: 10px 0 !important; /* increased margin to make card taller */
+        font-size: 1.05rem !important;
+        /* reduced product name size to make card shorter */
+        margin: 6px 0 !important;
+        /* reduced margin to make card shorter */
         min-height: auto !important;
+    }
+
+    .vcn-whole-body-shop-btn {
+        padding: 8px 20px !important;
+        /* reduced button padding to make card shorter */
+        font-size: 0.85rem !important;
+        /* reduced button font size */
     }
 
     /* shop all button underline in bottom right corner (header link wrapper) */
