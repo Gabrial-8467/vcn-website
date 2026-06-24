@@ -5,11 +5,12 @@
   --vcn-base-bg: #F6F7EE;
   --vcn-white: #fff;
   --vcn-dark: var(--vcn-footer);
+  --vcn-darker: #1C3A13;  
   --vcn-footer: #1D4503;
-  --vcn-light: #F2FEEA;
+  
   --vcn-font: "Outfit", sans-serif;
   --vcn-badge: #d3fa99;
-  --vcn-light: #e9fccd;
+  --vcn-light: #d3fA99;
   --vcn-product: #f6f7ef;
   --vcn-gradient: linear-gradient(135deg, #5E6C1F, #1D4503);
   --vcn-mobile: #83b576;
@@ -324,29 +325,29 @@ body.home-page main {
 
 .vcn-cobiotics-badge {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 6px 14px;
   background-color: var(--vcn-light);
-  color: var(--vcn-primary);
+  color: var(--vcn-darker);
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 600;
   margin-bottom: 20px;
   letter-spacing: 0.5px;
 }
 
 .vcn-cobiotics-title {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: var(--vcn-primary);
+  font-size: 40px;
+  font-weight: 400;
+  color: var( --vcn-darker);
   line-height: 1.2;
   margin-bottom: 20px;
   letter-spacing: -1px;
 }
 
 .vcn-cobiotics-description {
-  font-size: 1.5rem;
-  color: var(--vcn-footer);
-  line-height: 1.7;
+  font-size: 16px;
+  color: var(   --vcn-darker);
+  line-height: 20.8px;
   margin-bottom: 30px;
   text-align: justify;
 }
@@ -361,7 +362,7 @@ body.home-page main {
   position: relative;
   /* 🟢 add this */
   padding: 12px 40px;
-  background-color: var(--vcn-primary);
+  background-color: var(--vcn-darker);
   color: var(--vcn-white);
   text-decoration: none;
   border-radius: 50px;
@@ -382,7 +383,7 @@ body.home-page main {
 }
 
 .vcn-cobiotics-cta-btn:hover {
-  background: var(--vcn-primary);
+
   color: var(--vcn-white);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   padding-right: 55px;

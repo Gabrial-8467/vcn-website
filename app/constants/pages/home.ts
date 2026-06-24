@@ -17,7 +17,7 @@ export const HOME_PAGE_DATA = {
 
         leftContent: {
             badge: "Bundle + Save 25%",
-            title: "OUR MONTHLY OFFERS",
+            title: "Our Monthly Offers",
             description:
                 "Step into a world of natural wellness, trusted personal care, and rewarding growth opportunities. VCN is committed to providing quality products that nurture your health, support your everyday needs, and inspire a better, healthier future.",
             buttonText: "Monthly Offers",
