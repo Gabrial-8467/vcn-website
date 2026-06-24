@@ -16,7 +16,7 @@
 
       <!-- Products grid -->
       <div v-else class="row g-3">
-        <div v-for="product in products" :key="product.id || product.name" class="col-md-6 col-12">
+        <div v-for="product in products" :key="product.id || product.name" class="col-xl-6 col-12">
           <div class="product-card">
             <div class="product-image-wrapper">
               <span class="product-badge">NEW</span>
@@ -188,8 +188,8 @@ const addToCart = async (product) => {
   transform: scale(1.06) !important;
 }
 
-/* Make cards vertical and adjust padding for 2-column layout under 768px */
-@media (max-width: 768px) {
+/* Make cards horizontal and adjust padding for layout under 1199px */
+@media (max-width: 1199px) {
   .product-card {
     display: flex !important;
     flex-direction: row !important;
@@ -517,6 +517,46 @@ const addToCart = async (product) => {
 
   .qty-value {
     font-size: 11px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .product-card {
+    padding: 8px !important;
+    gap: 8px !important;
+  }
+
+  .product-image-wrapper {
+    width: 95px !important;
+    min-width: 95px !important;
+    height: 95px !important;
+    padding: 6px 0px 0px 0px !important;
+  }
+
+  .product-actions {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .btn-learn {
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .btn-cart {
+    font-size: 11px !important;
+    width: 100% !important;
+    display: inline-flex !important;
+    justify-content: flex-start !important;
+  }
+
+  .qty-box {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 4px 10px !important;
   }
 }
 </style>
