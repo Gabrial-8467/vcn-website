@@ -33,7 +33,7 @@
 
           <ul class="desktop-nav">
             <li class="nav-item dropdown">
-              <NuxtLink class="nav-link" to="/all-products">Shop</NuxtLink>
+              <NuxtLink class="nav-link" to="">Shop</NuxtLink>
               <ul class="dropdown-menu">
                 <!-- Scrollable product list -->
                 <li class="dropdown-products-scroll">
@@ -48,12 +48,15 @@
                 </li>
                 <!-- Fixed footer pinned at bottom -->
                 <li class="dropdown-footer">
-                  <NuxtLink to="/all-products">Shop All Products →</NuxtLink>
+                  <NuxtLink to="/all-products" class="shop-all-link">
+                    <span>Shop All Products</span>
+                    <span class="arrow">→</span>
+                  </NuxtLink>
                 </li>
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <NuxtLink class="nav-link" to="#">Science</NuxtLink>
+              <NuxtLink class="nav-link" to="">Science</NuxtLink>
               <ul class="dropdown-menu">
                 <li>
                   <NuxtLink class="dropdown-item" to="/all-products">
@@ -107,7 +110,7 @@
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <NuxtLink class="nav-link" to="/about-us">About Us</NuxtLink>
+              <NuxtLink class="nav-link" to="">About Us</NuxtLink>
               <ul class="dropdown-menu">
                 <li>
                   <NuxtLink class="dropdown-item" to="/vcn-R-D">
@@ -242,7 +245,10 @@
               </div>
               <!-- Fixed footer pinned at bottom -->
               <div class="dropdown-footer">
-                <NuxtLink to="/all-products">Shop All Products →</NuxtLink>
+                <NuxtLink to="/all-products" class="shop-all-link">
+                  <span>Shop All Products</span>
+                  <span class="arrow">→</span>
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -251,11 +257,11 @@
           <div class="dropdown-content" id="scienceAccordion">
             <div class="dropdown-menu-mobile">
 
-              <NuxtLink class="dropdown-item" to="/our-leadership">
+              <NuxtLink class="dropdown-item" to="/all-products">
                 <img src="/img/drop-down/abput us.png" alt="VCN Labs" />
                 <strong>V-Gano</strong>
               </NuxtLink>
-              <NuxtLink class="dropdown-item" to="/book-consultancy">
+              <NuxtLink class="dropdown-item" to="/all-products">
                 <img src="/img/image/vcnlabs.png" alt="VCN Labs" />
                 <strong>V-Veda</strong>
               </NuxtLink>
@@ -293,7 +299,7 @@
 
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import RegistrationForm from '@/components/RegistrationForm.vue'
 import { useCartStore } from '~/stores/cart'
 import { useAuthCart } from '~/composables/useAuthCart'
@@ -311,6 +317,30 @@ const { getFromEndpoint } = useApi()
 // Auth cart composable
 const { authState, initializeCart } = useAuthCart()
 
+const route = useRoute()
+
+// Close mobile menu helper
+const closeMobileMenu = () => {
+  if (process.client) {
+    const navbarContent = document.getElementById('navbarContent')
+    const body = document.body
+    if (navbarContent) {
+      navbarContent.classList.remove('show')
+    }
+    body.classList.remove('menu-open')
+    body.style.overflow = ''
+    
+    // Close all accordions too
+    document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'))
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'))
+  }
+}
+
+// Watch route changes to close mobile menu automatically
+watch(() => route.fullPath, () => {
+  closeMobileMenu()
+})
+
 // Initialize cart data on mount
 onMounted(() => {
   // Initialize cart based on auth state (non-blocking)
@@ -323,6 +353,19 @@ onMounted(() => {
 
   // Fetch products for shop dropdown (non-blocking)
   fetchShopProducts()
+
+  // Close mobile menu when clicking any navigation link inside it
+  if (process.client) {
+    const mobileMenu = document.getElementById('navbarContent')
+    if (mobileMenu) {
+      mobileMenu.addEventListener('click', (e) => {
+        const link = e.target.closest('a')
+        if (link && link.getAttribute('href') !== '#') {
+          closeMobileMenu()
+        }
+      })
+    }
+  }
 })
 
 // Registration form state
@@ -409,6 +452,35 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+a, .nav-link, .dropdown-item, .login-link, .navbar-brand {
+  cursor: pointer !important;
+}
+
+.shop-all-link {
+  color: white !important;
+  text-decoration: none !important;
+  font-weight: 500;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.shop-all-link span:first-child {
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+}
+
+.shop-all-link .arrow {
+  text-decoration: none !important;
+  display: inline-block;
+}
+
+.shop-all-link:hover {
+  opacity: 0.8;
+}
+
 /* Cart page specific navbar link colors */
 body.cart-page .desktop-nav .nav-link,
 body.cart-page .desktop-nav a,
@@ -892,6 +964,28 @@ body.menu-open .custom-navbar-toggler .hamburger-line:nth-child(3) {
 .dropdown-content.show {
   max-height: 50vh;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  display: block;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .dropdown-menu-mobile {
@@ -1108,20 +1202,31 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     max-height: 390px !important;
     /* Limit products list height */
     overflow-y: auto !important;
-    scrollbar-width: none;
-    /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none;
-    /* Hide scrollbar for IE/Edge */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
     list-style: none;
     padding: 8px !important;
     margin: 0;
   }
 
   .desktop-nav .dropdown-products-scroll::-webkit-scrollbar {
-    display: none;
-    /* Hide scrollbar for Webkit */
-    width: 0;
-    height: 0;
+    width: 6px;
+    height: 6px;
+    display: block;
+  }
+
+  .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+  }
+
+  .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 3px;
+  }
+
+  .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
   }
 
   .desktop-nav .dropdown-products-list {
@@ -1133,18 +1238,16 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   /* Pinned footer inside desktop dropdown */
   .desktop-nav .dropdown-footer {
     position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 50px !important;
-    background: rgba(85, 85, 85, 0.98) !important;
+    bottom: 12px !important;
+    right: 24px !important;
+    left: auto !important;
+    height: auto !important;
+    background: transparent !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: flex-end !important;
     margin: 0 !important;
     padding: 0 !important;
-    border-bottom-left-radius: 20px !important;
-    border-bottom-right-radius: 20px !important;
     list-style: none;
     z-index: 10 !important;
   }
@@ -1319,20 +1422,31 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       max-height: 390px !important;
       /* Limit products list height */
       overflow-y: auto !important;
-      scrollbar-width: none;
-      /* Hide scrollbar for Firefox */
-      -ms-overflow-style: none;
-      /* Hide scrollbar for IE/Edge */
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
       list-style: none;
       padding: 8px !important;
       margin: 0;
     }
 
     .desktop-nav .dropdown-products-scroll::-webkit-scrollbar {
-      display: none;
-      /* Hide scrollbar for Webkit */
-      width: 0;
-      height: 0;
+      width: 6px;
+      height: 6px;
+      display: block;
+    }
+
+    .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+    }
+
+    .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.4);
     }
 
     .desktop-nav .dropdown-products-list {
@@ -1344,18 +1458,16 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     /* Pinned footer inside desktop dropdown */
     .desktop-nav .dropdown-footer {
       position: absolute !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      height: 50px !important;
-      background: rgba(85, 85, 85, 0.98) !important;
+      bottom: 12px !important;
+      right: 24px !important;
+      left: auto !important;
+      height: auto !important;
+      background: transparent !important;
       display: flex !important;
       align-items: center !important;
-      justify-content: center !important;
+      justify-content: flex-end !important;
       margin: 0 !important;
       padding: 0 !important;
-      border-bottom-left-radius: 20px !important;
-      border-bottom-right-radius: 20px !important;
       list-style: none;
       z-index: 10 !important;
     }

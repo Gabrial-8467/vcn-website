@@ -39,7 +39,7 @@
             </div>
 
             <p class="mb-3">
-              {{ checkout.accountStep.haveAccountText }} <a href="/login" class="link-text">{{ checkout.accountStep.signInButton }}</a>
+              {{ checkout.accountStep.haveAccountText }} <NuxtLink to="/login" class="link-text">{{ checkout.accountStep.signInButton }}</NuxtLink>
             </p>
 
             <div class="info-box">
@@ -196,7 +196,7 @@
             <!-- Empty Cart Message -->
             <div v-if="!cartStore?.items || cartStore.items.length === 0" class="text-center py-4">
               <p>{{ checkout.cartSummary.emptyCartMessage }}</p>
-              <a href="/all-products" class="btn-learn">{{ checkout.cartSummary.continueShopping }}</a>
+              <NuxtLink to="/all-products" class="btn-learn">{{ checkout.cartSummary.continueShopping }}</NuxtLink>
             </div>
 
             <!-- Promo Code Section -->

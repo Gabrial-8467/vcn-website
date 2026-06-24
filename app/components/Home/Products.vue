@@ -139,14 +139,23 @@ const handleImageError = (event) => {
     event.target.src = '/img/products/img1.png'
 }
 
-// Fetch products: await on server-side (SSR) for pre-rendering, non-blocking on client-side
-if (productStore.products.length === 0) {
-    if (import.meta.server) {
-        await productStore.fetchProducts()
-    } else {
-        productStore.fetchProducts()
-    }
+// SSR pre-rendering fetch (if empty on server)
+if (import.meta.server && productStore.products.length === 0) {
+    await productStore.fetchProducts()
 }
+
+// Fetch fresh data client-side on mount (ensures API calls are made when page opens or navigated to)
+onMounted(async () => {
+    const config = useRuntimeConfig()
+    const apiBaseUrl = config.public.apiBaseUrl
+    if (apiBaseUrl && (apiBaseUrl.startsWith('http://') || apiBaseUrl.startsWith('https://'))) {
+        try {
+            await productStore.fetchProducts(true)
+        } catch (err) {
+            console.error('Failed to fetch fresh products on home mount:', err)
+        }
+    }
+})
 </script>
 
 <style scoped>

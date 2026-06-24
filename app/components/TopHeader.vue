@@ -2,7 +2,7 @@
   <!-- Top Header -->
   <div class="top-header" :class="{ 'hide': isHydrated && isHidden }" id="topHeader">
     <p>
-      Because Your Health <span class="text-nowrap">Deserves Better <span class="arrow">→</span></span>
+      Because Your Health <span class="text-nowrap">Deserves Better</span>
     </p>
   </div>
 </template>

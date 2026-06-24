@@ -594,8 +594,8 @@
               </button>
               <p class="contact-footer-text">
                 {{ contact.contactForm.fields.formFooter.text }} <br />
-                <a :href="contact.contactForm.fields.formFooter.privacyPolicyLink" class="contact-footer-link">{{ contact.contactForm.fields.formFooter.privacyPolicyLabel }}</a> and
-                <a :href="contact.contactForm.fields.formFooter.termsOfServiceLink" class="contact-footer-link">{{ contact.contactForm.fields.formFooter.termsOfServiceLabel }}</a> apply.
+                <NuxtLink :to="contact.contactForm.fields.formFooter.privacyPolicyLink" class="contact-footer-link">{{ contact.contactForm.fields.formFooter.privacyPolicyLabel }}</NuxtLink> and
+                <NuxtLink :to="contact.contactForm.fields.formFooter.termsOfServiceLink" class="contact-footer-link">{{ contact.contactForm.fields.formFooter.termsOfServiceLabel }}</NuxtLink> apply.
               </p>
             </form>
           </div>

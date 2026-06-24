@@ -104,46 +104,113 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useCmsStore } from '~/stores/cms'
 import { useCmsApi } from '~/composables/useCmsApi'
 import { useProductStore } from '~/stores/product'
 import { useCartStore } from '~/stores/cart'
 
+// ✅ All stores at the top
 const cmsStore = useCmsStore()
 const { getCmsImageUrl } = useCmsApi()
 const cartStore = useCartStore()
+const productStore = useProductStore()
 
-// Fetch page sections from API during SSR/routing
-await useAsyncData('products-cms', () => cmsStore.fetchSectionsBySlug('products'))
+const route = useRoute()
+
+// Fetch page sections and products from API during SSR/routing safely
+// We return the payload data from the callback so client-side navigation can restore it to Pinia stores
+// We wrap this inside an `import.meta.server` guard so client-side transitions are instant and do not block the router.
+const { data: pageData } = await useAsyncData(`products-cms-${route.path}`, async () => {
+  if (import.meta.server) {
+    const config = useRuntimeConfig()
+    const apiBaseUrl = config.public.apiBaseUrl
+
+    let sections = null
+    let products = null
+
+    if (apiBaseUrl && (apiBaseUrl.startsWith('http://') || apiBaseUrl.startsWith('https://'))) {
+      try {
+        // Clear any existing page state before fetching on the server
+        cmsStore.clearPage()
+        
+        await Promise.all([
+          cmsStore.fetchSectionsBySlug('products'),
+          productStore.fetchProducts(true)
+        ])
+        
+        sections = cmsStore.currentPage?.sections || null
+        products = productStore.products || []
+      } catch (err) {
+        console.error('Failed to fetch CMS sections and products for products page on server:', err)
+      }
+    }
+
+    return { sections, products }
+  }
+  return null
+})
+
+// Sync the returned pageData to Pinia stores reactively
+watch(pageData, (newData) => {
+  if (newData) {
+    cmsStore.clearPage() // Clear to prevent section bleeding across page transitions
+    
+    if (newData.sections) {
+      cmsStore.currentPage = {
+        id: 0,
+        title: 'products',
+        slug: 'products',
+        description: '',
+        pageType: '',
+        isHomePage: false,
+        seo: null,
+        sections: newData.sections,
+        updatedAt: ''
+      }
+    }
+    if (newData.products && newData.products.length > 0) {
+      productStore.products = newData.products
+    }
+  }
+}, { immediate: true })
+
+// Fetch fresh data client-side on mount (ensures API calls are made when page opens or navigated to)
+onMounted(async () => {
+  const config = useRuntimeConfig()
+  const apiBaseUrl = config.public.apiBaseUrl
+  if (apiBaseUrl && (apiBaseUrl.startsWith('http://') || apiBaseUrl.startsWith('https://'))) {
+    try {
+      await Promise.all([
+        cmsStore.fetchSectionsBySlug('products'),
+        productStore.fetchProducts(true)
+      ])
+    } catch (err) {
+      console.error('Failed to fetch fresh data on mount:', err)
+    }
+  }
+})
 
 const allProducts = computed(() => {
   const sections = cmsStore.currentPage?.sections || []
-  
-  // Find sections
+
   const heroSec = sections.find(s => s.name === 'hero' || s.sectionKey === 'products-hero')
   const sidebarSec = sections.find(s => s.name === 'sidebarCard' || s.sectionKey === 'products-sidebar-card')
   const uiLabelsSec = sections.find(s => s.name === 'uiLabels' || s.sectionKey === 'products-ui-labels')
-  
+
   const fallback = cmsStore.getPageSection('products', 'products') || {
     hero: { title: '' },
     sidebarCard: { image: '', text: '' },
     labels: { bestseller: '' },
     btn: { learnMore: '' }
   }
-  
-  // Resolve sidebar image
+
   const rawSidebarImage = sidebarSec?.image || sidebarSec?.extraData?.image
   let sidebarImage = ''
   if (rawSidebarImage) {
-    if (typeof rawSidebarImage === 'string') {
-      sidebarImage = rawSidebarImage
-    } else {
-      sidebarImage = getCmsImageUrl(rawSidebarImage)
-    }
+    sidebarImage = typeof rawSidebarImage === 'string' ? rawSidebarImage : getCmsImageUrl(rawSidebarImage)
   }
 
-  // Parse extraData labels
   const apiExtra = uiLabelsSec?.extraData?.extraData || uiLabelsSec?.extraData || {}
 
   return {
@@ -163,35 +230,18 @@ const allProducts = computed(() => {
   }
 })
 
-const productStore = useProductStore()
-
-// Computed properties from store
 const products = computed(() => productStore.allProducts)
 const error = computed(() => productStore.error)
 
-// Fetch products immediately (non-blocking)
-productStore.fetchProducts()
+const getProductPricing = (product) => productStore.getProductPricing(product)
+const getPrimaryImage = (product) => productStore.getPrimaryImage(product)
 
-// Helper function to get product pricing - use store getter
-const getProductPricing = (product) => {
-  return productStore.getProductPricing(product)
-}
-
-// Get primary image for product - use store getter
-const getPrimaryImage = (product) => {
-  return productStore.getPrimaryImage(product)
-}
-
-// Handle image loading errors
 const handleImageError = (event, product) => {
   console.error(`Failed to load image for product ${product.id}:`, event)
   event.target.src = '/img/products/img1.png'
 }
 
-// Get cart item helper
-const getCartItem = (productId) => {
-  return cartStore.getItemById(productId)
-}
+const getCartItem = (productId) => cartStore.getItemById(productId)
 
 const addToCart = async (product) => {
   const pricing = getProductPricing(product)

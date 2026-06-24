@@ -16,7 +16,7 @@
 
       <!-- Products grid -->
       <div v-else class="row g-3">
-        <div v-for="product in products" :key="product.id || product.name" class="col-md-6 col-12">
+        <div v-for="product in products" :key="product.id || product.name" class="col-xl-6 col-12">
           <div class="product-card">
             <div class="product-image-wrapper">
               <span class="product-badge">NEW</span>
@@ -42,7 +42,7 @@
                 </template>
               </div>
               <div class="product-actions">
-                <a :href="`/product-details/${product.slug}`" class="btn-learn">Learn More</a>
+                <NuxtLink :to="`/product-details/${product.slug}`" class="btn-learn">Learn More</NuxtLink>
                 <div class="cart-box">
                   <a href="#" v-if="!getCartItem(product.id)" @click.prevent="addToCart(product)"
                     class="btn-cart add-btn">
@@ -86,7 +86,6 @@ const { initializeCart } = useAuthCart()
 const products = computed(() => props.products ?? productStore.allProducts)
 const categories = computed(() => productStore.categories)
 const error = computed(() => productStore.error)
-const loading = computed(() => props.loading || productStore.loading)
 
 // Fetch products on client only if not provided via props
 onMounted(() => {
@@ -150,6 +149,7 @@ const addToCart = async (product) => {
 
 /* Premium smooth transitions for product cards and images */
 .product-card {
+  position: relative !important;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
               box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
               background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -163,6 +163,23 @@ const addToCart = async (product) => {
 .product-image-wrapper {
   aspect-ratio: 1 / 1 !important;
   height: 215px !important;
+  position: static !important;
+}
+
+.product-badge {
+  position: absolute !important;
+  left: 12px !important;
+  top: 12px !important;
+  background-color: #606f59 !important;
+  color: #ffffff !important;
+  border-radius: 30px !important;
+  padding: 4px 10px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  box-shadow: none !important;
+  transform: none !important;
+  z-index: 10 !important;
 }
 
 .product-image-wrapper a {
@@ -188,8 +205,8 @@ const addToCart = async (product) => {
   transform: scale(1.06) !important;
 }
 
-/* Make cards vertical and adjust padding for 2-column layout under 768px */
-@media (max-width: 768px) {
+/* Make cards horizontal and adjust padding for layout under 1199px */
+@media (max-width: 1199px) {
   .product-card {
     display: flex !important;
     flex-direction: row !important;
@@ -229,8 +246,8 @@ const addToCart = async (product) => {
 
   .product-badge {
     position: absolute !important;
-    left: 12px !important;
-    top: 12px !important; /* Positioned near top left corner of the card */
+    left: -20px !important;
+    top: -20px !important; /* Positioned near top left corner of the card */
     background-color: #606f59 !important;
     color: #ffffff !important;
     border-radius: 30px !important;
@@ -517,6 +534,46 @@ const addToCart = async (product) => {
 
   .qty-value {
     font-size: 11px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .product-card {
+    padding: 8px !important;
+    gap: 8px !important;
+  }
+
+  .product-image-wrapper {
+    width: 95px !important;
+    min-width: 95px !important;
+    height: 95px !important;
+    padding: 6px 0px 0px 0px !important;
+  }
+
+  .product-actions {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .btn-learn {
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .btn-cart {
+    font-size: 11px !important;
+    width: 100% !important;
+    display: inline-flex !important;
+    justify-content: flex-start !important;
+  }
+
+  .qty-box {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 4px 10px !important;
   }
 }
 </style>

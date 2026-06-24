@@ -48,16 +48,19 @@ await useAsyncData('disease-bundles-cms', () => cmsStore.fetchSectionsBySlug('di
 const bundles = computed(() => {
   const section = cmsStore.getSectionByKey('disease-bundles')
   const fallback = cmsStore.getPageSection('bundles', 'bundles') || { bundles: [] }
+
+  const rawItems = section?.items || []
+  const items = rawItems.filter(item => item && item.title && item.title.trim() !== '')
   
-  if (section && section.items && section.items.length > 0) {
-    const cmsBundles = section.items.map(item => {
+  if (items.length > 0) {
+    const cmsBundles = items.map(item => {
       // Find matching fallback item by title to use its local image asset as a fallback
       const fallbackItem = fallback.bundles?.find(
         fb => fb.title.trim().toLowerCase() === item.title?.trim().toLowerCase()
       )
       
       return {
-        title: item.title || 'Disease',
+        title: item.title,
         image: getCmsImageUrl(item.image || item.extraData?.image, '') || fallbackItem?.image || '/img/image/acidty.png',
         link: item.buttonLink || item.extraData?.link || item.config?.link || fallbackItem?.link || '/bundle-details'
       }
