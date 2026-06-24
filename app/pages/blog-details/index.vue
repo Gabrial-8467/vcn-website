@@ -7,9 +7,9 @@
         <div class="container">
           <ol class="breadcrumb">
             <li v-for="(item, index) in blogDetails.breadcrumb.items" :key="index">
-              <a v-if="item.link" :href="item.link">
+              <NuxtLink v-if="item.link" :to="item.link">
                 {{ item.label }}
-              </a>
+              </NuxtLink>
 
               <span v-else>
                 {{ item.label }}
