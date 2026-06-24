@@ -25,7 +25,7 @@ export const HOME_PAGE_DATA = {
         },
 
         rightContent: {
-            mainImage: "/img/image/frst image.png",
+            mainImage: "/img/image/es1.webp",
             thumbnails: [
                 "/img/image/4th image img.png",
                 "/img/image/secon img.png",

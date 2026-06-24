@@ -87,7 +87,7 @@ const footer = computed(() => cmsStore.bottomFooterData)
   margin: 0 auto !important;
   border: none !important;
   border-radius: 0 !important;
-  transform: scale(1.5) !important;
+  transform: scale(6.2) !important;
   transform-origin: center center !important;
 }
 

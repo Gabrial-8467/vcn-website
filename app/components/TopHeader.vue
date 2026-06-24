@@ -1,9 +1,9 @@
 <template>
   <!-- Top Header -->
   <div class="top-header" :class="{ 'hide': isHydrated && isHidden }" id="topHeader">
-    <p>
-      Because Your Health <span class="text-nowrap">Deserves Better</span>
-    </p>
+    <NuxtLink to="/all-products" class="vcn-top-header">
+      Because Your Health <span class="text-nowrap">Deserves Better</span><span class="arrow">→</span>
+    </NuxtLink>
   </div>
 </template>
 
@@ -109,7 +109,9 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
 }
-
+.vcn-top-header{
+  color: var(--vcn-dark);
+}
 .top-header.hide {
   transform: translateY(-100%);
   opacity: 0;

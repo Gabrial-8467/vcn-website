@@ -30,7 +30,7 @@ const probiotics = computed(() =>
 
 <template>
   <!-- Probiotic Info Section -->
-  <section class="vcn-probiotic-info-section" :style=" { backgroundImage: `url(${probiotics.backgroundImage})`}">
+  <section class="vcn-probiotic-info-section" :style="{ backgroundImage: `url(${probiotics.backgroundImage})` }">
     <div class="vcn-probiotic-container">
       <div class="vcn-probiotic-content-wrapper">
         <!-- Left Content -->
@@ -47,22 +47,22 @@ const probiotics = computed(() =>
 
           <div class="vcn-probiotic-stat-box" data-aos="zoom-in" data-aos-duration="400">
             <div class="vcn-probiotic-stat-label-wrapper">
-              <span class="vcn-probiotic-stat-badge">{{probiotics.leftContent.statBox.badge}}</span>
-              <span class="vcn-probiotic-stat-text">{{probiotics.leftContent.statBox.label}}</span>
+              <span class="vcn-probiotic-stat-badge">{{ probiotics.leftContent.statBox.badge }}</span>
+              <span class="vcn-probiotic-stat-text">{{ probiotics.leftContent.statBox.label }}</span>
             </div>
 
             <div class="vcn-probiotic-stat-divider"></div>
 
             <div class="vcn-probiotic-stat-number-wrapper">
-              <div class="vcn-probiotic-stat-icon">{{probiotics.leftContent.statBox.icon}}</div>
+              <div class="vcn-probiotic-stat-icon">{{ probiotics.leftContent.statBox.icon }}</div>
 
-              <span class="vcn-probiotic-stat-number">{{probiotics.leftContent.statBox.value}}</span>
-              <span class="vcn-probiotic-stat-multiplier">{{probiotics.leftContent.statBox.multiplier}}</span>
+              <span class="vcn-probiotic-stat-number">{{ probiotics.leftContent.statBox.value }}</span>
+              <span class="vcn-probiotic-stat-multiplier">{{ probiotics.leftContent.statBox.multiplier }}</span>
             </div>
           </div>
 
           <p class="vcn-probiotic-disclaimer">
-            {{probiotics.leftContent.disclaimer}}
+            {{ probiotics.leftContent.disclaimer }}
           </p>
         </div>
 
@@ -75,7 +75,8 @@ const probiotics = computed(() =>
               </div>
             </div>
 
-            <img :src="probiotics.rightContent.productImage" alt="V-Heldi Curcumin" class="vcn-probiotic-product-image" loading="eager" />
+            <img :src="probiotics.rightContent.productImage" alt="V-Heldi Curcumin" class="vcn-probiotic-product-image"
+              loading="eager" />
 
             <div class="vcn-probiotic-callout vcn-probiotic-callout-bottom" data-aos="fade-up" data-aos-duration="400">
               <div class="vcn-probiotic-callout-title">{{ probiotics.rightContent.bottomCallout.title }}</div>
@@ -94,6 +95,13 @@ const probiotics = computed(() =>
 /* Increase capsule image size by 10px on desktop */
 .vcn-probiotic-product-image {
   width: 360px !important;
+}
+
+@media (min-width: 992px) {
+  .vcn-probiotic-product-image {
+    transform: translatey(-31.5px) !important;
+
+  }
 }
 
 .vcn-probiotic-heading-group {
@@ -195,7 +203,8 @@ const probiotics = computed(() =>
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-    width: 100% !important; /* extends to the end of the callout */
+    width: 100% !important;
+    /* extends to the end of the callout */
     height: 1px !important;
     background-color: rgba(255, 255, 255, 0.4) !important;
     background-image: none !important;
@@ -212,7 +221,8 @@ const probiotics = computed(() =>
     content: "" !important;
     position: absolute !important;
     top: -2.5px !important;
-    right: -2px !important; /* places dot exactly at the end of the line */
+    right: -2px !important;
+    /* places dot exactly at the end of the line */
     left: auto !important;
     width: 6px !important;
     height: 6px !important;
@@ -228,6 +238,7 @@ const probiotics = computed(() =>
   .vcn-probiotic-product-image {
     max-width: 320px !important;
   }
+
   .vcn-probiotic-main-heading {
     font-size: 2.0rem !important;
   }

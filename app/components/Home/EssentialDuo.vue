@@ -92,4 +92,8 @@ const offers = computed(() =>
     font-size: 2.4rem !important;
   }
 }
+
+.vcn-cobiotics-cta-btn:hover {
+  color: var(--vcn-white) !important;
+}
 </style>
