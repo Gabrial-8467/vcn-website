@@ -149,6 +149,7 @@ const addToCart = async (product) => {
 
 /* Premium smooth transitions for product cards and images */
 .product-card {
+  position: relative !important;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
               box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
               background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -162,6 +163,23 @@ const addToCart = async (product) => {
 .product-image-wrapper {
   aspect-ratio: 1 / 1 !important;
   height: 215px !important;
+  position: static !important;
+}
+
+.product-badge {
+  position: absolute !important;
+  left: 12px !important;
+  top: 12px !important;
+  background-color: #606f59 !important;
+  color: #ffffff !important;
+  border-radius: 30px !important;
+  padding: 4px 10px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  box-shadow: none !important;
+  transform: none !important;
+  z-index: 10 !important;
 }
 
 .product-image-wrapper a {
@@ -228,8 +246,8 @@ const addToCart = async (product) => {
 
   .product-badge {
     position: absolute !important;
-    left: 12px !important;
-    top: 12px !important; /* Positioned near top left corner of the card */
+    left: -20px !important;
+    top: -20px !important; /* Positioned near top left corner of the card */
     background-color: #606f59 !important;
     color: #ffffff !important;
     border-radius: 30px !important;
