@@ -41,7 +41,7 @@
                   password?</a>
                 <a href="#" class="auth-link-item"
                   onclick="alert('Use social login or checkout to create account')">Don't have a password?</a>
-                <a href="/checkout" class="auth-link-item">Want to create a new account?</a>
+                <NuxtLink to="/checkout" class="auth-link-item">Want to create a new account?</NuxtLink>
               </div>
             </form>
           </div>

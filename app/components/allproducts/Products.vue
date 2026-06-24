@@ -42,7 +42,7 @@
                 </template>
               </div>
               <div class="product-actions">
-                <a :href="`/product-details/${product.slug}`" class="btn-learn">Learn More</a>
+                <NuxtLink :to="`/product-details/${product.slug}`" class="btn-learn">Learn More</NuxtLink>
                 <div class="cart-box">
                   <a href="#" v-if="!getCartItem(product.id)" @click.prevent="addToCart(product)"
                     class="btn-cart add-btn">

@@ -75,7 +75,9 @@ const handleSubscribe = async (event) => {
         <div class="col-md-5">
           <div class="vcn-footer-brand">
             <div class="vcn-footer-logo">
-              <img src="/img/logo/logo.png" alt="" />
+              <NuxtLink to="/">
+                <img src="/img/logo/logo.png" alt="VCN Logo" />
+              </NuxtLink>
             </div>
             <p class="vcn-footer-tagline">
               {{ footer.tagline.title }}
@@ -171,7 +173,7 @@ const handleSubscribe = async (event) => {
                 <h4 class="vcn-footer-column-title">{{footer.columns[0].title}}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[0].links" :key="link.text">
-                    <a :href="link.link" class="vcn-footer-link">{{link.text}}</a>
+                    <NuxtLink :to="link.link" class="vcn-footer-link">{{link.text}}</NuxtLink>
                   </li>
                 </ul>
               </div>
@@ -181,7 +183,7 @@ const handleSubscribe = async (event) => {
                 <h4 class="vcn-footer-column-title">{{footer.columns[1].title}}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[1].links" :key="link.text">
-                    <a :href="link.link" class="vcn-footer-link">{{link.text}}</a>
+                    <NuxtLink :to="link.link" class="vcn-footer-link">{{link.text}}</NuxtLink>
                   </li>
                 </ul>
               </div>
@@ -206,7 +208,7 @@ const handleSubscribe = async (event) => {
                 <h4 class="vcn-footer-column-title">{{ footer.columns[2].title }}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[2].links" :key="link.text">
-                    <a :href="link.link" class="vcn-footer-link">{{link.text}}</a>
+                    <NuxtLink :to="link.link" class="vcn-footer-link">{{link.text}}</NuxtLink>
                   </li>
                   
                   <!-- <li>
@@ -237,7 +239,7 @@ const handleSubscribe = async (event) => {
                 <h4 class="vcn-footer-column-title">{{ footer.columns[4].title }}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[4].links" :key="link.text">
-                    <a :href="link.link" class="vcn-footer-link">{{link.text}}</a>
+                    <NuxtLink :to="link.link" class="vcn-footer-link">{{link.text}}</NuxtLink>
                   </li>
                   <!-- <li>
                     <a href="/terms-conditions" class="vcn-footer-link">Terms + Conditions</a>
