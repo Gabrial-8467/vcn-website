@@ -86,7 +86,6 @@ const { initializeCart } = useAuthCart()
 const products = computed(() => props.products ?? productStore.allProducts)
 const categories = computed(() => productStore.categories)
 const error = computed(() => productStore.error)
-const loading = computed(() => props.loading || productStore.loading)
 
 // Fetch products on client only if not provided via props
 onMounted(() => {
