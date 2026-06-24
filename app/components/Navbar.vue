@@ -48,7 +48,10 @@
                 </li>
                 <!-- Fixed footer pinned at bottom -->
                 <li class="dropdown-footer">
-                  <NuxtLink to="/all-products">Shop All Products →</NuxtLink>
+                  <NuxtLink to="/all-products" class="shop-all-link">
+                    <span>Shop All Products</span>
+                    <span class="arrow">→</span>
+                  </NuxtLink>
                 </li>
               </ul>
             </li>
@@ -242,7 +245,10 @@
               </div>
               <!-- Fixed footer pinned at bottom -->
               <div class="dropdown-footer">
-                <NuxtLink to="/all-products">Shop All Products →</NuxtLink>
+                <NuxtLink to="/all-products" class="shop-all-link">
+                  <span>Shop All Products</span>
+                  <span class="arrow">→</span>
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -448,6 +454,31 @@ onUnmounted(() => {
 <style scoped>
 a, .nav-link, .dropdown-item, .login-link, .navbar-brand {
   cursor: pointer !important;
+}
+
+.shop-all-link {
+  color: white !important;
+  text-decoration: none !important;
+  font-weight: 500;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.shop-all-link span:first-child {
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+}
+
+.shop-all-link .arrow {
+  text-decoration: none !important;
+  display: inline-block;
+}
+
+.shop-all-link:hover {
+  opacity: 0.8;
 }
 
 /* Cart page specific navbar link colors */
@@ -933,6 +964,28 @@ body.menu-open .custom-navbar-toggler .hamburger-line:nth-child(3) {
 .dropdown-content.show {
   max-height: 50vh;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  display: block;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .dropdown-menu-mobile {
@@ -1149,20 +1202,31 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     max-height: 390px !important;
     /* Limit products list height */
     overflow-y: auto !important;
-    scrollbar-width: none;
-    /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none;
-    /* Hide scrollbar for IE/Edge */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
     list-style: none;
     padding: 8px !important;
     margin: 0;
   }
 
   .desktop-nav .dropdown-products-scroll::-webkit-scrollbar {
-    display: none;
-    /* Hide scrollbar for Webkit */
-    width: 0;
-    height: 0;
+    width: 6px;
+    height: 6px;
+    display: block;
+  }
+
+  .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+  }
+
+  .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 3px;
+  }
+
+  .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
   }
 
   .desktop-nav .dropdown-products-list {
@@ -1174,18 +1238,16 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   /* Pinned footer inside desktop dropdown */
   .desktop-nav .dropdown-footer {
     position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 50px !important;
-    background: rgba(85, 85, 85, 0.98) !important;
+    bottom: 12px !important;
+    right: 24px !important;
+    left: auto !important;
+    height: auto !important;
+    background: transparent !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: flex-end !important;
     margin: 0 !important;
     padding: 0 !important;
-    border-bottom-left-radius: 20px !important;
-    border-bottom-right-radius: 20px !important;
     list-style: none;
     z-index: 10 !important;
   }
@@ -1360,20 +1422,31 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       max-height: 390px !important;
       /* Limit products list height */
       overflow-y: auto !important;
-      scrollbar-width: none;
-      /* Hide scrollbar for Firefox */
-      -ms-overflow-style: none;
-      /* Hide scrollbar for IE/Edge */
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
       list-style: none;
       padding: 8px !important;
       margin: 0;
     }
 
     .desktop-nav .dropdown-products-scroll::-webkit-scrollbar {
-      display: none;
-      /* Hide scrollbar for Webkit */
-      width: 0;
-      height: 0;
+      width: 6px;
+      height: 6px;
+      display: block;
+    }
+
+    .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+    }
+
+    .desktop-nav .dropdown-products-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.4);
     }
 
     .desktop-nav .dropdown-products-list {
@@ -1385,18 +1458,16 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     /* Pinned footer inside desktop dropdown */
     .desktop-nav .dropdown-footer {
       position: absolute !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      height: 50px !important;
-      background: rgba(85, 85, 85, 0.98) !important;
+      bottom: 12px !important;
+      right: 24px !important;
+      left: auto !important;
+      height: auto !important;
+      background: transparent !important;
       display: flex !important;
       align-items: center !important;
-      justify-content: center !important;
+      justify-content: flex-end !important;
       margin: 0 !important;
       padding: 0 !important;
-      border-bottom-left-radius: 20px !important;
-      border-bottom-right-radius: 20px !important;
       list-style: none;
       z-index: 10 !important;
     }
