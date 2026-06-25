@@ -709,7 +709,7 @@ body.home-page main {
 
 /* Swiper Slider */
 .vcn-whole-body-swiper-container {
-  padding: 10px;
+  padding-top: 10px;
 }
 
 .vcn-whole-body-product-card {
@@ -1339,7 +1339,7 @@ body.home-page main {
 .vcn-human-left-content {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 15px;
   padding: 0 20px;
   transition: all 0.6s ease;
 }
@@ -1367,9 +1367,9 @@ body.home-page main {
 }
 
 .vcn-human-heading {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--vcn-primary);
+  font-size: 44px;
+  font-weight: 400;
+  color: var(--vcn-darker);
   line-height: 1.2;
   margin: 0;
 }
@@ -1378,7 +1378,7 @@ body.home-page main {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--vcn-footer);
+  background: var(--vcn-darker);
   color: white;
   padding: 14px 28px;
   border-radius: 30px;
@@ -1392,7 +1392,7 @@ body.home-page main {
 }
 
 .vcn-human-cta-button:hover {
-  background: var(--vcn-primary);
+  background: var(--vcn-footer);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(45, 74, 37, 0.3);
 }
