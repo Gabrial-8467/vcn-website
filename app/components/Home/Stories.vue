@@ -554,8 +554,8 @@ watch(storyCards, () => {
 }
 
 .vcn-stories-card-title {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 400;
   margin-bottom: 15px;
   color: var(--vcn-white);
 }
