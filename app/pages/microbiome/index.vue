@@ -4,11 +4,11 @@
         <div class="row">
           <h1>Microbiome 101</h1>
           <div class="col-lg-12">
-            <img
+            <!-- <img
               src="/img/image/microbiome.png"
               class="w-100"
               alt=""
-            />
+            /> -->
             <p class="mt-5">
               You are home to a community of trillions of microorganisms,
               including 38,000,000,000,000 (that’s 38 trillion) bacteria, living

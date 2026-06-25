@@ -1,6 +1,6 @@
 <template>
   <section>
-    <img src="/img/bg/bg-3.png" alt="" class="sustanability" />
+    <!-- <img src="/img/bg/bg-3.png" alt="" class="sustanability" /> -->
   </section>
 
   <div class="sustainability-page-wrapper">

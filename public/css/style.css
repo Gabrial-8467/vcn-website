@@ -15,6 +15,14 @@
   --vcn-product: #f6f7ef;
   --vcn-gradient: linear-gradient(135deg, #5E6C1F, #1D4503);
   --vcn-mobile: #83b576;
+
+  /* Typography Variables */
+  --vcn-heading-size: 48px;
+  --vcn-heading-weight: 400;
+  --vcn-desc-size: 16px;
+  --vcn-desc-weight: 400;
+  --vcn-btn-size: var(--vcn-desc-size);
+  --vcn-btn-weight: 400;
 }
 
 * {
@@ -23,7 +31,26 @@
   box-sizing: border-box;
 }
 
+/* Global Font & Typography Overrides */
+body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--vcn-font) !important;
+}
 
+h1, .h1 {
+  font-size: var(--vcn-heading-size) !important;
+  font-weight: var(--vcn-heading-weight) !important;
+}
+
+p, .description, .desc {
+  font-size: var(--vcn-desc-size) !important;
+  font-weight: var(--vcn-desc-weight) !important;
+}
+
+button, .btn, [type="button"], [type="submit"], [class*="btn"], [class*="button"] {
+  font-size: var(--vcn-btn-size) !important;
+  font-weight: var(--vcn-btn-weight) !important;
+}
 
 ul {
   list-style: none;
@@ -36,13 +63,7 @@ a {
 }
 
 body {
-  /* font-family: "Outfit", sans-serif; */
   overflow-x: hidden;
-}
-
-p {
-  font-size: 1.2rem;
-  text-align: justify;
 }
 
 /* ========== TOP HEADER ========== */
@@ -336,7 +357,7 @@ body.home-page main {
 }
 
 .vcn-cobiotics-title {
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 400;
   color: var( --vcn-darker);
   line-height: 1.2;
@@ -384,7 +405,7 @@ body.home-page main {
 
 .vcn-cobiotics-cta-btn:hover {
 
-  color: var(--vcn-light);
+  color: var(--vcn-white);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   padding-right: 55px;
   /* space for arrow */
@@ -1329,14 +1350,6 @@ body.home-page main {
   pointer-events: none;
   position: absolute;
 }
-.vcn-human-description{
-    font-size: 16px;
-  color: var(   --vcn-darker);
-  line-height: 20.8px;
- 
-  text-align: justify;
-
-}
 
 .vcn-human-logo {
   display: flex;
@@ -1354,17 +1367,11 @@ body.home-page main {
 }
 
 .vcn-human-heading {
-  font-size: 48px;
-  font-weight: 400;
-  color: var(--vcn-darker);
-  line-height: 44px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--vcn-primary);
+  line-height: 1.2;
   margin: 0;
-  
-}
-.vcn-human-content{
-  font-size: 16px;
-  color: var(   --vcn-darker);
-  line-height: 20.8px;
 }
 
 .vcn-human-cta-button {
@@ -1382,32 +1389,14 @@ body.home-page main {
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
-
-  /* display: inline-block;
-  position: relative;
-  /* 🟢 add this */
-  padding: 12px 40px;
-  background-color: var(--vcn-darker);
-  color: var(--vcn-white);
-  text-decoration: none;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(69, 102, 60, 0.2); */
 }
 
 .vcn-human-cta-button:hover {
-   color: var(--vcn-light);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  padding-right: 55px;
+  background: var(--vcn-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 74, 37, 0.3);
 }
 
-
-.vcn-human-cta-btn:hover::after {
-  opacity: 1;
-  right: 20px;
-}
 .vcn-human-play-icon {
   width: 30px;
   height: 30px;
@@ -1428,8 +1417,6 @@ body.home-page main {
   align-items: center;
   min-height: 500px;
   transition: all 0.6s ease;
-
-  
 }
 
 .vcn-human-container.fullscreen .vcn-human-right-content {
@@ -1899,7 +1886,7 @@ body.home-page main {
 .vcn-testimonial-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--vcn-dark) !important;
+  color: var(--vcn-primary);
   line-height: 1.3;
   margin-bottom: 16px;
 }
@@ -2562,7 +2549,7 @@ body.home-page main {
 
 .vcn-awaken-gif {
   max-width: 90%;
-  width: 800px ;
+  width: 800px;
   height: auto;
   display: block;
   margin: 0 auto;

@@ -25,7 +25,7 @@ export const HOME_PAGE_DATA = {
         },
 
         rightContent: {
-            mainImage: "/img/image/es1.webp",
+            mainImage: "/img/productsdetails/BOOSTER.png",
             thumbnails: [
                 "/img/image/4th image img.png",
                 "/img/image/secon img.png",
