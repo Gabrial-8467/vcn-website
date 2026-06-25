@@ -599,6 +599,7 @@ body.checkout-page .navbar.scrolled .login-link {
 .mobile-cart-wrapper .cart-count-badge {
   background: #1d4503 !important;
   color: #ffffff !important;
+  
 }
 
 /* Custom Navbar Toggler */

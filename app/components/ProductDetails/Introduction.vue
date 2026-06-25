@@ -744,7 +744,7 @@ const openProductPreview = (imageSrc) => {
 /* Variant Selector Styles */
 .variant-section {
   background: #f8f9fa;
-  padding: 15px;
+  /* padding: 15px; */
   border-radius: 8px;
 }
 

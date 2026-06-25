@@ -126,11 +126,11 @@ onMounted(() => {
 
 .top-header p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 14px !important;
   letter-spacing: 0.5px;
   text-align: center;
   color: var(--vcn-primary);
-  font-weight: 500;
+  font-weight: 900;
   line-height: 1.3;
   width: 100%;
   max-width: 1200px;

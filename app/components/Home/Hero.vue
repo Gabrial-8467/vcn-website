@@ -256,19 +256,19 @@ const hero = computed(() =>
     margin-top: calc((var(--top-header-height, 22px) + 48px) / 2);
   }
   .hero-content h1 {
-    font-size: 2.1rem;
+    font-size: 32px;
     margin-bottom: 1rem;
     letter-spacing: 0;
     line-height: 1.18;
   }
   .hero-content p {
-    font-size: 1.05rem;
+    font-size: 16px;
     margin-bottom: 1.4rem;
     line-height: 1.5;
   }
   .hero-btn {
     padding: 11px 32px;
-    font-size: 0.98rem;
+    font-size: 16px;
   }
 }
 
