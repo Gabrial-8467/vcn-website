@@ -65,7 +65,7 @@ export const HOME_PAGE_DATA = {
 
     probiotics: {
         key: "probiotics",
-        backgroundImage: "",
+        backgroundImage: "/img/bg/bg-4.png",
 
         leftContent: {
             brandTag: "ViaCapsi Technology",

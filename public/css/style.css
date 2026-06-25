@@ -879,23 +879,26 @@ body.home-page main {
 
 /* ========== PROBIOTIC INFO SECTION ========== */
 .vcn-probiotic-info-section {
-  background-image: url("../img/bg/natural-bg.png");
-  background-size: cover;
+  /* background-image: url("\img\bg\bg-1.png"); */
+  /* background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   padding: 80px 20px;
   position: relative;
   overflow: hidden;
+  
 }
 
 .vcn-probiotic-container {
   /* max-width: 1400px; */
   margin: 0 auto;
+   /* background-image: url('\img\bg\bg-4.png'); */
+
 }
 
 .vcn-probiotic-content-wrapper {
-  background: rgba(121, 121, 121, 0.5);
-  backdrop-filter: blur(15px);
+  background: rgba(87, 94, 85, 0.35);
+ backdrop-filter: blur(37.5px);
   border-radius: 30px;
   padding: 25px;
   border: 1px solid rgba(255, 255, 255, 0.15);
