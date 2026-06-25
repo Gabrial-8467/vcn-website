@@ -15,6 +15,14 @@
   --vcn-product: #f6f7ef;
   --vcn-gradient: linear-gradient(135deg, #5E6C1F, #1D4503);
   --vcn-mobile: #83b576;
+
+  /* Typography Variables */
+  --vcn-heading-size: 48px;
+  --vcn-heading-weight: 400;
+  --vcn-desc-size: 16px;
+  --vcn-desc-weight: 400;
+  --vcn-btn-size: var(--vcn-desc-size);
+  --vcn-btn-weight: 400;
 }
 
 * {
@@ -23,7 +31,26 @@
   box-sizing: border-box;
 }
 
+/* Global Font & Typography Overrides */
+body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--vcn-font) !important;
+}
 
+h1, .h1 {
+  font-size: var(--vcn-heading-size) !important;
+  font-weight: var(--vcn-heading-weight) !important;
+}
+
+p, .description, .desc {
+  font-size: var(--vcn-desc-size) !important;
+  font-weight: var(--vcn-desc-weight) !important;
+}
+
+button, .btn, [type="button"], [type="submit"], [class*="btn"], [class*="button"] {
+  font-size: var(--vcn-btn-size) !important;
+  font-weight: var(--vcn-btn-weight) !important;
+}
 
 ul {
   list-style: none;
@@ -36,13 +63,7 @@ a {
 }
 
 body {
-  /* font-family: "Outfit", sans-serif; */
   overflow-x: hidden;
-}
-
-p {
-  font-size: 1.2rem;
-  text-align: justify;
 }
 
 /* ========== TOP HEADER ========== */

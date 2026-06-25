@@ -2,7 +2,7 @@
   <!-- Top Header -->
   <div class="top-header" :class="{ 'hide': isHydrated && isHidden }" id="topHeader">
     <NuxtLink to="/all-products" class="vcn-top-header">
-      Because Your Health <span class="text-nowrap">Deserves Better</span><span class="arrow">→</span>
+      <p>Because Your Health <span class="text-nowrap">Deserves Better</span><span class="arrow">→</span></p>
     </NuxtLink>
   </div>
 </template>
@@ -16,7 +16,7 @@ const isHydrated = ref(false)
 const updateHeaderHeight = () => {
   const headerEl = document.getElementById('topHeader')
   if (headerEl) {
-    const height = headerEl.offsetHeight
+    const height = isHidden.value ? 0 : headerEl.offsetHeight
     document.documentElement.style.setProperty('--top-header-height', `${height}px`)
   }
 }
@@ -25,7 +25,11 @@ onMounted(() => {
   isHydrated.value = true
 
   const handleScroll = () => {
+    const wasHidden = isHidden.value
     isHidden.value = window.scrollY > 50
+    if (isHidden.value !== wasHidden) {
+      updateHeaderHeight()
+    }
   }
 
   // Initial checks
@@ -52,6 +56,7 @@ onMounted(() => {
     if (resizeObserver) {
       resizeObserver.disconnect()
     }
+    document.documentElement.style.removeProperty('--top-header-height')
   })
 })
 </script>
@@ -108,6 +113,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* text-decoration: underline; */
 }
 .vcn-top-header{
   color: var(--vcn-dark);
@@ -130,6 +136,11 @@ onMounted(() => {
   max-width: 1200px;
   padding: 0 10px;
   box-sizing: border-box;
+}
+.text-nowrap{
+  font-weight: 600;
+  text-decoration: underline;
+  color: var(--vcn-dark);
 }
 
 .top-header .arrow {

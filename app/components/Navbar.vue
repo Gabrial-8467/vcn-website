@@ -534,7 +534,7 @@ body.checkout-page .navbar.scrolled .login-link {
 /* ========== DESKTOP NAVBAR ========== */
 .navbar {
   position: fixed !important;
-  top: 28px;
+  top: var(--top-header-height, 45px);
   left: 0;
   right: 0;
   z-index: 9999;
