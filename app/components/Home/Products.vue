@@ -1,7 +1,7 @@
 <template>
     <!-- Whole Body Health Section -->
     <section class="vcn-whole-body-section">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Header -->
             <div class="vcn-whole-body-header">
                 <div class="vcn-whole-body-title-wrapper">
@@ -28,42 +28,40 @@
 
             <!-- Products grid -->
             <div v-else class="vcn-whole-body-swiper-container">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div v-for="(product, index) in products" :key="product.id"
-                            class="col-lg-3 col-md-6 col-sm-6 col-6" data-aos="fade-up" data-aos-duration="600">
-                            
-                                <div class="vcn-whole-body-product-card" @mouseenter="handleMouseEnter(index)"
-                                    @mouseleave="handleMouseLeave(index)">
-                                    <div class="vcn-whole-body-product-badges">
-                                        <span v-if="index === 0"
-                                            class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{
-                                                productsSection.productCard.badges.bestseller }}</span>
-                                        <span v-else class="vcn-whole-body-badge vcn-whole-body-badge-new">{{
-                                            productsSection.productCard.badges.new }}</span>
-                                    </div>
-                                    <span class="vcn-whole-body-product-label">{{
-                                        productsSection.productCard.productLabel }}</span>
-                                    <h3 class="vcn-whole-body-product-title">
-                                        <NuxtLink :to="`/product-details/${product.slug}`">
-                                            {{ product.name }}
-                                        </NuxtLink>
-                                    </h3>
-                                    <NuxtLink :to="`/product-details/${product.slug}`">
-                                        <div class="vcn-whole-body-product-image">
-                                            <img class="product-img" :src="getPrimaryImage(product)" :alt="product.name"
-                                                loading="lazy" @error="handleImageError($event)" />
-
-                                            <video :ref="el => { if (el) videoRefs[index] = el }" class="product-video"
-                                                muted loop playsinline preload="auto">
-                                                <source :src="productsSection.productCard.video" type="video/mp4" />
-                                            </video>
-                                        </div>
-                                    </NuxtLink>
-                                    <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-whole-body-shop-btn">
-                                        {{ productsSection.productCard.shopButtonText }}</NuxtLink>
+                <div class="row">
+                    <div v-for="(product, index) in products" :key="product.id"
+                        class="col-lg-3 col-md-6 col-sm-6 col-6" data-aos="fade-up" data-aos-duration="600">
+                        
+                            <div class="vcn-whole-body-product-card" @mouseenter="handleMouseEnter(index)"
+                                @mouseleave="handleMouseLeave(index)">
+                                <div class="vcn-whole-body-product-badges">
+                                    <span v-if="index === 0"
+                                        class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{
+                                            productsSection.productCard.badges.bestseller }}</span>
+                                    <span v-else class="vcn-whole-body-badge vcn-whole-body-badge-new">{{
+                                        productsSection.productCard.badges.new }}</span>
                                 </div>
-                        </div>
+                                <span class="vcn-whole-body-product-label">{{
+                                    productsSection.productCard.productLabel }}</span>
+                                <h3 class="vcn-whole-body-product-title">
+                                    <NuxtLink :to="`/product-details/${product.slug}`">
+                                        {{ product.name }}
+                                    </NuxtLink>
+                                </h3>
+                                <NuxtLink :to="`/product-details/${product.slug}`">
+                                    <div class="vcn-whole-body-product-image">
+                                        <img class="product-img" :src="getPrimaryImage(product)" :alt="product.name"
+                                            loading="lazy" @error="handleImageError($event)" />
+
+                                        <video :ref="el => { if (el) videoRefs[index] = el }" class="product-video"
+                                            muted loop playsinline preload="auto">
+                                            <source :src="productsSection.productCard.video" type="video/mp4" />
+                                        </video>
+                                    </div>
+                                </NuxtLink>
+                                <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-whole-body-shop-btn">
+                                    {{ productsSection.productCard.shopButtonText }}</NuxtLink>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -202,12 +200,12 @@ onMounted(async () => {
         margin: 0 25px;
     }
 
-    .vcn-whole-body-subtitle {
+    /* .vcn-whole-body-subtitle {
         font-size: 20px !important;
-        /* increased by 5px to 20px */
+        increased by 5px to 20px 
         margin: 0 25px;
         padding: 25px 0;
-    }
+    } */
 
     .vcn-whole-body-section {
         padding: 40px 0 !important;

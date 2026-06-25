@@ -52,6 +52,19 @@ button, .btn, [type="button"], [type="submit"], [class*="btn"], [class*="button"
   font-weight: var(--vcn-btn-weight) !important;
 }
 
+/* Unified Container Layout & Alignment */
+.container,
+.vcn-cobiotics-container,
+.vcn-probiotic-container,
+.vcn-human-container,
+.vcn-testimonial-container,
+.vcn-stories-container {
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -331,7 +344,7 @@ body.home-page main {
 }
 
 .vcn-cobiotics-container {
-  /* max-width: 1400px; */
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -339,10 +352,6 @@ body.home-page main {
   align-items: center;
 }
 
-/* ========== LEFT CONTENT ========== */
-.vcn-cobiotics-content {
-  padding: 20px;
-}
 
 .vcn-cobiotics-badge {
   display: inline-block;
@@ -666,8 +675,8 @@ body.home-page main {
 }
 
 .vcn-whole-body-main-title {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: var(--vcn-heading-size);
+  font-weight: var(--vcn-heading-weight);
   color: var(--vcn-white);
   line-height: 1.2;
   margin-bottom: 0;
@@ -677,7 +686,7 @@ body.home-page main {
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   max-width: 400px;
 }
 
@@ -690,7 +699,7 @@ body.home-page main {
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.3s ease;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .vcn-whole-body-view-link:hover {
@@ -911,7 +920,7 @@ body.home-page main {
 }
 
 .vcn-probiotic-container {
-  /* max-width: 1400px; */
+  max-width: 1200px;
   margin: 0 auto;
    /* background-image: url('\img\bg\bg-4.png'); */
 
@@ -1319,7 +1328,7 @@ body.home-page main {
 }
 
 .vcn-human-container {
-  /* max-width: 1300px; */
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1874,7 +1883,7 @@ body.home-page main {
 }
 
 .vcn-testimonial-container {
-  /* max-width: 1200px; */
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -2046,7 +2055,7 @@ body.home-page main {
 }
 
 .vcn-stories-container {
-  /* max-width: 1400px; */
+  max-width: 1200px;
   margin: 0 auto;
 }
 

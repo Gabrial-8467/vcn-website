@@ -2,7 +2,7 @@
   <!-- Navbar -->
   <header>
     <nav class="navbar" :class="{ 'scrolled': isHydrated && isScrolled }" id="navbar">
-      <div class="container-fluid">
+      <div class="container">
         <!-- Mobile Layout -->
         <NuxtLink class="navbar-brand d-lg-none" to="/">
           <img src="/img/logo/logo.png" alt="Logo" class="nav-img" />
@@ -454,6 +454,7 @@ onUnmounted(() => {
 <style scoped>
 a, .nav-link, .dropdown-item, .login-link, .navbar-brand {
   cursor: pointer !important;
+  font-size: var(--vcn-desc-size);
 }
 
 .shop-all-link {
@@ -538,7 +539,7 @@ body.checkout-page .navbar.scrolled .login-link {
   left: 0;
   right: 0;
   z-index: 9999;
-  padding: 20px 40px !important;
+  padding: 20px 20px !important;
   background: transparent !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -552,7 +553,7 @@ body.checkout-page .navbar.scrolled .login-link {
   height: auto;
 }
 
-.navbar .container-fluid {
+.navbar .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1102,14 +1103,14 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   }
 
   .navbar {
-    padding: 6px 40px !important;
+    padding: 6px 20px !important;
   }
 
   /* .navbar.scrolled {
-    padding: 12px 40px !important;
+    padding: 12px 20px !important;
   } */
 
-  .navbar .container-fluid {
+  .navbar .container {
     gap: 20px;
   }
 

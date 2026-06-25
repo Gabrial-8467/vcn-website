@@ -16,7 +16,7 @@
         <h2 class="vcn-human-heading" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">{{ heading
         }}</h2>
 
-        <p class="vcn-human-description" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="300">
+        <p data-aos="fade-right" data-aos-duration="1000" data-aos-delay="300">
           {{ description }}
         </p>
 
