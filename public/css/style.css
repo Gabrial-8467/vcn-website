@@ -951,7 +951,7 @@ body.home-page main {
   align-items: center;
   gap: 8px;
   color: var(--vcn-white);
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -964,8 +964,8 @@ body.home-page main {
 }
 
 .vcn-probiotic-main-heading {
-  font-size: 2.8rem;
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-white);
   line-height: 1.2;
 }
@@ -1001,18 +1001,18 @@ body.home-page main {
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 15px;
-  font-size: 0.75rem;
+  font-size: 16px;
   color: var(--vcn-white);
-  font-weight: 600;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   width: fit-content;
 }
 
 .vcn-probiotic-stat-text {
-  font-size: 1.1rem;
+  font-size: 16px;
   color: var(--vcn-white);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .vcn-probiotic-stat-divider {
@@ -1040,8 +1040,8 @@ body.home-page main {
 }
 
 .vcn-probiotic-stat-number {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-white);
 }
 
@@ -1051,7 +1051,7 @@ body.home-page main {
 }
 
 .vcn-probiotic-disclaimer {
-  font-size: 0.85rem;
+  font-size: 12px !important;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.5;
 }
@@ -1764,7 +1764,7 @@ body.home-page main {
 }
 
 .view-more-btn {
-  background: var(--vcn-footer);
+  background: var(--vcn-darker);
   color: white;
   border: none;
   padding: 14px 50px;
@@ -1780,7 +1780,7 @@ body.home-page main {
 .view-more-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-  background: var(--vcn-primary);
+  background: var(--vcn-dark);
   color: white;
 }
 

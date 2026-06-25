@@ -90,16 +90,16 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 }
 
 .mid-cta-heading {
-  font-size: 46px;
-  font-weight: 700;
-  color: var(--vcn-primary);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--vcn-darker);
   line-height: 1.3;
   margin-bottom: 1.5rem;
 }
 
 .mid-cta-text {
-  font-size: 18px;
-  color: #555;
+  font-size: 16px;
+  color: var(--vcn-dark);
   line-height: 1.6;
   margin-bottom: 2rem;
 }

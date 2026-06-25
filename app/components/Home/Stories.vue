@@ -269,9 +269,9 @@ watch(storyCards, () => {
 
 /* ========== SECTION TITLE ========== */
 .vcn-stories-title {
-  font-size: 3.2rem !important;
-  font-weight: 600;
-  color: var(--vcn-primary);
+  font-size: 48px !important;
+  font-weight: 400;
+  color: var(--vcn-darker);
   line-height: 1.3;
   margin-bottom: 50px;
   max-width: 800px;
