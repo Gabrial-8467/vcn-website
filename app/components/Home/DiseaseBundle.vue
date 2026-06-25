@@ -322,7 +322,7 @@ export default {
   .vcn-human-left-content {
     text-align: left !important;
     align-items: flex-start !important;
-    gap: 12px !important;
+    gap: 20px !important;
     padding: 0 !important;
   }
 
