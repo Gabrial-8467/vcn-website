@@ -197,7 +197,7 @@ onBeforeUnmount(() => {
 /* Swiper Styles */
 .vcn-swiper-container {
   width: 100%;
-  padding-bottom: 60px;
+  /* padding-bottom: 60px; */
 }
 
 :deep(.swiper-slide) {
@@ -309,12 +309,12 @@ onBeforeUnmount(() => {
 
 /* Big Screen Override (min-width: 768px) */
 @media (min-width: 768px) {
-  .vcn-testimonial-section {
+  /* .vcn-testimonial-section {
     padding: 80px 0;
-  }
+  } */
 
   .vcn-testimonial-header {
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
     padding: 0 20px;
   }
 

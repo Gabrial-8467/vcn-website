@@ -2281,7 +2281,9 @@ body.home-page main {
 }
 
 .vcn-container-footer {
-  padding: 41px !important;
+  padding-top:40px;
+  padding-bottom:30px;
+  padding-left: 160px !important;
 }
 
 .vcn-footer-brand {
@@ -2633,8 +2635,8 @@ body.home-page main {
   position: relative;
   z-index: 2;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 40px;
+  margin: 0 100px;
+  padding: 60px 50px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -2646,7 +2648,7 @@ body.home-page main {
   font-size: 56px;
   font-weight: 300;
   line-height: 1.2;
-  max-width: 700px;
+  max-width: 550px;
 
   letter-spacing: -0.5px;
 }
@@ -3053,7 +3055,7 @@ body.home-page main {
 .product-info {
   background: #ffffff;
   border-radius: 16px;
-  padding: 30px;
+  padding-left: 30px;
 }
 
 .product-details-title {
