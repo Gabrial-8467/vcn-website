@@ -290,11 +290,25 @@ export default {
   /* small internal gap so header content isn't flush to top */
 }
 
+.vcn-human-main-image {
+  width: 100% !important;
+  height: 600px !important;
+  object-fit: cover !important;
+  border-radius: 24px !important;
+}
+
+@media (max-width: 991px) {
+  .vcn-human-main-image {
+    height: 400px !important;
+    border-radius: 20px !important;
+  }
+}
+
 .vcn-human-heading {
   font-size: 3.2rem !important;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 992px) {
   .vcn-human-section {
     min-height: auto !important;
     padding-top: 30px !important;
@@ -338,15 +352,15 @@ export default {
     line-height: 0 !important;
   }
 
-  .vcn-human-main-image {
+  /* .vcn-human-main-image {
     display: block !important;
-    width: 100% !important;
-    max-width: 450px !important;
+    height: 100% !important;
+    max-height: 650px !important;
     margin: 0 auto !important;
     aspect-ratio: 3/4 !important;
     object-fit: cover !important;
     border-radius: 20px !important;
-  }
+  } */
 }
 
 /* Responsive 2-column layout for disease grid on mobile */

@@ -107,12 +107,13 @@ const hero = computed(() =>
   padding: 0 5%;
   /* Push content down to clear the fixed header stack */
   margin-top: calc((var(--top-header-height, 28px) + 70px) / 2);
+
 }
 
 .hero-content h1 {
   font-family: var(--vcn-font, "Outfit", sans-serif);
-  font-size: clamp(1.6rem, 4vw, 3.2rem);
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 400;
   line-height: 1.12;
   margin-bottom: 1.2rem;
   letter-spacing: -0.5px;
