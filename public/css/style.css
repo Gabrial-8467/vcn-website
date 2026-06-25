@@ -1105,8 +1105,8 @@ body.home-page main {
 
 /* Top Callout (Left Side) */
 .vcn-probiotic-callout-top {
-  top: -3%;
-  left: -80px;
+  top: -11%;
+  left: 10px;
 }
 
 /* Bottom Callout (Right Side) */
@@ -1130,16 +1130,16 @@ body.home-page main {
 /* Top Callout Connector - Image on right side */
 .vcn-probiotic-callout-top::before {
   background-image: url(../img/icons/curve-arrow.png);
-  bottom: 17%;
-  right: -102px;
-  rotate: 69deg;
+  bottom: 4%;
+  right: -41px;
+  rotate: 80deg;
 }
 
 /* Bottom Callout Connector - Image on left side */
 .vcn-probiotic-callout-bottom::before {
   background-image: url(../img/icons/curve-arrow.png);
-  top: -28%;
-  left: -100px;
+  top: -20%;
+  left: -115px;
   rotate: 264deg;
 }
 

@@ -196,7 +196,6 @@
         </div>
         <div class="col-lg-6 col-sm-12">
           <p>
-<<<<<<< HEAD
             Our Scientific Board consists of scientists, researchers, doctors,
             and authors across the fields of microbiology, immunology, genetics,
             metabolomics, gastroenterology, pediatrics, molecular biology, and
@@ -204,9 +203,6 @@
             institutions, and have among them 2800+ publications and over
             140,000 citations in peer-reviewed scientific journals and
             textbooks.
-=======
-            
->>>>>>> 90ae94594fab12d7203066eed687df603235f7e8
           </p>
         </div>
 
@@ -253,11 +249,7 @@
     </div>
   </section>
 
-<<<<<<< HEAD
-  <!-- s Section -->
-=======
-
->>>>>>> 90ae94594fab12d7203066eed687df603235f7e8
+  <!-- Section -->
   <section class="microbiomes-section">
     <div class="container">
       <marquee>

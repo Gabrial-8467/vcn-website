@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@theme {
+  --font-sans: "Outfit", sans-serif;
+  --font-family-sans: "Outfit", sans-serif;
+}
+
 
 .vcn-acc-body {
   padding: 12px 0;
