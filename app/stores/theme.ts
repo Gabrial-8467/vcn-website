@@ -6,8 +6,8 @@ const DEFAULT_THEME: ThemeData = {
   id: 0,
   name: 'Default',
   scope: 'PUBLIC',
-  logoUrl: '/images/logo/logo.png',
-  faviconUrl: '/images/logo/favicon.png',
+  logoUrl: '/img/logo/logo.png',
+  faviconUrl: '/img/logo/logo.png',
   primaryColor: '#5E6C1F',      // --vcn-primary
   secondaryColor: '#1D4503',    // --vcn-footer
   accentColor: '#d3fa99',        // --vcn-badge

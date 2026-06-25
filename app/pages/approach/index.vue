@@ -26,7 +26,7 @@
       </div>
       <div class="section-content">
         <div class="strains-viz">
-          <img src="/img/image/strains.png" alt="" />
+          <!-- <img src="/img/image/strains.png" alt="" /> -->
           <p>
             
           </p>
@@ -117,24 +117,12 @@
           </div>
           <div class="validation-item">
             <div class="validation-visual">
-              <img src="/gif/clinicalImage.webp" alt="" />
+              <!-- <img src="/gif/clinicalImage.webp" alt="" /> -->
             </div>
             <div class="column">
               <h3></h3>
               <p>
-<<<<<<< HEAD
-                We partner with leading academic research institutions and
-                notable Primary Investigators to validate our
-                rationally-designed probiotic formulations through
-                double-blind, randomized, placebo-controlled clinical trials.
-                Our human clinical work, in combination with strain-specific
-                clinical research and our in vitro data generation, allows us
-                to identify novel endpoints and benefits for human health,
-                while contributing advancements to the fields of
-                and probiotic science.
-=======
                 
->>>>>>> 90ae94594fab12d7203066eed687df603235f7e8
               </p>
             </div>
           </div>
@@ -165,7 +153,7 @@
           </div>
         </div>
         <div class="shine-capsules">
-          <img src="/img/image/shime.png" alt="" />
+          <!-- <img src="/img/image/shime.png" alt="" /> -->
           <p>
            
           </p>
@@ -185,8 +173,8 @@
       <div class="section-content">
         <div class="testing-content">
           <div class="testing-image">
-            <img src=""
-              alt="" />
+            <!-- <img src=""
+              alt="" /> -->
           </div>
           <div class="column">
             <ul class="testing-list">
@@ -227,9 +215,9 @@
       <div class="team-grid">
         <div class="team-member">
           <div class="member-photo">
-            <img
+            <!-- <img
               src=""
-              alt="" />
+              alt="" /> -->
           </div>
           <div class="member-name"></div>
           <div class="member-title"></div>
@@ -279,23 +267,23 @@
       </marquee>
       <div class="microbiome-circles">
         <div class="microbiome-circle">
-          <img src="/img/image/plastics.png" alt="" />
+          <!-- <img src="/img/image/plastics.png" alt="" /> -->
           <h5 style="margin-top: 20px; color: #1c3a13"></h5>
         </div>
         <div class="microbiome-circle">
-          <img src="/img/image/honeybees.png" alt="" />
+          <!-- <img src="/img/image/honeybees.png" alt="" /> -->
           <h5 style="margin-top: 20px; color: #1c3a13"></h5>
         </div>
         <div class="microbiome-circle">
-          <img src="/img/image/coral.png" alt="" />
+          <!-- <img src="/img/image/coral.png" alt="" /> -->
           <h5 style="margin-top: 20px; color: #1c3a13"></h5>
         </div>
         <div class="microbiome-circle">
-          <img src="/img/image/agriculture.png" alt="" />
+          <!-- <img src="/img/image/agriculture.png" alt="" /> -->
           <h5 style="margin-top: 20px; color: #1c3a13"></h5>
         </div>
         <div class="microbiome-circle">
-          <img src="/img/image/biomaterial.png" alt="" />
+          <!-- <img src="/img/image/biomaterial.png" alt="" /> -->
           <h5 style="margin-top: 20px; color: #1c3a13"></h5>
         </div>
       </div>
