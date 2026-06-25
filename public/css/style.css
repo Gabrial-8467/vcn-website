@@ -366,7 +366,7 @@ body.home-page main {
 }
 
 .vcn-cobiotics-title {
-  font-size: 40px;
+  font-size: var(--vcn-heading-size);
   font-weight: 400;
   color: var( --vcn-darker);
   line-height: 1.2;
@@ -570,7 +570,7 @@ body.home-page main {
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1200px) {
   .vcn-cobiotics-title {
-    font-size: 3rem;
+    font-size: var(--vcn-heading-size);
   }
 
   .vcn-cobiotics-product-jar {
@@ -586,7 +586,7 @@ body.home-page main {
   }
 
   .vcn-cobiotics-title {
-    font-size: 2.5rem;
+    font-size: var(--vcn-heading-size);
   }
 }
 
@@ -596,11 +596,11 @@ body.home-page main {
   }
 
   .vcn-cobiotics-title {
-    font-size: 2rem;
+    font-size: var(--vcn-heading-size)
   }
 
   .vcn-cobiotics-description {
-    font-size: 1rem;
+    font-size: 16px !important;
   }
 
   .vcn-cobiotics-products-display {
@@ -679,7 +679,7 @@ body.home-page main {
   font-weight: var(--vcn-heading-weight);
   color: var(--vcn-white);
   line-height: 1.2;
-  margin-bottom: 0;
+  margin-bottom: 30px;
 }
 
 .vcn-whole-body-subtitle {
@@ -3436,7 +3436,7 @@ body.home-page main {
 
 .product-gallery .gallery-item {
   /* background: #e8e8e0; */
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
   /* height: 215px; */
 }
@@ -3469,7 +3469,7 @@ body.home-page main {
   height: 500px;
   /* slightly reduced */
   overflow: hidden;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   border-radius: 20px 20px 0 0;
 }
 
@@ -3656,9 +3656,9 @@ body.home-page main {
 }
 
 /* health section */
-.health-section-bg {
+/* .health-section-bg {
   padding: 20px;
-}
+} */
 
 .health-section-below {
   background-image: url(/img/productsdetails/dbtpageimage.png);
@@ -3699,7 +3699,7 @@ body.home-page main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 68px 0px 12px 0;
+  padding: 38px 0px 12px 0;
   color: white;
   border-radius: 32px;
 }
@@ -3712,7 +3712,8 @@ body.home-page main {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   padding: 0px;
-  border-radius: 12px;
+  border-radius: 32px;
+  margin-top: 60px;
 }
 
 .feature-card {
@@ -6331,7 +6332,7 @@ body.home-page main {
 }
 
 .strains-info-main-section {
-  padding: 80px 0;
+  padding: 40px 0;
 }
 
 .strains-product-image-container {
@@ -13090,8 +13091,8 @@ video {
 .strains-info-main-section,
 .reviews-section {
   margin: 0 !important;
-  padding-top: 60px !important;
-  padding-bottom: 60px !important;
+  /* padding-top: 60px !important; */
+  /* padding-bottom: 60px !important; */
 }
 
 @media (max-width: 1400px) {
@@ -13319,4 +13320,61 @@ video {
   font-weight: 600 !important;
   text-decoration: none !important;
   display: inline-block !important;
+}
+
+/* Global desktop font size overrides for all main headings/titles */
+@media (min-width: 992px) {
+  html body h1,
+  html body .h1,
+  html body .welcome-title.welcome-title.welcome-title,
+  html body .product-details-title.product-details-title.product-details-title,
+  html body .main-heading.main-heading.main-heading,
+  html body .vcn-breadcrumb-title.vcn-breadcrumb-title.vcn-breadcrumb-title,
+  html body .blog-title.blog-title.blog-title,
+  html body .mid-page-title.mid-page-title.mid-page-title,
+  html body .mid-stats-title.mid-stats-title.mid-stats-title,
+  html body .primary-heading.primary-heading.primary-heading,
+  html body .cart-page-title.cart-page-title.cart-page-title,
+  html body .contact-form-title.contact-form-title.contact-form-title,
+  html body .shipping-main-title.shipping-main-title.shipping-main-title,
+  html body .planet-main-heading.planet-main-heading.planet-main-heading,
+  html body .vcn-faq-title.vcn-faq-title.vcn-faq-title,
+  html body .auth-heading-primary.auth-heading-primary.auth-heading-primary,
+  html body .hero-title.hero-title.hero-title,
+  html body .vcn-benefits-title.vcn-benefits-title.vcn-benefits-title,
+  html body .vcn-grow-hero-title.vcn-grow-hero-title.vcn-grow-hero-title,
+  html body .pract-heading-primary.pract-heading-primary.pract-heading-primary,
+  html body .page-titles.page-titles.page-titles,
+  html body .about-title.about-title.about-title,
+  html body .form-header-title.form-header-title.form-header-title,
+  html body .section-title-timeline.section-title-timeline.section-title-timeline,
+  html body .vcn-section-title.vcn-section-title.vcn-section-title {
+    font-size: 48px !important;
+  }
+}
+
+/* Global font size overrides for descriptions and subtitles */
+html body p,
+html body .description.description.description,
+html body .desc.desc.desc,
+html body .bundles-subtitle.bundles-subtitle.bundles-subtitle,
+html body .vcn-whole-body-subtitle.vcn-whole-body-subtitle.vcn-whole-body-subtitle,
+html body .vcn-testimonial-subtitle.vcn-testimonial-subtitle.vcn-testimonial-subtitle,
+html body .section-subtitle.section-subtitle.section-subtitle,
+html body .vcn-section-subtitle.vcn-section-subtitle.vcn-section-subtitle,
+html body .mobile-subtitle.mobile-subtitle.mobile-subtitle,
+html body .form-subtitle.form-subtitle.form-subtitle,
+html body .vcn-footer-newsletter-subtitle.vcn-footer-newsletter-subtitle.vcn-footer-newsletter-subtitle,
+html body .refill-subtitle-text.refill-subtitle-text.refill-subtitle-text,
+html body .vcn-grow-hero-subtitle.vcn-grow-hero-subtitle.vcn-grow-hero-subtitle,
+html body .pract-card-subtitle.pract-card-subtitle.pract-card-subtitle,
+html body .product-details-description.product-details-description.product-details-description,
+html body .delivery-info.delivery-info.delivery-info,
+html body .subscribe-text.subscribe-text.subscribe-text,
+html body .vcn-benefits-list li,
+html body .content-section p,
+html body .welcome-box p,
+html body .bundle-content p,
+html body .vcn-feature-description.vcn-feature-description.vcn-feature-description {
+  font-size: 16px !important;
 }

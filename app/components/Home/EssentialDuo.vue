@@ -55,7 +55,7 @@ const offers = computed(() =>
 
   /* Increase font size of heading */
   .vcn-cobiotics-title {
-    font-size: 3.2rem !important;
+    font-size:var(--vcn-heading-size);
   }
 
   /* Increase size of main image */
@@ -83,13 +83,13 @@ const offers = computed(() =>
 
 @media (max-width: 768px) {
   .vcn-cobiotics-title {
-    font-size: 2.8rem !important;
+    font-size:var(--vcn-heading-size);
   }
 }
 
 @media (max-width: 576px) {
   .vcn-cobiotics-title {
-    font-size: 2.4rem !important;
+    font-size: 32px;
   }
 }
 

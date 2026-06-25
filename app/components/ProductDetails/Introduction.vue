@@ -29,8 +29,8 @@
             </div>
 
             <!-- THUMBNAILS - Dynamic product images -->
-            <div class="row g-2 mt-2" v-if="allProductImages.length > 0">
-              <div v-for="(img, index) in allProductImages" :key="index" class="col-6 mb-2">
+            <div class="row g-3 mt-2" v-if="allProductImages.length > 0">
+              <div v-for="(img, index) in allProductImages" :key="index" class="col-6">
                 <div class="product-gallery">
                   <div class="gallery-item" :class="{ 'active': selectedImage === img }">
                     <img class="thumb" :src="img" :alt="productName" @click="selectImage(img)" />
@@ -573,6 +573,7 @@ const openProductPreview = (imageSrc) => {
   align-items: center !important;
   background-color: #f5f7f3 !important; /* Soft light green */
   border-radius: 20px !important; /* Premium rounded corners */
+  margin-top: 4px !important ;
   padding: 16px 20px !important;
   gap: 20px !important;
   max-width: 600px !important;
@@ -920,9 +921,7 @@ const openProductPreview = (imageSrc) => {
 
 /* Active thumbnail highlight */
 .gallery-item.active {
-  border: 2px solid var(--vcn-primary) !important;
-  border-radius: 8px;
-  overflow: hidden;
+  border-color: var(--vcn-primary) !important;
 }
 
 .gallery-item.active .thumb {
@@ -934,13 +933,13 @@ const openProductPreview = (imageSrc) => {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 20px;
   width: 100%;
   aspect-ratio: 500 / 294;
   height: auto !important;
-  /* background: rgba(0, 0, 0, 0.02);
-  border: 1px solid rgba(0, 0, 0, 0.05); */
   padding: 2px;
+  border: 2px solid transparent; /* Reserve space to prevent layout shifting */
+  transition: border-color 0.2s ease;
 }
 
 .gallery-item .thumb,
@@ -954,6 +953,14 @@ const openProductPreview = (imageSrc) => {
   max-height: 100% !important;
   object-fit: contain !important;
   object-position: center;
+  border-radius: 18px !important;
+}
+
+/* Disable zoom/scale effect on thumbnail hover */
+.gallery-item .thumb:hover,
+.thumb:hover {
+  transform: none !important;
+  opacity: 0.8;
 }
 
 /* Avoid cropping on the booster/bundle card image */
