@@ -274,6 +274,33 @@ export default {
 </script>
 
 <style scoped>
+.vcn-human-left-content {
+  padding-left: 0 !important;
+}
+
+.vcn-human-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (min-width: 992px) {
+  .vcn-human-section {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .vcn-human-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+  .vcn-human-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
 /* Ensure the disease bundles overlay does not sit under the fixed navbar on this page.
    This style only affects this component and won't change global layout. */
 .disease-bundles-container {
