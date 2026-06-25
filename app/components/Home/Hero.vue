@@ -30,10 +30,12 @@ const hero = computed(() =>
     <div class="overlay"></div>
 
     <!-- Hero Content - Left Aligned -->
-    <div class="hero-content">
-      <h1>{{ hero.title }}</h1>
-      <p>{{ hero.description }}</p>
-      <NuxtLink :to="hero.buttonLink" class="hero-btn">{{ hero.buttonText }}</NuxtLink>
+    <div class="container hero-container">
+      <div class="hero-content">
+        <h1>{{ hero.title }}</h1>
+        <p>{{ hero.description }}</p>
+        <NuxtLink :to="hero.buttonLink" class="hero-btn">{{ hero.buttonText }}</NuxtLink>
+      </div>
     </div>
   </section>
 </template>
@@ -46,6 +48,33 @@ const hero = computed(() =>
   width: 100%;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+@media (min-width: 992px) {
+  .hero-section {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .hero-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+}
+
+.hero-container {
+  width: 100%;
+  z-index: 3;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  position: relative;
+  pointer-events: none;
 }
 
 .video-bg {
@@ -97,22 +126,18 @@ const hero = computed(() =>
 
 /* ========== HERO CONTENT ========== */
 .hero-content {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
+  position: relative;
   z-index: 3;
   max-width: 680px;
-  padding: 0 5%;
+  padding: 0 !important;
   /* Push content down to clear the fixed header stack */
   margin-top: calc((var(--top-header-height, 28px) + 70px) / 2);
-
+  pointer-events: auto;
 }
 
 .hero-content h1 {
   font-family: var(--vcn-font, "Outfit", sans-serif);
-  font-size: 48px;
+  font-size: var(--vcn-heading-size);
   font-weight: 400;
   line-height: 1.12;
   margin-bottom: 1.2rem;
@@ -122,7 +147,7 @@ const hero = computed(() =>
 
 .hero-content p {
   font-family: var(--vcn-font, "Outfit", sans-serif);
-  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  font-size: var(--vcn-desc-size);
   line-height: 1.6;
   margin-bottom: 1.8rem;
   color: rgba(255, 255, 255, 0.9);
@@ -138,7 +163,7 @@ const hero = computed(() =>
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
-  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  font-size: var(--vcn-desc-size);
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   position: relative;

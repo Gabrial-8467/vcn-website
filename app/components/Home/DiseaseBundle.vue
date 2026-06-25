@@ -331,9 +331,9 @@ export default {
   }
 }
 
-.vcn-human-heading {
+/* .vcn-human-heading {
   font-size: 3.2rem !important;
-}
+} */
 
 @media (max-width: 992px) {
   .vcn-human-section {
@@ -361,10 +361,10 @@ export default {
     margin: 0 !important;
   }
 
-  .vcn-human-heading {
+  /* .vcn-human-heading {
     font-size: 2.6rem !important;
     margin: 0 !important;
-  }
+  } */
 
   .disease-bundles-container {
     top: 90px !important;
@@ -401,9 +401,9 @@ export default {
     gap: 10px !important;
   }
 
-  .vcn-human-heading {
+  /* .vcn-human-heading {
     font-size: 1.9rem !important;
-  }
+  } */
 
   .disease-grid {
     grid-template-columns: repeat(2, 1fr) !important;

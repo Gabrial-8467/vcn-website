@@ -178,15 +178,15 @@ onBeforeUnmount(() => {
 }
 
 .vcn-testimonial-title {
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: var(--vcn-primary);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--vcn-darker);
   line-height: 1.3;
   margin-bottom: 16px;
 }
 
 .vcn-testimonial-subtitle {
-  font-size: 0.88rem;
+  font-size: 16px;
   color: var(--vcn-dark);
   font-weight: 400;
   text-align: center;

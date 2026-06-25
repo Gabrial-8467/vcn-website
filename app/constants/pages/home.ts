@@ -43,7 +43,7 @@ export const HOME_PAGE_DATA = {
             subtitle:
                 "Explore our wide range of health, wellness, and personal care products designed to support your everyday needs.",
 
-            buttonText: "Shop All",
+            buttonText: "Shop All  →",
             buttonLink: "/all-products",
         },
 

@@ -16,7 +16,7 @@
                 </div>
                 <div class="vcn-whole-body-btn-wrapper d-none d-md-block">
                     <NuxtLink :to="productsSection.header.buttonLink" class="vcn-whole-body-view-link">
-                        {{ productsSection.header.buttonText }} <span class="vcn-arrow">→</span>
+                        {{ productsSection.header.buttonText }}
                     </NuxtLink>
                 </div>
             </div>
@@ -157,18 +157,48 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (min-width: 992px) {
+  .vcn-whole-body-section {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .vcn-whole-body-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .vcn-whole-body-swiper-container .row {
+    margin-left: -12px !important;
+    margin-right: -12px !important;
+  }
+  .vcn-whole-body-swiper-container .row > div {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
 /* Big Screen Styles (Defaults) */
 .vcn-whole-body-product-title a {
     color: var(--vcn-white) !important;
 }
 
-.vcn-whole-body-subtitle {
-    font-size: 1.1rem !important;
-    /* reduce subtitle font size a little bit */
-}
+/* .vcn-whole-body-subtitle {
+    font-size: var(--vcn-desc-size);
+} */
 
 .vcn-whole-body-view-link {
-    text-decoration: none !important;
+    text-decoration: underline !important;
+    margin-top: 0 !important;
 }
 
 .vcn-whole-body-product-label {
@@ -195,10 +225,12 @@ onMounted(async () => {
 /* Small Screen Styles (max-width: 768px) */
 @media (max-width: 768px) {
     .vcn-whole-body-main-title {
-        font-size: 2.3rem !important;
+        font-size: 32px !important;
         /* increase heading size */
-        margin: 0 25px;
+        /* margin: 0 25px; */
     }
+
+
 
     /* .vcn-whole-body-subtitle {
         font-size: 20px !important;
@@ -213,7 +245,7 @@ onMounted(async () => {
         border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
     }
 
-    .vcn-whole-body-section>.container-fluid {
+    .vcn-whole-body-section>.container {
         margin-left: 2px !important;
         margin-right: 2px !important;
         padding-left: 0 !important;
