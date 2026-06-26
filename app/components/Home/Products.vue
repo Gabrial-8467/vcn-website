@@ -16,7 +16,7 @@
                 </div>
                 <div class="vcn-whole-body-btn-wrapper d-none d-md-block">
                     <NuxtLink :to="productsSection.header.buttonLink" class="vcn-whole-body-view-link">
-                        {{ productsSection.header.buttonText }}
+                        {{ productsSection.header.buttonText }} <span class="vcn-arrow">→</span>
                     </NuxtLink>
                 </div>
             </div>
@@ -188,22 +188,39 @@ onMounted(async () => {
 }
 
 /* Big Screen Styles (Defaults) */
-.vcn-whole-body-product-title a {
-    color: var(--vcn-white) !important;
+.vcn-whole-body-product-card {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
 }
 
-/* .vcn-whole-body-subtitle {
-    font-size: var(--vcn-desc-size);
-} */
-
-.vcn-whole-body-view-link {
-    text-decoration: underline !important;
-    margin-top: 0 !important;
+.vcn-whole-body-product-badges {
+    margin-bottom: 12px !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: flex-start !important;
 }
 
 .vcn-whole-body-product-label {
     padding: 4px 10px !important;
     font-size: 0.75rem !important;
+    margin-bottom: 10px !important;
+}
+
+.vcn-whole-body-product-title {
+    margin-bottom: 15px !important;
+    min-height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.vcn-whole-body-product-title a {
+    color: var(--vcn-white) !important;
 }
 
 .vcn-whole-body-product-image {
@@ -212,7 +229,18 @@ onMounted(async () => {
     aspect-ratio: 1 / 1 !important;
     /* same aspect ratio */
     width: 100% !important;
+    flex: none !important;
+    margin-bottom: 20px !important;
 }
+
+.vcn-whole-body-view-link {
+    text-decoration: underline !important;
+    margin-top: 0 !important;
+}
+
+/* .vcn-whole-body-subtitle {
+    font-size: var(--vcn-desc-size);
+} */
 
 .product-img,
 .product-video {
@@ -220,6 +248,10 @@ onMounted(async () => {
     /* not cropped */
     width: 100% !important;
     height: 100% !important;
+}
+
+.vcn-whole-body-shop-btn {
+    margin-top: auto !important;
 }
 
 /* Small Screen Styles (max-width: 768px) */
@@ -240,18 +272,31 @@ onMounted(async () => {
     } */
 
     .vcn-whole-body-section {
-        padding: 40px 0 !important;
-        /* side padding is now 0 */
+        padding-top: 25px !important;
+        padding-bottom: 25px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+        box-sizing: border-box !important;
     }
 
     .vcn-whole-body-section>.container {
-        margin-left: 2px !important;
-        margin-right: 2px !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        width: calc(100% - 4px) !important;
-        /* 2px margin from right and left */
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    @media (max-width: 576px) {
+        .vcn-whole-body-section>.container {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
+    }
+
+    .vcn-whole-body-swiper-container {
+        box-sizing: border-box !important;
     }
 
     .vcn-whole-body-swiper-container .row {
@@ -266,6 +311,7 @@ onMounted(async () => {
         /* reduced padding to make card shorter */
         margin-bottom: 0 !important;
         /* let row gutters handle vertical gaps */
+        box-sizing: border-box !important;
     }
 
     .vcn-whole-body-product-badges {
@@ -299,7 +345,10 @@ onMounted(async () => {
         /* reduced product name size to make card shorter */
         margin: 6px 0 !important;
         /* reduced margin to make card shorter */
-        min-height: auto !important;
+        min-height: 45px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     .vcn-whole-body-shop-btn {

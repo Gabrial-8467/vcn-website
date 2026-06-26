@@ -393,8 +393,8 @@ export default {
 /* Responsive 2-column layout for disease grid on mobile */
 @media (max-width: 576px) {
   .vcn-human-section {
-    padding-top: 20px !important;
-    padding-bottom: 20px !important;
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
   }
 
   .vcn-human-left-content {

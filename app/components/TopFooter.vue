@@ -69,7 +69,7 @@ const handleSubscribe = async (event) => {
 <template>
   <!-- Footer Section -->
   <footer class="vcn-footer-section">
-    <div class="container-fluid vcn-container-footer">
+    <div class="container vcn-container-footer">
       <!-- Top Section: Brand & Newsletter -->
       <div class="row">
         <div class="col-md-5">

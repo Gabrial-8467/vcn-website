@@ -29,10 +29,13 @@ const footer = computed(() => cmsStore.bottomFooterData)
 .bottom-footer-wrapper {
   position: relative !important;
   width: 100% !important;
+  max-width: 100vw !important;
   height: calc(50vh + 5px) !important;
   min-height: calc(50vh + 5px) !important;
   max-height: calc(50vh + 5px) !important;
   overflow: hidden !important;
+  transform: translate3d(0, 0, 0) !important;
+  isolation: isolate !important;
   background-image: url("/img/bg/footer-bg.png") !important;
   background-size: cover !important;
   background-position: center !important;
@@ -49,6 +52,7 @@ const footer = computed(() => cmsStore.bottomFooterData)
   position: relative !important;
   height: 100% !important;
   width: 100% !important;
+  max-width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
@@ -56,6 +60,7 @@ const footer = computed(() => cmsStore.bottomFooterData)
   padding: 10px 20px 5px 20px !important;
   margin: 0 !important;
   overflow: hidden !important;
+  transform: translate3d(0, 0, 0) !important;
   background: transparent !important;
 }
 
@@ -64,6 +69,7 @@ const footer = computed(() => cmsStore.bottomFooterData)
   position: relative !important;
   flex: 1 !important;
   width: 100% !important;
+  max-width: 100% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -74,6 +80,8 @@ const footer = computed(() => cmsStore.bottomFooterData)
   margin: 0 !important;
   padding: 0 !important;
   min-height: 0 !important;
+  overflow: hidden !important;
+  transform: translate3d(0, 0, 0) !important;
 }
 
 /* GIF Image - Override Global Styles */
@@ -89,6 +97,7 @@ const footer = computed(() => cmsStore.bottomFooterData)
   border-radius: 0 !important;
   transform: scale(6.2) !important;
   transform-origin: center center !important;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 /* Copyright Text - Override Global Styles */
@@ -104,10 +113,15 @@ const footer = computed(() => cmsStore.bottomFooterData)
   visibility: visible !important;
   z-index: 20 !important;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+  transition: all 0.3s ease !important;
 }
 
 /* Laptop Screens (1200px - 1399px) */
 @media (max-width: 1399px) and (min-width: 1200px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(4.8) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-copyright {
     font-size: 0.85rem !important;
     margin-top: 12px !important;
@@ -116,6 +130,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Tablet Landscape (992px - 1199px) */
 @media (max-width: 1199px) and (min-width: 992px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(3.8) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-copyright {
     font-size: 0.8rem !important;
     margin-top: 10px !important;
@@ -124,6 +142,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Tablet Portrait (768px - 991px) */
 @media (max-width: 991px) and (min-width: 768px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(3.0) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-section {
     padding: 0 15px !important;
   }
@@ -136,6 +158,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Mobile Large (600px - 767px) */
 @media (max-width: 767px) and (min-width: 600px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(1.8) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-section {
     padding: 0 15px !important;
   }
@@ -148,6 +174,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Mobile Medium (480px - 599px) */
 @media (max-width: 599px) and (min-width: 480px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(1.6) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-section {
     padding: 0 10px !important;
   }
@@ -160,6 +190,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Mobile Small (400px - 479px) */
 @media (max-width: 479px) and (min-width: 400px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(1.4) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-section {
     padding: 0 10px !important;
   }
@@ -172,6 +206,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Mobile Extra Small (320px - 399px) */
 @media (max-width: 399px) and (min-width: 320px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(1.2) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-section {
     padding: 0 8px !important;
   }
@@ -184,6 +222,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Mobile Ultra Small (below 320px) */
 @media (max-width: 319px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(1.0) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-section {
     padding: 0 5px !important;
   }
@@ -196,6 +238,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Landscape Orientation for Mobile Devices */
 @media (max-height: 600px) and (orientation: landscape) and (max-width: 1024px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(1.5) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-section {
     padding: 0 10px !important;
   }
@@ -208,6 +254,10 @@ const footer = computed(() => cmsStore.bottomFooterData)
 
 /* Very Short Screens */
 @media (max-height: 400px) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(1.3) !important;
+  }
+
   .bottom-footer-wrapper .vcn-awaken-section {
     padding: 0 10px !important;
   }

@@ -112,7 +112,8 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 /* Responsive Design */
 @media (max-width: 991px) {
   .mid-consultation-cta {
-    padding: 60px 0;
+    padding: 60px 20px !important;
+    box-sizing: border-box !important;
   }
 
   .mid-cta-heading {
@@ -136,7 +137,8 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 
 @media (max-width: 768px) {
   .mid-consultation-cta {
-    padding: 50px 0;
+    padding: 50px 20px !important;
+    box-sizing: border-box !important;
   }
 
   .mid-cta-heading {
@@ -155,11 +157,12 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 
 @media (max-width: 576px) {
   .mid-consultation-cta {
-    padding: 40px 0;
+    padding: 0px 15px !important;
+    box-sizing: border-box !important;
   }
 
   .mid-cta-heading {
-    font-size: 1.5rem !important;
+    font-size: 32px !important;
   }
 
   .mid-cta-text {

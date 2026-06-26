@@ -575,7 +575,7 @@ watch(storyCards, () => {
   text-decoration: none;
   border-radius: 30px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 16px !important;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   position: relative;
@@ -840,7 +840,7 @@ watch(storyCards, () => {
   }
 
   .vcn-stories-card-description {
-    font-size: 1.0rem !important;
+    font-size: 16px !important;
     margin-bottom: 20px !important;
     line-height: 1.5 !important;
   }
@@ -913,11 +913,11 @@ watch(storyCards, () => {
 
 @media (max-width: 480px) {
   .vcn-stories-title {
-    font-size: 1.9rem !important;
+    font-size: 32px !important;
   }
 
   .vcn-stories-card-title {
-    font-size: 1.6rem !important;
+    font-size: 32px !important;
   }
 
   .vcn-stories-card {

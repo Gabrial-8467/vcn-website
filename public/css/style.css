@@ -1868,7 +1868,7 @@ body.home-page main {
 
 @media (max-width: 576px) {
   .vcn-human-heading {
-    font-size: 1.75rem;
+    font-size: 32px !important;
   }
 
   .vcn-human-description {
@@ -2039,7 +2039,7 @@ body.home-page main {
   }
 
   .vcn-testimonial-title {
-    font-size: 1.5rem;
+    font-size: 32px !important;
   }
 
   .vcn-testimonial-subtitle {
@@ -2278,12 +2278,32 @@ body.home-page main {
 .vcn-footer-section {
   background-color: var(--vcn-footer);
   color: rgba(255, 255, 255, 0.8);
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Align footer with navbar on large screens */
+@media (min-width: 992px) {
+  .vcn-footer-section {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .vcn-footer-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
 }
 
 .vcn-container-footer {
   padding-top:40px;
   padding-bottom:30px;
-  padding-left: 160px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .vcn-footer-brand {
@@ -2497,6 +2517,11 @@ body.home-page main {
 
 /* Responsive adjustments */
 @media (max-width: 992px) {
+  .vcn-container-footer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   .vcn-footer-tagline {
     font-size: 1.3rem;
   }
@@ -2507,13 +2532,18 @@ body.home-page main {
 }
 
 @media (max-width: 768px) {
+  .vcn-container-footer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   .vcn-footer-section {
-    padding: 60px 0 30px;
+    padding: 60px 20px 30px !important;
   }
 
   .vcn-footer-logo {
     font-size: 1.7rem;
-    justify-content: center;
+    justify-content: flex-start !important;
   }
 
   .vcn-footer-tagline {
@@ -2522,6 +2552,17 @@ body.home-page main {
 
   .vcn-footer-column-title {
     margin-top: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .vcn-container-footer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .vcn-footer-section {
+    padding: 60px 15px 30px !important;
   }
 }
 
@@ -13169,8 +13210,8 @@ video {
   .reviews-section {
     padding-left: 15px !important;
     padding-right: 15px !important;
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
   }
 }
 
@@ -13204,7 +13245,7 @@ video {
 
   h1,
   .h1 {
-    font-size: 1.5rem !important;
+    font-size: 32px !important;
   }
 
   h2,

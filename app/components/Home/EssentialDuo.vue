@@ -51,6 +51,7 @@ const offers = computed(() =>
   /* Reduce gap from hero section */
   .vcn-cobiotics-section {
     padding-top: 25px !important;
+    padding-bottom:25px !important;
   }
 
   /* Increase font size of heading */
@@ -89,7 +90,7 @@ const offers = computed(() =>
 
 @media (max-width: 576px) {
   .vcn-cobiotics-title {
-    font-size: 32px;
+    font-size: 32px !important;
   }
 }
 
