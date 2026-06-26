@@ -10871,7 +10871,7 @@ body.home-page main {
   height: calc(100vh - 140px);
   overflow-y: auto;
   flex-shrink: 0;
-  border-right: 1px solid #f0f0f0;
+  padding-top: 50px;
 }
 
 /* Give the content column a bit of breathing room on all sizes */
