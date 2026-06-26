@@ -6,13 +6,13 @@
   --vcn-base-bg: #F6F7EE;
   --vcn-white: #fff;
   --vcn-dark: var(--vcn-footer);
-  --vcn-darker: #1C3A13;
+  --vcn-darker: #1C3A13;  
   --vcn-footer: #1D4503;
-
+  
   --vcn-font: "Outfit", sans-serif;
   --vcn-badge: #d3fa99;
   --vcn-light: #d3fA99;
-  --vcn-product: #f6f7ef;
+  --vcn-product: #efefef;
   --vcn-gradient: linear-gradient(135deg, #5E6C1F, #1D4503);
   --vcn-mobile: #83b576;
 
@@ -161,156 +161,156 @@ body.home-page main {
 
 
 
-@media(min-width: 1400px) {
-  .vcn-whole-body-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-whole-body-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .hero-content {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-    max-width: 850px !important;
+  @media(min-width: 1400px) {
+    .hero-content {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
+      max-width: 850px !important;
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .vcn-cobiotics-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-cobiotics-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .vcn-probiotic-info-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-probiotic-info-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .vcn-human-container {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-human-container {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .vcn-testimonial-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-testimonial-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .vcn-stories-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-stories-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .vcn-product-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-product-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .vcn-new-product {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-new-product {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .product-detail-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .product-detail-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .health-section-bg {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .health-section-bg {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .comparison-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .comparison-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .testing-standards-wrapper {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .testing-standards-wrapper {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .probiotic-hero-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .probiotic-hero-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .vcn-difference-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .vcn-difference-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .gut-stats-main-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .gut-stats-main-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .comparison-table-main-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .comparison-table-main-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .strains-info-main-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .strains-info-main-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
-@media(min-width: 1400px) {
-  .reviews-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+  @media(min-width: 1400px) {
+    .reviews-section {
+      padding-left: 160px !important;
+      padding-right: 160px !important;
 
+    }
   }
-}
 
 
 
@@ -368,7 +368,7 @@ body.home-page main {
 .vcn-cobiotics-title {
   font-size: var(--vcn-heading-size);
   font-weight: 400;
-  color: var(--vcn-darker);
+  color: var( --vcn-darker);
   line-height: 1.2;
   margin-bottom: 20px;
   letter-spacing: -1px;
@@ -376,7 +376,7 @@ body.home-page main {
 
 .vcn-cobiotics-description {
   font-size: 16px;
-  color: var(--vcn-darker);
+  color: var(   --vcn-darker);
   line-height: 20.8px;
   margin-bottom: 30px;
   text-align: justify;
@@ -1360,15 +1360,6 @@ body.home-page main {
   position: absolute;
 }
 
-.vcn-human-description {
-  font-size: 16px;
-  color: var(--vcn-darker);
-  line-height: 20.8px;
-
-  text-align: justify;
-
-}
-
 .vcn-human-logo {
   display: flex;
   align-items: center;
@@ -1390,13 +1381,6 @@ body.home-page main {
   color: var(--vcn-darker);
   line-height: 1.2;
   margin: 0;
-
-}
-
-.vcn-human-content {
-  font-size: 16px;
-  color: var(--vcn-darker);
-  line-height: 20.8px;
 }
 
 .vcn-human-cta-button {
@@ -1414,32 +1398,12 @@ body.home-page main {
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
-
-  /* display: inline-block;
-  position: relative;
-  /* 🟢 add this */
-  padding: 12px 40px;
-  background-color: var(--vcn-darker);
-  color: var(--vcn-white);
-  text-decoration: none;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(69, 102, 60, 0.2);
-  */
 }
 
 .vcn-human-cta-button:hover {
-  color: var(--vcn-light);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  padding-right: 55px;
-}
-
-
-.vcn-human-cta-btn:hover::after {
-  opacity: 1;
-  right: 20px;
+  background: var(--vcn-footer);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 74, 37, 0.3);
 }
 
 .vcn-human-play-icon {
@@ -1462,8 +1426,6 @@ body.home-page main {
   align-items: center;
   min-height: 500px;
   transition: all 0.6s ease;
-
-
 }
 
 .vcn-human-container.fullscreen .vcn-human-right-content {
@@ -2337,10 +2299,10 @@ body.home-page main {
 }
 
 .vcn-container-footer {
-  padding-top:40px;
-  padding-bottom:30px;
-  padding-left: -1 !important;
-  padding-right: 0 !important;
+  padding-top: 40px;
+  padding-bottom: 30px;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
   box-sizing: border-box !important;
 }
 
@@ -2517,7 +2479,7 @@ body.home-page main {
 /* Footer Links */
 .vcn-footer-links-section {
   margin-top: 0;
-  padding-top: 0;
+  padding-left: 30px !important;
   border-top: none;
 }
 
@@ -2546,6 +2508,10 @@ body.home-page main {
   font-size: 1rem;
   transition: all 0.3s ease;
   display: inline-block;
+  max-width: 100%;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
 }
 
 .vcn-footer-link:hover {
@@ -2571,12 +2537,12 @@ body.home-page main {
 
 @media (max-width: 768px) {
   .vcn-container-footer {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
 
   .vcn-footer-section {
-    padding: 60px 20px 30px !important;
+    padding: 60px 20px !important;
   }
 
   .vcn-footer-logo {
@@ -2595,12 +2561,12 @@ body.home-page main {
 
 @media (max-width: 576px) {
   .vcn-container-footer {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
 
   .vcn-footer-section {
-    padding: 60px 15px 30px !important;
+    padding: 40px 15px !important;
   }
 }
 
@@ -2761,6 +2727,7 @@ body.home-page main {
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   height: 100%;
+  margin-left: 0 !important;
 }
 
 .vcn-product-content {
@@ -2927,7 +2894,7 @@ body.home-page main {
 }
 
 .vcn-new-product {
-  padding: 40px;
+  padding: 0;
   border-radius: 50px 50px 0 0;
   background-color: #ffff;
 }
@@ -3047,7 +3014,7 @@ body.home-page main {
 }
 
 .btn-learn {
-  background: var(--vcn-primary);
+  background: var(--vcn-darker);
   color: #ffffff;
   padding: 10px 20px;
   border-radius: 24px;
@@ -3066,21 +3033,17 @@ body.home-page main {
 }
 
 .btn-cart {
-  background: transparent;
-  color: var(--vcn-footer);
+  color: var(--vcn-dark);
   padding: 10px 20px;
-  border-radius: 24px;
-  border: 2px solid var(--vcn-primary);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .btn-cart:hover {
-  background: var(--vcn-primary);
-  color: #ffffff;
+  color: var(--vcn-dark);
 }
 
 @media (max-width: 576px) {
@@ -4020,7 +3983,7 @@ body.home-page main {
 .reviews-section {
 
   margin: 40px auto;
-  padding: 40px 20px;
+  padding: 60px 20px;
   background: white;
 }
 
@@ -4479,8 +4442,8 @@ body.home-page main {
   padding: 30px 20px;
   text-align: center;
   /* margin-top: 250px; */
-  margin-top: 100px;
-
+  margin-top:100px;
+  
 }
 
 .approach-hero-section h3 {
@@ -4497,18 +4460,17 @@ body.home-page main {
   color: var(--vcn-footer);
   text-align: left;
 }
-
-.about-description {
+.about-description{
   font-size: 1rem;
   line-height: 1.8;
-
+  
 }
 
 .about-title {
-  font-size: 4rem;
-  font-weight: 700;
-  color: var(--vcn-footer);
-  margin-bottom: 0;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--vcn-footer);
+    margin-bottom: 0;
 }
 
 
@@ -6414,7 +6376,7 @@ body.home-page main {
 }
 
 .strains-info-main-section {
-  padding: 40px 0;
+  padding: 60px 0 !important;
 }
 
 .strains-product-image-container {
@@ -8571,10 +8533,11 @@ body.home-page main {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #dddddd;
+  padding: 0 15px;
 }
 
 .contact-form-header {
-  padding: 20px 20px;
+  padding: 16px 16px;
   border-bottom: 1px solid #e5e5e5;
 }
 
@@ -8584,9 +8547,9 @@ body.home-page main {
   color: var(--vcn-footer);
 }
 
-.contact-form-body {
-  padding: 20px;
-}
+/* .contact-form-body {
+  padding: 30px;
+} */
 
 .contact-field-wrapper {
   margin-bottom: 24px;
@@ -8594,10 +8557,11 @@ body.home-page main {
 
 .contact-field-label {
   display: block;
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--vcn-footer);
-  margin-bottom: 8px;
+  margin: 0 0 6px 0;
+  padding: 0;
 }
 
 .contact-required-mark {
@@ -8609,16 +8573,22 @@ body.home-page main {
   width: 100%;
   padding: 12px 16px;
   font-size: 14px;
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  /* font-family: inherit; */
-  transition: border-color 0.2s, box-shadow 0.2s;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-text-input:hover {
+  border-color: #b0b8c0;
+  background-color: #ffffff;
 }
 
 .contact-text-input:focus {
   outline: none;
-  border-color: var(--vcn-footer);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  border-color: var(--vcn-primary);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(94, 108, 31, 0.15), 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .contact-text-input::placeholder {
@@ -8633,19 +8603,24 @@ body.home-page main {
   width: 100%;
   padding: 12px 40px 12px 16px;
   font-size: 14px;
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  background: white;
-  /* font-family: inherit; */
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: #fdfdfd;
   cursor: pointer;
   appearance: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-select-input:hover {
+  border-color: #b0b8c0;
+  background-color: #ffffff;
 }
 
 .contact-select-input:focus {
   outline: none;
-  border-color: var(--vcn-footer);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  border-color: var(--vcn-primary);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(94, 108, 31, 0.15), 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .contact-select-arrow {
@@ -8661,18 +8636,24 @@ body.home-page main {
   width: 100%;
   padding: 12px 16px;
   font-size: 14px;
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  /* font-family: inherit; */
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background-color: #fdfdfd;
   min-height: 120px;
   resize: vertical;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-textarea-input:hover {
+  border-color: #b0b8c0;
+  background-color: #ffffff;
 }
 
 .contact-textarea-input:focus {
   outline: none;
-  border-color: var(--vcn-footer);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  border-color: var(--vcn-primary);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(94, 108, 31, 0.15), 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .contact-textarea-input::placeholder {
@@ -8680,10 +8661,16 @@ body.home-page main {
 }
 
 .attachment-wrapper {
-  border: 1px dashed #d0d0d0;
-  border-radius: 4px;
-  background: #fafafa;
-  padding: 10px;
+  border: 1px dashed #dcdcdc;
+  border-radius: 8px;
+  background: #fdfdfd;
+  padding: 14px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.attachment-wrapper:hover {
+  border-color: var(--vcn-primary);
+  background-color: #ffffff;
 }
 
 .contact-file-info-text {
@@ -8727,23 +8714,26 @@ body.home-page main {
 
 .contact-submit-button {
   width: 100%;
-  padding: 16px;
+  padding: 14px 24px;
   font-size: 16px;
   font-weight: 600;
   color: white;
-  background: var(--vcn-footer);
+  background: var(--vcn-primary);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  box-shadow: 0 4px 10px rgba(94, 108, 31, 0.15);
+  transition: all 0.2s ease;
 }
 
-.contact-submit-button:hover {
-  background: #333;
+.contact-submit-button:hover:not(:disabled) {
+  background: var(--vcn-footer);
+  box-shadow: 0 6px 14px rgba(29, 69, 3, 0.25);
+  transform: translateY(-1px);
 }
 
-.contact-submit-button:active {
-  transform: scale(0.98);
+.contact-submit-button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .contact-footer-text {
@@ -8770,7 +8760,7 @@ body.home-page main {
 
   .contact-form-header,
   .contact-form-body {
-    padding: 24px 20px;
+    padding: 25px 25px;
   }
 
   .contact-form-title {
@@ -10869,23 +10859,36 @@ body.home-page main {
 }
 
 .terms-conditions {
-  padding: 108px 0;
+  padding: 80px 0;
 }
 
 .sidebar-section {
   background: #ffffff;
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: 140px;
+  height: calc(100vh - 140px);
   overflow-y: auto;
   flex-shrink: 0;
+  border-right: 1px solid #f0f0f0;
 }
 
-@media (min-width: 768px) {
+/* Give the content column a bit of breathing room on all sizes */
+.sidebar-section + [class*="col-"] {
+  padding-left: 0;
+}
 
-  .sidebar-section+div,
-  .sidebar-section+[class*="col-"] {
-    padding-left: 45px !important;
+/* Smaller screens — sidebar stays but uses less padding */
+@media (max-width: 991.98px) {
+  .sidebar-section {
+    top: 120px;
+    height: calc(100vh - 120px);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sidebar-section {
+    top: 100px;
+    height: calc(100vh - 100px);
   }
 }
 
@@ -10898,9 +10901,6 @@ body.home-page main {
 }
 
 .sidebar-inner {
-  position: sticky;
-  top: 0;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -11043,19 +11043,28 @@ body.home-page main {
   color: #667eea;
 }
 
-@media (max-width: 768px) {
+/* ── MOBILE NAV BAR (full-width sidebar strip for mobile/tablet) ── */
+/* This element lives OUTSIDE the Bootstrap column grid so it
+   participates in normal document flow and pushes content downward. */
+.mobile-nav-bar {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+@media (max-width: 991.98px) {
   .hero-banner {
     height: 250px;
   }
 
+  /* sidebar-section is now d-none d-lg-block so this only
+     affects edge cases where the class still renders */
   .sidebar-section {
     border-right: none;
-    border-bottom: 1px solid #e0e0e0;
     min-height: auto;
     height: auto;
     position: relative;
     overflow: visible;
-    margin-bottom: 25px !important;
   }
 
   .content-section {
@@ -11077,7 +11086,7 @@ body.home-page main {
   font-size: 32px;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 30px;
+  margin: 0;
 }
 
 .info-card {
@@ -11205,7 +11214,7 @@ body.home-page main {
   color: #996600;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991.98px) {
   .section-title {
     font-size: 24px;
     margin-bottom: 20px;
@@ -13171,7 +13180,6 @@ video {
 .vcn-difference-section,
 .gut-stats-main-section,
 .comparison-table-main-section,
-.strains-info-main-section,
 .reviews-section {
   margin: 0 !important;
   /* padding-top: 60px !important; */
@@ -13290,7 +13298,8 @@ video {
 
   h2,
   .h2 {
-    font-size: 1.3rem !important;
+    font-size: 32px !important;
+    font-weight: 400 !important;
   }
 
   h3,
@@ -13365,11 +13374,9 @@ video {
 
 #shopAccordion.dropdown-content.show {
   display: block !important;
-  max-height: 350px !important;
-  /* Fixed maximum height */
+  max-height: 350px !important; /* Fixed maximum height */
   overflow: hidden !important;
-  padding-bottom: 50px !important;
-  /* Make room for the absolute footer */
+  padding-bottom: 50px !important; /* Make room for the absolute footer */
 }
 
 #shopAccordion .dropdown-menu-mobile {
@@ -13379,8 +13386,7 @@ video {
 }
 
 #shopAccordion .mobile-products-scroll {
-  max-height: 300px !important;
-  /* Limit products list height */
+  max-height: 300px !important; /* Limit products list height */
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
   padding: 10px 15px !important;

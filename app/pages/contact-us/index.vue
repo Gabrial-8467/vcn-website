@@ -28,7 +28,7 @@
 }
 
 .office-pill-btn.active {
-  background: #2e7d32;
+  background: var(--vcn-dark);
   color: #ffffff;
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
@@ -75,7 +75,7 @@
 }
 
 .badge-head {
-  background: #2e7d32;
+  background: var(--vcn-dark);
 }
 
 .badge-regional {
@@ -378,7 +378,8 @@
 
 <template>
   <section class="terms-conditions">
-    <div class="row">
+    <div class="container">
+      <div class="row">
 
       <!-- Left Side -->
       <div class="col-lg-6 col-12">
@@ -603,6 +604,7 @@
       </div>
 
     </div>
+  </div>
   </section>
 </template>
 
