@@ -1,6 +1,6 @@
 <template>
     <section class="nutrients-section health-section-bg">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row mb-5">
         <div class="col-lg-6">
            <div class="bioavailable-section-header">

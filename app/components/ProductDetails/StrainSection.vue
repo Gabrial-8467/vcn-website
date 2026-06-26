@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <section class="strains-info-main-section">
-      <div class="container-fluid">
+      <div class="container">
         <div class="row">
           <!-- Left Column: Image -->
           <div class="col-lg-6 col-md-12">

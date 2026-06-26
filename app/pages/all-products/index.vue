@@ -272,7 +272,8 @@ const addToCart = async (product) => {
   }
 
   .vcn-product-section {
-    padding: 30px 10px !important;
+    padding: 40px 10px !important;
+    
   }
 
   .vcn-product-card {

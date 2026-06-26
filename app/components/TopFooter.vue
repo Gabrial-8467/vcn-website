@@ -169,7 +169,7 @@ const handleSubscribe = async (event) => {
           <div class="vcn-footer-links-section">
             <div class="row">
               <!-- Products Column -->
-              <div class="col-lg-4 col-md-6 col-sm-6 col-6 mb-4">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-6 mb-4">
                 <h4 class="vcn-footer-column-title">{{footer.columns[0].title}}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[0].links" :key="link.text">
@@ -179,7 +179,7 @@ const handleSubscribe = async (event) => {
               </div>
 
               <!-- About Column -->
-              <div class="col-lg-4 col-md-6 col-sm-6 col-6 mb-4">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-6 mb-4">
                 <h4 class="vcn-footer-column-title">{{footer.columns[1].title}}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[1].links" :key="link.text">
@@ -204,7 +204,7 @@ const handleSubscribe = async (event) => {
               </div> -->
 
               <!-- Help Column -->
-              <div class="col-lg-4 col-md-6 col-sm-6 col-6 mb-4">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-6 mb-4">
                 <h4 class="vcn-footer-column-title">{{ footer.columns[2].title }}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[2].links" :key="link.text">
@@ -218,55 +218,22 @@ const handleSubscribe = async (event) => {
               </div>
 
               <!-- Social Column -->
-              <div class="col-lg-4 col-md-6 col-sm-6 col-6 mb-4">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-6 mb-4">
                 <h4 class="vcn-footer-column-title">{{ footer.columns[3].title }}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[3].links" :key="link.text">
                     <a :href="link.link" target="_blank" class="vcn-footer-link">{{link.text}}</a>
                   </li>
-                  <!-- <li><a href="https://www.instagram.com/vcnorganic/" target="_blank"
-                      class="vcn-footer-link">Instagram</a></li>
-                  <li><a href="https://www.facebook.com/VCNorganic" target="_blank" class="vcn-footer-link">Facebook</a>
-                  </li>
-                  <li><a href="https://in.pinterest.com/vcn_organic/" target="_blank"
-                      class="vcn-footer-link">Pinterest</a></li>
-                 <li><a href="#" class="vcn-footer-link">Refer</a></li> -->
                 </ul>
               </div>
 
               <!-- Legal Column -->
-              <div class="col-lg-4 col-md-6 col-sm-6 col-6 mb-4">
+              <div class="col-lg-8 col-md-8 col-sm-12 col-12 mb-4">
                 <h4 class="vcn-footer-column-title">{{ footer.columns[4].title }}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[4].links" :key="link.text">
                     <NuxtLink :to="link.link" class="vcn-footer-link">{{link.text}}</NuxtLink>
                   </li>
-                  <!-- <li>
-                    <a href="/terms-conditions" class="vcn-footer-link">Terms + Conditions</a>
-                  </li>
-                  <li>
-                    <a href="/privacy-policy" class="vcn-footer-link">Privacy Policy</a>
-                  </li>
-                  <li>
-                    <a href="/accessibility" class="vcn-footer-link">Accessibility</a>
-                  </li>
-                  <li>
-                    <a href="#" class="vcn-footer-link" @click.prevent="openConsentModal">
-                      Consent Preferences
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/cancellation-and-refund-process" class="vcn-footer-link">Cancellation & Refund Process</a>
-                  </li>
-                  <li>
-                    <a href="/disclaimer" class="vcn-footer-link">Disclaimer</a>
-                  </li>
-                  <li>
-                    <a href="/shipping-policy" class="vcn-footer-link">Shipping Policy</a>
-                  </li>
-                  <li>
-                    <a href="/grievance-redressal" class="vcn-footer-link">Grievance Redressal</a>
-                  </li> -->
                 </ul>
               </div>
             </div>
@@ -278,3 +245,9 @@ const handleSubscribe = async (event) => {
     <ConsentPreferencesModal ref="consentModal" />
   </footer>
 </template>
+
+<style scoped>
+.vcn-footer-links-section{
+  padding-left: 30px !important;
+}
+</style>

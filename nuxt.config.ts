@@ -113,7 +113,7 @@ export default defineNuxtConfig({
 
         // 🔸 Public CSS files
         { rel: 'stylesheet', href: '/css/bootstrap.min.css' },
-        { rel: 'stylesheet', href: '/css/style.css' },
+        { rel: 'stylesheet', href: '/css/style.css?v=1.0.5' },
         { rel: 'stylesheet', href: '/css/dynamic-images.css' }
       ],
 

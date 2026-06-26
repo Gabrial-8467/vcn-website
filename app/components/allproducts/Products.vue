@@ -15,31 +15,39 @@
       </div>
 
       <!-- Products grid -->
-      <div v-else class="row g-3">
-        <div v-for="product in products" :key="product.id || product.name" class="col-xl-6 col-12">
+      <div v-else class=" vcn-pg">
+        <div v-for="product in products" :key="product.id || product.name" class="product-grid-item">
           <div class="product-card">
             <div class="product-image-wrapper">
-              <span class="product-badge">NEW</span>
+              <span v-if="product.isNew" class="product-badge">New</span>
               <NuxtLink :to="`/product-details/${product.slug}`">
                 <img :src="getPrimaryImage(product)" :alt="product.name" class="product-image" loading="eager"
                   @error="handleImageError($event)" />
               </NuxtLink>
             </div>
             <div class="product-content">
-              <span class="product-label">AGE 18+</span>
-              <span v-if="product.label" class="product-label">{{ product.label }}</span>
+              <!-- Outline labels at the top (like AGE 18+ or category identifiers) -->
+              <span class="product-label label-outline">AGE 18+</span>
+              <span v-if="product.label && !isDiscountLabel(product.label)" class="product-label label-outline">
+                {{ product.label }}
+              </span>
+              
               <NuxtLink :to="`/product-details/${product.slug}`" class="product-title-link">
                 <h3 class="product-title">{{ product.name }}</h3>
               </NuxtLink>
               <p class="product-description" v-html="product.description || 'Premium product for your wellness needs'">
               </p>
+              
+              <!-- Filled green/discount labels below description (like Bundle + Save 25%) -->
+              <div v-if="product.label && isDiscountLabel(product.label)" class="mb-2">
+                <span class="product-label label-filled">{{ product.label }}</span>
+              </div>
+              
               <div class="product-price">
-                <template v-if="getProductPricing(product).oldPrice">
-                  ₹{{ getProductPricing(product).price }}
-                </template>
-                <template v-else>
-                  ₹{{ getProductPricing(product).price }}
-                </template>
+                <span class="price-current">₹{{ getProductPricing(product).price }}</span>
+                <span v-if="getProductPricing(product).oldPrice" class="price-old">
+                  ₹{{ getProductPricing(product).oldPrice }}
+                </span>
               </div>
               <div class="product-actions">
                 <NuxtLink :to="`/product-details/${product.slug}`" class="btn-learn">Learn More</NuxtLink>
@@ -140,9 +148,25 @@ const addToCart = async (product) => {
     variantId: variantId  // Pass variantId for backend API
   })
 }
+
+const isDiscountLabel = (label) => {
+  if (!label) return false
+  const lower = label.toLowerCase()
+  return lower.includes('save') || lower.includes('bundle') || lower.includes('%') || lower.includes('off') || lower.includes('discount')
+}
 </script>
 
 <style scoped>
+.vcn-pg {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.product-grid-item {
+  width: 100%;
+}
+
 .vcn-new-product {
   padding: 40px 0;
 }
@@ -150,9 +174,9 @@ const addToCart = async (product) => {
 /* Premium smooth transitions for product cards and images */
 .product-card {
   position: relative !important;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
-              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
-              background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .product-card:hover {
@@ -170,16 +194,53 @@ const addToCart = async (product) => {
   position: absolute !important;
   left: 12px !important;
   top: 12px !important;
-  background-color: #606f59 !important;
+  background-color: #989a6a !important; /* Elegant olive/brown green matching the image */
   color: #ffffff !important;
   border-radius: 30px !important;
-  padding: 4px 10px !important;
+  padding: 4px 12px !important;
   font-size: 10px !important;
   font-weight: 700 !important;
-  text-transform: uppercase !important;
+  text-transform: capitalize !important;
   box-shadow: none !important;
   transform: none !important;
   z-index: 10 !important;
+}
+
+.product-label {
+  display: inline-block !important;
+  margin-left: 0 !important;
+  margin-right: 8px !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  padding: 3px 10px !important;
+  border-radius: 30px !important;
+  margin-bottom: 8px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.label-outline {
+  background-color: transparent !important;
+  color: #333333 !important;
+  border: 1px solid #777777 !important;
+}
+
+.label-filled {
+  background-color: #d2e4cb !important;
+  border: none !important;
+  color: #274027 !important;
+}
+
+.price-current {
+  font-weight: 700 !important;
+}
+
+.price-old {
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  color: #888888 !important;
+  text-decoration: line-through !important;
+  margin-left: 8px !important;
 }
 
 .product-image-wrapper a {
@@ -207,6 +268,11 @@ const addToCart = async (product) => {
 
 /* Make cards horizontal and adjust padding for layout under 1199px */
 @media (max-width: 1199px) {
+  .vcn-pg {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
   .product-card {
     display: flex !important;
     flex-direction: row !important;
@@ -232,9 +298,11 @@ const addToCart = async (product) => {
     align-items: center !important;
     background: transparent !important;
     border-radius: 0px !important;
-    padding: 12px 0px 0px 0px !important; /* Push image slightly down inside wrapper */
+    padding: 12px 0px 0px 0px !important;
+    /* Push image slightly down inside wrapper */
     flex-shrink: 0 !important;
-    position: static !important; /* Disables relative positioning context so badge uses product-card instead */
+    position: static !important;
+    /* Disables relative positioning context so badge uses product-card instead */
   }
 
   .product-image {
@@ -246,17 +314,18 @@ const addToCart = async (product) => {
 
   .product-badge {
     position: absolute !important;
-    left: -20px !important;
-    top: -20px !important; /* Positioned near top left corner of the card */
-    background-color: #606f59 !important;
+    left: 12px !important;
+    top: 12px !important;
+    background-color: #989a6a !important;
     color: #ffffff !important;
     border-radius: 30px !important;
-    padding: 4px 10px !important;
+    padding: 4px 12px !important;
     font-size: 10px !important;
     font-weight: 700 !important;
     box-shadow: none !important;
     transform: none !important;
     z-index: 10 !important;
+    text-transform: capitalize !important;
   }
 
   .product-content {
@@ -266,33 +335,6 @@ const addToCart = async (product) => {
     display: flex !important;
     flex-direction: column !important;
     padding: 0px !important;
-  }
-
-  .product-label {
-    display: inline-block !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    font-size: 10px !important;
-    font-weight: 600 !important;
-    padding: 3px 10px !important;
-    border-radius: 30px !important;
-    margin-bottom: 8px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-  }
-
-  /* Style for first label (AGE 18+) */
-  .product-content > .product-label:first-of-type {
-    background-color: transparent !important;
-    color: #333333 !important;
-    border: 1px solid #777777 !important;
-  }
-
-  /* Style for second label (Bundle + Save 25% etc.) */
-  .product-content > .product-label:nth-of-type(2) {
-    background-color: #d2e4cb !important;
-    border: none !important;
-    color: #274027 !important;
   }
 
   .product-title-link {
@@ -341,8 +383,10 @@ const addToCart = async (product) => {
     background-color: #1e331e !important;
     color: #ffffff !important;
     border-radius: 30px !important;
-    padding: 9px 24px !important; /* Increased padding */
-    font-size: 13px !important; /* Increased font size */
+    padding: 9px 24px !important;
+    /* Increased padding */
+    font-size: 13px !important;
+    /* Increased font size */
     font-weight: 600 !important;
     width: auto !important;
     text-align: center !important;
@@ -357,7 +401,8 @@ const addToCart = async (product) => {
   .btn-cart {
     background: transparent !important;
     color: #1e331e !important;
-    font-size: 13px !important; /* Increased font size */
+    font-size: 13px !important;
+    /* Increased font size */
     font-weight: 600 !important;
     width: auto !important;
     padding: 0 !important;
@@ -382,11 +427,13 @@ const addToCart = async (product) => {
     background: #ffffff !important;
     border: 1px solid #1e331e !important;
     border-radius: 30px !important;
-    padding: 6px 15px !important; /* Increased padding */
+    padding: 6px 15px !important;
+    /* Increased padding */
   }
 
   .qty-btn {
-    font-size: 16px !important; /* Increased font size */
+    font-size: 16px !important;
+    /* Increased font size */
     font-weight: bold !important;
     background: none !important;
     border: none !important;
@@ -400,7 +447,8 @@ const addToCart = async (product) => {
   }
 
   .qty-value {
-    font-size: 13px !important; /* Increased font size */
+    font-size: 13px !important;
+    /* Increased font size */
     font-weight: 600 !important;
     color: #1e331e !important;
     min-width: 15px !important;
@@ -447,12 +495,15 @@ const addToCart = async (product) => {
   }
 
   .btn-learn {
-    padding: 8px 20px !important; /* Increased padding */
-    font-size: 12px !important; /* Increased font size */
+    padding: 8px 20px !important;
+    /* Increased padding */
+    font-size: 12px !important;
+    /* Increased font size */
   }
 
   .btn-cart {
-    font-size: 12px !important; /* Increased font size */
+    font-size: 12px !important;
+    /* Increased font size */
   }
 }
 

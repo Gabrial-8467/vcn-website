@@ -1,7 +1,8 @@
 <template>
   <ClientOnly>
     <div class="container-fluid py-5 health-section-bg">
-      <!-- Section Header -->
+      <div class="container">
+        <!-- Section Header -->
       <div class="text-center mb-4">
         <h1 class="section-title-timeline">{{ journeyTitle || '11 Herbs. One Journey. Complete Diabetic Wellness.' }}
         </h1>
@@ -68,6 +69,7 @@
         </div>
       </div>
     </div>
+  </div>
   </ClientOnly>
 </template>
 

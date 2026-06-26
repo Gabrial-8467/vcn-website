@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <section class="testing-standards-wrapper">
-      <div class="container-fluid">
+      <div class="container">
         <div class="row align-items-center g-4">
           <!-- Left Column: Headline & Description -->
           <div class="col-lg-5">

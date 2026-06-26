@@ -14,7 +14,7 @@
 
 
         <h2 class="vcn-human-heading" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">{{ heading
-        }}</h2>
+          }}</h2>
 
         <p data-aos="fade-right" data-aos-duration="1000" data-aos-delay="300">
           {{ description }}
@@ -33,7 +33,8 @@
       <div class="vcn-human-right-content">
         <div class="video-container" id="videoContainer">
           <div class="vcn-human-image-wrapper" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
-            <video id="myVideo" ref="myVideo" muted loop autoplay playsinline preload="none" class="vcn-human-main-image"></video>
+            <video id="myVideo" ref="myVideo" muted loop autoplay playsinline preload="auto"
+              class="vcn-human-main-image"></video>
             <!-- <img src="/img/image/skelton.png" class="vcn-human-main-image" /> -->
           </div>
         </div>
@@ -139,7 +140,6 @@ export default {
   },
   created() {
     this.hls = null;
-    this.observer = null;
     this.hlsInitialized = false;
   },
   beforeUnmount() {
@@ -150,11 +150,7 @@ export default {
       document.documentElement.style.height = '';
     }
 
-    // Disconnect observer
-    if (this.observer) {
-      this.observer.disconnect();
-      this.observer = null;
-    }
+  
 
     // Destroy HLS instance to prevent memory leaks and redundant network requests
     if (this.hls) {
@@ -191,36 +187,7 @@ export default {
       "https://stream.mux.com/87tnV011w6GkwNzl7dxntQSNhpcVSJNgSQaqlj3iLTK00.m3u8?redundant_streams=true";
 
     // Setup intersection observer to lazy-load video when visible in viewport
-    if (process.client && 'IntersectionObserver' in window) {
-      this.observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Enter viewport: start loading and play
-            if (!this.hlsInitialized) {
-              this.initHls(video, videoSrc);
-            } else {
-              if (this.hls) {
-                this.hls.startLoad();
-              }
-              video.play().catch(() => {});
-            }
-          } else {
-            // Exit viewport: pause and stop loading segments to save bandwidth and API calls
-            if (this.hlsInitialized) {
-              video.pause();
-              if (this.hls) {
-                this.hls.stopLoad();
-              }
-            }
-          }
-        });
-      }, { threshold: 0.1 });
-
-      this.observer.observe(video);
-    } else {
-      // Fallback if IntersectionObserver not supported
-      this.initHls(video, videoSrc);
-    }
+    this.initHls(video, videoSrc);
   },
   methods: {
     cleanUrl(url) {
@@ -251,12 +218,22 @@ export default {
       if (Hls.isSupported()) {
         this.hls = new Hls({
           autoStartLoad: true,
+          startLevel: 0,
+          enableWorker: true,
+          lowLatencyMode: true,
+          maxBufferLength: 10,
+          maxMaxBufferLength: 20,
         });
 
         this.hls.loadSource(videoSrc);
+
+        this.hls.startLoad(0);
+
         this.hls.attachMedia(video);
 
         this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          this.hls.currentLevel = 0;
+
           video.play().catch(() => { });
         });
       } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
@@ -295,6 +272,7 @@ export default {
     padding-left: 160px !important;
     padding-right: 160px !important;
   }
+
   .vcn-human-container {
     padding-left: 0 !important;
     padding-right: 0 !important;

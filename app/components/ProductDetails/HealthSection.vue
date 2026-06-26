@@ -13,7 +13,7 @@
                 v-html="supportTitle || 'DBT Care Plus is the herbal juice <br />to fuel your body and control blood sugar.'">
               </h1>
             </div>
-            <div class="container-fluid">
+            <div class="container">
               <div class="feature-top">
                 <div class="feature-bg">
                   <div class="row g-4">

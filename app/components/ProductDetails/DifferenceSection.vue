@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <section class="p-5 health-section-bg">
-      <div class="container-fluid">
+      <div class="container">
         <div class="row mb-5">
           <div class="col-12">
             <h1 class="vcn-section-title">{{ featureHeading || 'DBT Care Plus — Natural Solution for Blood Sugar' }}

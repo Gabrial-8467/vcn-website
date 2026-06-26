@@ -5,7 +5,7 @@
         <div class="row g-5">
 
           <!-- Left Column - Form -->
-          <div class="col-lg-5">
+          <div class="col-lg-5 cta-form">
             <h1 class="mid-page-title mb-4"> {{ consultation.leftContent.title }}</h1>
 
             <form class="mid-consultation-form" @submit.prevent="submitForm">
@@ -176,7 +176,7 @@
           <div class="row g-4 mt-4">
 
             <!-- Branch Locations -->
-            <div class="col-lg-6">
+            <div class="col-lg-6 px-4">
               <div class="mid-branch-card p-4 h-100">
                 <div v-for="(branch, index) in consultation.branchLocations" :key="index"
                   :class="{ 'mb-4': index !== consultation.branchLocations.length - 1 }">
@@ -437,3 +437,9 @@ const submitForm = () => {
   // Add your form submission logic here
 }
 </script>
+
+<style scoped>
+.cta-form{
+  padding-left: 12px;
+}
+</style>

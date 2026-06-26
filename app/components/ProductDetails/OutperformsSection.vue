@@ -1,6 +1,6 @@
 <template>
   <section class="comparison-table-main-section">
-    <div class="container-fluid">
+    <div class="container">
       <h2 class="comparison-table-heading-title">
         VCN-01 outperforms<br />other probiotics.
       </h2>

@@ -137,7 +137,7 @@ useHead({
 
 <style scoped>
 .journey-container {
-  padding: 30px;
+  padding-top: 60px;
   background: #ffffff;
   font-family: var(--vcn-font, "Outfit", sans-serif);
 }

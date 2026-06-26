@@ -1,6 +1,6 @@
 <template>
   <section class="comparison-section">
-    <div class="container-fluid comparison-container">
+    <div class="container comparison-container">
       <div class="row">
         <div class="col-lg-3">
           <h2 class="comparison-section-title">How DBT Care Plus Compares:</h2>

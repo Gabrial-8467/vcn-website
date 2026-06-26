@@ -1,11 +1,11 @@
 <template>
   <section class="product-detail-section">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <!-- Left Column - Product Images -->
         <div class="col-lg-7">
           <!-- Desktop Version: main image + thumbnails -->
-          <div class="d-none d-md-block">
+          <div class="d-none d-md-block img-container">
             <div class="product-img-wrapper">
               <div class="product-image-cards">
                 <video 
@@ -579,6 +579,10 @@ const openProductPreview = (imageSrc) => {
   max-width: 600px !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
   text-align: left !important;
+}
+
+.img-container{
+  padding-left: 8px;
 }
 
 .bundle-image {
