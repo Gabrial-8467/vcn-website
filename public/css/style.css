@@ -642,7 +642,7 @@ body.home-page main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 80px 20px;
+  padding: 25px 20px;
   position: relative;
   overflow: hidden;
 }
@@ -913,7 +913,7 @@ body.home-page main {
   /* background-size: cover;
   background-position: center;
   background-repeat: no-repeat; */
-  padding: 80px 20px;
+  padding: 25px 20px;
   position: relative;
   overflow: hidden;
   
@@ -1321,7 +1321,7 @@ body.home-page main {
 /* ========== vcn-human-section ========== */
 .vcn-human-section {
   background: #fcfcf7;
-  padding: 60px 20px;
+  padding: 25px 20px;
   position: relative;
   overflow: hidden;
   min-height: 600px;
@@ -13293,9 +13293,9 @@ video {
 /* Remove gaps between sections */
 .vcn-cobiotics-section {
   margin-top: 0 !important;
-  padding-top: 80px !important;
+  padding-top: 25px !important;
   margin-bottom: 0 !important;
-  padding-bottom: 80px !important;
+  padding-bottom: 25px !important;
 }
 
 /* BottomFooter gap fixes moved to component scoped styles */

@@ -614,8 +614,8 @@ watch(storyCards, () => {
   .vcn-stories-section {
     padding-left: 160px;
     padding-right: 160px;
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 25px;
+    padding-bottom: 25px;
   }
 }
 

@@ -52,7 +52,7 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 <style scoped>
 .mid-consultation-cta {
   background-color: #fff;
-  padding: 80px 0;
+  padding: 25px 0 !important;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

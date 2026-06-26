@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .vcn-testimonial-section {
   background: linear-gradient(180deg, #e8f5e0 0%, #f0f8ec 100%);
-  padding: 40px 15px; /* Mobile first padding */
+  padding: 25px 15px; /* Mobile first padding */
   position: relative;
   overflow: hidden;
 }
