@@ -6,9 +6,9 @@
   --vcn-base-bg: #F6F7EE;
   --vcn-white: #fff;
   --vcn-dark: var(--vcn-footer);
-  --vcn-darker: #1C3A13;  
+  --vcn-darker: #1C3A13;
   --vcn-footer: #1D4503;
-  
+
   --vcn-font: "Outfit", sans-serif;
   --vcn-badge: #d3fa99;
   --vcn-light: #d3fA99;
@@ -161,156 +161,156 @@ body.home-page main {
 
 
 
-  @media(min-width: 1400px) {
-    .vcn-whole-body-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
-    }
+@media(min-width: 1400px) {
+  .vcn-whole-body-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
   }
+}
 
-  @media(min-width: 1400px) {
-    .hero-content {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
-      max-width: 850px !important;
-    }
+@media(min-width: 1400px) {
+  .hero-content {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+    max-width: 850px !important;
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-cobiotics-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-cobiotics-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-probiotic-info-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-probiotic-info-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-human-container {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-human-container {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-testimonial-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-testimonial-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-stories-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-stories-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-product-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-product-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-new-product {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-new-product {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .product-detail-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .product-detail-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .health-section-bg {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .health-section-bg {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .comparison-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .comparison-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .testing-standards-wrapper {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .testing-standards-wrapper {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .probiotic-hero-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .probiotic-hero-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-difference-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-difference-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .gut-stats-main-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .gut-stats-main-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .comparison-table-main-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .comparison-table-main-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .strains-info-main-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .strains-info-main-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .reviews-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .reviews-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
 
 
@@ -368,7 +368,7 @@ body.home-page main {
 .vcn-cobiotics-title {
   font-size: var(--vcn-heading-size);
   font-weight: 400;
-  color: var( --vcn-darker);
+  color: var(--vcn-darker);
   line-height: 1.2;
   margin-bottom: 20px;
   letter-spacing: -1px;
@@ -376,7 +376,7 @@ body.home-page main {
 
 .vcn-cobiotics-description {
   font-size: 16px;
-  color: var(   --vcn-darker);
+  color: var(--vcn-darker);
   line-height: 20.8px;
   margin-bottom: 30px;
   text-align: justify;
@@ -1360,6 +1360,15 @@ body.home-page main {
   position: absolute;
 }
 
+.vcn-human-description {
+  font-size: 16px;
+  color: var(--vcn-darker);
+  line-height: 20.8px;
+
+  text-align: justify;
+
+}
+
 .vcn-human-logo {
   display: flex;
   align-items: center;
@@ -1381,6 +1390,13 @@ body.home-page main {
   color: var(--vcn-darker);
   line-height: 1.2;
   margin: 0;
+
+}
+
+.vcn-human-content {
+  font-size: 16px;
+  color: var(--vcn-darker);
+  line-height: 20.8px;
 }
 
 .vcn-human-cta-button {
@@ -1398,12 +1414,32 @@ body.home-page main {
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
+
+  /* display: inline-block;
+  position: relative;
+  /* 🟢 add this */
+  padding: 12px 40px;
+  background-color: var(--vcn-darker);
+  color: var(--vcn-white);
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(69, 102, 60, 0.2);
+  */
 }
 
 .vcn-human-cta-button:hover {
-  background: var(--vcn-footer);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(45, 74, 37, 0.3);
+  color: var(--vcn-light);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  padding-right: 55px;
+}
+
+
+.vcn-human-cta-btn:hover::after {
+  opacity: 1;
+  right: 20px;
 }
 
 .vcn-human-play-icon {
@@ -1426,6 +1462,8 @@ body.home-page main {
   align-items: center;
   min-height: 500px;
   transition: all 0.6s ease;
+
+
 }
 
 .vcn-human-container.fullscreen .vcn-human-right-content {
@@ -4441,8 +4479,8 @@ body.home-page main {
   padding: 30px 20px;
   text-align: center;
   /* margin-top: 250px; */
-  margin-top:100px;
-  
+  margin-top: 100px;
+
 }
 
 .approach-hero-section h3 {
@@ -4459,17 +4497,18 @@ body.home-page main {
   color: var(--vcn-footer);
   text-align: left;
 }
-.about-description{
+
+.about-description {
   font-size: 1rem;
   line-height: 1.8;
-  
+
 }
 
 .about-title {
-    font-size: 4rem;
-    font-weight: 700;
-    color: var(--vcn-footer);
-    margin-bottom: 0;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--vcn-footer);
+  margin-bottom: 0;
 }
 
 
@@ -10843,8 +10882,9 @@ body.home-page main {
 }
 
 @media (min-width: 768px) {
-  .sidebar-section + div,
-  .sidebar-section + [class*="col-"] {
+
+  .sidebar-section+div,
+  .sidebar-section+[class*="col-"] {
     padding-left: 45px !important;
   }
 }
@@ -13325,9 +13365,11 @@ video {
 
 #shopAccordion.dropdown-content.show {
   display: block !important;
-  max-height: 350px !important; /* Fixed maximum height */
+  max-height: 350px !important;
+  /* Fixed maximum height */
   overflow: hidden !important;
-  padding-bottom: 50px !important; /* Make room for the absolute footer */
+  padding-bottom: 50px !important;
+  /* Make room for the absolute footer */
 }
 
 #shopAccordion .dropdown-menu-mobile {
@@ -13337,7 +13379,8 @@ video {
 }
 
 #shopAccordion .mobile-products-scroll {
-  max-height: 300px !important; /* Limit products list height */
+  max-height: 300px !important;
+  /* Limit products list height */
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
   padding: 10px 15px !important;
