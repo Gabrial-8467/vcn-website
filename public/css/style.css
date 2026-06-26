@@ -2293,15 +2293,15 @@ body.home-page main {
 
 @media (min-width: 1400px) {
   .vcn-footer-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
+    padding-left: 169px !important;
+    padding-right: 169px !important;
   }
 }
 
 .vcn-container-footer {
   padding-top:40px;
   padding-bottom:30px;
-  padding-left: 0 !important;
+  padding-left: -1 !important;
   padding-right: 0 !important;
   box-sizing: border-box !important;
 }
