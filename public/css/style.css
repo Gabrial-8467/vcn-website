@@ -13421,3 +13421,11 @@ html body .bundle-content p,
 html body .vcn-feature-description.vcn-feature-description.vcn-feature-description {
   font-size: 16px !important;
 }
+
+
+@media(max-width:576px){
+  .product-detail-section{
+  padding: 0 !important;
+}
+
+}
