@@ -1,6 +1,6 @@
 <template>
      <section class="probiotic-hero-section">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <!-- Left Side -->
         <div class="col-lg-7 left-section">

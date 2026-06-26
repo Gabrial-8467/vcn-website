@@ -1,6 +1,7 @@
 <template>
   <section class="health-section-bg">
-    <div class="row">
+    <div class="container">
+      <div class="row">
       <div class="col-12 col-md-4 col-lg-3 health-section-below d-flex align-items-center justify-content-center order-2 order-md-1">
         <video src="" class="video-centered" autoplay muted loop playsinline ></video>
       </div>
@@ -57,6 +58,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </section>

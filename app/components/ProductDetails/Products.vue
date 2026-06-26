@@ -1,6 +1,6 @@
 <template>
   <section class="vcn-new-product">
-    <div class="container-fluid">
+    <div class="container">
       <div class="swiper vcn-product-detail-swiper">
         <div class="swiper-wrapper">
           <div v-for="product in products" :key="product.id" class="swiper-slide">

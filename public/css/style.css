@@ -3074,7 +3074,7 @@ body.home-page main {
 
 /* product details */
 .product-detail-section {
-  padding: 102px 0 0 0;
+  padding: 50px 0 0 0;
 }
 
 .product-image-card {
@@ -5310,11 +5310,13 @@ body.home-page main {
   color: var(--vcn-footer);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  padding-left: 20px;
 }
 
 .cart-item-wrapper {
+  border-top: 1px solid #d0d0c8;
   border-bottom: 2px solid #d0d0c8;
-  padding: 20px 0;
+  padding: 30px ;
 }
 
 .cart-product-image {
@@ -8538,7 +8540,7 @@ body.home-page main {
 
 .contact-form-header {
   padding: 16px 16px;
-  border-bottom: 1px solid #e5e5e5;
+  /* border-bottom: 1px solid #e5e5e5; */
 }
 
 .contact-form-title {
@@ -11973,6 +11975,7 @@ body.home-page main {
 /* Form Styles */
 .mid-consultation-form {
   background: #fff;
+  padding-left: 8px;
 }
 
 .mid-form-label {

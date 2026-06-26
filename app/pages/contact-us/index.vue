@@ -389,7 +389,7 @@
             <!-- Company Branding -->
             <div class="mb-4">
 
-              <h2 style="font-size: 20px; font-weight: 700; margin-top: 10px; color: #1a1a1a;">
+              <h2 style="font-size: 48px; font-weight: 400; margin-top: 10px; color: var(--vcn-dark);">
                 {{ contact.company.name }}
               </h2>
               <p style="color: #777; font-size: 13px;">{{ contact.company.description }} </p>

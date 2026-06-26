@@ -1,7 +1,8 @@
 <template>
 
   <div class="reviews-section">
-    <h2 class="section-title">Member<br />Reviews</h2>
+    <div class="container">
+      <h2 class="section-title">Member<br />Reviews</h2>
 
     <!-- Write Review Button -->
     <button class="btn-write-review" @click="showForm = !showForm">
@@ -143,6 +144,7 @@
 
       <button class="arrow-btn">›</button>
     </div> -->
+    </div>
   </div>
 </template>
 

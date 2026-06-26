@@ -1,6 +1,6 @@
 <template>
   <section class="gut-stats-main-section">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row align-items-center">
         <!-- Left Column: Heading -->
         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
