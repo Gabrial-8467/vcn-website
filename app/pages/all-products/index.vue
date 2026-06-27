@@ -10,7 +10,7 @@
     </div>
   </div>
   <section class="vcn-product-section py-5">
-    <div class="container-fluid">
+    <div class="container">
       <!-- Error state -->
       <div v-if="error" class="alert alert-danger text-center py-5">
         {{ error.message || error }}

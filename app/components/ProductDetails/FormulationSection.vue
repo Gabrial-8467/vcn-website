@@ -195,10 +195,12 @@
 
   .alternative-callout-top {
     right: -40px !important;
+    top: 60px !important;
   }
 
   .alternative-callout-bottom {
-    left: -65px !important;
+    left: -101px !important;
+    bottom: -40px !important;
   }
 }
 

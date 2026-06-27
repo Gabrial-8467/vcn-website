@@ -13,11 +13,11 @@
 
       <div class="col-lg-12" v-else>
         <!-- Cart Header -->
-        <!-- <div class="cart-table-header row">
+        <div class="cart-table-header row">
           <div class="col-6 cart-header-product">{{ cart.tableHeader.product }}</div>
           <div class="col-3 cart-header-product text-center">{{ cart.tableHeader.quantity }}</div>
           <div class="col-3 cart-header-product text-end">{{ cart.tableHeader.price }}</div>
-        </div> -->
+        </div>
 
         <!-- Cart Items -->
         <div v-for="item in cartStore.items" :key="item.id" class="cart-item-wrapper row align-items-center">

@@ -1,6 +1,6 @@
 <template>
   <section class="vcn-new-product">
-    <div class="container-fluid">
+    <div class="container">
       <!-- Error state -->
       <div v-if="error" class="alert alert-danger text-center py-5">
         {{ error }}

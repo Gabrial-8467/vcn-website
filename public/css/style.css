@@ -6,9 +6,9 @@
   --vcn-base-bg: #F6F7EE;
   --vcn-white: #fff;
   --vcn-dark: var(--vcn-footer);
-  --vcn-darker: #1C3A13;  
+  --vcn-darker: #1C3A13;
   --vcn-footer: #1D4503;
-  
+
   --vcn-font: "Outfit", sans-serif;
   --vcn-badge: #d3fa99;
   --vcn-light: #d3fA99;
@@ -32,22 +32,48 @@
 }
 
 /* Global Font & Typography Overrides */
-body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea,
-.h1, .h2, .h3, .h4, .h5, .h6 {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+button,
+input,
+select,
+textarea,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
   font-family: var(--vcn-font) !important;
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-size: var(--vcn-heading-size) !important;
   font-weight: var(--vcn-heading-weight) !important;
 }
 
-p, .description, .desc {
+p,
+.description,
+.desc {
   font-size: var(--vcn-desc-size) !important;
   font-weight: var(--vcn-desc-weight) !important;
 }
 
-button, .btn, [type="button"], [type="submit"], [class*="btn"], [class*="button"] {
+button,
+.btn,
+[type="button"],
+[type="submit"],
+[class*="btn"],
+[class*="button"] {
   font-size: var(--vcn-btn-size) !important;
   font-weight: var(--vcn-btn-weight) !important;
 }
@@ -161,156 +187,156 @@ body.home-page main {
 
 
 
-  @media(min-width: 1400px) {
-    .vcn-whole-body-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
-    }
+@media(min-width: 1400px) {
+  .vcn-whole-body-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
   }
+}
 
-  @media(min-width: 1400px) {
-    .hero-content {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
-      max-width: 850px !important;
-    }
+@media(min-width: 1400px) {
+  .hero-content {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+    max-width: 850px !important;
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-cobiotics-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-cobiotics-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-probiotic-info-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-probiotic-info-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-human-container {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-human-container {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-testimonial-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-testimonial-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-stories-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-stories-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-product-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-product-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-new-product {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-new-product {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .product-detail-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .product-detail-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .health-section-bg {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .health-section-bg {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .comparison-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .comparison-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .testing-standards-wrapper {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .testing-standards-wrapper {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .probiotic-hero-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .probiotic-hero-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .vcn-difference-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .vcn-difference-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .gut-stats-main-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .gut-stats-main-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .comparison-table-main-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .comparison-table-main-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .strains-info-main-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .strains-info-main-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
-  @media(min-width: 1400px) {
-    .reviews-section {
-      padding-left: 160px !important;
-      padding-right: 160px !important;
+@media(min-width: 1400px) {
+  .reviews-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
 
-    }
   }
+}
 
 
 
@@ -368,7 +394,7 @@ body.home-page main {
 .vcn-cobiotics-title {
   font-size: var(--vcn-heading-size);
   font-weight: 400;
-  color: var( --vcn-darker);
+  color: var(--vcn-darker);
   line-height: 1.2;
   margin-bottom: 20px;
   letter-spacing: -1px;
@@ -376,7 +402,7 @@ body.home-page main {
 
 .vcn-cobiotics-description {
   font-size: 16px;
-  color: var(   --vcn-darker);
+  color: var(--vcn-darker);
   line-height: 20.8px;
   margin-bottom: 30px;
   text-align: justify;
@@ -916,19 +942,19 @@ body.home-page main {
   padding: 25px 20px;
   position: relative;
   overflow: hidden;
-  
+
 }
 
 .vcn-probiotic-container {
   max-width: 1200px;
   margin: 0 auto;
-   /* background-image: url('\img\bg\bg-4.png'); */
+  /* background-image: url('\img\bg\bg-4.png'); */
 
 }
 
 .vcn-probiotic-content-wrapper {
   background: rgba(87, 94, 85, 0.35);
- backdrop-filter: blur(37.5px);
+  backdrop-filter: blur(37.5px);
   border-radius: 30px;
   padding: 25px;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1185,6 +1211,7 @@ body.home-page main {
 .alternate-image {
   width: 100%;
   padding: 0 39px 0 0;
+  max-width: 300px;
 }
 
 /* ========== MOBILE RESPONSIVE ========== */
@@ -2686,12 +2713,15 @@ body.home-page main {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  padding-left: 0;
+  font-size: 48px;
+  font-weight: 400;
 }
 
 .vcn-breadcrumb-title {
   color: #ffffff;
-  font-size: 56px;
-  font-weight: 300;
+  font-size: 48px;
+  font-weight: 400;
   line-height: 1.2;
   max-width: 550px;
 
@@ -4442,8 +4472,8 @@ body.home-page main {
   padding: 30px 20px;
   text-align: center;
   /* margin-top: 250px; */
-  margin-top:100px;
-  
+  margin-top: 100px;
+
 }
 
 .approach-hero-section h3 {
@@ -4460,17 +4490,18 @@ body.home-page main {
   color: var(--vcn-footer);
   text-align: left;
 }
-.about-description{
+
+.about-description {
   font-size: 1rem;
   line-height: 1.8;
-  
+
 }
 
 .about-title {
-    font-size: 4rem;
-    font-weight: 700;
-    color: var(--vcn-footer);
-    margin-bottom: 0;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--vcn-footer);
+  margin-bottom: 0;
 }
 
 
@@ -5314,9 +5345,8 @@ body.home-page main {
 }
 
 .cart-item-wrapper {
-  border-top: 1px solid #d0d0c8;
   border-bottom: 2px solid #d0d0c8;
-  padding: 30px ;
+  padding: 30px;
 }
 
 .cart-product-image {
@@ -8720,7 +8750,7 @@ body.home-page main {
   font-size: 16px;
   font-weight: 600;
   color: white;
-  background: var(--vcn-primary);
+  background: var(--vcn-dark) !important;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -8729,7 +8759,7 @@ body.home-page main {
 }
 
 .contact-submit-button:hover:not(:disabled) {
-  background: var(--vcn-footer);
+  background: var(--vcn-darker) !important;
   box-shadow: 0 6px 14px rgba(29, 69, 3, 0.25);
   transform: translateY(-1px);
 }
@@ -10875,7 +10905,7 @@ body.home-page main {
 }
 
 /* Give the content column a bit of breathing room on all sizes */
-.sidebar-section + [class*="col-"] {
+.sidebar-section+[class*="col-"] {
   padding-left: 0;
 }
 
@@ -13198,7 +13228,6 @@ video {
   .vcn-testimonial-section,
   .vcn-stories-section,
   .vcn-product-section,
-  .vcn-new-product,
   .product-detail-section,
   .health-section-bg,
   .comparison-section,
@@ -13212,6 +13241,11 @@ video {
     padding-left: 40px !important;
     padding-right: 40px !important;
   }
+}
+
+.vcn-new-product {
+  padding-left: 67px !important;
+  padding-right: 67px !important;
 }
 
 @media (max-width: 992px) {
@@ -13290,6 +13324,7 @@ video {
   .h4 {
     font-size: 1.1rem !important;
   }
+
 }
 
 @media (max-width: 576px) {
@@ -13377,9 +13412,11 @@ video {
 
 #shopAccordion.dropdown-content.show {
   display: block !important;
-  max-height: 350px !important; /* Fixed maximum height */
+  max-height: 350px !important;
+  /* Fixed maximum height */
   overflow: hidden !important;
-  padding-bottom: 50px !important; /* Make room for the absolute footer */
+  padding-bottom: 50px !important;
+  /* Make room for the absolute footer */
 }
 
 #shopAccordion .dropdown-menu-mobile {
@@ -13389,7 +13426,8 @@ video {
 }
 
 #shopAccordion .mobile-products-scroll {
-  max-height: 300px !important; /* Limit products list height */
+  max-height: 300px !important;
+  /* Limit products list height */
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
   padding: 10px 15px !important;
@@ -13419,6 +13457,7 @@ video {
 
 /* Global desktop font size overrides for all main headings/titles */
 @media (min-width: 992px) {
+
   html body h1,
   html body .h1,
   html body .welcome-title.welcome-title.welcome-title,
@@ -13475,9 +13514,9 @@ html body .vcn-feature-description.vcn-feature-description.vcn-feature-descripti
 }
 
 
-@media(max-width:576px){
-  .product-detail-section{
-  padding: 0 !important;
-}
+@media(max-width:576px) {
+  .product-detail-section {
+    padding: 0 !important;
+  }
 
 }
