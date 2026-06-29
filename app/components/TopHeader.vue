@@ -8,7 +8,47 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { useCmsStore } from '~/stores/cms'
+import { useCmsApi } from '~/composables/useCmsApi'
+
+const cmsStore = useCmsStore()
+const { fetchSectionsBySlug } = useCmsApi()
+
+// Fetch common layout sections from the CMS API (isolated from page-level currentPage)
+const { data: commonCmsData } = await useAsyncData('common-layout-cms', () => fetchSectionsBySlug('common'))
+
+const topHeader = computed(() => {
+  // 1. Try to find top-header section in fetched common layout data
+  const sections = commonCmsData.value?.data || []
+  const cmsSection = sections.find(s => s.sectionKey === 'top-header' || s.sectionKey === 'topHeader' || s.name === 'topHeader')
+  
+  if (cmsSection) {
+    return {
+      title: cmsSection.title,
+      description: cmsSection.description,
+      extraData: cmsSection.extraData || {
+        arrow: cmsSection.buttonText || '→',
+        link: cmsSection.buttonLink || '/all-products'
+      }
+    }
+  }
+
+  // 2. Fallback to local static PAGE_DATA
+  const staticData = cmsStore.getPageSection('common', 'topheader')
+  if (staticData) {
+    return {
+      title: staticData.text,
+      description: staticData.highlightedText,
+      extraData: {
+        arrow: staticData.arrow,
+        link: staticData.link
+      }
+    }
+  }
+
+  return null
+})
 
 const isHidden = ref(false)
 const isHydrated = ref(false)

@@ -47,6 +47,7 @@ export const PAGE_DATA = {
   termsConditions: TERMS_CONDITIONS_PAGE_DATA,
   common: {
     sidebar: COMMON_DATA.sidebar,
+    topheader:COMMON_DATA.topHeader,
     navbar: COMMON_DATA.navbar,
     topFooter: COMMON_DATA.topFooter,
     bottomFooter: COMMON_DATA.bottomFooter

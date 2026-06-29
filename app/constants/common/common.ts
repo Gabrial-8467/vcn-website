@@ -1,5 +1,11 @@
 // src/constants/index.ts
 export const COMMON_DATA = {
+    topHeader: {
+        text: "Because Your Health",
+        highlightedText: "Deserves Better",
+        arrow: "→",
+        link: "/all-products"
+    },
     navbar: {
         logo: "/img/logo/logo.png",
 
