@@ -161,6 +161,8 @@ const isDiscountLabel = (label) => {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+  margin-left: -12px;
+  margin-right: -12px;
 }
 
 .product-grid-item {
