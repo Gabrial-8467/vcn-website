@@ -13429,6 +13429,7 @@ video {
   max-height: 300px !important;
   /* Limit products list height */
   overflow-y: auto !important;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding: 10px 15px !important;
 }

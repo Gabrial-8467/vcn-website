@@ -966,6 +966,7 @@ body.menu-open .custom-navbar-toggler .hamburger-line:nth-child(3) {
 .dropdown-content.show {
   max-height: 50vh;
   overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
 }
@@ -1204,6 +1205,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     max-height: 390px !important;
     /* Limit products list height */
     overflow-y: auto !important;
+    overscroll-behavior: contain;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
     list-style: none;
@@ -1424,6 +1426,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       max-height: 390px !important;
       /* Limit products list height */
       overflow-y: auto !important;
+      overscroll-behavior: contain;
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.05);
       list-style: none;
