@@ -38,13 +38,13 @@
                 <p class="routine-product-details" v-html="point.description"></p>
               </div>
 
-              <div class="row">
-                <div class="col-lg-6">
+              <div class="row justify-content-center justify-content-lg-start">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                   <ClientOnly>
                     <button v-if="!isBundleInCart()" @click="addBundleToCart" class="routine-cta-button">
                       {{ bundleButtonText || 'Add Bundle • Save 25%' }}
                     </button>
-                    <div v-else class="bundle-quantity-control">
+                    <div v-else class="bundle-quantity-control mx-auto mx-lg-0">
                       <button class="bundle-qty-btn minus" @click="decrementBundle">−</button>
                       <span class="bundle-qty-value">{{ getBundleQuantity() }}</span>
                       <button class="bundle-qty-btn plus" @click="incrementBundle">+</button>
@@ -144,7 +144,11 @@ const decrementBundle = () => {
 .routine-cta-button {
   display: block;
   width: 100%;
-  padding: 12px 24px;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  padding: 12px 20px;
   background: white;
   color: var(--vcn-primary);
   border: none;
@@ -155,6 +159,22 @@ const decrementBundle = () => {
   transition: background 0.3s;
   text-align: center;
   text-decoration: none;
+}
+
+@media (max-width: 991.98px) {
+  .routine-cta-button {
+    width: 260px !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .routine-cta-button {
+    width: 260px !important;
+    margin: 0 auto !important;
+    font-size: 14px !important;
+    padding: 10px 16px !important;
+  }
 }
 
 .bundle-quantity-control {

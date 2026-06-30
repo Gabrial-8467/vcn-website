@@ -1,13 +1,13 @@
 <template>
   <ClientOnly>
-    <section class="p-5 health-section-bg">
+    <section class="py-5 px-3 px-md-5 health-section-bg">
       <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-4 mb-md-5">
           <div class="col-12">
             <h1 class="vcn-section-title">{{ featureHeading || 'DBT Care Plus — Natural Solution for Blood Sugar' }}
             </h1>
             <p class="vcn-section-subtitle"
-              v-html="featureSubHeading || 'Our Ayurvedic formulation combines 11 powerful herbs, clinically trusted to manage blood sugar.'">
+               v-html="featureSubHeading || 'Our Ayurvedic formulation combines 11 powerful herbs, clinically trusted to manage blood sugar.'">
             </p>
           </div>
         </div>
@@ -140,8 +140,39 @@ const cleanUrl = (url) => {
 @media (max-width: 991px) {
   .vcn-showcase-img {
     height: auto !important;
-    max-height: 480px !important;
+    max-height: 380px !important;
     width: 100% !important;
+  }
+
+  .vcn-section-title {
+    font-size: 1.85rem !important;
+    text-align: center !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .vcn-section-subtitle {
+    font-size: 0.95rem !important;
+    text-align: center !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .vcn-feature-card {
+    text-align: center !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .vcn-feature-card img {
+    margin: 0 auto 0.75rem auto !important;
+    display: block !important;
+  }
+
+  .vcn-feature-divider {
+    margin: 0.75rem auto !important;
+    max-width: 120px !important;
+  }
+
+  .vcn-feature-description {
+    font-size: 0.88rem !important;
   }
 }
 </style>

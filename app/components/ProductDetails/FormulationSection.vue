@@ -260,29 +260,29 @@
   }
 
   .vcn-probiotic-heading-group .vcn-probiotic-callout-text {
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
+    line-height: 1.5;
     margin: 0;
     text-align: left;
   }
 
   .vcn-probiotic-product-display {
     order: 2 !important;
-    min-height: 500px !important;
     position: relative !important;
     display: block !important;
     width: 100% !important;
+    min-height: 380px !important;
     margin: 10px 0 !important;
   }
 
   .alternate-image {
     position: absolute !important;
     left: auto !important;
-    right: -80px !important;
+    right: -60px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    width: 115% !important;
-    max-width: 650px !important;
+    width: 110% !important;
+    max-width: 440px !important;
     height: auto !important;
     z-index: 5 !important;
   }
@@ -298,7 +298,7 @@
     position: absolute !important;
     width: 45% !important;
     padding: 0 !important;
-    padding-top: 15px !important;
+    padding-top: 12px !important;
     background: transparent !important;
     border: none !important;
     backdrop-filter: none !important;
@@ -309,8 +309,21 @@
     text-align: left !important;
   }
 
+  .vcn-probiotic-callout .vcn-probiotic-callout-title {
+    font-size: 0.78rem !important;
+    margin-bottom: 5px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+  }
+
+  .vcn-probiotic-callout .vcn-probiotic-callout-text {
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
   .alternative-callout-top {
-    top: 10% !important;
+    top: 5% !important;
     left: 0 !important;
     right: auto !important;
     bottom: auto !important;
@@ -318,7 +331,7 @@
 
   .alternative-callout-bottom {
     top: auto !important;
-    bottom: 0 !important;
+    bottom: 5% !important;
     left: 0 !important;
     right: auto !important;
   }
@@ -362,28 +375,47 @@
 @media (max-width: 575.98px) {
 
   .health-section-bg {
-    padding: 1rem 0.75rem;
+    padding: 0.85rem 0.5rem;
   }
 
   .health-section-below {
-    padding: 0 32px;
+    padding: 0 20px;
+    margin-top: 10px;
   }
 
   .video-centered {
-    max-width: 220px;
+    max-width: 150px;
+  }
+
+  .vcn-probiotic-content-wrapper {
+    gap: 1rem;
   }
 
   .vcn-probiotic-product-display {
-    min-height: 580px !important;
+    min-height: 380px !important;
   }
 
   .alternate-image {
-    max-width: 420px !important;
-    right: -90px !important;
+    max-width: 320px !important;
+    right: -100px !important;
   }
 
   .alternate-heading {
-    font-size: 2.0rem !important;
+    font-size: 1.45rem !important;
+  }
+
+  .vcn-probiotic-heading-group .vcn-probiotic-callout-text {
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .vcn-probiotic-callout .vcn-probiotic-callout-title {
+    font-size: 0.70rem !important;
+  }
+
+  .vcn-probiotic-callout .vcn-probiotic-callout-text {
+    font-size: 0.62rem !important;
+    line-height: 1.35 !important;
   }
 }
 </style>

@@ -32,9 +32,9 @@
           </NuxtLink>
 
           <ul class="desktop-nav">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" @mouseleave="handleMouseLeave">
               <NuxtLink class="nav-link" to="">Shop</NuxtLink>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" @click="handleDropdownClick">
                 <!-- Scrollable product list -->
                 <li class="dropdown-products-scroll">
                   <ul class="dropdown-products-list">
@@ -55,9 +55,9 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" @mouseleave="handleMouseLeave">
               <NuxtLink class="nav-link" to="">Science</NuxtLink>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" @click="handleDropdownClick">
                 <li>
                   <NuxtLink class="dropdown-item" to="/all-products">
                     <img src="/img/drop-down/abput us.png" alt="Approach" />
@@ -109,9 +109,9 @@
                 </li> -->
               </ul>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" @mouseleave="handleMouseLeave">
               <NuxtLink class="nav-link" to="">About Us</NuxtLink>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" @click="handleDropdownClick">
                 <li>
                   <NuxtLink class="dropdown-item" to="/vcn-R-D">
                     <img src="/img/drop-down/blog.png" alt="Research" />
@@ -333,6 +333,24 @@ const closeMobileMenu = () => {
     // Close all accordions too
     document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'))
     document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'))
+  }
+}
+
+const handleDropdownClick = (event) => {
+  if (event.target.closest('a')) {
+    const menu = event.currentTarget
+    if (menu) {
+      console.log('Force closing dropdown menu:', menu)
+      menu.classList.add('force-closed')
+    }
+  }
+}
+
+const handleMouseLeave = (event) => {
+  const menu = event.currentTarget.querySelector('.dropdown-menu')
+  if (menu) {
+    console.log('Resetting force-closed dropdown menu:', menu)
+    menu.classList.remove('force-closed')
   }
 }
 
@@ -1192,6 +1210,14 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     overflow: hidden !important;
   }
 
+  .desktop-nav .dropdown-menu.force-closed {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    transition: none !important;
+  }
+
   .desktop-nav .dropdown:hover .dropdown-menu {
     opacity: 1;
     visibility: visible;
@@ -2022,6 +2048,15 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       font-size: 13px;
       gap: 3px;
     }
+  }
+
+  /* Global dropdown force close class - overrides all hover rules and media queries */
+  .desktop-nav .dropdown-menu.force-closed {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    transition: none !important;
   }
 
 </style>

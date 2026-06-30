@@ -183,7 +183,7 @@ const hero = computed(() =>
 }
 
 .hero-btn:hover {
-  background: var(--vcn-primary, #5e6c1f);
+  background: var(--vcn-darker);
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
