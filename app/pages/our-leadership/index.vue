@@ -6,169 +6,156 @@
         <div class="col-md-3 col-lg-3 sidebar-section">
           <AboutSidebar />
         </div>
-        <div class="col-md-9 col-lg-9">
-          <div class="leadership-page">
-            
-            <!-- Hero Section -->
-            <section class="hero-sectioning" data-aos="fade-up" data-aos-duration="600">
-              <div class="hero-glow-blob"></div>
-              <div class="container-fluid">
-                <div class="row align-items-center position-relative">
-                  <div class="col-lg-6 order-2 order-lg-1">
-                    <div class="hero-contents">
-                      <div class="hero-tag">OUR VISIONARIES</div>
-                      <h1 class="hero-title">{{ leadership.hero.title }}</h1>
-                      <div class="hero-divider"></div>
-                      <p class="hero-text">
-                        {{ leadership.hero.description }}
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 order-1 order-lg-2">
-                    <div class="hero-image-wrapper">
-                      <div class="hero-image-backdrop"></div>
-                      <img :src="leadership.hero.image" :alt="leadership.hero.title" class="hero-img" />
-                    </div>
-                  </div>
-                </div>
+
+        <div class="col-md-9 col-lg-9 lp-content-col">
+          <div class="lp-root">
+
+            <!-- ═══════════════════════════════════════════
+                 HERO  –  centered, plain white bg
+            ═══════════════════════════════════════════ -->
+            <div class="lp-hero" data-aos="fade-up" data-aos-duration="700">
+              <p class="lp-eyebrow">LEGACY OF TRUST</p>
+              <h1 class="lp-headline">Our leadership</h1>
+              <p class="lp-hero-body">
+                At VCN Lifestyle, our board is guided by a collective vision of radical transparency
+                and holistic integrity. We believe that true wellness stems from ethical foundations
+                and a steadfast commitment to scientific excellence.
+              </p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 BOARD OF DIRECTORS
+            ═══════════════════════════════════════════ -->
+            <div class="lp-board" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+              <div class="lp-board-head">
+                <h2 class="lp-board-title">{{ leadership.boardSection.title }}</h2>
+                <span class="lp-board-bar"></span>
               </div>
-            </section>
 
-            <!-- Board of Directors Section -->
-            <section class="board-section" data-aos="fade-up" data-aos-duration="600">
-              <div class="container">
-                <div class="section-header">
-                  <h2 class="section-title">
-                    {{ leadership.boardSection.title }}
-                  </h2>
-                  <!-- <div class="section-title-line"></div> -->
-                </div>
-
-                <div class="team-grid">
-                  <div
-                    v-for="(member, index) in leadership.boardSection.members"
-                    :key="index"
-                    class="team-member-wrapper"
-                    data-aos="fade-up"
-                    :data-aos-delay="index * 100"
-                    data-aos-duration="500"
-                  >
-                    <div class="team-card">
-                      <div class="team-image-container">
-                        <img
-                          :src="member.image"
-                          :alt="member.name"
-                          class="team-img"
-                        />
-                      </div>
-
-                      <div class="team-info">
-                        <h3 class="team-name">
-                          {{ member.name }}
-                        </h3>
-
-                        <p class="team-titles">
-                          {{ member.title }}
-                        </p>
-
-                        <button
-                          @click="openBio(member)"
-                          class="view-bio-link"
-                        >
-                          <span>{{ leadership.boardSection.btntext }}</span>
-                          <svg class="bio-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
+              <ul class="lp-member-list">
+                <li
+                  v-for="(member, i) in leadership.boardSection.members"
+                  :key="i"
+                  class="lp-member"
+                  data-aos="fade-up"
+                  :data-aos-delay="i * 80"
+                  data-aos-duration="500"
+                >
+                  <!-- circular photo -->
+                  <div class="lp-photo-wrap">
+                    <img
+                      :src="member.image"
+                      :alt="member.name"
+                      class="lp-photo"
+                    />
                   </div>
-                </div>
-              </div>
-            </section>
 
-            <!-- Connect Section -->
-            <section class="connect-section" data-aos="zoom-in" data-aos-duration="600">
-              <div class="connect-bg-mesh"></div>
-              <div class="container position-relative">
-                <div class="row align-items-center">
-                  <div class="col-lg-5">
-                    <h2 class="connect-title">{{ leadership.connectSection.title }}</h2>
+                  <!-- text block -->
+                  <div class="lp-member-body">
+                    <h3 class="lp-mname">{{ member.name }}</h3>
+                    <p class="lp-mrole">{{ member.title }}</p>
+                    <p class="lp-mbio">{{ member.bio }}</p>
+                    <button class="lp-bio-btn" @click="openBio(member)">
+                      View Bio
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                      </svg>
+                    </button>
                   </div>
-                  <div class="col-lg-4">
-                    <p class="connect-text">
-                      {{ leadership.connectSection.description }}
-                    </p>
-                  </div>
-                  <div class="col-lg-3 text-lg-end mt-4 mt-lg-0">
-                    <button class="contact-btn">
-                      <i class="bi" :class="leadership.connectSection.icon || 'bi-plus-circle'"></i>
-                      <span>{{ leadership.connectSection.buttonText }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 CONNECT SECTION  –  dark olive card
+            ═══════════════════════════════════════════ -->
+            <div class="lp-connect" data-aos="fade-up" data-aos-duration="700">
+              <!-- decorative circle top-right -->
+              <div class="lp-connect-orb"></div>
+
+              <div class="lp-connect-inner">
+                <div class="lp-connect-text">
+                  <h2 class="lp-ct-title">{{ leadership.connectSection.title }}</h2>
+                  <p class="lp-ct-body">{{ leadership.connectSection.description }}</p>
+                  <div class="lp-ct-btns">
+                    <button class="lp-btn-primary">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                      </svg>
+                      {{ leadership.connectSection.buttonText }}
                     </button>
                   </div>
                 </div>
-              </div>
-            </section>
 
-            <!-- Bio Modal -->
-            <Transition name="fade">
-              <div v-if="showModal" class="modal-overlay" @click.self="closeBio">
-                <div class="modal-card">
-                  <button class="modal-close-btn" @click="closeBio" aria-label="Close modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="18" y1="6" x2="6" y2="18"></line>
-                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                <div class="lp-connect-icon">
+                  <div class="lp-icon-ring">
+                    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                     </svg>
-                  </button>
-                  <div class="modal-grid">
-                    <div class="modal-sidebar-img">
-                      <img :src="selectedMember.image" :alt="selectedMember.name" />
-                    </div>
-                    <div class="modal-bio-content">
-                      <div class="modal-header-info">
-                        <h2 class="modal-name">{{ selectedMember.name }}</h2>
-                        <p class="modal-title">{{ selectedMember.title }}</p>
-                      </div>
-                      <div class="modal-divider"></div>
-                      <div class="modal-bio-text">
-                        <p>{{ selectedMember.bio }}</p>
-                      </div>
-                      
-                      <!-- Professional Details Timeline/Grid -->
-                      <div class="modal-credentials" v-if="selectedMember.education || selectedMember.experience">
-                        <div v-if="selectedMember.education" class="credential-item">
-                          <div class="credential-header">
-                            <svg class="cred-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                              <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
-                            </svg>
-                            <h4>Education</h4>
-                          </div>
-                          <p>{{ selectedMember.education }}</p>
-                        </div>
-                        <div v-if="selectedMember.experience" class="credential-item">
-                          <div class="credential-header">
-                            <svg class="cred-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                            </svg>
-                            <h4>Experience</h4>
-                          </div>
-                          <p>{{ selectedMember.experience }}</p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
-            </Transition>
+            </div>
 
-          </div>
+          </div><!-- /lp-root -->
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ═══════════════════════════════════════════
+       BIO MODAL (teleported to body)
+  ═══════════════════════════════════════════ -->
+  <Transition name="lp-fade">
+    <div v-if="showModal" class="lp-modal-backdrop" @click.self="closeBio">
+      <div class="lp-modal">
+        <button class="lp-modal-close" @click="closeBio" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+
+        <div class="lp-modal-grid">
+          <div class="lp-modal-photo">
+            <img :src="selectedMember.image" :alt="selectedMember.name" />
+          </div>
+          <div class="lp-modal-info">
+            <h2 class="lp-modal-name">{{ selectedMember.name }}</h2>
+            <p class="lp-modal-role">{{ selectedMember.title }}</p>
+            <hr class="lp-modal-hr" />
+            <p class="lp-modal-bio">{{ selectedMember.bio }}</p>
+
+            <div class="lp-modal-creds" v-if="selectedMember.education || selectedMember.experience">
+              <div v-if="selectedMember.education" class="lp-cred">
+                <div class="lp-cred-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+                  </svg>
+                  <span>Education</span>
+                </div>
+                <p>{{ selectedMember.education }}</p>
+              </div>
+              <div v-if="selectedMember.experience" class="lp-cred">
+                <div class="lp-cred-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                  <span>Experience</span>
+                </div>
+                <p>{{ selectedMember.experience }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <script setup>
@@ -179,670 +166,622 @@ import { useCmsApi } from '~/composables/useCmsApi'
 const cmsStore = useCmsStore()
 const { getCmsImageUrl } = useCmsApi()
 
-// Fetch page sections from API during SSR/routing
 await useAsyncData('leadership-cms', () => cmsStore.fetchSectionsBySlug('leadership'))
 
 const leadership = computed(() => {
   const sections = cmsStore.currentPage?.sections || []
-  
-  // Find sections by name/key
-  const heroSec = sections.find(s => s.name === 'hero' || s.sectionKey === 'leadership-hero')
-  const boardSec = sections.find(s => s.name === 'boardSection' || s.sectionKey === 'leadership-board')
-  const connectSec = sections.find(s => s.name === 'connectSection' || s.sectionKey === 'leadership-connect')
-  
-  // Fallbacks
-  const fallback = cmsStore.getPageSection('about', 'leadership')
-  
-  // Resolve hero image
-  const rawHeroImage = heroSec?.image || heroSec?.extraData?.image
-  let heroImage = ''
-  if (rawHeroImage) {
-    if (typeof rawHeroImage === 'string') {
-      heroImage = rawHeroImage
-    } else {
-      heroImage = getCmsImageUrl(rawHeroImage)
-    }
-  }
+  const heroSec    = sections.find(s => s.name === 'hero'          || s.sectionKey === 'leadership-hero')
+  const boardSec   = sections.find(s => s.name === 'boardSection'  || s.sectionKey === 'leadership-board')
+  const connectSec = sections.find(s => s.name === 'connectSection'|| s.sectionKey === 'leadership-connect')
+  const fallback   = cmsStore.getPageSection('about', 'leadership')
 
-  // Parse board members
+  // hero image
+  const rawHeroImg = heroSec?.image || heroSec?.extraData?.image
+  const heroImage  = rawHeroImg
+    ? (typeof rawHeroImg === 'string' ? rawHeroImg : getCmsImageUrl(rawHeroImg))
+    : (fallback?.hero?.image || '/img/leadership/ourleadership.jpeg')
+
+  // board members
   const fallbackMembers = fallback?.boardSection?.members || []
   let parsedMembers = fallbackMembers
-  
-  if (boardSec?.items && boardSec.items.length > 0) {
-    parsedMembers = boardSec.items.map((m, idx) => {
+  if (boardSec?.items?.length > 0) {
+    parsedMembers = boardSec.items.map(m => {
       const rawImg = m.image || m.extraData?.image
-      let memberImage = ''
-      if (rawImg) {
-        if (typeof rawImg === 'string') {
-          memberImage = rawImg
-        } else {
-          memberImage = getCmsImageUrl(rawImg)
-        }
-      }
-      
-      const mName = m.extraData?.name || m.title || ''
-      const fallbackM = fallbackMembers.find(fm => fm.name.trim().toLowerCase() === mName.trim().toLowerCase())
-      
+      const memberImage = rawImg
+        ? (typeof rawImg === 'string' ? rawImg : getCmsImageUrl(rawImg))
+        : ''
+      const mName   = m.extraData?.name || m.title || ''
+      const fbMatch = fallbackMembers.find(fm => fm.name.trim().toLowerCase() === mName.trim().toLowerCase())
       return {
-        name: mName,
+        name:  mName,
         title: m.extraData?.title || m.subtitle || '',
-        image: memberImage || fallbackM?.image || `/img/leadership/our team.png`,
-        bio: m.extraData?.bio || m.description || ''
+        image: memberImage || fbMatch?.image || '/img/leadership/our team.png',
+        bio:   m.extraData?.bio || m.description || ''
       }
     })
   }
 
   return {
     hero: {
-      title: heroSec?.title || fallback?.hero?.title || 'Our leadership',
+      title:       heroSec?.title       || fallback?.hero?.title       || 'Our leadership',
       description: heroSec?.description || fallback?.hero?.description || '',
-      image: heroImage || fallback?.hero?.image || '/img/leadership/ourleadership.jpeg'
+      image:       heroImage
     },
     boardSection: {
-      title: boardSec?.title || fallback?.boardSection?.title || 'Board of directors',
+      title:   boardSec?.title || fallback?.boardSection?.title || 'Board of directors',
       btntext: boardSec?.items?.[0]?.extraData?.btntext || fallback?.boardSection?.btntext || 'View Bio',
       members: parsedMembers
     },
     connectSection: {
-      title: connectSec?.title || fallback?.connectSection?.title || 'Connect with our leadership',
+      title:       connectSec?.title       || fallback?.connectSection?.title       || 'Connect with our leadership',
       description: connectSec?.description || fallback?.connectSection?.description || '',
-      buttonText: connectSec?.buttonText || fallback?.connectSection?.buttonText || 'Contact the Board',
-      icon: connectSec?.extraData?._extraData?.icon || fallback?.connectSection?.icon || 'bi-plus-circle'
+      buttonText:  connectSec?.buttonText  || fallback?.connectSection?.buttonText  || 'Contact the Board',
+      icon:        connectSec?.extraData?._extraData?.icon || fallback?.connectSection?.icon || 'bi-people'
     }
   }
 })
 
-useHead({
-  bodyAttrs: {
-    class: "product-details-page",
-  },
-})
+useHead({ bodyAttrs: { class: 'product-details-page' } })
 
-const showModal = ref(false)
+const showModal      = ref(false)
 const selectedMember = ref({})
 
 const openBio = (member) => {
   selectedMember.value = member
-  showModal.value = true
-  document.body.style.overflow = "hidden"
+  showModal.value      = true
+  document.body.style.overflow = 'hidden'
 }
-
 const closeBio = () => {
   showModal.value = false
-  document.body.style.overflow = "auto"
+  document.body.style.overflow = 'auto'
 }
 </script>
 
 <style scoped>
-/* Page Layout */
-.leadership-page {
+/* ─── layout wrapper ────────────────────────────────── */
+.lp-content-col { padding-left: 0; padding-right: 0; }
+
+.lp-root {
   font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
   color: #2c3e50;
-  overflow: hidden;
+  background: #ffffff;
+  padding-bottom: 60px;
 }
 
-/* Hero Section */
-.hero-sectioning {
-  background: linear-gradient(135deg, #f0f4f1 0%, #e1ebe5 100%);
-  padding: 50px 30px;
-  margin-bottom: 30px;
-  border-radius: 24px;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+/* ─── HERO ──────────────────────────────────────────── */
+.lp-hero {
+  text-align: center;
+  padding: 56px 60px 44px;
+  background: #ffffff;
 }
 
-.hero-glow-blob {
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(76, 175, 80, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.hero-tag {
-  font-size: 13px;
+.lp-eyebrow {
+  font-size: 11.5px;
   font-weight: 700;
+  letter-spacing: 3.5px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #2e7d32;
-  margin-bottom: 16px;
+  color: #8c9e93;
+  margin: 0 0 16px;
 }
 
-.hero-title {
-  font-size: 48px;
+.lp-headline {
+  font-size: 46px;
   font-weight: 700;
-  color: #1a4d2e;
-  margin-bottom: 20px;
+  color: #1c3625;
   line-height: 1.15;
+  margin: 0 0 22px;
+  font-family: 'Outfit', 'Inter', serif;
 }
 
-.hero-divider {
-  width: 60px;
-  height: 4px;
-  background: #2e7d32;
-  border-radius: 2px;
-  margin-bottom: 24px;
+.lp-hero-body {
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: #5e7265;
+  max-width: 580px;
+  margin: 0 auto;
 }
 
-.hero-text {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #4a5d4e;
-  max-width: 520px;
+/* ─── BOARD ─────────────────────────────────────────── */
+.lp-board {
+  padding: 0 60px 50px;
 }
 
-.hero-image-wrapper {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
+.lp-board-head {
+  margin-bottom: 32px;
 }
 
-.hero-image-backdrop {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: -20px;
-  bottom: -20px;
-  background: rgba(46, 125, 50, 0.08);
-  border-radius: 20px;
-  z-index: 1;
-}
-
-.hero-img {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  z-index: 2;
-  transition: transform 0.5s ease;
-  object-fit: cover;
-}
-
-.hero-sectioning:hover .hero-img {
-  transform: translateY(-5px);
-}
-
-/* Section Header */
-.section-header {
-  margin-bottom: 30px;
-  position: relative;
-  text-align: start;
-  justify-content: start;
-}
-
-.section-title {
-  font-size: 2.25rem;
+.lp-board-title {
+  font-size: 24px;
   font-weight: 700;
-  color: #1a4d2e;
-  margin-bottom: 12px;
+  color: #1c3625;
+  margin: 0 0 10px;
 }
 
-@media (max-width: 767px) {
-  .section-title {
-    font-size: 1.75rem;
-  }
-}
-
-/* .section-title-line {
-  width: 50px;
+.lp-board-bar {
+  display: block;
+  width: 36px;
   height: 3px;
   background: #b89047;
   border-radius: 2px;
-} */
-
-/* Board Section */
-.board-section {
-  padding: 40px 0;
-  background: #fcfdfd;
 }
 
-.team-grid {
-  row-gap: 30px;
+/* member list */
+.lp-member-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.team-member-wrapper {
-  height: 100%;
-}
-
-/* Team Cards */
-.team-card {
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 100%;
+.lp-member {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 32px 0;
+  border-bottom: 1px solid #e8eceb;
+  transition: background 0.2s;
 }
 
-.team-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(26, 77, 46, 0.08);
+.lp-member:first-child {
+  border-top: 1px solid #e8eceb;
 }
 
-.team-image-container {
-  position: relative;
-  width: 100%;
-  height: 350px;
+/* circular photo */
+.lp-photo-wrap {
+  flex-shrink: 0;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
   overflow: hidden;
-  background: #eef2ef;
+  background: #edf2ee;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.team-img {
+.lp-member:hover .lp-photo-wrap {
+  transform: scale(1.05);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.14);
+}
+
+.lp-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(100%);
-  transition: filter 0.6s ease, transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  object-position: top center;
+  display: block;
 }
 
-.team-card:hover .team-img {
-  filter: grayscale(0%);
-  transform: scale(1.04);
+/* text */
+.lp-member-body {
+  flex: 1;
+  padding-top: 10px;
 }
 
-.team-card-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(26, 77, 46, 0.4);
-  opacity: 0;
-  display: flex;
+.lp-mname {
+  font-size: 21px;
+  font-weight: 700;
+  color: #1c3625;
+  margin: 0 0 4px;
+}
+
+.lp-mrole {
+  font-size: 13px;
+  font-weight: 500;
+  color: #8c9e93;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+  margin: 0 0 12px;
+}
+
+.lp-mbio {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #5e7265;
+  margin: 0 0 18px;
+  max-width: 500px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* View Bio button — matches reference (dark green, small, rounded) */
+.lp-bio-btn {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  transition: opacity 0.4s ease;
-  z-index: 3;
-}
-
-.team-card:hover .team-card-overlay {
-  opacity: 1;
-}
-
-.overlay-bio-btn {
-  background: white;
-  color: #1a4d2e;
+  gap: 7px;
+  background: #2a4a33;
+  color: #ffffff;
   border: none;
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-size: 14px;
+  border-radius: 7px;
+  padding: 9px 20px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transform: translateY(15px);
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.3s ease;
+  letter-spacing: 0.2px;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
 }
 
-.overlay-bio-btn:hover {
-  background: #f5f5f5;
+.lp-bio-btn svg {
+  transition: transform 0.25s;
+  flex-shrink: 0;
 }
 
-.team-card:hover .overlay-bio-btn {
-  transform: translateY(0);
+.lp-bio-btn:hover {
+  background: #1c3625;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(28,54,37,0.22);
 }
 
-.team-info {
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-  justify-content: space-between;
+.lp-bio-btn:hover svg {
+  transform: translateX(3px);
 }
 
-.team-name {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a4d2e;
-  margin: 0 0 6px 0;
-  text-align: center;
-}
-
-.team-titles {
-  font-size: 14px;
-  font-weight: 500;
-  color: #889e90;
-  margin: 0 0 20px 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-align: center;
-}
-
-.view-bio-link {
-  background: none;
-  border: none;
-  color: #1a4d2e;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: color 0.3s ease;
-  position: relative;
-}
-
-.view-bio-link span::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #b89047;
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.3s ease-out;
-}
-
-.view-bio-link:hover {
-  color: #b89047;
-}
-
-.view-bio-link:hover span::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-.bio-arrow {
-  transition: transform 0.3s ease;
-}
-
-.view-bio-link:hover .bio-arrow {
-  transform: translateX(4px);
-}
-
-/* Connect Section */
-.connect-section {
-  background: linear-gradient(135deg, #113c22 0%, #1a4d2e 100%);
-  padding: 45px 40px;
-  border-radius: 24px;
-  margin: 40px auto;
-  max-width: 1200px;
+/* ─── CONNECT CARD ──────────────────────────────────── */
+.lp-connect {
+  margin: 16px 60px 0;
+  background: #3d5c46;
+  border-radius: 18px;
+  padding: 48px 52px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(26, 77, 46, 0.25);
 }
 
-.connect-bg-mesh {
+/* decorative orb top-right */
+.lp-connect-orb {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+  top: -70px;
+  right: -70px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(255,255,255,0.09) 0%, transparent 70%);
+  border-radius: 50%;
   pointer-events: none;
 }
 
-.connect-title {
-  font-size: 36px;
-  font-weight: 700;
-  color: white;
-  margin: 0;
-  line-height: 1.2;
+.lp-connect-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  position: relative;
+  z-index: 1;
 }
 
-.connect-text {
-  font-size: 16px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
+.lp-connect-text { flex: 1; }
+
+.lp-ct-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 0 0 14px;
+  max-width: 300px;
 }
 
-.contact-btn {
-  background: #ffffff;
-  border: none;
-  color: #1a4d2e;
-  padding: 15px 36px;
-  border-radius: 30px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.2s ease;
+.lp-ct-body {
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.75);
+  margin: 0 0 28px;
+  max-width: 400px;
+}
+
+/* stacked buttons (match reference) */
+.lp-ct-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.lp-btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
+  background: #ffffff;
+  color: #1c3625;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 26px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
 }
 
-.contact-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  background-color: #f8faf9;
+.lp-btn-primary:hover {
+  background: #f0f5f1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
 }
 
-.contact-btn:active {
-  transform: translateY(-1px);
+.lp-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: #ffffff;
+  border: 1.5px solid rgba(255,255,255,0.45);
+  border-radius: 9px;
+  padding: 11px 26px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s, transform 0.2s;
 }
 
-.contact-btn i {
-  font-size: 18px;
+.lp-btn-outline:hover {
+  border-color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
 }
 
-/* Modal Styling with Transition fade */
-.modal-overlay {
+/* icon circle (right side of connect card) */
+.lp-connect-icon {
+  flex-shrink: 0;
+}
+
+.lp-icon-ring {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.14);
+  border: 1.5px solid rgba(255,255,255,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.88);
+}
+
+/* ─── MODAL ─────────────────────────────────────────── */
+.lp-modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(11, 31, 18, 0.7);
-  backdrop-filter: blur(12px);
+  inset: 0;
+  background: rgba(10,28,16,0.72);
+  backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 99999;
-  padding: 20px;
+  padding: 24px;
 }
 
-.modal-card {
-  background: white;
-  border-radius: 24px;
-  max-width: 950px;
+.lp-modal {
+  background: #ffffff;
+  border-radius: 22px;
+  max-width: 920px;
   width: 100%;
-  max-height: 85vh;
+  max-height: 88vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 32px 64px rgba(0,0,0,0.28);
 }
 
-.modal-close-btn {
+.lp-modal-close {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  width: 44px;
-  height: 44px;
+  top: 20px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  cursor: pointer;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.09);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1a4d2e;
+  color: #1c3625;
+  cursor: pointer;
   z-index: 10;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: background 0.25s, transform 0.25s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.07);
 }
 
-.modal-close-btn:hover {
-  background: #1a4d2e;
-  color: white;
+.lp-modal-close:hover {
+  background: #1c3625;
+  color: #ffffff;
   transform: rotate(90deg);
 }
 
-.modal-grid {
+.lp-modal-grid {
   display: grid;
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 768px) {
-  .modal-grid {
-    grid-template-columns: 42% 58%;
-  }
+  .lp-modal-grid { grid-template-columns: 40% 60%; }
 }
 
-.modal-sidebar-img {
-  width: 100%;
-  height: 420px;
+.lp-modal-photo {
+  background: #eef2ee;
+  min-height: 380px;
   overflow: hidden;
-  background: #eef2ef;
 }
 
 @media (min-width: 768px) {
-  .modal-sidebar-img {
-    height: 100%;
-    min-height: 520px;
-  }
+  .lp-modal-photo { min-height: 520px; }
 }
 
-.modal-sidebar-img img {
+.lp-modal-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
+  display: block;
 }
 
-.modal-bio-content {
-  padding: 30px;
+.lp-modal-info {
+  padding: 36px 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.modal-header-info {
-  margin-bottom: 20px;
-}
-
-.modal-name {
-  font-size: 32px;
+.lp-modal-name {
+  font-size: 30px;
   font-weight: 700;
-  color: #1a4d2e;
-  margin: 0 0 6px 0;
+  color: #1c3625;
+  margin: 0 0 6px;
 }
 
-.modal-title {
-  font-size: 16px;
+.lp-modal-role {
+  font-size: 14px;
   font-weight: 600;
-  color: #889e90;
+  color: #8c9e93;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin: 0;
 }
 
-.modal-divider {
-  width: 100%;
-  height: 1px;
-  background: rgba(0, 0, 0, 0.06);
-  margin-bottom: 24px;
+.lp-modal-hr {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  margin: 20px 0 22px;
 }
 
-.modal-bio-text p {
-  font-size: 16px;
+.lp-modal-bio {
+  font-size: 15px;
   line-height: 1.85;
   color: #4a5568;
-  margin-bottom: 28px;
+  margin: 0 0 24px;
 }
 
-/* Professional Credentials */
-.modal-credentials {
+.lp-modal-creds {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  padding-top: 24px;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding-top: 22px;
 }
 
-@media (min-width: 576px) {
-  .modal-credentials {
-    grid-template-columns: 1fr 1fr;
-  }
-}
+.lp-cred { display: flex; flex-direction: column; gap: 6px; }
 
-.credential-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.credential-header {
+.lp-cred-label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.cred-icon {
+  gap: 7px;
   color: #b89047;
 }
 
-.credential-item h4 {
-  font-size: 15px;
+.lp-cred-label span {
+  font-size: 13px;
   font-weight: 700;
-  color: #1a4d2e;
-  margin: 0;
+  color: #1c3625;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.credential-item p {
-  font-size: 14px;
+.lp-cred p {
+  font-size: 13.5px;
   line-height: 1.6;
   color: #718096;
   margin: 0;
 }
 
-/* Transitions */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
+/* ─── TRANSITION ─────────────────────────────────────── */
+.lp-fade-enter-active,
+.lp-fade-leave-active { transition: opacity 0.28s ease; }
+.lp-fade-enter-from,
+.lp-fade-leave-to     { opacity: 0; }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Responsive Styles */
+/* ─── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 991px) {
-  .hero-sectioning {
-    padding: 35px 20px;
-  }
-
-  .hero-title {
-    font-size: 38px;
-  }
-
-  .connect-section {
-    padding: 35px 24px;
-    margin: 30px 15px;
-  }
-
-  .connect-title {
-    font-size: 28px;
-  }
+  .lp-hero   { padding: 40px 28px 32px; }
+  .lp-board  { padding: 0 28px 40px; }
+  .lp-connect { margin: 16px 28px 0; padding: 36px 32px; }
 }
 
 @media (max-width: 767px) {
-  .hero-contents {
-    padding: 30px 0 0 0;
+  .lp-hero   { padding: 32px 20px 28px; }
+  .lp-headline { font-size: 32px; }
+
+  .lp-board  { padding: 0 20px 32px; }
+
+  .lp-member {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 24px 0;
   }
 
-  .hero-image-backdrop {
-    display: none;
+  .lp-mbio { margin-left: auto; margin-right: auto; }
+
+  .lp-bio-btn { align-self: center; }
+
+  .lp-connect { margin: 12px 0 0; border-radius: 14px; padding: 28px 22px; }
+  .lp-connect-icon { display: none; }
+  .lp-ct-title { max-width: 100%; }
+
+  .lp-modal-creds { grid-template-columns: 1fr; }
+  .lp-modal-info  { padding: 28px 24px; }
+}
+</style>
+<style>
+/*
+  ===========================================================
+  STICKY-SAFE LAYOUT OVERRIDES (unscoped)
+  ===========================================================
+*/
+.product-detail-section,
+.product-detail-section .container-fluid,
+.product-detail-section .row {
+  overflow: visible !important;
+  transform: none !important;
+  filter: none !important;
+  contain: none !important;
+  will-change: auto !important;
+}
+
+@media (min-width: 992px) {
+  .product-detail-section .row {
+    display: flex !important;
+    align-items: stretch !important;
   }
 
-  .modal-bio-content {
-    padding: 32px;
+  .sidebar-section {
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: stretch !important;
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    transform: none !important;
+    background: transparent !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .product-detail-section {
+    padding: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .product-detail-section > .container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .product-detail-section .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .sidebar-section {
+    height: auto !important;
+    min-height: auto !important;
+    position: relative !important;
+    top: 0 !important;
+    overflow: visible !important;
+    border-right: none !important;
+    background: transparent !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }
 </style>

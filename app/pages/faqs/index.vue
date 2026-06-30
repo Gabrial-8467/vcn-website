@@ -301,3 +301,72 @@ useHead({
   }
 }
 </style>
+<style>
+/*
+  ===========================================================
+  STICKY-SAFE LAYOUT OVERRIDES (unscoped)
+  ===========================================================
+*/
+.product-detail-section,
+.product-detail-section .container-fluid,
+.product-detail-section .row {
+  overflow: visible !important;
+  transform: none !important;
+  filter: none !important;
+  contain: none !important;
+  will-change: auto !important;
+}
+
+@media (min-width: 992px) {
+  .product-detail-section .row {
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  .sidebar-section {
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: stretch !important;
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    transform: none !important;
+    background: transparent !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .product-detail-section {
+    padding: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .product-detail-section > .container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .product-detail-section .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .sidebar-section {
+    height: auto !important;
+    min-height: auto !important;
+    position: relative !important;
+    top: 0 !important;
+    overflow: visible !important;
+    border-right: none !important;
+    background: transparent !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+</style>

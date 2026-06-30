@@ -1,66 +1,132 @@
 <template>
-  <section class="product-detail-section  mt-3">
+  <section class="product-detail-section mt-3">
     <div class="container-fluid">
       <div class="row">
         <!-- Left Sidebar Navigation -->
         <div class="col-md-3 col-lg-3 sidebar-section">
           <AboutSidebar />
         </div>
-        <div class="col-md-9 col-lg-9">
-          <div class="news-content">
-            <!-- HERO -->
-            <section class="news-hero">
-              <img :src="newsData.hero.image" :alt="newsData.hero.title" class="news-banner" />
 
-              <div class="hero-title">
+        <!-- Right Main News Content -->
+        <div class="col-md-9 col-lg-9">
+          <div class="news-content-wrapper">
+            
+            <!-- HERO BANNER -->
+            <section class="news-hero" :style="{ backgroundImage: `url(${heroBgImage})` }">
+              <div class="news-hero-overlay"></div>
+              <div class="news-hero-content">
+                <span class="press-media-tag">Press & Media</span>
                 <h1>{{ newsData.hero.title }}</h1>
+                <p class="news-hero-desc">
+                  Tracing our global impact and thought leadership in the modern wellness landscape. From breakthrough clinical research to lifestyle innovations.
+                </p>
               </div>
             </section>
 
-            <!-- MEDIA TITLE -->
-
-            <div class="media-heading">
-              <h2>{{ newsData.mediaCoverage.title }}</h2>
-            </div>
-
-            <!-- YEAR FILTER -->
-
-            <div class="year-tabs">
-              <button v-for="year in newsData.years" :key="year" @click="activeYear = year"
-                :class="{ active: activeYear === year }">
-                {{ year }}
-              </button>
-            </div>
-
-            <!-- NEWS GRID -->
-
-            <div class="news-grid">
-              <div v-for="item in filteredNews" :key="item.title" class="news-card">
-                <div class="news-logo">
-                  {{ item.logo }}
+            <!-- MEDIA TITLE & YEAR FILTER -->
+            <div class="news-filter-bar">
+              <div class="tabs-container">
+                <div class="year-tabs-pills">
+                  <button v-for="year in newsData.years" :key="year" @click="activeYear = year"
+                    :class="['year-pill', { active: activeYear === year }]">
+                    {{ year }}
+                  </button>
                 </div>
-
-                <div class="news-info">
-                  <span class="news-date">
-                    {{ item.date }}
-                  </span>
-
-                  <h3 class="news-title">
-                    {{ item.title }}
-                  </h3>
-
-                  <p class="news-source">
-                    {{ item.source }}
-                  </p>
-                </div>
+                <button class="all-publications-btn" aria-label="All Publications">
+                  <i class="bi bi-sliders filter-icon"></i>
+                  <span>ALL PUBLICATIONS</span>
+                </button>
               </div>
             </div>
+
+            <!-- NEWS LISTINGS -->
+            <div class="news-listings">
+              <!-- FEATURED ARTICLE (First article of the active year) -->
+              <div v-if="featuredArticle" class="featured-news-card">
+                <div class="featured-news-info">
+                  <span class="featured-meta">
+                    {{ featuredArticle.source }} &bull; {{ featuredArticle.date }}
+                  </span>
+                  <h3 class="featured-title">
+                    {{ featuredArticle.title }}
+                  </h3>
+                  <p class="featured-excerpt">
+                    {{ featuredArticle.excerpt || 'The brand\'s commitment to ethical sourcing and clinical transparency has set a new benchmark for the wellness industry, according to recent analysts.' }}
+                  </p>
+                  <NuxtLink to="/blog" class="read-article-link">
+                    <span>Read Full Article</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </NuxtLink>
+                </div>
+                <div class="featured-news-media">
+                  <img src="/img/news/featured-leaves.jpg" alt="Featured Article Image" class="featured-image" />
+                </div>
+              </div>
+
+              <!-- SUBSEQUENT ARTICLES (Remaining articles of the active year) -->
+              <div class="remaining-news-list" v-if="remainingArticles.length > 0">
+                <div v-for="item in remainingArticles" :key="item.title" class="news-row-card">
+                  <div class="news-row-info">
+                    <span class="news-row-meta">
+                      {{ item.source }} &bull; {{ item.date }}
+                    </span>
+                    <h4 class="news-row-title">
+                      {{ item.title }}
+                    </h4>
+                  </div>
+                  <div class="news-row-action">
+                    <NuxtLink to="/blog" class="external-link-btn" aria-label="Read Article">
+                      <i class="bi bi-box-arrow-up-right"></i>
+                    </NuxtLink>
+                  </div>
+                </div>
+              </div>
+
+              <!-- NO ARTICLES FOUND -->
+              <div v-if="!featuredArticle" class="no-news-placeholder">
+                <i class="bi bi-newspaper placeholder-icon"></i>
+                <p>No press coverage found for the year {{ activeYear }}.</p>
+              </div>
+            </div>
+
+            <!-- WIDGETS SECTION (Quote & Media Inquiries) -->
+            <div class="news-widgets-grid">
+              <!-- Quote Widget -->
+              <div class="widget-quote-card">
+                <div class="quote-symbol">”</div>
+                <blockquote class="quote-text">
+                  "VCN Lifestyle isn't just selling products; they are curating a movement of conscious vitality that is long overdue."
+                </blockquote>
+                <div class="quote-author">
+                  <div class="author-avatar">
+                    <span class="avatar-fallback">AS</span>
+                  </div>
+                  <div class="author-meta">
+                    <cite class="author-name">Aravind Sharma</cite>
+                    <span class="author-title">Editor, Global Health Review</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Media Inquiries Widget -->
+              <div class="widget-inquiry-card">
+                <h3>Media Inquiries</h3>
+                <p>
+                  For press kits, interviews, and brand assets, please contact our global communications team.
+                </p>
+                <NuxtLink to="/contact-us" class="press-office-btn">
+                  Contact Press Office
+                </NuxtLink>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
+
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useCmsStore } from '~/stores/cms'
@@ -101,7 +167,7 @@ const newsData = computed(() => {
   return {
     hero: {
       title: heroSec?.title || fallback?.hero?.title || 'VCN In News',
-      image: heroImage || fallback?.hero?.image || '/img/news/news.png'
+      image: heroImage || fallback?.hero?.image || '/img/news/news-redesign.jpg'
     },
     mediaCoverage: {
       title: mediaSec?.title || fallback?.mediaCoverage?.title || 'Media Coverage'
@@ -109,6 +175,15 @@ const newsData = computed(() => {
     years,
     articles
   }
+})
+
+// Dynamically use the high-quality redesign image if default points to the old design
+const heroBgImage = computed(() => {
+  const img = newsData.value.hero.image
+  if (!img || img === '/img/news/news.png') {
+    return '/img/news/news.png'
+  }
+  return img
 })
 
 const activeYear = ref(2026)
@@ -128,271 +203,622 @@ const filteredNews = computed(() =>
   ) 
 )
 
+const featuredArticle = computed(() => {
+  const articles = filteredNews.value || []
+  return articles.length > 0 ? articles[0] : null
+})
+
+const remainingArticles = computed(() => {
+  const articles = filteredNews.value || []
+  return articles.length > 1 ? articles.slice(1) : []
+})
+
 useHead({
   bodyAttrs: {
     class: "product-details-page",
   },
+  link: [
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@100..900&display=swap'
+    }
+  ]
 })
 </script>
 
 <style scoped>
-.news-content {
-  padding: 30px;
-  background: #f6f6f6;
+.product-detail-section {
+  background: var(--vcn-white, #fff);
 }
 
-/* HERO */
+.news-content-wrapper {
+  padding: 40px;
+  background: var(--vcn-white, #fff);
+  border: 1px solid rgba(29, 69, 3, 0.08);
+  box-shadow: 0 10px 30px rgba(29, 69, 3, 0.04);
+  border-radius: 24px;
+  min-height: 100vh;
+}
 
+/* HERO BANNER */
 .news-hero {
   position: relative;
-  margin-bottom: 30px;
+  height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 10px 30px rgba(29, 69, 3, 0.03);
 }
 
-.news-banner {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.hero-title {
+.news-hero-overlay {
   position: absolute;
-  bottom: 20px;
-  left: 30px;
-  background: #c9e1b4;
-  padding: 10px 25px;
-  border-radius: 6px;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(29, 69, 3, 0.72) 0%,
+    rgba(29, 69, 3, 0.30) 60%,
+    transparent 100%
+  );
+  z-index: 1;
 }
 
-.hero-title h1 {
+.news-hero-content {
+  position: relative;
+  padding: 45px;
+  z-index: 2;
+  max-width: 650px;
+  text-align: left;
+}
+
+.press-media-tag {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--vcn-badge, #d3fa99);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.news-hero h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--vcn-white, #fff);
+  margin: 0 0 16px 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.1;
+}
+
+.news-hero-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
-  font-size: 28px;
+  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
 }
 
-/* HEADING */
+/* FILTER BAR */
+.news-filter-bar {
+  margin-bottom: 35px;
+}
 
-.media-heading {
+.tabs-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(29, 69, 3, 0.08);
+}
+
+.year-tabs-pills {
+  display: flex;
+  gap: 12px;
+}
+
+.year-pill {
+  background: transparent;
+  border: 1px solid rgba(29, 69, 3, 0.15);
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  color: var(--vcn-darker, #1C3A13);
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.year-pill:hover {
+  background-color: rgba(29, 69, 3, 0.05);
+  color: var(--vcn-dark, #1D4503);
+  border-color: rgba(29, 69, 3, 0.3);
+}
+
+.year-pill.active {
+  background-color: var(--vcn-dark, #1D4503);
+  color: var(--vcn-white, #fff);
+  border-color: var(--vcn-dark, #1D4503);
+}
+
+.all-publications-btn {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--vcn-darker, #1C3A13);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease;
+  padding: 8px 12px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.all-publications-btn:hover {
+  color: var(--vcn-dark, #1D4503);
+}
+
+.filter-icon {
+  font-size: 14px;
+}
+
+/* LISTINGS */
+.news-listings {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+/* FEATURED CARD */
+.featured-news-card {
+  display: flex;
+  background: var(--vcn-white, #fff);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(29, 69, 3, 0.03);
+  border: 1px solid rgba(29, 69, 3, 0.08);
+  align-items: stretch;
+}
+
+.featured-news-info {
+  flex: 1.3;
+  padding: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.featured-meta {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #6b7280;
+  margin-bottom: 12px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.featured-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--vcn-darker, #1C3A13);
+  line-height: 1.35;
+  margin: 0 0 16px 0;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.featured-excerpt {
+  font-size: 15px;
+  color: rgba(28, 58, 19, 0.8);
+  line-height: 1.65;
+  margin: 0 0 28px 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+.read-article-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vcn-dark, #1D4503);
+  text-decoration: none;
+  width: fit-content;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.read-article-link i {
+  transition: transform 0.25s ease;
+}
+
+.read-article-link:hover i {
+  transform: translateX(5px);
+}
+
+.read-article-link:hover {
+  color: var(--vcn-darker, #1C3A13);
+}
+
+.featured-news-media {
+  flex: 1;
+  min-height: 280px;
+  position: relative;
+}
+
+.featured-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* LIST CARDS */
+.remaining-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.news-row-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--vcn-base-bg, #F6F7EE);
+  padding: 22px 30px;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(29, 69, 3, 0.05);
+}
+
+.news-row-card:hover {
+  background: var(--vcn-white, #fff);
+  transform: translateY(-2px);
+  border-color: rgba(29, 69, 3, 0.12);
+  box-shadow: 0 4px 16px rgba(29, 69, 3, 0.06);
+}
+
+.news-row-info {
+  text-align: left;
+}
+
+.news-row-meta {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9ca3af;
+  display: block;
+  margin-bottom: 6px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.news-row-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--vcn-darker, #1C3A13);
+  margin: 0;
+  line-height: 1.45;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.external-link-btn {
+  background: var(--vcn-white, #fff);
+  border: 1px solid rgba(29, 69, 3, 0.12);
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vcn-dark, #1D4503);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(29, 69, 3, 0.02);
+}
+
+.external-link-btn:hover {
+  background: var(--vcn-dark, #1D4503);
+  color: var(--vcn-white, #fff);
+  border-color: var(--vcn-dark, #1D4503);
+}
+
+/* PLACEHOLDER */
+.no-news-placeholder {
   text-align: center;
+  padding: 60px 20px;
+  background: var(--vcn-base-bg, #F6F7EE);
+  border-radius: 12px;
+  color: #6b7280;
+}
+
+.placeholder-icon {
+  font-size: 44px;
+  color: #d1d5db;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* WIDGETS */
+.news-widgets-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-top: 50px;
+  margin-bottom: 40px;
+}
+
+.widget-quote-card {
+  background: var(--vcn-gradient, linear-gradient(135deg, #1D4503 0%, #1C3A13 100%)) !important;
+  color: var(--vcn-white, #fff);
+  padding: 50px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(29, 69, 3, 0.08);
+}
+
+.quote-symbol {
+  font-size: 90px;
+  line-height: 0.1;
+  font-family: Georgia, serif;
+  color: rgba(255, 255, 255, 0.12);
+  position: absolute;
+  top: 45px;
+  left: 30px;
+}
+
+.quote-text {
+  font-size: 20px;
+  font-style: italic;
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.7;
+  margin: 30px 0 40px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.quote-author {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.author-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.author-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--vcn-white, #fff);
+  font-style: normal;
+  font-family: 'Outfit', sans-serif;
+}
+
+.author-title {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Outfit', sans-serif;
+}
+
+.widget-inquiry-card {
+  background: var(--vcn-base-bg, #F6F7EE);
+  border: 1px solid rgba(29, 69, 3, 0.08);
+  padding: 50px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(29, 69, 3, 0.03);
+}
+
+.widget-inquiry-card h3 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--vcn-darker, #1C3A13);
+  margin-bottom: 12px;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.widget-inquiry-card p {
+  font-size: 14px;
+  color: var(--vcn-darker, #1C3A13);
+  opacity: 0.85;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  max-width: 320px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.press-office-btn {
+  background-color: var(--vcn-dark, #1D4503);
+  color: var(--vcn-white, #fff) !important;
+  border: 2px solid var(--vcn-dark, #1D4503);
+  padding: 12px 32px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  font-family: 'Outfit', sans-serif;
+  box-shadow: 0 4px 6px rgba(29, 69, 3, 0.05);
+}
+
+.press-office-btn:hover {
+  background-color: var(--vcn-badge, #d3fa99);
+  color: var(--vcn-darker, #1C3A13) !important;
+  border-color: var(--vcn-badge, #d3fa99);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(29, 69, 3, 0.1);
+}
+
+/* OLDER COVERAGE */
+.older-coverage-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
   margin-bottom: 20px;
 }
 
-.media-heading h2 {
-  font-size: 32px;
-  font-weight: 600;
-}
-
-/* YEAR TABS */
-
-.year-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 30px;
-}
-
-.year-tabs button {
-  background: none;
+.older-coverage-link {
+  background: transparent;
   border: none;
-  padding-bottom: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.year-tabs .active {
-  border-bottom: 3px solid #e30613;
-  font-weight: 600;
-}
-
-/* NEWS GRID */
-
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-/* CARD */
-
-.news-card {
-  display: flex;
-  gap: 15px;
-  background: #fff;
-  padding: 18px;
-  border-radius: 8px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
-  align-items: center;
-}
-
-.news-logo {
-  width: 60px;
-  height: 60px;
-  background: #000;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-}
-
-.news-date {
-  font-size: 13px;
-  color: #777;
-}
-
-.news-title {
-  font-size: 16px;
-  margin: 6px 0;
-}
-
-.news-source {
   font-size: 14px;
-  color: #666;
+  font-weight: 600;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  transition: color 0.2s ease;
 }
 
-/* MOBILE */
+.older-coverage-link:hover {
+  color: var(--vcn-dark, #1D4503);
+}
+
+/* Sidebar overrides to match website theme on this page */
+:deep(.about-sidebar-bg) {
+  background: var(--vcn-white, #fff) !important;
+  border: 1px solid rgba(29, 69, 3, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(29, 69, 3, 0.04) !important;
+}
+
+:deep(.sidebar-menu-item) {
+  color: var(--vcn-darker, #1C3A13) !important;
+}
+
+:deep(.sidebar-menu-item:hover) {
+  background: rgba(29, 69, 3, 0.05) !important;
+  color: var(--vcn-dark, #1D4503) !important;
+}
+
+:deep(.sidebar-menu-item.active) {
+  color: var(--vcn-dark, #1D4503) !important;
+}
+
+:deep(.sidebar-menu-item.active::before) {
+  background: var(--vcn-dark, #1D4503) !important;
+}
+
+:deep(.about-sidebar-mobile) {
+  background: var(--vcn-white, #fff) !important;
+  border-bottom: 1px solid rgba(29, 69, 3, 0.08) !important;
+}
+
+:deep(.mobile-dropdown-trigger) {
+  border-bottom: 2px solid var(--vcn-dark, #1D4503) !important;
+  color: var(--vcn-darker, #1C3A13) !important;
+}
+
+:deep(.mobile-dropdown-list) {
+  background: var(--vcn-white, #fff) !important;
+  border: 1px solid rgba(29, 69, 3, 0.08) !important;
+}
+
+:deep(.mobile-dropdown-item) {
+  color: var(--vcn-darker, #1C3A13) !important;
+}
+
+:deep(.mobile-dropdown-item:hover),
+:deep(.mobile-dropdown-item.active-item) {
+  background: rgba(29, 69, 3, 0.05) !important;
+  color: var(--vcn-dark, #1D4503) !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+  .news-content-wrapper {
+    padding: 20px;
+  }
+}
 
 @media (max-width: 768px) {
-  .sidebar-section {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  
-  .product-detail-section {
-    margin-top: 0 !important;
-  }
-  
-  .product-detail-section .container-fluid {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  
-  .product-detail-section .row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  
-  .col-md-9 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .news-content {
-    padding: 0;
-    background: #fff;
-  }
-
   .news-hero {
-    margin-bottom: 0;
-  }
-
-  .news-banner {
-    border-radius: 0;
-    width: 100%;
-    display: block;
-  }
-
-  .hero-title {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    background: #e5f7d5; /* Light green background */
-    padding: 15px 10px;
-    border-radius: 0;
-    text-align: center;
-    width: 100%;
-    margin-top: -1px;
-  }
-
-  .hero-title h1 {
-    font-size: 24px;
-    color: #1d593f; /* Dark green text */
-    font-weight: 600;
-    margin: 0;
-  }
-
-  .media-heading {
-    margin: 25px 0 20px 0;
-    text-align: center;
-  }
-
-  .media-heading h2 {
-    font-size: 28px;
-    font-weight: 600;
-    color: #111;
-  }
-
-  .year-tabs {
-    display: flex;
-    justify-content: space-around;
-    background: #f8f9fa;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #dee2e6;
-    padding: 0;
-    gap: 0;
-  }
-
-  .year-tabs button {
-    flex: 1;
-    padding: 12px 0;
-    font-size: 15px;
-    color: #495057;
-    border-bottom: 3px solid transparent;
-    font-weight: normal;
-    text-align: center;
-  }
-
-  .year-tabs .active {
-    border-bottom: 3px solid #e30613;
-    font-weight: 700;
-    color: #212529;
-  }
-
-  .news-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 0 15px 30px 15px;
-  }
-
-  .news-card {
-    display: flex;
-    gap: 15px;
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    height: auto;
+    min-height: 250px;
     align-items: center;
-    border: 1px solid #f1f5f9;
   }
-
-  .news-logo {
-    width: 90px;
-    height: 90px;
-    font-size: 40px;
-    flex-shrink: 0;
-    border-radius: 4px;
+  
+  .news-hero-content {
+    padding: 30px 20px;
   }
-
-  .news-info {
-    flex-grow: 1;
-    text-align: left;
+  
+  .news-hero h1 {
+    font-size: 32px;
   }
-
-  .news-date {
-    font-size: 12px;
-    color: #888;
+  
+  .tabs-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
   }
-
-  .news-title {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: #1a202c;
-    margin: 4px 0 6px 0;
+  
+  .all-publications-btn {
+    justify-content: center;
   }
-
-  .news-source {
-    font-size: 12px;
-    color: #64748b;
-    margin: 0;
+  
+  .featured-news-card {
+    flex-direction: column;
+  }
+  
+  .featured-news-info {
+    padding: 30px 24px;
+  }
+  
+  .featured-news-media {
+    height: 220px;
+    order: -1; /* Image on top on mobile */
+  }
+  
+  .news-row-card {
+    padding: 18px 20px;
+  }
+  
+  .news-row-title {
+    font-size: 16px;
+  }
+  
+  .news-widgets-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .widget-quote-card, .widget-inquiry-card {
+    padding: 35px 25px;
   }
 }
 </style>
+ 
