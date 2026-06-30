@@ -231,6 +231,7 @@
 
   .vcn-viacap-hero-area-below {
     padding: 0 12px;
+    overflow: hidden !important;
   }
 
   .vcn-probiotic-content-wrapper {

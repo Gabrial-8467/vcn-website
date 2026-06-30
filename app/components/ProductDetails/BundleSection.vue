@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <section class="health-section-bg">
-      <div class="container px-3 px-md-0">
+      <div class="container px-0">
         <div class="routine-bundle-wrapper">
           <div class="routine-bundle-container px-4 px-lg-5">
             <div class="row align-items-center g-4 g-lg-5">

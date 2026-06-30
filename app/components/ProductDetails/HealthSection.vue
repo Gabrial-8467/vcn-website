@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <section class="health-section-bg">
-      <div class="container px-3 px-md-0">
+      <div class="container px-0">
         <div class="health-section" style="position: relative; min-height: 600px; overflow: hidden; border-radius: 32px;">
           <img v-if="supportBgImage" :src="supportBgImage"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
