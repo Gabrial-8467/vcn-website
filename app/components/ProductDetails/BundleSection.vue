@@ -1,55 +1,57 @@
 <template>
   <ClientOnly>
     <section class="health-section-bg">
-      <div class="routine-bundle-wrapper">
-        <div class="container routine-bundle-container">
-          <div class="row align-items-center g-4 g-lg-5">
-            <!-- Left Column: Product Images -->
-            <div class="col-lg-6 routine-products-column">
-              <div class="routine-wrapper">
-                <img class="routine-main-image booster" :src="bundleImage || '/img/productsdetails/BOOSTER.png'"
-                  alt="routine products" />
+      <div class="container px-0">
+        <div class="routine-bundle-wrapper">
+          <div class="routine-bundle-container px-4 px-lg-5">
+            <div class="row align-items-center g-4 g-lg-5">
+              <!-- Left Column: Product Images -->
+              <div class="col-lg-6 routine-products-column">
+                <div class="routine-wrapper">
+                  <img class="routine-main-image booster" :src="bundleImage || '/img/productsdetails/BOOSTER.png'"
+                    alt="routine products" />
 
-                <!-- Label 1 -->
-                <div class="label-block label-1">
-                  <div class="routine-product-label">
-                    DELIVERS BENEFICIAL BACTERIA
-                  </div>
-                  <div class="routine-label-connector"></div>
-                </div>
-
-                <!-- Label 2 -->
-                <div class="label-block label-2">
-                  <div class="routine-product-label">NOURISHES THE BACTERIA</div>
-                  <div class="routine-label-connector"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Column: Content -->
-            <div class="col-lg-6 routine-content-column">
-              <h2 class="routine-main-heading">
-                {{ bundleHeading || 'Natural Blood Sugar Control Bundle' }}
-              </h2>
-
-              <div v-for="(point, index) in bundleKeyPoints" :key="index" class="routine-product-description"
-                :class="{ 'mb-4': index === bundleKeyPoints.length - 1 }">
-                <h3 class="routine-product-name">{{ point.title }}</h3>
-                <p class="routine-product-details" v-html="point.description"></p>
-              </div>
-
-              <div class="row justify-content-center justify-content-lg-start">
-                <div class="col-12 col-sm-10 col-md-8 col-lg-6">
-                  <ClientOnly>
-                    <button v-if="!isBundleInCart()" @click="addBundleToCart" class="routine-cta-button">
-                      {{ bundleButtonText || 'Add Bundle • Save 25%' }}
-                    </button>
-                    <div v-else class="bundle-quantity-control mx-auto mx-lg-0">
-                      <button class="bundle-qty-btn minus" @click="decrementBundle">−</button>
-                      <span class="bundle-qty-value">{{ getBundleQuantity() }}</span>
-                      <button class="bundle-qty-btn plus" @click="incrementBundle">+</button>
+                  <!-- Label 1 -->
+                  <div class="label-block label-1">
+                    <div class="routine-product-label">
+                      DELIVERS BENEFICIAL BACTERIA
                     </div>
-                  </ClientOnly>
+                    <div class="routine-label-connector"></div>
+                  </div>
+
+                  <!-- Label 2 -->
+                  <div class="label-block label-2">
+                    <div class="routine-product-label">NOURISHES THE BACTERIA</div>
+                    <div class="routine-label-connector"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: Content -->
+              <div class="col-lg-6 routine-content-column">
+                <h2 class="routine-main-heading">
+                  {{ bundleHeading || 'Natural Blood Sugar Control Bundle' }}
+                </h2>
+
+                <div v-for="(point, index) in bundleKeyPoints" :key="index" class="routine-product-description"
+                  :class="{ 'mb-4': index === bundleKeyPoints.length - 1 }">
+                  <h3 class="routine-product-name">{{ point.title }}</h3>
+                  <p class="routine-product-details" v-html="point.description"></p>
+                </div>
+
+                <div class="row justify-content-center justify-content-lg-start">
+                  <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+                    <ClientOnly>
+                      <button v-if="!isBundleInCart()" @click="addBundleToCart" class="routine-cta-button">
+                        {{ bundleButtonText || 'Add Bundle • Save 25%' }}
+                      </button>
+                      <div v-else class="bundle-quantity-control mx-auto mx-lg-0">
+                        <button class="bundle-qty-btn minus" @click="decrementBundle">−</button>
+                        <span class="bundle-qty-value">{{ getBundleQuantity() }}</span>
+                        <button class="bundle-qty-btn plus" @click="incrementBundle">+</button>
+                      </div>
+                    </ClientOnly>
+                  </div>
                 </div>
               </div>
             </div>
@@ -142,13 +144,14 @@ const decrementBundle = () => {
 
 <style scoped>
 .routine-cta-button {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 100% !important;
   box-sizing: border-box !important;
-  white-space: normal !important;
-  word-wrap: break-word !important;
-  padding: 12px 20px;
+  white-space: nowrap !important;
+  padding: 0 20px;
   background: white;
   color: var(--vcn-primary);
   border: none;
@@ -159,6 +162,7 @@ const decrementBundle = () => {
   transition: background 0.3s;
   text-align: center;
   text-decoration: none;
+  height: 48px !important;
 }
 
 @media (max-width: 991.98px) {
@@ -173,35 +177,53 @@ const decrementBundle = () => {
     width: 260px !important;
     margin: 0 auto !important;
     font-size: 14px !important;
-    padding: 10px 16px !important;
+    height: 44px !important;
   }
 }
 
 .bundle-quantity-control {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
   background: white;
   border: 2px solid var(--vcn-primary);
   border-radius: 25px;
-  padding: 10px 31px;
-  width: 130px;
+  padding: 0 25px;
+  width: 100%;
+  height: 48px !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 991.98px) {
+  .bundle-quantity-control {
+    width: 260px !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .bundle-quantity-control {
+    width: 260px !important;
+    margin: 0 auto !important;
+    height: 44px !important;
+    padding: 0 20px;
+  }
 }
 
 .bundle-qty-btn {
   background: none;
   border: none;
   color: var(--vcn-primary);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
-  width: 20px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .bundle-qty-btn:hover {
@@ -212,7 +234,8 @@ const decrementBundle = () => {
 .bundle-qty-value {
   color: var(--vcn-primary);
   font-weight: 600;
-  min-width: 10px;
+  font-size: 16px;
+  min-width: 20px;
   text-align: center;
 }
 </style>

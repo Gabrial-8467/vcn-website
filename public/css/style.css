@@ -101,8 +101,10 @@ a {
   text-decoration: none;
 }
 
+html,
 body {
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  max-width: 100% !important;
 }
 
 /* ========== TOP HEADER ========== */
@@ -13617,8 +13619,58 @@ body.home-page main {
   }
 
 
-  @media(max-width:576px) {
-    .product-detail-section {
-      padding: 0 !important;
-    }
+@media(max-width:576px) {
+  .product-detail-section {
+    padding: 0 !important;
   }
+
+}
+
+/* Perfect alignment override for all sections with the navbar */
+.vcn-whole-body-section,
+.hero-content,
+.vcn-cobiotics-section,
+.vcn-probiotic-info-section,
+.vcn-human-container,
+.vcn-testimonial-section,
+.vcn-stories-section,
+.vcn-product-section,
+.vcn-new-product,
+.product-detail-section,
+.health-section-bg,
+.comparison-section,
+.testing-standards-wrapper,
+.probiotic-hero-section,
+.vcn-difference-section,
+.gut-stats-main-section,
+.comparison-table-main-section,
+.strains-info-main-section,
+.reviews-section {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+@media (max-width: 576px) {
+  .vcn-whole-body-section,
+  .hero-content,
+  .vcn-cobiotics-section,
+  .vcn-probiotic-info-section,
+  .vcn-human-container,
+  .vcn-testimonial-section,
+  .vcn-stories-section,
+  .vcn-product-section,
+  .vcn-new-product,
+  .product-detail-section,
+  .health-section-bg,
+  .comparison-section,
+  .testing-standards-wrapper,
+  .probiotic-hero-section,
+  .vcn-difference-section,
+  .gut-stats-main-section,
+  .comparison-table-main-section,
+  .strains-info-main-section,
+  .reviews-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}

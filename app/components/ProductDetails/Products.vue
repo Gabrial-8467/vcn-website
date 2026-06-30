@@ -240,12 +240,40 @@ const addToCart = async (product) => {
   transform: scale(1.05) !important;
 }
 
-/* Mobile responsive adjustments */
-@media (max-width: 768px) {
+/* Mobile and Tablet responsive adjustments */
+@media (max-width: 991.98px) {
+  .product-card {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 24px !important;
+  }
+
   .product-image-wrapper {
     width: 100% !important;   /* Full width container on mobile */
-    height: 220px !important;  /* Increased consistent height on mobile viewports */
+    height: 220px !important;  /* Consistent height on mobile viewports */
     margin-bottom: 15px !important;
+    justify-content: center !important;
+  }
+
+  .product-label {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .product-title {
+    font-size: 1.5rem !important;
+  }
+
+  .product-description {
+    font-size: 1rem !important;
+  }
+
+  .product-price {
+    font-size: 18px !important;
+  }
+
+  .product-actions {
+    justify-content: center !important;
   }
 }
 </style>

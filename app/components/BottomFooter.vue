@@ -116,6 +116,21 @@ const footer = computed(() => cmsStore.bottomFooterData)
   transition: all 0.3s ease !important;
 }
 
+/* Tall/Square Screens Responsiveness Fixes */
+@media (min-width: 768px) and (min-height: 900px) {
+  .bottom-footer-wrapper {
+    height: 450px !important;
+    min-height: 450px !important;
+    max-height: 450px !important;
+  }
+}
+
+@media (min-width: 1200px) and (max-aspect-ratio: 1.35) {
+  .bottom-footer-wrapper .vcn-awaken-gif {
+    transform: scale(4.2) !important;
+  }
+}
+
 /* Laptop Screens (1200px - 1399px) */
 @media (max-width: 1399px) and (min-width: 1200px) {
   .bottom-footer-wrapper .vcn-awaken-gif {
