@@ -13524,3 +13524,27 @@ html body .vcn-feature-description.vcn-feature-description.vcn-feature-descripti
   }
 
 }
+
+/* Perfect alignment override for all sections with the navbar */
+.vcn-whole-body-section,
+.hero-content,
+.vcn-cobiotics-section,
+.vcn-probiotic-info-section,
+.vcn-human-container,
+.vcn-testimonial-section,
+.vcn-stories-section,
+.vcn-product-section,
+.vcn-new-product,
+.product-detail-section,
+.health-section-bg,
+.comparison-section,
+.testing-standards-wrapper,
+.probiotic-hero-section,
+.vcn-difference-section,
+.gut-stats-main-section,
+.comparison-table-main-section,
+.strains-info-main-section,
+.reviews-section {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}

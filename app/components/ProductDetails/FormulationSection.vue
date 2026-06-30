@@ -208,7 +208,8 @@
 @media (max-width: 991.98px) {
 
   .health-section-bg {
-    padding: 1.5rem 1rem;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
   }
 
   .health-section-below {
@@ -271,8 +272,9 @@
     position: relative !important;
     display: block !important;
     width: 100% !important;
+    max-width: 540px !important;
     min-height: 380px !important;
-    margin: 10px 0 !important;
+    margin: 20px auto !important;
   }
 
   .alternate-image {
@@ -372,10 +374,61 @@
   }
 }
 
+/* Tablet Specific Adjustments to make the section more compact and fit perfectly */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .health-section-bg {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .health-section-below {
+    margin-top: 0 !important;
+  }
+
+  .video-centered {
+    max-width: 190px !important;
+  }
+
+  .alternate-heading {
+    font-size: 1.8rem !important;
+  }
+
+  .vcn-probiotic-heading-group {
+    gap: 15px !important;
+  }
+
+  .vcn-probiotic-content-wrapper {
+    gap: 1.5rem !important;
+  }
+
+  .vcn-probiotic-product-display {
+    max-width: 440px !important;
+    min-height: 310px !important;
+  }
+
+  .alternate-image {
+    max-width: 320px !important;
+    right: -40px !important;
+  }
+
+  .vcn-probiotic-callout {
+    width: 42% !important;
+  }
+
+  .alternative-callout-top {
+    top: 8% !important;
+  }
+
+  .alternative-callout-bottom {
+    bottom: 8% !important;
+  }
+}
+
 @media (max-width: 575.98px) {
 
   .health-section-bg {
-    padding: 0.85rem 0.5rem;
+    padding-top: 0.85rem !important;
+    padding-bottom: 0.85rem !important;
   }
 
   .health-section-below {

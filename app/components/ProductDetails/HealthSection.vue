@@ -1,53 +1,55 @@
 <template>
   <ClientOnly>
     <section class="health-section-bg">
-      <div class="health-section" style="position: relative; min-height: 600px;">
-        <img v-if="supportBgImage" :src="supportBgImage"
-          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
-        <div style="position: relative; z-index: 1;">
-          <!-- Desktop Version -->
-          <div class="d-none d-md-block">
-            <div class="container">
-              <h4>{{ supportMainTitle || 'Your body needs natural Ayurvedic support to fight diabetes.' }}</h4>
-              <h1 class="mb-5"
-                v-html="supportTitle || 'DBT Care Plus is the herbal juice <br />to fuel your body and control blood sugar.'">
-              </h1>
-            </div>
-            <div class="container">
-              <div class="feature-top">
-                <div class="feature-bg">
-                  <div class="row g-4">
-                    <!-- Dynamic Features from API -->
-                    <div v-for="(point, index) in supportKeyPoints" :key="index" class="col-lg-4 col-md-6">
-                      <div class="feature-card">
-                        <div class="icon-wrapper">
-                          <img :src="point.icon || `/img/icons/icon-${index + 1}.png`" :alt="point.title" />
+      <div class="container px-3 px-md-0">
+        <div class="health-section" style="position: relative; min-height: 600px; overflow: hidden; border-radius: 32px;">
+          <img v-if="supportBgImage" :src="supportBgImage"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
+          <div style="position: relative; z-index: 1;">
+            <!-- Desktop Version -->
+            <div class="d-none d-md-block px-4 px-lg-5 pt-5">
+              <div class="px-2">
+                <h4>{{ supportMainTitle || 'Your body needs natural Ayurvedic support to fight diabetes.' }}</h4>
+                <h1 class="mb-5"
+                  v-html="supportTitle || 'DBT Care Plus is the herbal juice <br />to fuel your body and control blood sugar.'">
+                </h1>
+              </div>
+              <div class="px-2">
+                <div class="feature-top">
+                  <div class="feature-bg">
+                    <div class="row g-4">
+                      <!-- Dynamic Features from API -->
+                      <div v-for="(point, index) in supportKeyPoints" :key="index" class="col-lg-4 col-md-6">
+                        <div class="feature-card">
+                          <div class="icon-wrapper">
+                            <img :src="point.icon || `/img/icons/icon-${index + 1}.png`" :alt="point.title" />
+                          </div>
+                          <h3 class="feature-title">{{ point.title }}</h3>
+                          <p class="feature-description">{{ point.description }}</p>
                         </div>
-                        <h3 class="feature-title">{{ point.title }}</h3>
-                        <p class="feature-description">{{ point.description }}</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Mobile Version: Horizontal Glassmorphic Slider -->
-          <div class="d-block d-md-none mobile-health-layout">
-            <div class="container text-start p-0">
-              <h4 class="mobile-subtitle">{{ supportMainTitle || 'Your body needs natural Ayurvedic support to fight diabetes.' }}</h4>
-              <h1 class="mobile-title" v-html="supportTitle || 'DBT Care Plus is the herbal juice <br />to fuel your body and control blood sugar.'"></h1>
-            </div>
-            
-            <div class="mobile-scroll-container">
-              <div class="features-scroll-wrapper">
-                <div v-for="(point, index) in supportKeyPoints" :key="index" class="feature-card-mobile">
-                  <div class="mobile-icon-wrapper">
-                    <img :src="point.icon || `/img/icons/icon-${index + 1}.png`" :alt="point.title" class="mobile-icon" />
+            <!-- Mobile Version: Horizontal Glassmorphic Slider -->
+            <div class="d-block d-md-none mobile-health-layout">
+              <div class="text-start px-3">
+                <h4 class="mobile-subtitle">{{ supportMainTitle || 'Your body needs natural Ayurvedic support to fight diabetes.' }}</h4>
+                <h1 class="mobile-title" v-html="supportTitle || 'DBT Care Plus is the herbal juice <br />to fuel your body and control blood sugar.'"></h1>
+              </div>
+              
+              <div class="mobile-scroll-container">
+                <div class="features-scroll-wrapper">
+                  <div v-for="(point, index) in supportKeyPoints" :key="index" class="feature-card-mobile">
+                    <div class="mobile-icon-wrapper">
+                      <img :src="point.icon || `/img/icons/icon-${index + 1}.png`" :alt="point.title" class="mobile-icon" />
+                    </div>
+                    <h3 class="mobile-feature-title">{{ point.title }}</h3>
+                    <p class="mobile-feature-description">{{ point.description }}</p>
                   </div>
-                  <h3 class="mobile-feature-title">{{ point.title }}</h3>
-                  <p class="mobile-feature-description">{{ point.description }}</p>
                 </div>
               </div>
             </div>

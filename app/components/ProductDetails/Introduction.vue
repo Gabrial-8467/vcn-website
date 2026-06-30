@@ -1014,8 +1014,6 @@ const openProductPreview = (imageSrc) => {
 
 @media (max-width: 768px) {
   .product-detail-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
     padding-top: 40px !important;
   }
 
