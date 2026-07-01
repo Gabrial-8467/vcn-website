@@ -10496,7 +10496,7 @@ body.home-page main {
 
   /* Positioning for Label 1 (left bottle) */
   .label-1 {
-    top: -70px;
+    top: -40px;
     left: 32%;
     transform: translateX(-50%);
   }
@@ -13661,7 +13661,6 @@ body.home-page main {
   .vcn-product-section,
   .vcn-new-product,
   .product-detail-section,
-  .health-section-bg,
   .comparison-section,
   .testing-standards-wrapper,
   .probiotic-hero-section,
@@ -13672,5 +13671,8 @@ body.home-page main {
   .reviews-section {
     padding-left: 15px !important;
     padding-right: 15px !important;
+  }
+  .health-section-bg {
+    padding-bottom: 0 !important;
   }
 }

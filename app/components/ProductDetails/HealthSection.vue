@@ -188,4 +188,10 @@ const supportKeyPoints = computed(() => {
   color: rgba(255, 255, 255, 0.85) !important;
   margin: 0 !important;
 }
+@media (max-width: 676px) {
+  * {
+    scrollbar-color: auto;
+    scrollbar-width: auto;
+}
+}
 </style>

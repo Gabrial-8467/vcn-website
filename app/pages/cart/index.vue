@@ -13,7 +13,7 @@
 
       <div class="col-lg-12" v-else>
         <!-- Cart Header -->
-        <div class="cart-table-header row">
+        <div class="cart-table-header row d-none d-md-flex">
           <div class="col-6 cart-header-product">{{ cart.tableHeader.product }}</div>
           <div class="col-3 cart-header-product text-center">{{ cart.tableHeader.quantity }}</div>
           <div class="col-3 cart-header-product text-end">{{ cart.tableHeader.price }}</div>
@@ -22,8 +22,8 @@
         <!-- Cart Items -->
         <div v-for="item in cartStore.items" :key="item.id" class="cart-item-wrapper row align-items-center">
           <!-- Desktop Layout (hidden on mobile) -->
-          <div class="d-none d-lg-flex col-lg-12 row align-items-center w-100 m-0 p-0">
-            <div class="col-lg-6 d-flex align-items-center gap-3">
+          <div class="d-none d-md-flex col-md-12 row align-items-center w-100 m-0 p-0">
+            <div class="col-md-6 d-flex align-items-center gap-3">
               <img :src="item.image" :alt="item.name" class="cart-product-image"
                 @error="$event.target.src = '/img/products/img1.png'" />
               <div class="cart-product-details">
@@ -31,14 +31,14 @@
                 <div class="cart-product-subscription">{{ item.subscription }}</div>
               </div>
             </div>
-            <div class="col-lg-3 text-center">
+            <div class="col-md-3 text-center">
               <div class="cart-quantity-control">
                 <button class="cart-qty-button" @click="handleDecrement(item.id)">−</button>
                 <div class="cart-qty-display">{{ item.quantity }}</div>
                 <button class="cart-qty-button" @click="handleIncrement(item.id)">+</button>
               </div>
             </div>
-            <div class="col-lg-3 text-end">
+            <div class="col-md-3 text-end">
               <div class="cart-item-price">
                 <span v-if="item.mrp" class="cart-item-mrp">₹{{ (item.mrp * item.quantity).toFixed(2) }}</span>
                 ₹{{ (item.price * item.quantity).toFixed(2) }}
@@ -50,7 +50,7 @@
           </div>
 
           <!-- Mobile Layout (hidden on desktop) -->
-          <div class="d-lg-none cart-item-mobile-container w-100">
+          <div class="d-md-none cart-item-mobile-container w-100">
             <img :src="item.image" :alt="item.name" class="cart-product-image-mobile"
               @error="$event.target.src = '/img/products/img1.png'" />
             <div class="cart-product-info-mobile">

@@ -5,7 +5,7 @@
       <div class="col-12 col-md-4 col-lg-3 health-section-below d-flex align-items-center justify-content-center order-2 order-md-1">
         <video src="" class="video-centered" autoplay muted loop playsinline ></video>
       </div>
-      <div class="col-12 col-md-8 col-lg-9 order-1 order-md-2">
+      <div class="col-12 col-md-8 col-lg-9 order-1 order-md-2 sm-pr-0">
         <div class="vcn-viacap-hero-area-below h-100">
           <div class="vcn-probiotic-container">
             <div class="vcn-probiotic-content-wrapper">
@@ -66,6 +66,7 @@
 </template>
 
 <style scoped>
+
 .health-section-bg {
   padding: 60px 0;
 }
@@ -471,5 +472,10 @@
     font-size: 0.62rem !important;
     line-height: 1.35 !important;
   }
+}
+@media (max-width: 676px) {
+ .sm-pr-0{
+  padding-right: 0 !important;  
+ }
 }
 </style>

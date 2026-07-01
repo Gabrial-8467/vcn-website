@@ -110,7 +110,7 @@ const cleanUrl = (url) => {
 @media (max-width: 992px) {
   .strains-badges-grid-container {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 20px 15px !important;
+    gap: 20px 40px !important;
   }
 }
 
