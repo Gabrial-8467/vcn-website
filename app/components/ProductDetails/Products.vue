@@ -241,7 +241,7 @@ const addToCart = async (product) => {
 }
 
 /* Mobile and Tablet responsive adjustments */
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
   .product-card {
     flex-direction: column !important;
     text-align: center !important;

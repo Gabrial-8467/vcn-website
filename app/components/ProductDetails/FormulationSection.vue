@@ -2,10 +2,10 @@
   <section class="health-section-bg">
     <div class="container">
       <div class="row">
-      <div class="col-12 col-md-4 col-lg-3 health-section-below d-flex align-items-center justify-content-center order-2 order-md-1">
+      <div class="col-12 col-xl-3 health-section-below d-flex align-items-center justify-content-center order-2 order-xl-1">
         <video src="" class="video-centered" autoplay muted loop playsinline ></video>
       </div>
-      <div class="col-12 col-md-8 col-lg-9 order-1 order-md-2 sm-pr-0">
+      <div class="col-12 col-xl-9 order-1 order-xl-2 sm-pr-0">
         <div class="vcn-viacap-hero-area-below h-100">
           <div class="vcn-probiotic-container">
             <div class="vcn-probiotic-content-wrapper">
@@ -89,17 +89,17 @@
   margin-top: 0 !important;
 }
 
-/* Base desktop styles (min-width: 992px) */
-@media (min-width: 992px) {
+/* Base desktop styles (min-width: 1200px) */
+@media (min-width: 1200px) {
   .vcn-probiotic-content-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 50px;
     align-items: center;
   }
 
   .vcn-probiotic-left-content {
-    max-width: 400px;
+    max-width: 440px;
     position: relative;
     z-index: 2;
   }
@@ -116,42 +116,6 @@
   }
 
   .vcn-probiotic-callout {
-    max-width: 210px !important;
-  }
-
-  .alternate-image {
-    margin-left: -20px;
-  }
-
-  .alternate-image img {
-    max-width: 180px;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-  }
-
-  .alternative-callout-top {
-    right: -10px !important;
-    top: 17% !important;
-  }
-
-  .alternative-callout-bottom {
-    left: -25px !important;
-    bottom: 3% !important;
-  }
-}
-
-/* Medium desktops (min-width: 1200px) */
-@media (min-width: 1200px) {
-  .vcn-probiotic-content-wrapper {
-    gap: 50px;
-  }
-
-  .vcn-probiotic-left-content {
-    max-width: 440px;
-  }
-
-  .vcn-probiotic-callout {
     max-width: 230px !important;
   }
 
@@ -161,14 +125,19 @@
 
   .alternate-image img {
     max-width: 200px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
   }
 
   .alternative-callout-top {
     right: -25px !important;
+    top: 17% !important;
   }
 
   .alternative-callout-bottom {
     left: -45px !important;
+    bottom: 3% !important;
   }
 }
 
@@ -206,7 +175,7 @@
 }
 
 /* Responsive stack behavior for tablets/mobile */
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
 
   .health-section-bg {
     padding-top: 1.5rem !important;
@@ -376,55 +345,7 @@
   }
 }
 
-/* Tablet Specific Adjustments to make the section more compact and fit perfectly */
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .health-section-bg {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-  }
 
-  .health-section-below {
-    margin-top: 0 !important;
-  }
-
-  .video-centered {
-    max-width: 190px !important;
-  }
-
-  .alternate-heading {
-    font-size: 1.8rem !important;
-  }
-
-  .vcn-probiotic-heading-group {
-    gap: 15px !important;
-  }
-
-  .vcn-probiotic-content-wrapper {
-    gap: 1.5rem !important;
-  }
-
-  .vcn-probiotic-product-display {
-    max-width: 440px !important;
-    min-height: 310px !important;
-  }
-
-  .alternate-image {
-    max-width: 320px !important;
-    right: -40px !important;
-  }
-
-  .vcn-probiotic-callout {
-    width: 42% !important;
-  }
-
-  .alternative-callout-top {
-    top: 8% !important;
-  }
-
-  .alternative-callout-bottom {
-    bottom: 8% !important;
-  }
-}
 
 @media (max-width: 575.98px) {
 
