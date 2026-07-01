@@ -400,4 +400,9 @@
   padding-right: 0 !important;  
  }
 }
+@media (max-width: 992px) {
+ .sm-pr-0{
+  padding-right: 0 !important;  
+ }
+}
 </style>

@@ -159,7 +159,7 @@ const addToCart = async (product) => {
   background: white;
   border: 2px solid var(--vcn-primary);
   border-radius: 25px;
-  padding: 6px 12px;
+  padding: 6px 110px;
 }
 
 .qty-btn {
