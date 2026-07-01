@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <!-- Left Column - Product Images -->
-        <div class="col-lg-7">
+        <div class="col-lg-7 pe-0">
           <!-- Desktop Version: main image + thumbnails -->
           <div class="d-none d-md-block img-container">
             <div class="product-img-wrapper">
@@ -72,7 +72,7 @@
 
         <!-- <div class="col-lg-1"></div> -->
         <!-- Right Column - Product Info -->
-        <div class="col-lg-5">
+        <div class="col-lg-5 pe-0">
           <div class="product-info">
             <!-- Error State -->
             <div v-if="error" class="alert alert-warning">

@@ -394,15 +394,5 @@
     line-height: 1.35 !important;
   }
 }
-@media (max-width: 676px) {
- .sm-pr-0{
-  padding-top: 20px !important;
-  padding-right: 0 !important;  
- }
-}
-@media (max-width: 992px) {
- .sm-pr-0{
-  padding-right: 0 !important;  
- }
-}
+
 </style>

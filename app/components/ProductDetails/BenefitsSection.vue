@@ -40,7 +40,7 @@
         </div>
 
         <!-- Right Column: Images -->
-        <div class="col-lg-7">
+        <div class="col-lg-7 pe-0">
           <div class="image-grid">
             <!-- Large Image -->
             <div class="image-large">

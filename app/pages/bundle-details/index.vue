@@ -24,36 +24,38 @@
   </section>
 
   <section class="video-section">
-    <div class="section-header">
-      <h2 class="section-title">{{ bundles.videoSection.title }}</h2>
-    </div>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">{{ bundles.videoSection.title }}</h2>
+      </div>
 
-    <div class="video-grid">
-      <div v-for="(video, index) in bundles.videoSection.videos" :key="index" class="video-card">
-        <div class="video-thumbnail-container" :data-video-id="video.videoId">
-          <img :src="`https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`" :alt="video.title"
-            class="video-thumbnail" />
+      <div class="video-grid">
+        <div v-for="(video, index) in bundles.videoSection.videos" :key="index" class="video-card">
+          <div class="video-thumbnail-container" :data-video-id="video.videoId">
+            <img :src="`https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`" :alt="video.title"
+              class="video-thumbnail" />
 
-          <div class="video-overlay"></div>
+            <div class="video-overlay"></div>
 
-          <div class="play-button-overlay"></div>
+            <div class="play-button-overlay"></div>
 
-          <div class="video-player">
-            <iframe src=""
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-top-navigation" />
+            <div class="video-player">
+              <iframe src=""
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-top-navigation" />
+            </div>
           </div>
-        </div>
 
-        <div class="video-content">
-          <h3 class="video-title">
-            {{ video.title }}
-          </h3>
+          <div class="video-content">
+            <h3 class="video-title">
+              {{ video.title }}
+            </h3>
 
-          <p class="video-description">
-            {{ video.description }}
-          </p>
+            <p class="video-description">
+              {{ video.description }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -103,7 +105,7 @@
   </section>
 
   <section class="vcn-new-product">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row g-3">
         <h2 class="vcn-acidity-main-heading">{{ bundles.productsSection.heading }}</h2>
         <!-- Dynamic Products -->
@@ -138,39 +140,41 @@
     </div>
   </section>
   <section class="acidity-info-container">
-    <h1 class="main-heading">{{ bundles.knowMoreSection.heading }}</h1>
-    <div class="expand-section">
-      <div v-for="section in bundles.knowMoreSection.accordions" :key="section.id" class="expandable-section"
-        :class="{ active: activeSection === section.id }">
-        <div class="accordion-trigger" @click="toggleSection(section.id)">
-          <div class="trigger-left-area">
-            <div class="circle-badge">
-              <img :src="section.image" :alt="section.title" />
-            </div>
-
-            <h3 class="accordion-label">
-              {{ section.title }}
-            </h3>
-          </div>
-
-          <span class="arrow-indicator">›</span>
-        </div>
-
-        <div class="panel-body" v-show="activeSection === section.id">
-          <div class="items-layout">
-            <div v-for="(item, index) in section.items" :key="index" class="feature-block">
-              <div class="feature-symbol">
-                {{ item.icon }}
+    <div class="container">
+      <h1 class="main-heading">{{ bundles.knowMoreSection.heading }}</h1>
+      <div class="expand-section">
+        <div v-for="section in bundles.knowMoreSection.accordions" :key="section.id" class="expandable-section"
+          :class="{ active: activeSection === section.id }">
+          <div class="accordion-trigger" @click="toggleSection(section.id)">
+            <div class="trigger-left-area">
+              <div class="circle-badge">
+                <img :src="section.image" :alt="section.title" />
               </div>
 
-              <div class="feature-details">
-                <h3 class="detail-title">
-                  {{ item.title }}
-                </h3>
+              <h3 class="accordion-label">
+                {{ section.title }}
+              </h3>
+            </div>
 
-                <p class="detail-text">
-                  {{ item.description }}
-                </p>
+            <span class="arrow-indicator">›</span>
+          </div>
+
+          <div class="panel-body" v-show="activeSection === section.id">
+            <div class="items-layout">
+              <div v-for="(item, index) in section.items" :key="index" class="feature-block">
+                <div class="feature-symbol">
+                  {{ item.icon }}
+                </div>
+
+                <div class="feature-details">
+                  <h3 class="detail-title">
+                    {{ item.title }}
+                  </h3>
+
+                  <p class="detail-text">
+                    {{ item.description }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -180,39 +184,41 @@
   </section>
 
   <section class="care-wrapper">
-    <h1 class="primary-heading">{{ bundles.completeCareSection.heading }}</h1>
-    <p class="intro-paragraph">
-      {{bundles.completeCareSection.description}}
-    </p>
-
-    <div class="row g-4">
-  <div
-    v-for="(card, index) in bundles.completeCareSection.cards"
-    :key="index"
-    class="col-lg-6 col-md-12"
-  >
-    <div class="care-card">
-      <div class="icon-circle">
-        <img :src="card.image" :alt="card.title" />
-      </div>
-
-      <h2 class="card-heading">
-        {{ card.title }}
-      </h2>
-
-      <p class="card-content">
-        {{ card.description }}
-
-        <div
-          v-if="card.highlight"
-          class="highlight-text"
-        >
-          {{ card.highlight }}
-        </div>
+    <div class="container">
+      <h1 class="primary-heading">{{ bundles.completeCareSection.heading }}</h1>
+      <p class="intro-paragraph">
+        {{bundles.completeCareSection.description}}
       </p>
+
+      <div class="row g-4">
+        <div
+          v-for="(card, index) in bundles.completeCareSection.cards"
+          :key="index"
+          class="col-lg-6 col-md-12"
+        >
+          <div class="care-card">
+            <div class="icon-circle">
+              <img :src="card.image" :alt="card.title" />
+            </div>
+
+            <h2 class="card-heading">
+              {{ card.title }}
+            </h2>
+
+            <p class="card-content">
+              {{ card.description }}
+
+              <div
+                v-if="card.highlight"
+                class="highlight-text"
+              >
+                {{ card.highlight }}
+              </div>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
   </section>
 </template>
 <script setup>
@@ -426,6 +432,94 @@ const addToCart = async (product) => {
 </script>
 
 <style scoped>
+/* Align all sections with the navbar padding constraints */
+.terms-conditions,
+.video-section,
+.vcn-acidity-bundle-section,
+.vcn-new-product,
+.acidity-info-container,
+.care-wrapper {
+  padding-left: 40px !important; /* Default for desktop >= 1200px */
+  padding-right: 40px !important;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Small laptops and landscape tablets (992px to 1200px) */
+@media (max-width: 1200px) {
+  .terms-conditions,
+  .video-section,
+  .vcn-acidity-bundle-section,
+  .vcn-new-product,
+  .acidity-info-container,
+  .care-wrapper {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* Mobile & Tablets (max-width: 991px) */
+@media (max-width: 991px) {
+  .terms-conditions,
+  .video-section,
+  .vcn-acidity-bundle-section,
+  .vcn-new-product,
+  .acidity-info-container,
+  .care-wrapper {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+/* Portrait Tablets / Large Phones (max-width: 768px) */
+@media (max-width: 768px) {
+  .terms-conditions,
+  .video-section,
+  .vcn-acidity-bundle-section,
+  .vcn-new-product,
+  .acidity-info-container,
+  .care-wrapper {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* Phones (max-width: 576px) */
+@media (max-width: 576px) {
+  .terms-conditions,
+  .video-section,
+  .vcn-acidity-bundle-section,
+  .vcn-new-product,
+  .acidity-info-container,
+  .care-wrapper {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+/* Small Phones (max-width: 380px) */
+@media (max-width: 380px) {
+  .terms-conditions,
+  .video-section,
+  .vcn-acidity-bundle-section,
+  .vcn-new-product,
+  .acidity-info-container,
+  .care-wrapper {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+
+/* Reset layout max widths */
+.video-section,
+.acidity-info-container,
+.care-wrapper {
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 .qty-box {
   display: flex;
   align-items: center;
@@ -474,20 +568,40 @@ const addToCart = async (product) => {
 }
 
 /* Ensure consistent product image sizes and alignment */
+.product-card {
+  display: flex !important;
+  flex-direction: row !important;
+  background: var(--vcn-product) !important;
+  border-radius: 16px !important;
+  padding: 24px !important; /* Reduced from 40px to give more room for text */
+  height: 100% !important;
+  gap: 20px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  position: relative !important;
+  align-items: stretch !important;
+}
+
+.product-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
 .product-image-wrapper {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 280px !important; /* Increased height */
-  width: 245px !important;  /* Increased width */
+  height: 220px !important; /* Elegant height */
+  width: 200px !important;  /* Elegant width */
   flex-shrink: 0 !important;
   overflow: hidden !important;
   border-radius: 12px !important;
+  padding: 10px !important;
 }
 
 .product-image {
-  max-width: 100% !important; /* Increased to fill container */
-  max-height: 100% !important; /* Increased to fill container */
+  max-width: 100% !important;
+  max-height: 100% !important;
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
@@ -502,11 +616,191 @@ const addToCart = async (product) => {
   position: absolute !important;
   top: 12px !important;
   left: 12px !important;
+  background: #4a5d4a !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  padding: 3px 9px !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
   z-index: 5 !important;
+  text-transform: uppercase !important;
+}
+
+.product-content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.product-label {
+  display: inline-block !important;
+  border: 1px solid #d0d0d0 !important;
+  color: var(--vcn-footer) !important;
+  padding: 3px 10px !important;
+  border-radius: 12px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+  margin-bottom: 8px !important;
+  width: fit-content !important;
+  background: #ffffff !important;
+}
+
+.product-title {
+  color: var(--vcn-footer) !important;
+  font-size: 1.4rem !important; /* Elegant size */
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+  line-height: 1.3 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  min-height: 3.6rem !important; /* Aligns description start */
+}
+
+.product-title a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.product-description {
+  color: var(--vcn-footer) !important;
+  font-size: 1rem !important;
+  line-height: 1.4 !important;
+  margin-bottom: 12px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  min-height: 4.2rem !important; /* Aligns price and actions */
+  flex-grow: 1 !important;
+}
+
+.product-price {
+  color: var(--vcn-footer) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin-bottom: 12px !important;
+}
+
+.product-price .old-price {
+  color: #999 !important;
+  font-size: 13px !important;
+  text-decoration: line-through !important;
+  margin-left: 8px !important;
+  font-weight: 400 !important;
+}
+
+.product-actions {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+  margin-top: auto !important;
+}
+
+.btn-learn {
+  background: var(--vcn-darker) !important;
+  color: #ffffff !important;
+  padding: 8px 18px !important;
+  border-radius: 24px !important;
+  border: none !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  text-align: center !important;
+}
+
+.btn-learn:hover {
+  background: var(--vcn-footer) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-cart {
+  color: var(--vcn-dark) !important;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-decoration: underline !important;
+  background: none !important;
+  border: none !important;
+  display: inline-block !important;
+}
+
+.btn-cart:hover {
+  color: var(--vcn-dark) !important;
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .product-card {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 24px !important;
+    align-items: center !important;
+  }
+
+  .product-image-wrapper {
+    width: 100% !important;
+    height: 200px !important;
+    margin-bottom: 16px !important;
+    justify-content: center !important;
+    display: flex !important;
+  }
+
+  .product-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .product-label {
+    align-self: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .product-title {
+    font-size: 1.3rem !important;
+    min-height: 3.4rem !important;
+    margin-bottom: 8px !important;
+    width: 100% !important;
+  }
+
+  .product-description {
+    font-size: 0.95rem !important;
+    min-height: 4.0rem !important;
+    margin-bottom: 12px !important;
+    width: 100% !important;
+  }
+
+  .product-price {
+    justify-content: center !important;
+    font-size: 17px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .product-actions {
+    justify-content: center !important;
+    align-items: center !important;
+  }
 }
 
 /* Mobile responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   .product-card {
     flex-direction: row !important;
     text-align: left !important;
@@ -516,17 +810,17 @@ const addToCart = async (product) => {
   }
 
   .product-image-wrapper {
-    width: 145px !important;
-    height: 175px !important;
+    width: 120px !important;
+    height: 140px !important;
     margin-bottom: 0 !important;
     flex-shrink: 0 !important;
-    /* background: #ffffff !important; */
     border-radius: 12px !important;
-    padding: 0 !important;
+    padding: 8px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     position: relative !important;
+    background: #f7f7f7 !important;
   }
 
   .product-image {
@@ -540,18 +834,18 @@ const addToCart = async (product) => {
     align-items: flex-start !important;
     display: flex !important;
     flex-direction: column !important;
+    width: auto !important;
   }
 
-  /* Badge styling */
   .product-badge {
     position: absolute !important;
-    top: 10px !important;
-    left: 10px !important;
+    top: 8px !important;
+    left: 8px !important;
     transform: none !important;
-    background: #4a5d4a !important; /* Match dark green badge background */
+    background: #4a5d4a !important;
     color: #ffffff !important;
-    font-size: 11px !important;
-    padding: 3px 9px !important;
+    font-size: 10px !important;
+    padding: 2px 8px !important;
     border-radius: 10px !important;
     font-weight: 600 !important;
     letter-spacing: 0.3px !important;
@@ -562,7 +856,7 @@ const addToCart = async (product) => {
     align-self: flex-start !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    font-size: 11px !important;
+    font-size: 10px !important;
     padding: 2px 8px !important;
     border-radius: 12px !important;
     margin-bottom: 6px !important;
@@ -571,27 +865,34 @@ const addToCart = async (product) => {
   }
 
   .product-title {
-    font-size: 16px !important;
+    font-size: 15px !important;
     margin-bottom: 4px !important;
     font-weight: 700 !important;
     line-height: 1.3 !important;
+    min-height: auto !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
 
   .product-description {
     font-size: 12px !important;
     line-height: 1.4 !important;
     margin-bottom: 8px !important;
+    min-height: auto !important;
     display: -webkit-box !important;
-    -webkit-line-clamp: 5 !important;
-    line-clamp: 5;
+    -webkit-line-clamp: 3 !important;
+    line-clamp: 3 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
   }
 
   .product-price {
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
   }
 
   .product-actions {
@@ -602,48 +903,80 @@ const addToCart = async (product) => {
     width: 100% !important;
   }
 
-  /* Learn More Button */
   .product-actions .btn-learn {
-    background: #1e3322 !important; /* Dark green background from design */
+    background: #1e3322 !important;
     color: #ffffff !important;
-    padding: 6px 14px !important;
+    padding: 5px 12px !important;
     border-radius: 20px !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     font-weight: 600 !important;
     text-decoration: none !important;
     display: inline-block !important;
     text-align: center !important;
   }
 
-  /* Add to Cart link */
   .product-actions .btn-cart {
     background: none !important;
     border: none !important;
     color: #1e3322 !important;
     padding: 0 !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     font-weight: 600 !important;
     text-decoration: underline !important;
     cursor: pointer !important;
     display: inline-block !important;
   }
 
-  /* Quantity controls if item is in cart */
   .product-actions .qty-box {
-    padding: 4px 8px !important;
+    padding: 3px 6px !important;
     border-radius: 20px !important;
     gap: 2px !important;
   }
 
   .product-actions .qty-btn {
-    width: 20px !important;
-    height: 20px !important;
-    font-size: 12px !important;
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 11px !important;
   }
 
   .product-actions .qty-value {
-    font-size: 12px !important;
-    min-width: 15px !important;
+    font-size: 11px !important;
+    min-width: 12px !important;
+  }
+}
+
+/* Extra small mobile responsive adjustments */
+@media (max-width: 480px) {
+  .product-card {
+    padding: 12px !important;
+    gap: 12px !important;
+  }
+
+  .product-image-wrapper {
+    width: 90px !important;
+    height: 110px !important;
+    padding: 4px !important;
+  }
+
+  .product-title {
+    font-size: 14px !important;
+  }
+
+  .product-description {
+    display: none !important;
+  }
+
+  .product-actions {
+    gap: 8px !important;
+  }
+
+  .product-actions .btn-learn {
+    padding: 4px 10px !important;
+    font-size: 10px !important;
+  }
+
+  .product-actions .btn-cart {
+    font-size: 10px !important;
   }
 }
 </style>

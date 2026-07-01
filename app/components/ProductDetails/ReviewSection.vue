@@ -608,6 +608,8 @@ const resetForm = () => {
   background: var(--vcn-primary, #5E6C1F);
   color: white;
   border: none;
+  display:flex;
+  justify-content:flex-end;
   padding: 14px 32px;
   border-radius: 50px;
   font-weight: 600;
@@ -616,6 +618,7 @@ const resetForm = () => {
   margin-bottom: 24px;
   font-family: var(--vcn-font, "Outfit", sans-serif);
   font-size: 1rem;
+  margin-left: auto;
 }
 
 .btn-write-review:hover {

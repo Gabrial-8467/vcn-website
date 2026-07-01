@@ -13,7 +13,7 @@
         </div>
 
         <div class="row">
-          <div class="col-lg-6 mb-4">
+          <div class="col-lg-6 mb-4 pe-0">
             <!-- Video wrapper (only for video + optional overlays/controls) -->
             <div class="vcn-video-wrapper">
               <img :src="featureImage || cleanUrl('/img/dbt/389size.png')" alt="Doctor" class="vcn-showcase-img" />
@@ -51,7 +51,7 @@
           <div class="col-lg-6">
             <div class="row">
               <!-- Dynamic Feature Cards from API -->
-              <div v-for="(point, index) in featureKeyPoints" :key="index" class="col-md-6">
+              <div v-for="(point, index) in featureKeyPoints" :key="index" class="col-md-6 pe-0">
                 <div class="vcn-feature-card">
                   <img :src="point.icon || fallbackIcons[index]" :alt="point.title" />
                   <div class="vcn-feature-divider"></div>
@@ -159,6 +159,7 @@ const cleanUrl = (url) => {
   .vcn-feature-card {
     text-align: center !important;
     margin-bottom: 1.5rem !important;
+    padding-left:  10px;
   }
 
   .vcn-feature-card img {

@@ -10,10 +10,10 @@
           </div>
 
           <!-- Right Column: Feature Cards -->
-          <div class="col-lg-7 rf-cards">
+          <div class="col-lg-7 rf-cards pe-0">
             <div class="row g-3 g-md-4 justify-content-center">
               <!-- Dynamic Feature Cards from API -->
-              <div v-for="(point, index) in purityKeyPoints" :key="index" class="col-12 col-sm-6 col-lg-4 mx-auto">
+              <div v-for="(point, index) in purityKeyPoints" :key="index" class="col-12 col-sm-6 col-lg-4 mx-auto sm-pr-0">
                 <div class="testing-feature-card">
                   <div class="testing-icon-wrapper">
                     <img :src="point.icon || fallbackIcons[index]" :alt="point.title" />
@@ -73,4 +73,7 @@ const cleanUrl = (url) => {
     margin: 0 auto !important;
   }
 }
+
+
+
 </style>

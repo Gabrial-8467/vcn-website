@@ -1352,7 +1352,8 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     }
 
     .navbar {
-      padding: 6px 40px !important;
+      padding-top: 6px !important;
+      padding-bottom: 6px !important;
     }
 
     /* .navbar.scrolled {
