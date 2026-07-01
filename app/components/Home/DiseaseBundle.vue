@@ -260,7 +260,42 @@ export default {
   padding-right: 0 !important;
 }
 
-@media (min-width: 992px) {
+.vcn-human-section {
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+@media (max-width: 991.98px) {
+  .vcn-human-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .vcn-human-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .vcn-human-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 379.98px) {
+  .vcn-human-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (min-width: 1200px) {
   .vcn-human-section {
     padding-left: 80px !important;
     padding-right: 80px !important;
@@ -272,11 +307,11 @@ export default {
     padding-left: 160px !important;
     padding-right: 160px !important;
   }
+}
 
-  .vcn-human-container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
+.vcn-human-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* Ensure the disease bundles overlay does not sit under the fixed navbar on this page.

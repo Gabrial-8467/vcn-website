@@ -54,7 +54,35 @@ const hero = computed(() =>
   padding-right: 20px !important;
 }
 
-@media (min-width: 992px) {
+@media (max-width: 991.98px) {
+  .hero-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 379.98px) {
+  .hero-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (min-width: 1200px) {
   .hero-section {
     padding-left: 80px !important;
     padding-right: 80px !important;
@@ -203,7 +231,7 @@ const hero = computed(() =>
 @media (min-width: 1200px) {
   .hero-content {
     max-width: 700px;
-    padding: 0 6%;
+    padding: 0 !important;
   }
 }
 
@@ -223,7 +251,7 @@ const hero = computed(() =>
   }
   .hero-content {
     max-width: 82%;
-    padding: 0 32px;
+    padding: 0 !important;
     margin-top: calc((var(--top-header-height, 26px) + 60px) / 2);
   }
   .hero-content h1 {
@@ -249,7 +277,7 @@ const hero = computed(() =>
   }
   .hero-content {
     max-width: 92%;
-    padding: 0 26px;
+    padding: 0 !important;
     margin-top: calc((var(--top-header-height, 24px) + 55px) / 2);
   }
   .hero-content h1 {
@@ -277,7 +305,7 @@ const hero = computed(() =>
   }
   .hero-content {
     max-width: 94%;
-    padding: 0 16px;
+    padding: 0 !important;
     margin-top: calc((var(--top-header-height, 22px) + 48px) / 2);
   }
   .hero-content h1 {
@@ -308,7 +336,7 @@ const hero = computed(() =>
     top: 50%;
     transform: translateY(-50%);
     margin-top: 0;
-    padding: 0 5%;
+    padding: 0 !important;
     max-width: 65%;
   }
   .hero-content h1 {

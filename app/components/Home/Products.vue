@@ -162,7 +162,42 @@ onMounted(async () => {
   padding-right: 0 !important;
 }
 
-@media (min-width: 992px) {
+.vcn-whole-body-section {
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+@media (max-width: 991.98px) {
+  .vcn-whole-body-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .vcn-whole-body-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .vcn-whole-body-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 379.98px) {
+  .vcn-whole-body-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (min-width: 1200px) {
   .vcn-whole-body-section {
     padding-left: 80px !important;
     padding-right: 80px !important;
@@ -274,25 +309,8 @@ onMounted(async () => {
     .vcn-whole-body-section {
         padding-top: 25px !important;
         padding-bottom: 25px !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
         box-sizing: border-box !important;
-    }
-
-    .vcn-whole-body-section>.container {
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        box-sizing: border-box !important;
-    }
-
-    @media (max-width: 576px) {
-        .vcn-whole-body-section>.container {
-            padding-left: 15px !important;
-            padding-right: 15px !important;
-        }
     }
 
     .vcn-whole-body-swiper-container {

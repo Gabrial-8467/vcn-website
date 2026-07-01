@@ -86,13 +86,22 @@
         <span class="search-icon"><img src="/img/icons/search.png" alt="" /></span>
         <input type="text" placeholder="Search reviews" />
       </div>
-      <div class="sort-dropdown">
-        <select>
-          <option>Sort by: Highest rating</option>
-          <option>Sort by: Lowest rating</option>
-          <option>Sort by: Most recent</option>
-          <option>Sort by: Most helpful</option>
-        </select>
+      <div class="sort-dropdown" ref="sortDropdownRef">
+        <div class="custom-select-trigger" @click="toggleSortDropdown">
+          <span>Sort by: {{ selectedSort }}</span>
+          <span class="custom-select-arrow" :class="{ open: isSortDropdownOpen }">▼</span>
+        </div>
+        <div v-show="isSortDropdownOpen" class="custom-select-options">
+          <div
+            v-for="option in sortOptions"
+            :key="option"
+            class="custom-select-option"
+            :class="{ active: selectedSort === option }"
+            @click="selectSortOption(option)"
+          >
+            Sort by: {{ option }}
+          </div>
+        </div>
       </div>
     </div>
 
@@ -260,6 +269,7 @@ const fetchReviews = async () => {
     } else if (data && (data as ReviewsResponse).success) {
       const responseData = (data as ReviewsResponse).data
       reviews.value = responseData.reviews || []
+      sortReviews(selectedSort.value)
       averageRating.value = responseData.averageRating || 0
       totalReviews.value = responseData.totalReviews || 0
     }
@@ -270,11 +280,48 @@ const fetchReviews = async () => {
   }
 }
 
+// Custom Dropdown State & Methods
+const isSortDropdownOpen = ref(false)
+const selectedSort = ref('Highest rating')
+const sortOptions = ['Highest rating', 'Lowest rating', 'Most recent', 'Most helpful']
+const sortDropdownRef = ref<HTMLElement | null>(null)
+
+const toggleSortDropdown = () => {
+  isSortDropdownOpen.value = !isSortDropdownOpen.value
+}
+
+const selectSortOption = (option: string) => {
+  selectedSort.value = option
+  isSortDropdownOpen.value = false
+  sortReviews(option)
+}
+
+const sortReviews = (option: string) => {
+  if (option === 'Highest rating') {
+    reviews.value.sort((a, b) => b.rating - a.rating)
+  } else if (option === 'Lowest rating') {
+    reviews.value.sort((a, b) => a.rating - b.rating)
+  } else if (option === 'Most recent') {
+    reviews.value.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  }
+}
+
+const handleClickOutside = (event: MouseEvent) => {
+  if (sortDropdownRef.value && !sortDropdownRef.value.contains(event.target as Node)) {
+    isSortDropdownOpen.value = false
+  }
+}
+
 // Fetch reviews on client side only
 onMounted(() => {
   if (actualProductId.value) {
     fetchReviews()
   }
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
 })
 
 // Watch for productId changes on client side
@@ -355,6 +402,88 @@ const resetForm = () => {
 </script>
 
 <style scoped>
+.search-sort-bar {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.sort-dropdown {
+  position: relative;
+  min-width: 220px;
+  max-width: 100% !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
+}
+
+@media (max-width: 991px) {
+  .sort-dropdown {
+    width: 100%;
+    min-width: 100%;
+  }
+}
+
+.custom-select-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  color: var(--vcn-dark, #333);
+  user-select: none;
+  transition: border-color 0.2s;
+}
+
+.custom-select-trigger:hover {
+  border-color: var(--vcn-primary, #5E6C1F);
+}
+
+.custom-select-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+  color: #888;
+}
+
+.custom-select-arrow.open {
+  transform: rotate(180deg);
+}
+
+.custom-select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.custom-select-option {
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: #333;
+  text-align: left;
+}
+
+.custom-select-option:hover {
+  background: #f5f7f2;
+  color: var(--vcn-primary, #5E6C1F);
+}
+
+.custom-select-option.active {
+  background: var(--vcn-primary, #5E6C1F);
+  color: white;
+}
+
 .review-form {
   background: var(--vcn-base-bg, #F6F7EE);
   border-radius: 8px;

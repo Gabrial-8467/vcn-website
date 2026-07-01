@@ -52,10 +52,62 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 <style scoped>
 .mid-consultation-cta {
   background-color: #fff;
-  padding: 25px 0 !important;
+  padding-top: 25px !important;
+  padding-bottom: 25px !important;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.mid-consultation-cta .container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+  .mid-consultation-cta {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .mid-consultation-cta {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .mid-consultation-cta {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 379.98px) {
+  .mid-consultation-cta {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .mid-consultation-cta {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .mid-consultation-cta {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
 }
 
 .mid-cta-image-wrapper {
@@ -112,8 +164,8 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 /* Responsive Design */
 @media (max-width: 991px) {
   .mid-consultation-cta {
-    padding: 60px 20px !important;
-    box-sizing: border-box !important;
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
   }
 
   .mid-cta-heading {
@@ -137,8 +189,8 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 
 @media (max-width: 768px) {
   .mid-consultation-cta {
-    padding: 50px 20px !important;
-    box-sizing: border-box !important;
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
   }
 
   .mid-cta-heading {
@@ -157,8 +209,8 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 
 @media (max-width: 576px) {
   .mid-consultation-cta {
-    padding: 0px 15px !important;
-    box-sizing: border-box !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
   }
 
   .mid-cta-heading {
