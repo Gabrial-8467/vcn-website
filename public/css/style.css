@@ -2313,7 +2313,7 @@ body.home-page main {
 }
 
 /* Align footer with navbar on large screens */
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .vcn-footer-section {
     padding-left: 80px !important;
     padding-right: 80px !important;
@@ -2322,8 +2322,8 @@ body.home-page main {
 
 @media (min-width: 1400px) {
   .vcn-footer-section {
-    padding-left: 169px !important;
-    padding-right: 169px !important;
+    padding-left: 160px !important;
+    padding-right: 160px !important;
   }
 }
 
