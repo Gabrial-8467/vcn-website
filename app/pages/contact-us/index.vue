@@ -1,4 +1,7 @@
 <style>
+  .terms-conditions {
+    padding:  80px;
+  }
 /* ===== PILL TABS ===== */
 .office-pills-wrapper {
   display: flex;
@@ -296,83 +299,148 @@
   }
 }
 
-@media (max-width: 576px) {
-  .terms-conditions {
-    padding: 20px 10px;
-  }
+@media (max-width:576px){
 
-  .office-pills-wrapper {
-    gap: 4px;
-    margin-bottom: 12px;
-  }
+.terms-conditions{
+    padding:32px 16px;
+}
 
-  .office-pill-btn {
-    padding: 4px 8px;
-    font-size: 11px;
-  }
+.office-image-wrapper{
+    text-align:center;
+}
 
-  .office-img-wrapper {
-    height: 140px;
-    margin-bottom: 10px;
-  }
+.office-image-wrapper h2{
+    font-size:28px !important;
+    margin-bottom:8px;
+}
 
-  .office-detail-row {
-    gap: 8px;
-    margin-bottom: 10px;
-  }
+.office-image-wrapper p{
+    font-size:13px !important;
+    line-height:1.6;
+    margin-bottom:20px;
+}
 
-  .office-detail-icon {
-    width: 28px;
-    height: 28px;
-  }
+/* Mobile Dropdown */
 
-  .office-detail-value {
-    font-size: 12px;
-  }
+.office-mobile-select{
+    margin-bottom:20px;
+}
 
-  .office-maps-btn {
-    padding: 4px 10px;
-    font-size: 11px;
-  }
+.office-select-dropdown{
+    width:100%;
+    height:48px;
+    border:1px solid #dcdcdc;
+    border-radius:12px;
+    background:#fff;
+    padding:0 16px;
+    font-size:15px;
+    color:#333;
+    outline:none;
+    appearance:none;
 
-  /* Contact Form Mobile Styles */
-  .contact-form-container {
-    margin-top: 30px;
-  }
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 15px center;
+}
 
-  .contact-form-title {
-    font-size: 24px !important;
-  }
+.office-img-wrapper{
+    height:200px;
+    border-radius:14px;
+}
 
-  .contact-field-wrapper {
-    margin-bottom: 16px;
-  }
+.office-type-badge{
+    font-size:11px;
+    padding:6px 12px;
+}
 
-  .contact-field-label {
-    font-size: 14px;
-    margin-bottom: 6px;
-  }
 
-  .contact-text-input,
-  .contact-select-input,
-  .contact-textarea-input {
-    font-size: 14px;
-    padding: 10px 12px;
-  }
 
-  .contact-textarea-input {
-    min-height: 100px;
-  }
+.office-detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  background: #f8f8f8;
+  border-radius: 14px;
+  width: 100%;
+}
 
-  .contact-submit-button {
-    padding: 12px 20px;
-    font-size: 14px;
-  }
+.office-detail-row > div {
+  width: 100%;
+}
 
-  .contact-footer-text {
-    font-size: 11px;
-    line-height: 1.4;
-  }
+.office-detail-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.office-detail-value {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #222;
+
+  /* Better wrapping */
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.office-maps-btn{
+    width:100%;
+    justify-content:center;
+    padding:12px;
+    margin-top:16px;
+}
+
+.contact-form-container{
+    margin-top:40px;
+}
+
+.contact-form-title{
+    font-size:28px !important;
+    text-align:center;
+    margin-bottom:24px;
+}
+
+.contact-field-wrapper{
+    margin-bottom:18px;
+}
+
+.contact-text-input,
+.contact-select-input,
+.contact-textarea-input{
+    padding:14px;
+    font-size:14px;
+    border-radius:10px;
+}
+
+.contact-textarea-input{
+    min-height:120px;
+}
+
+.contact-file-upload-area{
+    border-radius:12px;
+    padding:18px;
+}
+
+.contact-submit-button{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+}
+
+.contact-footer-text{
+    text-align:center;
+    font-size:12px;
+    line-height:1.6;
+}
+
 }
 </style>
 
@@ -389,14 +457,28 @@
             <!-- Company Branding -->
             <div class="mb-4">
 
-              <h2 style="font-size: 48px; font-weight: 400; margin-top: 10px; color: var(--vcn-dark);">
+              <h2 class="office-company-title">
                 {{ contact.company.name }}
               </h2>
-              <p style="color: #777; font-size: 13px;">{{ contact.company.description }} </p>
+              <p class="office-company-description">{{ contact.company.description }} </p>
             </div>
-
+<!-- Mobile Office Selector -->
+<div class="office-mobile-select d-block d-sm-none">
+  <select
+    class="office-select-dropdown"
+    v-model="activeTab"
+  >
+    <option
+      v-for="office in contact.offices"
+      :key="office.id"
+      :value="office.id"
+    >
+      {{ office.city }}
+    </option>
+  </select>
+</div>
             <!-- Pill Buttons -->
-            <div class="office-pills-wrapper">
+            <div class="office-pills-wrapper  d-none d-sm-flex">
               <button v-for="office in contact.offices" :key="office.id" class="office-pill-btn"
                 :class="{ active: activeTab === office.id }" @click="activeTab = office.id">
                 <span class="pill-dot"></span>
