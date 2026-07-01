@@ -2550,6 +2550,10 @@ body.home-page main {
 
 /* Responsive adjustments */
 @media (max-width: 992px) {
+  .vcn-container-footer {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
 
   .vcn-footer-tagline {
     font-size: 1.3rem;

@@ -152,30 +152,40 @@ const addToCart = async (product) => {
   color: inherit;
 }
 
-.qty-box {
+.product-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
+}
+
+.qty-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: white;
-  border: 2px solid var(--vcn-primary);
+  border: 1.5px solid var(--vcn-primary);
   border-radius: 25px;
-  padding: 6px 110px;
+  padding: 6px 12px;
+  flex-shrink: 0;
 }
 
 .qty-btn {
   background: none;
   border: none;
   color: var(--vcn-primary);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
-  display: flex;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.2s;
+  flex-shrink: 0;
+  padding: 0;
 }
 
 .qty-btn:hover {
@@ -186,8 +196,10 @@ const addToCart = async (product) => {
 .qty-value {
   color: var(--vcn-primary);
   font-weight: 600;
-  min-width: 20px;
+  min-width: 18px;
   text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* Pagination styles */
@@ -274,6 +286,7 @@ const addToCart = async (product) => {
 
   .product-actions {
     justify-content: center !important;
+    align-items: center !important;
   }
 }
 </style>
