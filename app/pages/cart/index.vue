@@ -402,13 +402,13 @@ useHead({
   .cart-main-wrapper {
     padding-top: 90px !important;
     padding-bottom: 40px !important;
+    text-align: center !important;
   }
 }
 
 .empty-cart-message {
   text-align: center;
   padding: 60px 20px;
-  background: #f8f9fa;
   border-radius: 8px;
   margin: 20px 0;
 }

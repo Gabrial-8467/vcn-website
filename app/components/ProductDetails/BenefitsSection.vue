@@ -235,4 +235,21 @@ const journeyHowToUse = computed(() => {
     height: auto !important;
   }
 }
+
+@media (max-width: 576px) {
+  .image-large {
+    height: 200px !important;
+  }
+  .image-small-container {
+    gap: 0.75rem !important;
+    margin-top: 0.75rem !important;
+  }
+  .image-small {
+    height: 250px !important;
+  }
+  .image-circle {
+    width: 150px !important;
+    height: 150px !important;
+  }
+}
 </style>
