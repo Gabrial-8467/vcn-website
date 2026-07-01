@@ -132,6 +132,7 @@
   align-items: center;
   gap: 6px;
   margin-top: 8px;
+  margin-bottom: 18px;
   padding: 8px 18px;
   background: #e8f5e9;
   color: #2e7d32;
@@ -322,25 +323,72 @@
 
 /* Mobile Dropdown */
 
-.office-mobile-select{
-    margin-bottom:20px;
+/* Mobile Office Custom Dropdown */
+.office-mobile-select {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-.office-select-dropdown{
-    width:100%;
-    height:48px;
-    border:1px solid #dcdcdc;
-    border-radius:12px;
-    background:#fff;
-    padding:0 16px;
-    font-size:15px;
-    color:#333;
-    outline:none;
-    appearance:none;
+.office-mobile-select .office-select-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  background: #fff;
+  padding: 0 16px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+}
 
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 15px center;
+.office-mobile-select .office-select-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+  color: #666;
+}
+
+.office-mobile-select .office-select-arrow.open {
+  transform: rotate(180deg);
+}
+
+.office-mobile-select .office-select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.office-mobile-select .office-select-option {
+  padding: 12px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  color: #333;
+  text-align: left;
+}
+
+.office-mobile-select .office-select-option:hover {
+  background: #f5f5f5;
+  color: var(--vcn-primary, #2e7d32);
+}
+
+.office-mobile-select .office-select-option.active {
+  background: var(--vcn-primary);
+  color: white;
 }
 
 .office-img-wrapper{
@@ -441,6 +489,81 @@
     line-height:1.6;
 }
 
+/* Custom Dropdown Styles */
+.contact-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.contact-select-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #f7f9f5;
+  border: 1px solid #dcdfd9;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.contact-select-trigger:hover {
+  border-color: var(--vcn-primary, #2e7d32);
+}
+
+.contact-select-arrow-svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.contact-select-arrow-svg.open {
+  transform: rotate(180deg);
+}
+
+.contact-select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #dcdfd9;
+  border-radius: 8px;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  max-height: 250px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.contact-select-option {
+  padding: 12px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  color: #333;
+  text-align: left;
+}
+
+.contact-select-option:hover {
+  background: #e8f5e9;
+  color: var(--vcn-primary, #2e7d32);
+}
+
+.contact-select-option.active {
+  background: var(--vcn-primary, #2e7d32);
+  color: white;
+}
+
+.contact-select-option.placeholder-option {
+  color: #999;
+}
 }
 </style>
 
@@ -463,19 +586,18 @@
               <p class="office-company-description">{{ contact.company.description }} </p>
             </div>
 <!-- Mobile Office Selector -->
-<div class="office-mobile-select d-block d-sm-none">
-  <select
-    class="office-select-dropdown"
-    v-model="activeTab"
-  >
-    <option
-      v-for="office in contact.offices"
-      :key="office.id"
-      :value="office.id"
-    >
+<div class="office-mobile-select d-block d-sm-none" ref="officeMobileDropdownRef">
+  <div class="office-select-trigger" @click="toggleOfficeMobileDropdown">
+    <span>{{ getSelectedOfficeCity() }}</span>
+    <span class="office-select-arrow" :class="{ open: isOfficeMobileDropdownOpen }">▼</span>
+  </div>
+  <div v-show="isOfficeMobileDropdownOpen" class="office-select-options">
+    <div v-for="office in contact.offices" :key="office.id"
+      class="office-select-option" :class="{ active: activeTab === office.id }"
+      @click="selectOfficeMobileOption(office.id)">
       {{ office.city }}
-    </option>
-  </select>
+    </div>
+  </div>
 </div>
             <!-- Pill Buttons -->
             <div class="office-pills-wrapper  d-none d-sm-flex">
@@ -592,24 +714,29 @@
                 <label class="contact-field-label" for="officeField">
                   {{ contact.contactForm.fields.office.label }} <span class="contact-required-mark">*</span>
                 </label>
-                <div class="contact-select-wrapper">
-                  <select id="officeField" class="contact-select-input"
-                    :class="{ 'contact-input-error': errors.office }" v-model="formData.office" required>
-                    <option value="">
+                <div class="contact-select-wrapper" ref="officeDropdownRef">
+                  <div class="contact-select-trigger" :class="{ 'contact-input-error': errors.office }" @click="toggleOfficeDropdown">
+                    <span :style="{ color: formData.office ? 'var(--vcn-dark, #333)' : '#999' }">
+                      {{ getSelectedOfficeLabel() || contact.contactForm.fields.office.placeholder }}
+                    </span>
+                    <span class="contact-select-arrow-svg" :class="{ open: isOfficeDropdownOpen }">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                          d="M8.71005 11.71L11.3001 14.3C11.6901 14.69 12.3201 14.69 12.7101 14.3L15.3001 11.71C15.9301 11.08 15.4801 10 14.5901 10H9.41005C8.52005 10 8.08005 11.08 8.71005 11.71Z"
+                          fill="#AFAFAF"></path>
+                      </svg>
+                    </span>
+                  </div>
+                  <div v-show="isOfficeDropdownOpen" class="contact-select-options">
+                    <div class="contact-select-option placeholder-option" @click="selectOfficeOption('')">
                       {{ contact.contactForm.fields.office.placeholder }}
-                    </option>
-                    <option v-for="office in contact.contactForm.fields.office.officeOptions" :key="office.value"
-                      :value="office.value">
+                    </div>
+                    <div v-for="office in contact.contactForm.fields.office.officeOptions" :key="office.value"
+                      class="contact-select-option" :class="{ active: formData.office === office.value }"
+                      @click="selectOfficeOption(office.value)">
                       {{ office.label }}
-                    </option>
-                  </select>
-                  <span class="contact-select-arrow">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M8.71005 11.71L11.3001 14.3C11.6901 14.69 12.3201 14.69 12.7101 14.3L15.3001 11.71C15.9301 11.08 15.4801 10 14.5901 10H9.41005C8.52005 10 8.08005 11.08 8.71005 11.71Z"
-                        fill="#AFAFAF"></path>
-                    </svg>
-                  </span>
+                    </div>
+                  </div>
                 </div>
                 <span v-if="errors.office" class="contact-error-message">{{ errors.office }}</span>
               </div>
@@ -617,22 +744,29 @@
                 <label class="contact-field-label" for="subjectField">
                   {{ contact.contactForm.fields.subject.label }} <span class="contact-required-mark">*</span>
                 </label>
-                <div class="contact-select-wrapper">
-                  <select id="subjectField" class="contact-select-input"
-                    :class="{ 'contact-input-error': errors.subject }" v-model="formData.subject" required>
-                    <option value="">{{ contact.contactForm.fields.subject.placeholder }}</option>
-                    <option v-for="subject in contact.contactForm.fields.subject.subjectOptions" :key="subject.value"
-                      :value="subject.value">
+                <div class="contact-select-wrapper" ref="subjectDropdownRef">
+                  <div class="contact-select-trigger" :class="{ 'contact-input-error': errors.subject }" @click="toggleSubjectDropdown">
+                    <span :style="{ color: formData.subject ? 'var(--vcn-dark, #333)' : '#999' }">
+                      {{ getSelectedSubjectLabel() || contact.contactForm.fields.subject.placeholder }}
+                    </span>
+                    <span class="contact-select-arrow-svg" :class="{ open: isSubjectDropdownOpen }">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                          d="M8.71005 11.71L11.3001 14.3C11.6901 14.69 12.3201 14.69 12.7101 14.3L15.3001 11.71C15.9301 11.08 15.4801 10 14.5901 10H9.41005C8.52005 10 8.08005 11.08 8.71005 11.71Z"
+                          fill="#AFAFAF"></path>
+                      </svg>
+                    </span>
+                  </div>
+                  <div v-show="isSubjectDropdownOpen" class="contact-select-options">
+                    <div class="contact-select-option placeholder-option" @click="selectSubjectOption('')">
+                      {{ contact.contactForm.fields.subject.placeholder }}
+                    </div>
+                    <div v-for="subject in contact.contactForm.fields.subject.subjectOptions" :key="subject.value"
+                      class="contact-select-option" :class="{ active: formData.subject === subject.value }"
+                      @click="selectSubjectOption(subject.value)">
                       {{ subject.label }}
-                    </option>
-                  </select>
-                  <span class="contact-select-arrow">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M8.71005 11.71L11.3001 14.3C11.6901 14.69 12.3201 14.69 12.7101 14.3L15.3001 11.71C15.9301 11.08 15.4801 10 14.5901 10H9.41005C8.52005 10 8.08005 11.08 8.71005 11.71Z"
-                        fill="#AFAFAF"></path>
-                    </svg>
-                  </span>
+                    </div>
+                  </div>
                 </div>
                 <span v-if="errors.subject" class="contact-error-message">{{ errors.subject }}</span>
               </div>
@@ -990,4 +1124,79 @@ const submitForm = async () => {
     isSubmitting.value = false
   }
 }
+
+// Custom dropdowns states and methods
+const isOfficeDropdownOpen = ref(false)
+const isSubjectDropdownOpen = ref(false)
+const officeDropdownRef = ref(null)
+const subjectDropdownRef = ref(null)
+
+const toggleOfficeDropdown = () => {
+  isOfficeDropdownOpen.value = !isOfficeDropdownOpen.value
+  isSubjectDropdownOpen.value = false
+}
+
+const toggleSubjectDropdown = () => {
+  isSubjectDropdownOpen.value = !isSubjectDropdownOpen.value
+  isOfficeDropdownOpen.value = false
+}
+
+const selectOfficeOption = (value) => {
+  formData.value.office = value
+  isOfficeDropdownOpen.value = false
+}
+
+const selectSubjectOption = (value) => {
+  formData.value.subject = value
+  isSubjectDropdownOpen.value = false
+}
+
+const getSelectedOfficeLabel = () => {
+  const options = contact.value?.contactForm?.fields?.office?.officeOptions || []
+  const selected = options.find(opt => opt.value === formData.value.office)
+  return selected ? selected.label : ''
+}
+
+const getSelectedSubjectLabel = () => {
+  const options = contact.value?.contactForm?.fields?.subject?.subjectOptions || []
+  const selected = options.find(opt => opt.value === formData.value.subject)
+  return selected ? selected.label : ''
+}
+
+const isOfficeMobileDropdownOpen = ref(false)
+const officeMobileDropdownRef = ref(null)
+
+const toggleOfficeMobileDropdown = () => {
+  isOfficeMobileDropdownOpen.value = !isOfficeMobileDropdownOpen.value
+}
+
+const selectOfficeMobileOption = (id) => {
+  activeTab.value = id
+  isOfficeMobileDropdownOpen.value = false
+}
+
+const getSelectedOfficeCity = () => {
+  const office = contact.value?.offices?.find(o => o.id === activeTab.value)
+  return office ? office.city : ''
+}
+
+const handleClickOutsideDropdowns = (event) => {
+  if (officeDropdownRef.value && !officeDropdownRef.value.contains(event.target)) {
+    isOfficeDropdownOpen.value = false
+  }
+  if (subjectDropdownRef.value && !subjectDropdownRef.value.contains(event.target)) {
+    isSubjectDropdownOpen.value = false
+  }
+  if (officeMobileDropdownRef.value && !officeMobileDropdownRef.value.contains(event.target)) {
+    isOfficeMobileDropdownOpen.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutsideDropdowns)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutsideDropdowns)
+})
 </script>
