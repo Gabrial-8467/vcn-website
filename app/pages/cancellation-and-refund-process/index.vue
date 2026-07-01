@@ -2,7 +2,7 @@
   <section class="terms-conditions mt-3">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-12">
 
           <h3>{{ cancellationRefund.heading }}</h3>
 
@@ -57,3 +57,56 @@ useHead({
   },
 })
 </script>
+
+<style scoped>
+.terms-conditions {
+  padding-top: 50px;
+  padding-bottom: 80px;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+@media (max-width: 991.98px) {
+  .terms-conditions {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .terms-conditions {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .terms-conditions {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 379.98px) {
+  .terms-conditions {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .terms-conditions {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .terms-conditions {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+}
+</style>
