@@ -402,6 +402,8 @@ useHead({
   .cart-main-wrapper {
     padding-top: 90px !important;
     padding-bottom: 40px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
     text-align: center !important;
   }
 }

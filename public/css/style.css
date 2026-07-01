@@ -2550,10 +2550,6 @@ body.home-page main {
 
 /* Responsive adjustments */
 @media (max-width: 992px) {
-  .vcn-container-footer {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
 
   .vcn-footer-tagline {
     font-size: 1.3rem;
@@ -5324,7 +5320,7 @@ body.home-page main {
 .cart-main-wrapper {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 165px 20px;
+  padding: 165px 100px;
 }
 
 .cart-page-title {
@@ -6648,7 +6644,6 @@ body.home-page main {
 
   @media (max-width: 992px) {
     .strains-content-wrapper-right {
-      padding-left: 0;
       margin-top: 30px;
     }
 
