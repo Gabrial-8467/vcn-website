@@ -211,14 +211,26 @@ onMounted(async () => {
   }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767.98px) {
+  /* 1. Ensure the row offsets the column padding to align with container edges */
   .vcn-whole-body-swiper-container .row {
-    margin-left: -12px !important;
-    margin-right: -12px !important;
+    margin-left: -4px !important;
+    margin-right: -4px !important;
+    margin-top: 0 !important; /* Resetting bootstrap default margin-top */
   }
-  .vcn-whole-body-swiper-container .row > div {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+
+  /* 2. Set uniform horizontal and vertical gaps */
+  .vcn-whole-body-swiper-container .row > [class*="col-"] {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    margin-bottom: 8px !important; /* Match the total horizontal gutter (4px + 4px) */
+    margin-top: 0 !important;
+  }
+
+  /* 3. Ensure cards inside take full height if content varies */
+  .vcn-whole-body-product-card {
+    height: 100%;
+    margin: 0 !important;
   }
 }
 

@@ -182,6 +182,50 @@ const journeyHowToUse = computed(() => {
 .center-img {
   border-radius: 50%;
 }
+@media (max-width: 956px) {
+  /* 1. Remove extra space between images */
+  .image-grid {
+    gap: 12px !important;
+  }
+
+  .image-small-container {
+    display: flex !important;
+    width: 100% !important;
+    gap: 12px !important;
+    justify-content: flex-start !important;
+    padding-right: 70px;
+  }
+
+  /* 2. Use space efficiently (Right side space removal) */
+  .image-small {
+    flex: 1 1 0% !important;
+    width: auto !important;
+  }
+
+  .image-small img {
+    width: 100% !important;
+    height: 290px !important; /* Matches the circle's height */
+    object-fit: contain !important;
+    border-radius: 8px; /* Optional: adds a slight curve to match your UI */
+  }
+
+  /* 3. Perfect Circle Fix (190px size) */
+  .image-circle {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: auto !important;
+  }
+
+  img.center-img {
+    width: 190px !important;
+    height: 190px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    flex: none !important;
+  }
+}
 
 /* Desktop layout overrides matching the mockup image.png */
 @media (min-width: 768px) {

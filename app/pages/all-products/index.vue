@@ -18,7 +18,7 @@
 
       <!-- Products grid -->
       <div v-else class="row g-4">
-        <div v-for="product in [products[0]]" :key="product.id || product.name" class="col-lg-9"
+        <div v-for="product in [products[0]]" :key="product.id || product.name" class="col-lg-9 px-3 mx-auto md:px-3"
           v-if="products.length > 0">
           <div class="vcn-product-card row align-items-center h-100">
 

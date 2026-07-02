@@ -250,4 +250,15 @@ const handleSubscribe = async (event) => {
 .vcn-footer-links-section{
   padding-left: 30px !important;
 }
+@media (max-width: 767.98px) {
+  .vcn-container-footer .row {
+    margin-left: -12px !important;
+    margin-right: -12px !important;
+  }
+
+  .vcn-container-footer .row > [class*="col-"] {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
 </style>
