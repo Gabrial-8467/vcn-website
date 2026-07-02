@@ -176,7 +176,7 @@
 
   .alternative-callout-top {
     right: -40px !important;
-    top: 60px !important;
+    top: -40px !important;
   }
 
   .alternative-callout-bottom {
