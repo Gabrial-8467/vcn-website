@@ -16,7 +16,7 @@
         <h2 class="vcn-section-title text-center fw-semibold mb-5">{{ blogs.sectionTitle }}</h2>
 
         <!-- Blog Posts Grid -->
-        <div class="vcn-blog-grid row g-4 mb-5">
+        <div class="vcn-blog-grid row g-4 mb-5 ">
           <div v-for="(blog, index) in filteredBlogs" :key="index" class="col-lg-4 col-md-6">
             <div class="vcn-blog-card card h-100 border-0 shadow-sm">
               <div class="vcn-blog-image-wrapper position-relative overflow-hidden">
@@ -149,3 +149,298 @@ const filteredBlogs = computed(() => {
   )
 })
 </script>
+
+<style scoped>
+/* ==========================
+   BLOG PAGE RESPONSIVE
+========================== */
+
+.vcn-blogs-page {
+    overflow-x: hidden;
+}
+/* Row spacing */
+.vcn-blog-grid {
+    margin-left: -18px !important;
+    margin-right: -18px !important;
+}
+
+/* Column spacing */
+.vcn-blog-grid > div {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    margin-bottom: 36px !important;
+}
+
+/* Card */
+.vcn-blog-card {
+    height: 100%;
+    width: 100%;
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+    .vcn-blog-grid {
+        margin-left: -14px !important;
+        margin-right: -14px !important;
+    }
+
+    .vcn-blog-grid > div {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+        margin-bottom: 28px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .vcn-blog-grid {
+        margin-left: -10px !important;
+        margin-right: -10px !important;
+    }
+
+    .vcn-blog-grid > div {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin-bottom: 24px !important;
+    }
+}
+
+/* ---------- Filters ---------- */
+
+.vcn-category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.vcn-filter-btn {
+    padding: 10px 22px;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+/* ---------- Card ---------- */
+
+.vcn-blog-card {
+    border-radius: 14px;
+    overflow: hidden;
+    transition: .3s;
+    height: 100%;
+}
+
+.vcn-blog-card:hover {
+    transform: translateY(-4px);
+}
+
+.vcn-blog-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.vcn-blog-content {
+    padding: 20px;
+}
+
+.vcn-blog-title {
+    line-height: 1.5;
+    flex: 1;
+}
+
+.vcn-read-more-btn {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-metas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 20px;
+    font-size: 14px;
+    color: #777;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* ==========================
+        LARGE DESKTOP
+========================== */
+
+@media (min-width:1400px){
+
+    .container{
+        max-width:1320px;
+    }
+
+    .vcn-blog-image{
+        height:280px;
+    }
+
+    .vcn-blog-title{
+        font-size:20px;
+    }
+
+}
+
+/* ==========================
+        LAPTOP
+========================== */
+
+@media (max-width:1200px){
+
+    .vcn-blog-image{
+        height:230px;
+    }
+
+}
+
+/* ==========================
+        TABLET
+========================== */
+
+@media (max-width:991px){
+
+    .vcn-section-title{
+        font-size:30px;
+    }
+
+    .vcn-blog-image{
+        height:220px;
+    }
+
+    .vcn-blog-content{
+        padding:18px;
+    }
+
+    .blog-metas{
+        padding:0 18px 18px;
+        font-size:13px;
+    }
+
+}
+
+/* ==========================
+        MOBILE
+========================== */
+
+@media (max-width:767px){
+
+    .vcn-blogs-page{
+        padding:50px 0;
+    }
+
+    .vcn-section-title{
+        font-size:26px;
+        margin-bottom:35px !important;
+    }
+
+    .vcn-category-filters{
+        justify-content:flex-start;
+        overflow-x:auto;
+        flex-wrap:nowrap;
+        padding-bottom:10px;
+
+        scrollbar-width:none;
+    }
+
+    .vcn-category-filters::-webkit-scrollbar{
+        display:none;
+    }
+
+    .vcn-filter-btn{
+        flex-shrink:0;
+        font-size:14px;
+        padding:8px 18px;
+    }
+
+    .vcn-blog-image{
+        height:210px;
+    }
+
+    .vcn-blog-content{
+        padding:16px;
+    }
+
+    .vcn-blog-title{
+        font-size:16px !important;
+    }
+
+    .vcn-read-more-btn{
+        width:38px;
+        height:38px;
+    }
+
+    .blog-metas{
+        padding:0 16px 16px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+
+    .vcn-load-more-btn{
+        width:100%;
+    }
+
+}
+
+/* ==========================
+      SMALL MOBILE
+========================== */
+
+@media (max-width:576px){
+
+    .container{
+        padding-left:16px;
+        padding-right:16px;
+    }
+
+    .vcn-blog-image{
+        height:190px;
+    }
+
+    .vcn-blog-title{
+        font-size:15px !important;
+    }
+
+    .vcn-section-title{
+        font-size:22px;
+    }
+
+    .vcn-filter-btn{
+        padding:8px 16px;
+        font-size:13px;
+    }
+
+    .blog-metas{
+        font-size:12px;
+    }
+
+}
+
+/* ==========================
+      EXTRA SMALL
+========================== */
+
+@media (max-width:375px){
+
+    .vcn-blog-image{
+        height:170px;
+    }
+
+    .vcn-blog-title{
+        font-size:14px !important;
+    }
+
+    .vcn-read-more-btn{
+        width:34px;
+        height:34px;
+    }
+
+}
+</style>
