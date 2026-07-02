@@ -392,7 +392,7 @@
 }
 
 .office-img-wrapper{
-    height:200px;
+    height:110px;
     border-radius:14px;
 }
 
