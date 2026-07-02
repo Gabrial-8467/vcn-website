@@ -29,39 +29,38 @@
             <!-- Products grid -->
             <div v-else class="vcn-whole-body-swiper-container">
                 <div class="row">
-                    <div v-for="(product, index) in products" :key="product.id"
-                        class="col-lg-3 col-md-6 col-sm-6 col-6" data-aos="fade-up" data-aos-duration="600">
-                        
-                            <div class="vcn-whole-body-product-card" @mouseenter="handleMouseEnter(index)"
-                                @mouseleave="handleMouseLeave(index)">
-                                <div class="vcn-whole-body-product-badges">
-                                    <span v-if="index === 0"
-                                        class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{
-                                            productsSection.productCard.badges.bestseller }}</span>
-                                    <span v-else class="vcn-whole-body-badge vcn-whole-body-badge-new">{{
-                                        productsSection.productCard.badges.new }}</span>
-                                </div>
-                                <span class="vcn-whole-body-product-label">{{
-                                    productsSection.productCard.productLabel }}</span>
-                                <h3 class="vcn-whole-body-product-title">
-                                    <NuxtLink :to="`/product-details/${product.slug}`">
-                                        {{ product.name }}
-                                    </NuxtLink>
-                                </h3>
-                                <NuxtLink :to="`/product-details/${product.slug}`">
-                                    <div class="vcn-whole-body-product-image">
-                                        <img class="product-img" :src="getPrimaryImage(product)" :alt="product.name"
-                                            loading="lazy" @error="handleImageError($event)" />
+                    <div v-for="(product, index) in products" :key="product.id" class="col-lg-3 col-md-6 col-sm-6 col-6"
+                        data-aos="fade-up" data-aos-duration="600">
 
-                                        <video :ref="el => { if (el) videoRefs[index] = el }" class="product-video"
-                                            muted loop playsinline preload="auto">
-                                            <source :src="productsSection.productCard.video" type="video/mp4" />
-                                        </video>
-                                    </div>
-                                </NuxtLink>
-                                <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-whole-body-shop-btn">
-                                    {{ productsSection.productCard.shopButtonText }}</NuxtLink>
+                        <div class="vcn-whole-body-product-card" @mouseenter="handleMouseEnter(index)"
+                            @mouseleave="handleMouseLeave(index)">
+                            <div class="vcn-whole-body-product-badges">
+                                <span v-if="index === 0" class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{
+                                    productsSection.productCard.badges.bestseller }}</span>
+                                <span v-else class="vcn-whole-body-badge vcn-whole-body-badge-new">{{
+                                    productsSection.productCard.badges.new }}</span>
                             </div>
+                            <span class="vcn-whole-body-product-label">{{
+                                productsSection.productCard.productLabel }}</span>
+                            <h3 class="vcn-whole-body-product-title">
+                                <NuxtLink :to="`/product-details/${product.slug}`">
+                                    {{ product.name }}
+                                </NuxtLink>
+                            </h3>
+                            <NuxtLink :to="`/product-details/${product.slug}`">
+                                <div class="vcn-whole-body-product-image">
+                                    <img class="product-img" :src="getPrimaryImage(product)" :alt="product.name"
+                                        loading="lazy" @error="handleImageError($event)" />
+
+                                    <video :ref="el => { if (el) videoRefs[index] = el }" class="product-video" muted
+                                        loop playsinline preload="auto">
+                                        <source :src="productsSection.productCard.video" type="video/mp4" />
+                                    </video>
+                                </div>
+                            </NuxtLink>
+                            <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-whole-body-shop-btn">
+                                {{ productsSection.productCard.shopButtonText }}</NuxtLink>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,80 +157,96 @@ onMounted(async () => {
 
 <style scoped>
 .container {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .vcn-whole-body-section {
-  box-sizing: border-box;
-  width: 100%;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+/* * This affects screens below 768px where 'col-6' is active  */
+.vcn-whole-body-swiper-container .row>div {
+    padding: 0 10px;
+    /* Adds 20px total space between cards */
+    margin-bottom: 20px;
+    /* Adds vertical space if they wrap */
 }
 
 @media (max-width: 991.98px) {
-  .vcn-whole-body-section {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-  }
+    .vcn-whole-body-section {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
 }
 
 @media (max-width: 767.98px) {
-  .vcn-whole-body-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
+    .vcn-whole-body-section {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .vcn-whole-body-swiper-container .row>div {
+        padding: 0 15px;
+        /* Slightly more space for tablets */
+    }
 }
 
 @media (max-width: 575.98px) {
-  .vcn-whole-body-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
+    .vcn-whole-body-section {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
 }
 
 @media (max-width: 379.98px) {
-  .vcn-whole-body-section {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
+    .vcn-whole-body-section {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
 }
 
 @media (min-width: 1200px) {
-  .vcn-whole-body-section {
-    padding-left: 80px !important;
-    padding-right: 80px !important;
-  }
+    .vcn-whole-body-section {
+        padding-left: 80px !important;
+        padding-right: 80px !important;
+    }
 }
 
 @media (min-width: 1400px) {
-  .vcn-whole-body-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-  }
+    .vcn-whole-body-section {
+        padding-left: 160px !important;
+        padding-right: 160px !important;
+    }
 }
 
 @media (max-width: 767.98px) {
-  /* 1. Ensure the row offsets the column padding to align with container edges */
-  .vcn-whole-body-swiper-container .row {
-    margin-left: -4px !important;
-    margin-right: -4px !important;
-    margin-top: 0 !important; /* Resetting bootstrap default margin-top */
-  }
 
-  /* 2. Set uniform horizontal and vertical gaps */
-  .vcn-whole-body-swiper-container .row > [class*="col-"] {
-    padding-left: 4px !important;
-    padding-right: 4px !important;
-    margin-bottom: 8px !important; /* Match the total horizontal gutter (4px + 4px) */
-    margin-top: 0 !important;
-  }
+    /* 1. Ensure the row offsets the column padding to align with container edges */
+    .vcn-whole-body-swiper-container .row {
+        margin-left: -4px !important;
+        margin-right: -4px !important;
+        margin-top: 0 !important;
+        /* Resetting bootstrap default margin-top */
+    }
 
-  /* 3. Ensure cards inside take full height if content varies */
-  .vcn-whole-body-product-card {
-    height: 100%;
-    margin: 0 !important;
-  }
+    /* 2. Set uniform horizontal and vertical gaps */
+    .vcn-whole-body-swiper-container .row>[class*="col-"] {
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        margin-bottom: 8px !important;
+        /* Match the total horizontal gutter (4px + 4px) */
+        margin-top: 0 !important;
+    }
+
+    /* 3. Ensure cards inside take full height if content varies */
+    .vcn-whole-body-product-card {
+        height: 100%;
+        margin: 0 !important;
+    }
 }
 
 /* Big Screen Styles (Defaults) */
