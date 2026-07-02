@@ -73,6 +73,16 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
     padding-left: 30px !important;
     padding-right: 30px !important;
   }
+
+  .mid-consultation-cta .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .mid-consultation-cta .row > [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 }
 
 @media (max-width: 767.98px) {
@@ -182,7 +192,7 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
   }
 
   .mid-cta-image-wrapper {
-    max-width: 600px;
+    max-width: 100% !important;
     margin: 0 auto;
   }
 }
