@@ -113,6 +113,29 @@ const cleanUrl = (url) => {
     gap: 20px 40px !important;
   }
 }
+/* Fix for the Strains Section Uneven Spacing */
+@media (max-width: 956px) {
+  .strains-info-main-section .col-lg-6.col-md-12 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  .strains-info-main-section .strains-content-wrapper-right {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* Fix for the Hero/Health Section Uneven Spacing */
+@media (min-width: 1200px) {
+  .health-section-bg .col-xl-3.health-section-below,
+  .health-section-bg .col-xl-9.sm-pr-0 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
 
 @media (max-width: 767.98px) {
   .strains-product-image {

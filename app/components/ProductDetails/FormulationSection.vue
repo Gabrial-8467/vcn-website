@@ -86,7 +86,7 @@
 
 /* Fix the buggy global margin-top from style.css */
 .alternate-heading {
-  margin-top: 0 !important;
+  margin-top: -85px !important;
 }
 
 /* Base desktop styles (min-width: 1200px) */
@@ -132,12 +132,23 @@
 
   .alternative-callout-top {
     right: -25px !important;
-    top: 17% !important;
+    top: -8% !important;
   }
 
   .alternative-callout-bottom {
-    left: -45px !important;
-    bottom: 3% !important;
+    left: -80px !important;
+    bottom: -10% !important;
+  }
+  /* Left Column (Video/Graphic) */
+  .health-section-below.col-xl-3 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Right Column (Content) */
+  .col-xl-9.sm-pr-0 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }
 
@@ -345,7 +356,11 @@
   }
 }
 
-
+@media (max-width: 991.98px) {
+  .alternate-heading {
+    margin-top: -10px !important;
+  }
+}
 
 @media (max-width: 575.98px) {
 

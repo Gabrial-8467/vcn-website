@@ -999,8 +999,8 @@ body.home-page main {
 }
 
 .alternate-heading {
-  font-size: 2.8rem;
-  font-weight: 500;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-white);
   line-height: 1.2;
   margin-top: -12rem;
@@ -1193,8 +1193,8 @@ body.home-page main {
 
 .alternative-callout-top::before {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><marker id="circleEnd" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto"><circle  cx="2" cy="2" r="1.2" fill="rgba(255,255,255,1)" /></marker></defs><path d="M 10 90 Q 50 50, 90 10" stroke="rgba(255,255,255,0.8)" stroke-width="2" fill="none" marker-end="url(%23circleEnd)"/></svg>');
-  bottom: 56%;
-  right: 88px;
+  bottom: -36%;
+  right: 73px;
   rotate: 225deg;
 }
 
@@ -1207,7 +1207,7 @@ body.home-page main {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><marker id="circleEnd" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto"><circle  cx="2" cy="2" r="1.2" fill="rgba(255,255,255,1)" /></marker></defs><path d="M 10 90 Q 50 50, 90 10" stroke="rgba(255,255,255,0.8)" stroke-width="2" fill="none" marker-end="url(%23circleEnd)"/></svg>');
   bottom: 69%;
   right: 88px;
-  rotate: 44deg;
+  rotate: 45deg;
 }
 
 .alternate-image {

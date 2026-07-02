@@ -23,6 +23,9 @@
                 <div class="product-actions">
                   <NuxtLink :to="`/product-details/${product.slug}`" class="btn-learn">Learn More</NuxtLink>
                   <ClientOnly>
+                    <template #placeholder>
+                      <a href="#" class="btn-cart">Add to Cart</a>
+                    </template>
                     <a v-if="!getCartItem(product.id)" href="#" @click.prevent="addToCart(product)"
                       class="btn-cart">Add to Cart</a>
                     <div v-else class="qty-box">
@@ -143,6 +146,16 @@ const addToCart = async (product) => {
   height: 100%;
 }
 
+.product-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+
+.product-description {
+  flex-grow: 1 !important;
+}
+
 .product-title :deep(a) {
   color: inherit;
   text-decoration: none;
@@ -152,54 +165,115 @@ const addToCart = async (product) => {
   color: inherit;
 }
 
+/* Product Actions and Buttons Styling */
 .product-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important; /* Left-aligned on desktop */
+  gap: 10px !important;
+  margin-top: auto !important;
+  width: 100% !important;
+}
+
+.btn-learn,
+.btn-cart,
+.qty-box {
+  flex: 1 !important;
+  max-width: 160px !important; /* Prevents stretching too wide, while shrinking on small sizes */
+  height: 40px !important;
+  box-sizing: border-box !important;
+}
+
+.btn-learn {
+  background: var(--vcn-darker) !important;
+  color: #ffffff !important;
+  padding: 0 12px !important;
+  border-radius: 25px !important;
+  border: 2px solid var(--vcn-darker) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  box-shadow: 0 2px 4px rgba(28, 58, 19, 0.1) !important;
+}
+
+.btn-learn:hover {
+  background: var(--vcn-primary) !important;
+  border-color: var(--vcn-primary) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(94, 108, 31, 0.2) !important;
+}
+
+.btn-cart {
+  background: transparent !important;
+  color: var(--vcn-darker) !important;
+  padding: 0 12px !important;
+  border-radius: 25px !important;
+  border: 2px solid var(--vcn-darker) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+}
+
+.btn-cart:hover {
+  background: var(--vcn-darker) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(28, 58, 19, 0.15) !important;
 }
 
 .qty-box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: white;
-  border: 1.5px solid var(--vcn-primary);
-  border-radius: 25px;
-  padding: 6px 12px;
-  flex-shrink: 0;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #ffffff !important;
+  border: 2px solid var(--vcn-darker) !important;
+  border-radius: 25px !important;
+  padding: 0 8px !important;
 }
 
 .qty-btn {
-  background: none;
-  border: none;
-  color: var(--vcn-primary);
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 22px;
-  height: 22px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s;
-  flex-shrink: 0;
-  padding: 0;
+  background: none !important;
+  border: none !important;
+  color: var(--vcn-darker) !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  width: 24px !important;
+  height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
 }
 
 .qty-btn:hover {
-  background-color: var(--vcn-primary);
-  color: white;
+  background-color: rgba(28, 58, 19, 0.1) !important;
 }
 
 .qty-value {
-  color: var(--vcn-primary);
-  font-weight: 600;
-  min-width: 18px;
-  text-align: center;
-  flex-shrink: 0;
-  white-space: nowrap;
+  color: var(--vcn-darker) !important;
+  font-weight: 600 !important;
+  min-width: 16px !important;
+  text-align: center !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+  font-size: 13px !important;
 }
 
 /* Pagination styles */
@@ -283,10 +357,31 @@ const addToCart = async (product) => {
   .product-price {
     font-size: 18px !important;
   }
+}
 
+/* Center buttons on tablet/medium screen card designs */
+@media (max-width: 1199.98px) and (min-width: 576.01px) {
   .product-actions {
     justify-content: center !important;
-    align-items: center !important;
+  }
+}
+
+/* Stack buttons vertically on mobile screens for narrow width safety */
+@media (max-width: 576px) {
+  .product-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  .btn-learn,
+  .btn-cart,
+  .qty-box {
+    max-width: none !important;
+    width: 100% !important;
+    height: 44px !important;
+    font-size: 14px !important;
   }
 }
 </style>
