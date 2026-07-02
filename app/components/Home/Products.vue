@@ -271,6 +271,7 @@ onMounted(async () => {
 .vcn-whole-body-view-link {
     text-decoration: underline !important;
     margin-top: 0 !important;
+    text-underline-offset: 6px;
 }
 
 /* .vcn-whole-body-subtitle {
