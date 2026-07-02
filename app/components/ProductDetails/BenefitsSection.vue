@@ -160,6 +160,7 @@ const journeyHowToUse = computed(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  padding-left: 20px;
 }
 
 .image-circle {
@@ -182,6 +183,7 @@ const journeyHowToUse = computed(() => {
 .center-img {
   border-radius: 50%;
 }
+
 @media (max-width: 956px) {
   /* 1. Remove extra space between images */
   .image-grid {
