@@ -505,4 +505,31 @@ const addToCart = async (product) => {
   min-width: 15px !important;
   text-align: center !important;
 }
+/* Ensure the breadcrumb container never exceeds the screen width */
+.vcn-breadcrumb-container {
+  width: 100% !important;
+  max-width: 100vw !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Make the content area responsive and centered */
+.vcn-breadcrumb-content.ai-style-change-1 {
+  width: 92% !important; /* Provides a small gutter on mobile */
+  max-width: 1200px !important; /* Matches your desktop container */
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure the title text wraps if it is too long */
+h1.vcn-breadcrumb-title.ai-style-change-2 {
+  max-width: 100% !important;
+  width: 100% !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+}
 </style>
