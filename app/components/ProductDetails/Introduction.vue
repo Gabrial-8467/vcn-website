@@ -9,7 +9,7 @@
             <div class="product-img-wrapper">
               <div class="product-image-cards">
                 <video 
-                  v-if="!selectedImage"
+                  v-if="selectedImage === 'video'"
                   id="mainImage" 
                   src="/img/single%20product/vcn-seed-vdo.mp4" 
                   autoplay 
@@ -37,6 +37,17 @@
                   </div>
                 </div>
               </div>
+              <!-- Video play option at the end -->
+              <div class="col-6">
+                <div class="product-gallery">
+                  <div class="gallery-item" :class="{ 'active': selectedImage === 'video' }">
+                    <div class="thumb video-thumb-preview" @click="selectImage('video')">
+                      <i class="bi bi-play-circle"></i>
+                      <span>Watch Video</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -44,7 +55,13 @@
           <div class="d-block d-md-none">
             <div class="swiper product-images-swiper">
               <div class="swiper-wrapper">
-                <!-- Slide 1: Video -->
+                <!-- Slides: Images first -->
+                <div v-for="(img, index) in allProductImages" :key="index" class="swiper-slide">
+                  <div class="mobile-swiper-image-card">
+                    <img :src="img" :alt="productName" @click="openProductPreview(img)" class="mobile-swiper-image" />
+                  </div>
+                </div>
+                <!-- Slide: Video last -->
                 <div class="swiper-slide">
                   <div class="mobile-swiper-image-card">
                     <video 
@@ -55,12 +72,6 @@
                       playsinline 
                       style="width: 100%; height: 100%; object-fit: contain;"
                     ></video>
-                  </div>
-                </div>
-                <!-- Other Slides: Images -->
-                <div v-for="(img, index) in allProductImages" :key="index" class="swiper-slide">
-                  <div class="mobile-swiper-image-card">
-                    <img :src="img" :alt="productName" @click="openProductPreview(img)" class="mobile-swiper-image" />
                   </div>
                 </div>
               </div>
@@ -336,7 +347,7 @@ const productMrp = computed(() => {
   return mrp ? parseFloat(mrp).toFixed(2) : null
 })
 const productImage = computed(() => {
-  return '/img/single%20product/seed%201.webp'
+  return resolveProductImage()
 })
 
 // Track selected main image
@@ -351,14 +362,57 @@ const selectImage = (imageSrc) => {
   }
 }
 
-// All product images (primary + variants) excluding current display image
+// All product images (primary + variants)
 const allProductImages = computed(() => {
-  return [
-    '/img/single%20product/seed%201.webp',
-    '/img/single%20product/seed%202.webp',
-    '/img/single%20product/seed%203.webp',
-    '/img/single%20product/vcnimage-fallback.webp'
-  ]
+  const urls = []
+  const prod = product.value
+  if (!prod) return urls
+
+  // 1. Collect from product.images
+  if (prod.images && prod.images.length > 0) {
+    prod.images.forEach(img => {
+      if (img && img.media) {
+        const url = img.media.variants?.webp || img.media.webpUrl || img.media.fileUrl
+        if (url && !urls.includes(url)) {
+          urls.push(url)
+        }
+      } else if (img && img.image) {
+        if (!urls.includes(img.image)) {
+          urls.push(img.image)
+        }
+      }
+    })
+  }
+
+  // 2. Collect from variant images
+  if (prod.variants && prod.variants.length > 0) {
+    prod.variants.forEach(variant => {
+      if (variant && variant.productImages && variant.productImages.length > 0) {
+        variant.productImages.forEach(img => {
+          if (img && img.media) {
+            const url = img.media.variants?.webp || img.media.webpUrl || img.media.fileUrl
+            if (url && !urls.includes(url)) {
+              urls.push(url)
+            }
+          } else if (img && img.image) {
+            if (!urls.includes(img.image)) {
+              urls.push(img.image)
+            }
+          }
+        })
+      }
+    })
+  }
+
+  // 3. Fallback to primary image if no urls found
+  if (urls.length === 0) {
+    const primary = resolveProductImage()
+    if (primary) {
+      urls.push(primary)
+    }
+  }
+
+  return urls
 })
 
 // Main image to display

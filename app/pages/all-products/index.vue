@@ -23,11 +23,21 @@
           <div class="vcn-product-card row align-items-center h-100">
 
             <!-- Image -->
-            <div class="col-lg-4 position-relative">
+            <div class="col-lg-4 position-relative d-flex flex-column align-items-center justify-content-center">
 
-              <div class="vcn-product-image text-center">
-                <img :src="getPrimaryImage(product)" :alt="product.name" class="vcn-product-bottle" loading="lazy"
+              <div class="vcn-product-image text-center w-100">
+                <img :src="displayFeaturedImage" :alt="product.name" class="vcn-product-bottle" loading="lazy"
                   @error="handleImageError($event, product)" />
+              </div>
+
+              <!-- Thumbnail Gallery -->
+              <div v-if="featuredProductImages.length > 1" class="featured-thumbnails d-flex justify-content-center gap-2 mt-3 w-100">
+                <div v-for="(img, idx) in featuredProductImages" :key="idx" 
+                  class="featured-thumbnail-item" 
+                  :class="{ active: (selectedFeaturedImage === img) || (!selectedFeaturedImage && img === getPrimaryImage(product)) }"
+                  @click="selectedFeaturedImage = img">
+                  <img :src="img" :alt="product.name + ' thumbnail ' + idx" />
+                </div>
               </div>
             </div>
 
@@ -236,6 +246,74 @@ const error = computed(() => productStore.error)
 const getProductPricing = (product) => productStore.getProductPricing(product)
 const getPrimaryImage = (product) => productStore.getPrimaryImage(product)
 
+// Featured product image gallery refs & computed properties
+const selectedFeaturedImage = ref(null)
+
+const getAllProductImages = (product) => {
+  const urls = []
+  if (!product) return urls
+
+  // 1. Collect from product.images
+  if (product.images && product.images.length > 0) {
+    product.images.forEach(img => {
+      if (img && img.media) {
+        const url = img.media.variants?.webp || img.media.webpUrl || img.media.fileUrl
+        if (url && !urls.includes(url)) {
+          urls.push(url)
+        }
+      } else if (img && img.image) {
+        if (!urls.includes(img.image)) {
+          urls.push(img.image)
+        }
+      }
+    })
+  }
+
+  // 2. Collect from variant images
+  if (product.variants && product.variants.length > 0) {
+    product.variants.forEach(variant => {
+      if (variant && variant.productImages && variant.productImages.length > 0) {
+        variant.productImages.forEach(img => {
+          if (img && img.media) {
+            const url = img.media.variants?.webp || img.media.webpUrl || img.media.fileUrl
+            if (url && !urls.includes(url)) {
+              urls.push(url)
+            }
+          } else if (img && img.image) {
+            if (!urls.includes(img.image)) {
+              urls.push(img.image)
+            }
+          }
+        })
+      }
+    })
+  }
+
+  // 3. Fallback to primary image if no urls found
+  if (urls.length === 0) {
+    const primary = getPrimaryImage(product)
+    if (primary) {
+      urls.push(primary)
+    }
+  }
+
+  return urls
+}
+
+const displayFeaturedImage = computed(() => {
+  return selectedFeaturedImage.value || (products.value && products.value[0] ? getPrimaryImage(products.value[0]) : '')
+})
+
+const featuredProductImages = computed(() => {
+  const product = products.value && products.value[0]
+  if (!product) return []
+  return getAllProductImages(product)
+})
+
+watch(() => products.value, () => {
+  selectedFeaturedImage.value = null
+})
+
 const handleImageError = (event, product) => {
   console.error(`Failed to load image for product ${product.id}:`, event)
   event.target.src = '/img/products/img1.png'
@@ -261,6 +339,51 @@ const addToCart = async (product) => {
 </script>
 
 <style scoped>
+.featured-thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.featured-thumbnail-item {
+  width: 55px;
+  height: 55px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.featured-thumbnail-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+
+.featured-thumbnail-item:hover img {
+  transform: scale(1.1);
+}
+
+.featured-thumbnail-item.active {
+  border-color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.featured-thumbnail-item:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
 .vcn-breadcrumb-container {
   margin-top: -120px !important;
   padding-top: 85px !important;
@@ -512,9 +635,12 @@ const addToCart = async (product) => {
   overflow: hidden !important;
   box-sizing: border-box !important;
 }
-
+h1.vcn-breadcrumb-title {
+  position: relative;
+  left: -40px; /* Adjust this value to move it more or less 'outside' */
+}
 /* Make the content area responsive and centered */
-.vcn-breadcrumb-content.ai-style-change-1 {
+.vcn-breadcrumb-content {
   width: 92% !important; /* Provides a small gutter on mobile */
   max-width: 1200px !important; /* Matches your desktop container */
   margin-left: auto !important;
