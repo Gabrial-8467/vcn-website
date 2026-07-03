@@ -542,4 +542,27 @@ h1.vcn-breadcrumb-title.ai-style-change-2 {
 .vcn-new-product .row > [class^="col-"] {
     padding: 10px !important;
 }
+@media (min-width: 1200px) {
+  /* Unify container widths and centering */
+  .vcn-breadcrumb-container .vcn-breadcrumb-content,
+  section.vcn-product-section .container,
+  section.vcn-new-product .container,
+  header .container,
+  footer .container {
+    max-width: 1140px; /* Standard Bootstrap 1200px container width, or adjust to your preference */
+    padding-left: 40px !important;
+    padding-right: 74px !important;
+  }
+
+  /* Specific override for the breadcrumb content which had fixed margins */
+  .vcn-breadcrumb-content {
+    margin: 0 auto !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .row{
+    padding-left: 15px !important;
+  }
+}  
 </style>
