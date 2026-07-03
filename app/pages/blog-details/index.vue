@@ -600,6 +600,7 @@ useHead({
   align-items: center;
   gap: 24px;
   flex-wrap: wrap;
+  margin-bottom: 40px !important; /* Adjust this number to your liking */
 }
 
 .share-label {

@@ -2,6 +2,9 @@
   .terms-conditions {
     padding:  80px;
   }
+  .col-lg-6{
+    padding-left: 20px;
+  }
 /* ===== PILL TABS ===== */
 .office-pills-wrapper {
   display: flex;

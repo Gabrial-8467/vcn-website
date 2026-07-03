@@ -181,7 +181,7 @@ export const BLOG_DETAIL_DATA = {
                 {
                     title: 'Can a Grade 2 Fatty Liver Disease Be Cured Completely?',
                     date: '02 Feb, 2025',
-                    image: 'https://images.unsplash.com/photo-1530026405186-ed1f1398f70f?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80'
+                    image: 'https://t4.ftcdn.net/jpg/05/25/56/43/360_F_525564337_9sBIHAyzVZxN53Om1T8paeQevGZPGSX7.jpg'
                 },
                 {
                     title: '7 Top Foods High in Magnesium and Zinc for Better Health',
@@ -191,12 +191,12 @@ export const BLOG_DETAIL_DATA = {
                 {
                     title: 'Top 20 Probiotic Foods in India for a Healthy Gut & Immunity',
                     date: '01 Jan, 2025',
-                    image: 'https://images.unsplash.com/photo-1550572017-edd951aa8f72?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80'
+                    image: 'https://sa1s3optim.patientpop.com/fit-in/624x560/assets/images/provider/photos/2466447.jpg'
                 },
                 {
                     title: '10 Lifestyle Changes to Control Cholesterol at Home Naturally',
                     date: '01 Jan, 2025',
-                    image: 'https://images.unsplash.com/photo-1434494838584-02fb06a4a96d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80'
+                    image: 'https://www.adityabirlacapital.com/healthinsurance/active-together/wp-content/uploads/2019/04/How-to-Reduce-Cholesterol-Level-Naturally-with-Lifestyle-Changes-512_512-1200x675.jpg'
                 }
             ],
 

@@ -2968,11 +2968,6 @@ body.home-page main {
   position: relative;
 }
 
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
 .product-image-wrapper {
   flex-shrink: 0;
   width: 215px;
@@ -11653,7 +11648,7 @@ body.home-page main {
 
   /* Content Section */
   .blog-content-section {
-    padding: 60px 0 80px;
+    padding: 60px 0 0 !important;
     background: #fff;
   }
 

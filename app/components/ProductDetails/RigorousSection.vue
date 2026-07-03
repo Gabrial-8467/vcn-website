@@ -74,6 +74,16 @@ const cleanUrl = (url) => {
   }
 }
 
+/* Restore spacing for the RF cards section */
+.rf-cards .row.g-md-4 > [class^="col-"] {
+    padding-left: 12px !important;  /* Half of g-md-4 (1.5rem / 2) */
+    padding-right: 12px !important; /* Half of g-md-4 (1.5rem / 2) */
+}
 
+/* Ensure the cards themselves don't hit each other */
+.rf-cards .row.g-md-4 {
+    margin-left: -12px !important;
+    margin-right: -12px !important;
+}
 
 </style>

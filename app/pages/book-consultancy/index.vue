@@ -442,4 +442,34 @@ const submitForm = () => {
 .cta-form{
   padding-left: 12px;
 }
+/* Restore gutters for the CTA row */
+.row.g-5 > .col-lg-5.cta-form {
+    padding-right: 24px !important; /* Half of g-5 (3rem / 2) */
+}
+
+.row.g-5 > .col-lg-7 {
+    padding-left: 24px !important; /* Half of g-5 (3rem / 2) */
+}
+/* Restore horizontal space between inputs in the same row */
+.mid-consultation-form .row.g-3 > [class^="col-"] {
+    padding-left: 8px !important;  /* Half of g-3 gutter */
+    padding-right: 8px !important; /* Half of g-3 gutter */
+}
+
+/* Ensure the row doesn't cause overflow with its negative margins */
+.mid-consultation-form .row.g-3 {
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+}
+/* Restore space between the stats cards (Experts, Consultation, etc.) */
+.mid-stats-section .row.g-3 > .col-md-4 {
+    padding-left: 8px !important;  /* Half of g-3 gutter */
+    padding-right: 8px !important; /* Half of g-3 gutter */
+}
+
+/* Ensure the cards are centered within their new padded columns */
+.mid-stats-section .row.g-3 {
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+}
 </style>

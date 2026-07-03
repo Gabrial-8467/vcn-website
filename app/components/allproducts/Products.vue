@@ -181,10 +181,7 @@ const isDiscountLabel = (label) => {
     background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.product-card:hover {
-  transform: translateY(-6px) !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12) !important;
-}
+
 
 .product-image-wrapper {
   aspect-ratio: 1 / 1 !important;

@@ -11,9 +11,9 @@ await useAsyncData('about-us-cms', () => cmsStore.fetchSectionsBySlug('about'))
 
 const about = computed(() => {
   const sections = cmsStore.currentPage?.sections || []
-  const heroSec    = sections.find(s => s.name === 'hero'     || s.sectionKey === 'about-hero')
-  const welcomeSec = sections.find(s => s.name === 'welcome'  || s.sectionKey === 'about-welcome')
-  const contentSec = sections.find(s => s.name === 'content'  || s.sectionKey === 'about-content')
+  const heroSec = sections.find(s => s.name === 'hero' || s.sectionKey === 'about-hero')
+  const welcomeSec = sections.find(s => s.name === 'welcome' || s.sectionKey === 'about-welcome')
+  const contentSec = sections.find(s => s.name === 'content' || s.sectionKey === 'about-content')
   const moreAboutSec = sections.find(s => s.name === 'moreAboutUs' || s.sectionKey === 'about-more')
   const fallback = cmsStore.getPageSection('about', 'about')
 
@@ -37,33 +37,33 @@ const about = computed(() => {
   }
 
   let parsedMoreAboutItems = fallback?.moreAboutUs?.[0]?.items || []
-  let parsedMoreAboutCta   = fallback?.moreAboutUs?.[0]?.ctaCards || []
+  let parsedMoreAboutCta = fallback?.moreAboutUs?.[0]?.ctaCards || []
   if (moreAboutSec?.items?.length > 0) {
     const navItems = moreAboutSec.items.filter(i => i.name?.startsWith('nav-item'))
     if (navItems.length > 0) {
       parsedMoreAboutItems = navItems.map(item => ({
-        title:     item.extraData?.title     || item.title     || '',
-        icon:      item.extraData?.icon      || item.icon      || 'bi-bullseye',
+        title: item.extraData?.title || item.title || '',
+        icon: item.extraData?.icon || item.icon || 'bi-bullseye',
         iconClass: item.extraData?.iconClass || 'icon-journey'
       }))
     }
     const ctaItems = moreAboutSec.items.filter(i => i.name?.startsWith('cta-card'))
     if (ctaItems.length > 0) {
       parsedMoreAboutCta = ctaItems.map(item => ({
-        title:      item.extraData?.title      || item.title      || '',
-        icon:       item.extraData?.icon       || item.icon       || 'bi-bullseye',
-        iconClass:  item.extraData?.iconClass  || 'icon-shopping',
+        title: item.extraData?.title || item.title || '',
+        icon: item.extraData?.icon || item.icon || 'bi-bullseye',
+        iconClass: item.extraData?.iconClass || 'icon-shopping',
         buttonText: item.extraData?.buttonText || item.buttonText || 'Start Shopping'
       }))
     }
   }
 
   return {
-    heroImage:   heroBannerImage || fallback?.heroImage || '/img/about/about-us.png',
-    welcome:     { title: welcomeSec?.title || fallback?.welcome?.title || 'Welcome to the world of VCN!', subtitle: welcomeSec?.subtitle || fallback?.welcome?.subtitle || 'Helping people live better lives' },
-    heading:     contentSec?.title || fallback?.heading || 'This is VCN',
+    heroImage: heroBannerImage || fallback?.heroImage || '/img/about/about-us.png',
+    welcome: { title: welcomeSec?.title || fallback?.welcome?.title || 'Welcome to the world of VCN!', subtitle: welcomeSec?.subtitle || fallback?.welcome?.subtitle || 'Helping people live better lives' },
+    heading: contentSec?.title || fallback?.heading || 'This is VCN',
     description: parsedDescription,
-    sections:    parsedSections,
+    sections: parsedSections,
     moreAboutUs: [{ heading: moreAboutSec?.title || fallback?.moreAboutUs?.[0]?.heading || 'More About Us', items: parsedMoreAboutItems, ctaCards: parsedMoreAboutCta }]
   }
 })
@@ -100,9 +100,6 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
         <!-- Main Content -->
         <div class="col-lg-9 ab-main">
 
-          <!-- ═══════════════════════════════════════════
-               TOP ROW: Hero text col + Right cards col
-          ════════════════════════════════════════════ -->
           <div class="row g-0 ab-top-row">
 
             <!-- Hero / intro column -->
@@ -145,11 +142,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
               <!-- 4 small icon cards in 2x2 grid -->
               <div class="row g-2 ab-grid-cards">
-                <div
-                  v-for="(item, i) in moreAbout.items"
-                  :key="i"
-                  class="col-6"
-                >
+                <div v-for="(item, i) in moreAbout.items" :key="i" class="col-6">
                   <div class="ab-grid-card">
                     <i class="bi" :class="item.icon"></i>
                     <span>{{ item.title }}</span>
@@ -163,21 +156,12 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
               </div> -->
             </div>
           </div>
-          <!-- / ab-top-row -->
-
-          <!-- ═══════════════════════════════════════════
-               THE MISSION
-          ════════════════════════════════════════════ -->
           <div class="ab-mission">
             <div class="row g-0 align-items-center">
               <div class="col-md-6 ab-mission-text">
                 <span class="ab-tag">THE MISSION</span>
                 <h2 class="ab-section-h">{{ about.heading }}</h2>
-                <p
-                  v-for="(para, i) in about.description.slice(0, 2)"
-                  :key="i"
-                  class="ab-para"
-                >{{ para }}</p>
+                <p v-for="(para, i) in about.description.slice(0, 2)" :key="i" class="ab-para">{{ para }}</p>
               </div>
               <div class="col-md-6 ab-mission-visual">
                 <div class="ab-visual-card">
@@ -190,18 +174,11 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
             </div>
           </div>
 
-          <!-- ═══════════════════════════════════════════
-               OUR STORY — 3-column timeline cards
-          ════════════════════════════════════════════ -->
           <div class="ab-story">
             <h2 class="ab-story-title">Our Story</h2>
             <div class="ab-story-divider"></div>
             <div class="row g-4">
-              <div
-                v-for="(card, i) in storyCards"
-                :key="i"
-                class="col-md-4"
-              >
+              <div v-for="(card, i) in storyCards" :key="i" class="col-md-4">
                 <div class="ab-story-card">
                   <div class="ab-story-year">{{ card.year }}</div>
                   <div class="ab-story-phase">{{ card.phase }}</div>
@@ -211,16 +188,9 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
             </div>
           </div>
 
-          <!-- ═══════════════════════════════════════════
-               TWO-COL INFO BLOCKS
-          ════════════════════════════════════════════ -->
           <div class="ab-info-cols">
             <div class="row g-4">
-              <div
-                v-for="(sec, i) in about.sections.slice(1, 3)"
-                :key="i"
-                class="col-md-6"
-              >
+              <div v-for="(sec, i) in about.sections.slice(1, 3)" :key="i" class="col-md-6">
                 <div class="ab-info-block">
                   <div class="ab-info-icon-wrap">
                     <i class="bi" :class="i === 0 ? 'bi-heart-pulse-fill' : 'bi-people-fill'"></i>
@@ -232,17 +202,10 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
             </div>
           </div>
 
-          <!-- ═══════════════════════════════════════════
-               MORE ABOUT US — dark forest-green bar
-          ════════════════════════════════════════════ -->
           <div class="ab-more-dark">
             <h2 class="ab-more-dark-h">{{ moreAbout.heading }}</h2>
             <div class="row g-3 justify-content-center">
-              <div
-                v-for="(item, i) in moreAbout.items"
-                :key="i"
-                class="col-6 col-md-3"
-              >
+              <div v-for="(item, i) in moreAbout.items" :key="i" class="col-6 col-md-3">
                 <div class="ab-more-nav-card">
                   <i class="bi" :class="item.icon"></i>
                   <span>{{ item.title }}</span>
@@ -251,23 +214,18 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
             </div>
           </div>
 
-          <!-- ═══════════════════════════════════════════
-               BOTTOM CTA CARDS
-          ════════════════════════════════════════════ -->
           <div class="ab-cta-section">
             <div class="row g-4 justify-content-center">
-              <div
-                v-for="(card, i) in moreAbout.ctaCards"
-                :key="i"
-                class="col-md-5"
-              >
+              <div v-for="(card, i) in moreAbout.ctaCards" :key="i" class="col-md-5">
                 <div class="ab-cta-card" :class="i === 0 ? 'ab-cta-gold' : 'ab-cta-light'">
                   <div class="ab-cta-icon">
                     <i class="bi" :class="card.icon"></i>
                   </div>
                   <h3 class="ab-cta-title">{{ card.title }}</h3>
-                  <p v-if="i === 0" class="ab-cta-desc">Take our wellness quiz to find the perfect supplements and routines for your unique lifestyle.</p>
-                  <p v-else class="ab-cta-desc">Join our network of partners and build a sustainable business while promoting health and happiness.</p>
+                  <p v-if="i === 0" class="ab-cta-desc">Take our wellness quiz to find the perfect supplements and
+                    routines for your unique lifestyle.</p>
+                  <p v-else class="ab-cta-desc">Join our network of partners and build a sustainable business while
+                    promoting health and happiness.</p>
                   <a href="#" class="ab-cta-btn-link">{{ card.buttonText }} ↗</a>
                 </div>
               </div>
@@ -308,29 +266,34 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   flex: 1;
   overflow: hidden;
   min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .ab-hero-bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  z-index: 1;
 }
 
 .ab-hero-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(29, 69, 3, 0.72) 0%,
-    rgba(29, 69, 3, 0.30) 60%,
-    transparent 100%
-  );
+  background: linear-gradient(to right,
+      rgba(29, 69, 3, 0.72) 0%,
+      rgba(29, 69, 3, 0.30) 60%,
+      transparent 100%);
+  z-index: 2;
 }
 
 .ab-hero-content {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -452,7 +415,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
-  display: -webkit-box;   
+  display: -webkit-box;
   -webkit-line-clamp: 4;
   line-clamp: 4;
   -webkit-box-orient: vertical;
@@ -460,7 +423,19 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-grid-cards {
-  flex-shrink: 0;
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 8px;
+  /* This creates even space between all items */
+  margin: 0 !important;
+  /* Reset negative margins */
+}
+
+.row.ab-grid-cards > .col-6 {
+    /* Adjust width to account for the gap: (100% - gap) / 2 */
+    width: calc(50% - 4px) !important; 
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .ab-grid-card {
@@ -626,6 +601,16 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.8;
   margin: 0;
+}
+/* Restore gutters for the story grid */
+.ab-story .row.g-4 > [class^="col-"] {
+    padding-right: 12px !important; /* Half of g-4 (1.5rem / 2) */
+    padding-left: 12px !important;  /* Half of g-4 (1.5rem / 2) */
+}
+
+/* Ensure the cards inside don't have conflicting margins */
+.ab-story-card {
+    margin: 0 !important;
 }
 
 /* TWO-COL INFO BLOCKS */
@@ -837,31 +822,110 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   color: var(--vcn-dark, #1D4503) !important;
 }
 
+/* Fix for all grids on the page */
+.row[class*='g-'] > [class^="col-"],
+.row[class*='g-'] > [class*=" col-"] {
+    padding-right: calc(var(--bs-gutter-x) * .5) !important;
+    padding-left: calc(var(--bs-gutter-x) * .5) !important;
+    margin-top: var(--bs-gutter-y) !important;
+}
+
+/* Ensure the row itself doesn't have extra top margin if you're using g- classes */
+.row[class*='g-'] {
+    margin-top: calc(-1 * var(--bs-gutter-y)) !important;
+}
+
 /* MOBILE OVERRIDES */
 @media (max-width: 991.98px) {
   .product-detail-section {
     padding: 0 !important;
     margin-top: 0 !important;
   }
-  .product-detail-section > .container-fluid {
+
+  .product-detail-section>.container-fluid {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
-  .ab-hero-content { padding: 28px 20px; }
-  .ab-hero-title   { font-size: 1.6rem; }
+
+  .ab-top-row {
+    min-height: auto;
+  }
+
+  .ab-hero-content {
+    padding: 28px 20px;
+  }
+
+  .ab-hero-title {
+    font-size: 1.6rem;
+  }
+
   .ab-mission,
   .ab-story,
   .ab-info-cols,
   .ab-more-dark,
-  .ab-cta-section  { padding: 40px 20px; }
-  .ab-mission-visual { padding-left: 0; margin-top: 30px; }
-  .ab-right-panel  { border-left: none; border-top: 1px solid rgba(29, 69, 3, 0.08); }
+  .ab-cta-section {
+    padding: 40px 20px;
+  }
+
+  .ab-mission-visual {
+    padding-left: 20px;
+  }
+
+  .ab-right-panel {
+    border-left: none;
+    border-top: 1px solid rgba(29, 69, 3, 0.08);
+  }
+  .ab-top-row {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        /* Ensure the width takes this padding into account */
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 767.98px) {
+  .ab-mission-visual {
+    padding-left: 0;
+    margin-top: 30px;
+  }
+
+  .ab-cta-card {
+    padding: 30px 24px;
+  }
 }
 
 @media (max-width: 575.98px) {
-  .ab-mini-card span { display: none; }
-  .ab-mini-card      { padding: 14px 6px; }
-  .ab-hero-title     { font-size: 1.35rem; }
+  .ab-mini-card span {
+    display: none;
+  }
+
+  .ab-mini-card {
+    padding: 14px 6px;
+  }
+
+  .ab-hero-title {
+    font-size: 1.35rem;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .ab-right-panel {
+    padding: 20px 16px;
+    gap: 12px;
+  }
+
+  .ab-welcome-card {
+    padding: 16px 14px;
+  }
+
+  .ab-grid-card {
+    padding: 10px 8px;
+    font-size: 0.75rem;
+  }
+
+  .ab-hero-content {
+    padding: 30px 24px;
+  }
 }
 </style>
 <style>
@@ -908,7 +972,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
     margin-top: 0 !important;
   }
 
-  .product-detail-section > .container-fluid {
+  .product-detail-section>.container-fluid {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
@@ -930,6 +994,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
     padding-right: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
+    z-index: 100 !important;
   }
 }
 </style>

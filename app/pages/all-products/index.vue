@@ -532,4 +532,14 @@ h1.vcn-breadcrumb-title.ai-style-change-2 {
   overflow-wrap: break-word !important;
   white-space: normal !important;
 }
+/* Ensure the hovered card is on top of its neighbors */
+.vcn-new-product .product-card:hover {
+    z-index: 10 !important;
+    position: relative; /* Required for z-index to work */
+}
+
+/* Optional: Add a small gap between cards so they don't overlap as easily */
+.vcn-new-product .row > [class^="col-"] {
+    padding: 10px !important;
+}
 </style>

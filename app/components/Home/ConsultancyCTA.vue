@@ -68,6 +68,7 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
   padding-right: 0 !important;
 }
 
+
 @media (max-width: 991.98px) {
   .mid-consultation-cta {
     padding-left: 30px !important;

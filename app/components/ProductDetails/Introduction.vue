@@ -573,7 +573,7 @@ const openProductPreview = (imageSrc) => {
   align-items: center !important;
   background-color: #f5f7f3 !important; /* Soft light green */
   border-radius: 20px !important; /* Premium rounded corners */
-  margin-top: 4px !important ;
+  margin-top: 10px !important ;
   padding: 16px 20px !important;
   gap: 20px !important;
   max-width: 600px !important;
