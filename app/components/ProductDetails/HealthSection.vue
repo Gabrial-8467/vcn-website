@@ -95,6 +95,9 @@ const supportKeyPoints = computed(() => {
 </script>
 
 <style scoped>
+.health-section-bg{
+  padding-top: 60px;
+}
 .mobile-health-layout {
   position: relative;
   z-index: 2;

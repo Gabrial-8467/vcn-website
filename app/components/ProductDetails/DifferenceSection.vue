@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <section class="py-5 px-3 px-md-5 health-section-bg">
+    <section class="py-5 px-3 px-md-5 health-section-bg difference-section">
       <div class="container">
         <div class="row mb-4 mb-md-5">
           <div class="col-12">
@@ -12,8 +12,8 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-lg-6 mb-4 pe-0">
+        <div class="row difference-content-row">
+          <div class="col-lg-6 mb-4 pe-0 difference-media-column">
             <!-- Video wrapper (only for video + optional overlays/controls) -->
             <div class="vcn-video-wrapper">
               <img :src="featureImage || cleanUrl('/img/dbt/389size.png')" alt="Doctor" class="vcn-showcase-img" />
@@ -48,8 +48,8 @@
           </div> -->
           </div>
 
-          <div class="col-lg-6">
-            <div class="row">
+          <div class="col-lg-6 difference-features-column">
+            <div class="row difference-cards-row">
               <!-- Dynamic Feature Cards from API -->
               <div v-for="(point, index) in featureKeyPoints" :key="index" class="col-md-6 pe-0">
                 <div class="vcn-feature-card">
@@ -114,6 +114,65 @@ const cleanUrl = (url) => {
 </script>
 
 <style scoped>
+
+.row {
+  margin-right: 10px;
+  margin-left: 0;
+}
+
+.difference-content-row,
+.difference-cards-row {
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.difference-content-row {
+  align-items: center;
+}
+
+.difference-media-column,
+.difference-features-column,
+.difference-cards-row > [class*="col-"] {
+  display: flex;
+  justify-content: center;
+}
+
+.difference-features-column {
+  flex-direction: column;
+}
+
+.difference-cards-row {
+  width: 100%;
+}
+
+.difference-section {
+  text-align: center;
+}
+
+.difference-section .vcn-video-wrapper,
+.difference-section .vcn-showcase-img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.difference-section .vcn-feature-card {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.difference-section .vcn-feature-card img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.difference-section .vcn-feature-divider {
+  margin-left: auto;
+  margin-right: auto;
+}
 /* Add any additional styles here if needed */
 .vcn-feature-card img {
   width: 60px;

@@ -146,10 +146,10 @@ export const useProductStore = defineStore('product', {
     },
 
     // Fetch single product by slug
-    async fetchProductBySlug(slug: string) {
+    async fetchProductBySlug(slug: string, force = false) {
       // Check if already in store
       const existing = this.getProductBySlug(slug)
-      if (existing) {
+      if (existing && !force) {
         this.selectedProduct = existing
         return { success: true }
       }

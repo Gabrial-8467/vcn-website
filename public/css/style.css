@@ -3188,7 +3188,7 @@ body.home-page main {
 
 .old-price {
   font-size: 18px;
-  color: var(--vcn-light);
+  color: var(--vcn-dark);
   text-decoration: line-through;
   margin-left: 10px;
 }

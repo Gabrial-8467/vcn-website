@@ -1,9 +1,9 @@
 <template>
   <!-- Top Header -->
   <div class="top-header" :class="{ 'hide': isHydrated && isHidden }" id="topHeader">
-    <NuxtLink to="/all-products" class="vcn-top-header">
-      <p>Because Your Health <span class="text-nowrap">Deserves Better</span><span class="arrow">→</span></p>
-    </NuxtLink>
+      <NuxtLink to="/all-products" class="vcn-top-header">
+        <p>Because Your Health <span class="text-nowrap">Deserves Better</span><span class="arrow">→</span></p>
+      </NuxtLink>
   </div>
 </template>
 

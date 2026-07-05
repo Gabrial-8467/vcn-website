@@ -138,6 +138,9 @@ const addToCart = async (product) => {
 </script>
 
 <style scoped>
+.vcn-new-product {
+  padding: 0 !important;
+}
 .swiper-slide {
   height: auto;
 }

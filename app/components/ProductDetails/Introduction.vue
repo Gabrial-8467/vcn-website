@@ -3,15 +3,15 @@
     <div class="container">
       <div class="row">
         <!-- Left Column - Product Images -->
-        <div class="col-lg-7 pe-0">
+        <div class="col-lg-7">
           <!-- Desktop Version: main image + thumbnails -->
           <div class="d-none d-md-block img-container">
             <div class="product-img-wrapper">
               <div class="product-image-cards">
                 <video 
-                  v-if="selectedImage === 'video'"
+                  v-if="backendVideoUrl && !selectedImage"
                   id="mainImage" 
-                  src="/img/single%20product/vcn-seed-vdo.mp4" 
+                  :src="backendVideoUrl" 
                   autoplay 
                   loop 
                   muted 
@@ -29,22 +29,11 @@
             </div>
 
             <!-- THUMBNAILS - Dynamic product images -->
-            <div class="row g-3 mt-2" v-if="allProductImages.length > 0">
-              <div v-for="(img, index) in allProductImages" :key="index" class="col-6">
+            <div class="row g-3 mt-2" v-if="thumbnailImages.length > 0">
+              <div v-for="(img, index) in thumbnailImages" :key="img" class="col-6">
                 <div class="product-gallery">
                   <div class="gallery-item" :class="{ 'active': selectedImage === img }">
-                    <img class="thumb" :src="img" :alt="productName" @click="selectImage(img)" />
-                  </div>
-                </div>
-              </div>
-              <!-- Video play option at the end -->
-              <div class="col-6">
-                <div class="product-gallery">
-                  <div class="gallery-item" :class="{ 'active': selectedImage === 'video' }">
-                    <div class="thumb video-thumb-preview" @click="selectImage('video')">
-                      <i class="bi bi-play-circle"></i>
-                      <span>Watch Video</span>
-                    </div>
+                    <img class="thumb" :src="img" :alt="productName" @click="openProductPreview(img)" />
                   </div>
                 </div>
               </div>
@@ -55,23 +44,23 @@
           <div class="d-block d-md-none">
             <div class="swiper product-images-swiper">
               <div class="swiper-wrapper">
-                <!-- Slides: Images first -->
-                <div v-for="(img, index) in allProductImages" :key="index" class="swiper-slide">
-                  <div class="mobile-swiper-image-card">
-                    <img :src="img" :alt="productName" @click="openProductPreview(img)" class="mobile-swiper-image" />
-                  </div>
-                </div>
-                <!-- Slide: Video last -->
-                <div class="swiper-slide">
+                <!-- Slide 1: Video -->
+                <div v-if="backendVideoUrl" class="swiper-slide">
                   <div class="mobile-swiper-image-card">
                     <video 
-                      src="/img/single%20product/vcn-seed-vdo.mp4" 
+                      :src="backendVideoUrl" 
                       autoplay 
                       loop 
                       muted 
                       playsinline 
                       style="width: 100%; height: 100%; object-fit: contain;"
                     ></video>
+                  </div>
+                </div>
+                <!-- Other Slides: Images -->
+                <div v-for="(img, index) in allProductImages" :key="index" class="swiper-slide">
+                  <div class="mobile-swiper-image-card">
+                    <img :src="img" :alt="productName" @click="openProductPreview(img)" class="mobile-swiper-image" />
                   </div>
                 </div>
               </div>
@@ -83,7 +72,7 @@
 
         <!-- <div class="col-lg-1"></div> -->
         <!-- Right Column - Product Info -->
-        <div class="col-lg-5 pe-0">
+        <div class="col-lg-5">
           <div class="product-info">
             <!-- Error State -->
             <div v-if="error" class="alert alert-warning">
@@ -198,6 +187,39 @@
         </div>
       </div>
     </div>
+
+    <Teleport to="body">
+      <div
+        v-if="isPreviewOpen"
+        class="product-lightbox"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="`${productName} image preview`"
+        @click.self="closeProductPreview"
+      >
+        <button class="product-lightbox-close" type="button" aria-label="Close image preview"
+          @click="closeProductPreview">
+          &times;
+        </button>
+
+        <div class="product-lightbox-content">
+          <img class="product-lightbox-main" :src="previewImage" :alt="productName" />
+
+          <div v-if="allProductImages.length > 1" class="product-lightbox-thumbnails">
+            <button
+              v-for="image in allProductImages"
+              :key="image"
+              type="button"
+              class="product-lightbox-thumbnail"
+              :class="{ active: previewImage === image }"
+              @click="previewImage = image"
+            >
+              <img :src="image" :alt="productName" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </section>
 </template>
 
@@ -228,13 +250,16 @@ const isLoadingReviews = ref(false)
 
 // Swiper state
 const productSwiperInstance = ref(null)
+const isPreviewOpen = ref(false)
+const previewImage = ref('')
 
 // Get product slug from URL path
 const productSlug = computed(() => route.params.slug)
 
 // Fetch product data immediately (SSR)
 if (productSlug.value) {
-  const result = await productStore.fetchProductBySlug(productSlug.value)
+  // Always fetch the complete detail response so populated image media is available.
+  const result = await productStore.fetchProductBySlug(productSlug.value, true)
   if (result.success && productStore.selectedProduct) {
     // Handle API response: data is an array, extract first product
     const productData = Array.isArray(productStore.selectedProduct)
@@ -298,6 +323,10 @@ onBeforeUnmount(() => {
     productSwiperInstance.value.destroy(true, true)
     productSwiperInstance.value = null
   }
+  if (process.client) {
+    document.removeEventListener('keydown', handlePreviewKeydown)
+    document.body.style.overflow = ''
+  }
 })
 
 // Fetch reviews from API
@@ -346,8 +375,59 @@ const productMrp = computed(() => {
   const mrp = variant?.mrp
   return mrp ? parseFloat(mrp).toFixed(2) : null
 })
+
+const getMediaImageUrl = (image) => {
+  const media = image?.media || (image?.fileUrl ? image : null)
+  if (!media) return null
+
+  if (media.type === 'VIDEO' || media.mimeType?.startsWith('video/')) {
+    return null
+  }
+
+  return media.variants?.webp ||
+    media.variants?.large ||
+    media.variants?.medium ||
+    media.webpUrl ||
+    media.fileUrl ||
+    null
+}
+
+const getMediaVideoUrl = (item) => {
+  const media = item?.media || (item?.fileUrl ? item : null)
+  if (!media) return null
+
+  const isVideo = media.type === 'VIDEO' || media.mimeType?.startsWith('video/')
+  if (!isVideo) return null
+
+  return media.variants?.original || media.originalUrl || media.fileUrl || null
+}
+
+const backendMediaItems = computed(() => {
+  if (!product.value) return []
+
+  const productMedia = product.value.images || []
+  const productVideos = product.value.videos || []
+  const additionalMedia = product.value.media || []
+  const variantMedia = (product.value.variants || []).flatMap(
+    variant => variant.productImages || []
+  )
+
+  return [...productMedia, ...productVideos, ...additionalMedia, ...variantMedia]
+    .filter(item => item?.isActive !== false)
+})
+
+const backendVideoUrl = computed(() => {
+  return backendMediaItems.value.map(getMediaVideoUrl).find(Boolean) || ''
+})
+
 const productImage = computed(() => {
-  return resolveProductImage()
+  return allProductImages.value[0] || ''
+})
+
+const thumbnailImages = computed(() => {
+  return allProductImages.value
+    .filter(imageUrl => imageUrl !== productImage.value)
+    .slice(0, 4)
 })
 
 // Track selected main image
@@ -362,57 +442,12 @@ const selectImage = (imageSrc) => {
   }
 }
 
-// All product images (primary + variants)
+// All backend product and variant images, primary image first.
 const allProductImages = computed(() => {
-  const urls = []
-  const prod = product.value
-  if (!prod) return urls
-
-  // 1. Collect from product.images
-  if (prod.images && prod.images.length > 0) {
-    prod.images.forEach(img => {
-      if (img && img.media) {
-        const url = img.media.variants?.webp || img.media.webpUrl || img.media.fileUrl
-        if (url && !urls.includes(url)) {
-          urls.push(url)
-        }
-      } else if (img && img.image) {
-        if (!urls.includes(img.image)) {
-          urls.push(img.image)
-        }
-      }
-    })
-  }
-
-  // 2. Collect from variant images
-  if (prod.variants && prod.variants.length > 0) {
-    prod.variants.forEach(variant => {
-      if (variant && variant.productImages && variant.productImages.length > 0) {
-        variant.productImages.forEach(img => {
-          if (img && img.media) {
-            const url = img.media.variants?.webp || img.media.webpUrl || img.media.fileUrl
-            if (url && !urls.includes(url)) {
-              urls.push(url)
-            }
-          } else if (img && img.image) {
-            if (!urls.includes(img.image)) {
-              urls.push(img.image)
-            }
-          }
-        })
-      }
-    })
-  }
-
-  // 3. Fallback to primary image if no urls found
-  if (urls.length === 0) {
-    const primary = resolveProductImage()
-    if (primary) {
-      urls.push(primary)
-    }
-  }
-
-  return urls
+  return [...backendMediaItems.value]
+    .sort((a, b) => Number(Boolean(b?.isPrimary)) - Number(Boolean(a?.isPrimary)))
+    .map(getMediaImageUrl)
+    .filter((url, index, urls) => url && urls.indexOf(url) === index)
 })
 
 // Main image to display
@@ -426,8 +461,8 @@ watch(() => product.value, (newProduct) => {
     const defaultVariant = newProduct.variants.find(v => v.isDefault) || newProduct.variants[0]
     selectedVariant.value = defaultVariant
   }
-  // Reset selected image when product changes
-  selectedImage.value = null
+  // Prefer a backend video; otherwise display the primary backend image.
+  selectedImage.value = backendVideoUrl.value ? null : (allProductImages.value[0] || null)
 }, { immediate: true })
 
 // Watch images to re-initialize swiper if they load/change dynamically
@@ -610,16 +645,140 @@ const handleStartNow = async () => {
   await navigateTo('/cart')
 }
 
-// SSR-safe product preview function
-const openProductPreview = (imageSrc) => {
+const closeProductPreview = () => {
+  isPreviewOpen.value = false
   if (process.client) {
-    // Only open preview on client side
-    window.open(imageSrc, '_blank')
+    document.body.style.overflow = ''
+    document.removeEventListener('keydown', handlePreviewKeydown)
   }
+}
+
+const handlePreviewKeydown = (event) => {
+  if (event.key === 'Escape') closeProductPreview()
+}
+
+// Open an in-page preview instead of navigating away from the product page.
+const openProductPreview = (imageSrc) => {
+  if (!process.client || !imageSrc) return
+
+  previewImage.value = imageSrc
+  isPreviewOpen.value = true
+  document.body.style.overflow = 'hidden'
+  document.removeEventListener('keydown', handlePreviewKeydown)
+  document.addEventListener('keydown', handlePreviewKeydown)
 }
 </script>
 
 <style scoped>
+.product-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px 32px;
+  background: rgba(8, 10, 8, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+.product-lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  width: 72px !important;
+  height: 72px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-size: 40px !important;
+  font-weight: 300;
+  line-height: 72px !important;
+  text-align: center;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.product-lightbox-content {
+  display: flex;
+  width: min(1100px, 100%);
+  max-height: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.product-lightbox-main {
+  display: block;
+  width: auto;
+  max-width: calc(100% - 20px);
+  height: auto;
+  max-height: calc(100vh - 210px);
+  object-fit: contain;
+  border-radius: 24px;
+}
+
+.product-lightbox-thumbnails {
+  display: flex;
+  max-width: 100%;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 2px;
+  scrollbar-width: thin;
+}
+
+.product-lightbox-thumbnail {
+  width: 88px;
+  height: 88px;
+  flex: 0 0 88px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.72;
+}
+
+.product-lightbox-thumbnail.active {
+  border-color: #ffffff;
+  opacity: 1;
+}
+
+.product-lightbox-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 767.98px) {
+  .product-lightbox {
+    padding: 64px 16px 24px;
+  }
+
+  .product-lightbox-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .product-lightbox-content {
+    gap: 18px;
+  }
+
+  .product-lightbox-main {
+    max-height: calc(100vh - 180px);
+    border-radius: 16px;
+  }
+
+  .product-lightbox-thumbnail {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+    border-radius: 12px;
+  }
+}
+
 /* Custom premium style for bundle card to match the design */
 .bundle-card {
   display: flex !important;
@@ -627,7 +786,7 @@ const openProductPreview = (imageSrc) => {
   align-items: center !important;
   background-color: #f5f7f3 !important; /* Soft light green */
   border-radius: 20px !important; /* Premium rounded corners */
-  margin-top: 10px !important ;
+  margin-top: 4px !important ;
   padding: 16px 20px !important;
   gap: 20px !important;
   max-width: 600px !important;
@@ -915,7 +1074,7 @@ const openProductPreview = (imageSrc) => {
   max-width: 100%;
   max-height: 100%;
   width: auto;
-  height: auto;
+  height: 515px !important;
   object-fit: contain !important;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -1011,7 +1170,7 @@ const openProductPreview = (imageSrc) => {
   max-height: 100% !important;
   object-fit: contain !important;
   object-position: center;
-  border-radius: 18px !important;
+  border-radius: 20px !important;
 }
 
 /* Disable zoom/scale effect on thumbnail hover */

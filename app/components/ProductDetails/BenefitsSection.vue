@@ -40,7 +40,7 @@
           </div>
 
           <!-- Right Column: Images -->
-          <div class="col-lg-7 pe-0">
+          <div class="col-lg-7 pe-0 benefits-images-column">
             <div class="image-grid">
               <!-- Large Image -->
               <div class="image-large">
@@ -137,7 +137,7 @@ const journeyHowToUse = computed(() => {
 .image-large img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* Image Small & Circle styling */
@@ -285,10 +285,83 @@ const journeyHowToUse = computed(() => {
   }
 }
 
+/* Laptop/desktop image composition: large image left, two images stacked right. */
+@media (min-width: 992px) {
+  .benefits-images-column {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .image-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.75fr) minmax(180px, 0.95fr);
+    align-items: stretch;
+    gap: 20px !important;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .image-large {
+    width: 100% !important;
+    height: 550px !important;
+    min-width: 0;
+  }
+
+  .image-large img.img-fluid {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .image-small-container {
+    display: flex !important;
+    width: 100% !important;
+    height: 550px;
+    min-width: 0;
+    margin-top: 0 !important;
+    padding: 0 !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+  }
+
+  .image-circle {
+    width: min(100%, 250px) !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto !important;
+    margin: 0 auto !important;
+  }
+
+  .image-small {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0;
+    flex: 1 1 auto !important;
+  }
+
+  .image-small img {
+    width: 100% !important;
+    height: 100% !important;
+    padding-left: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .how-to-use-card {
+    position: relative;
+    z-index: 1;
+  }
+}
+
 /* Responsive How to Use Card to prevent overflowing screen */
 .how-to-use-card {
   width: 100% !important;
-  max-width: 500px !important;
+  max-width: 470px !important;
 }
 
 @media (max-width: 480px) {
