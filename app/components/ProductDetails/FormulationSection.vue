@@ -86,7 +86,7 @@
 
 /* Fix the buggy global margin-top from style.css */
 .alternate-heading {
-  margin-top: -85px !important;
+  margin-top: 10px !important;
 }
 
 /* Base desktop styles (min-width: 1200px) */
@@ -363,7 +363,7 @@
   }
   .health-section-bg{
     padding-top: 24px;
-    padding-right: 12px !important;
+    padding-right: 24px !important;
     padding-left: 24px !important;
   }
 

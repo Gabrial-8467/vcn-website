@@ -75,6 +75,21 @@
                 <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-btn-secondary">
                   {{ allProducts.btn.learnMore }}
                 </NuxtLink>
+                <div class="cart-box">
+                  <a href="#" v-if="!getCartItem(product.id)" @click.prevent="addToCart(product)"
+                    class="btn-cart add-btn">
+                    Add to Cart
+                  </a>
+                  <div v-else class="qty-box">
+                    <button class="qty-btn minus" @click="cartStore.decrementQuantity(product.id)">
+                      −
+                    </button>
+                    <span class="qty-value">{{ getCartItem(product.id)?.quantity || 1 }}</span>
+                    <button class="qty-btn plus" @click="cartStore.incrementQuantity(product.id)">
+                      +
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -441,8 +456,8 @@ const addToCart = async (product) => {
 
   /* Title overrides on mobile */
   .vcn-product-title {
-    font-size: 26px !important;
-    font-weight: 600 !important;
+    font-size: 48px !important;
+    font-weight: 400 !important;
     color: #ffffff !important;
     margin-top: 10px !important;
     margin-bottom: 12px !important;
@@ -591,6 +606,27 @@ const addToCart = async (product) => {
   }
 }
 
+.vcn-product-buttons {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+  flex-wrap: wrap !important;
+}
+
+.btn-cart {
+  color: #ffffff !important;
+  padding: 10px 20px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-decoration: underline !important;
+}
+
+.btn-cart:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
 .cart-box {
   width: auto !important;
   display: inline-flex !important;
@@ -637,7 +673,13 @@ const addToCart = async (product) => {
 }
 h1.vcn-breadcrumb-title {
   position: relative;
-  left: -40px; /* Adjust this value to move it more or less 'outside' */
+  left: 0 !important;
+  text-align: center !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
 }
 /* Make the content area responsive and centered */
 .vcn-breadcrumb-content {
@@ -648,16 +690,13 @@ h1.vcn-breadcrumb-title {
   padding-left: 0 !important;
   padding-right: 0 !important;
   box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-/* Ensure the title text wraps if it is too long */
-h1.vcn-breadcrumb-title.ai-style-change-2 {
-  max-width: 100% !important;
-  width: 100% !important;
-  word-wrap: break-word !important;
-  overflow-wrap: break-word !important;
-  white-space: normal !important;
-}
+
 /* Ensure the hovered card is on top of its neighbors */
 .vcn-new-product .product-card:hover {
     z-index: 10 !important;
@@ -670,7 +709,6 @@ h1.vcn-breadcrumb-title.ai-style-change-2 {
 }
 @media (min-width: 1200px) {
   /* Unify container widths and centering */
-  .vcn-breadcrumb-container .vcn-breadcrumb-content,
   section.vcn-product-section .container,
   section.vcn-new-product .container,
   header .container,
@@ -686,6 +724,7 @@ h1.vcn-breadcrumb-title.ai-style-change-2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
   .row{
     padding-left: 15px !important;
