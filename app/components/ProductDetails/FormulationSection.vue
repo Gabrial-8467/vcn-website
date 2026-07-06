@@ -68,7 +68,7 @@
 <style scoped>
 
 .health-section-bg {
-  padding: 60px 0;
+  padding: 20px 0;
 }
 
 .video-centered {
@@ -86,7 +86,7 @@
 
 /* Fix the buggy global margin-top from style.css */
 .alternate-heading {
-  margin-top: 10px !important;
+  margin-top: 2px !important;
 }
 
 /* Base desktop styles (min-width: 1200px) */

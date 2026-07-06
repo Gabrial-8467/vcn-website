@@ -2,7 +2,7 @@
   <section class="terms-conditions">
     <div class="container">
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 box-container">
           <h3>{{ accessibility.title }}</h3>
 
           <p v-for="(paragraph, index) in accessibility.content" :key="index">
@@ -68,6 +68,9 @@ useHead({
 </script>
 
 <style scoped>
+.box-container{
+  padding-top:20px;
+}
 .terms-conditions {
   padding-top: 50px;
   padding-bottom: 80px;

@@ -576,7 +576,7 @@
       <div class="row">
 
       <!-- Left Side -->
-      <div class="col-lg-6 col-12">
+      <div class="col-lg-6 col-12"vsc>
         <div class="contact-form-body">
           <div class="office-image-wrapper">
 

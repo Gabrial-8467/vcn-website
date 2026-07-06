@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <div class="container-fluid py-5 health-section-bg">
+    <div class="container-fluid py-5 health-section-bg ">
       <div class="container">
         <!-- Section Header -->
         <div class="text-center mb-4">
@@ -126,6 +126,12 @@ const journeyHowToUse = computed(() => {
 })
 </script>
 <style scoped>
+
+.health-section-bg {
+ 
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
 /* Image Large styling */
 .image-large {
   width: 100%;
