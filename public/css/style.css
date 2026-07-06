@@ -1000,7 +1000,7 @@ body.home-page main {
 
 .alternate-heading {
   font-size: 2.8rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--vcn-white);
   line-height: 1.2;
   margin-top: -12rem;
@@ -10299,7 +10299,7 @@ body.home-page main {
   }
 
   .testing-standards-wrapper {
-    background-color: #e8e6d8;
+    background-color:  #efefef !important;
     padding: 6rem 0;
   }
 
@@ -10516,6 +10516,7 @@ body.home-page main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding:40px;
   }
 
   .routine-main-heading {
@@ -10524,6 +10525,9 @@ body.home-page main {
     color: #fff;
     line-height: 1.2;
     margin-bottom: 2.5rem;
+  }
+  .routine-wrapper img{
+    vertical-align: bottom;
   }
 
   .routine-product-description {
@@ -13558,6 +13562,9 @@ body.home-page main {
     display: inline-block !important;
   }
 
+  .vcn-breadcrumb-title{
+    text-align:center !important;
+  }
   /* Global desktop font size overrides for all main headings/titles */
   @media (min-width: 992px) {
 

@@ -68,7 +68,7 @@
 <style scoped>
 
 .health-section-bg {
-  padding: 60px 0;
+  padding: 20px 0;
 }
 
 .video-centered {
