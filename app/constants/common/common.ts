@@ -204,7 +204,7 @@ export const COMMON_DATA = {
 
     bottomFooter: {
         image: "/img/gif/Makes-Life-Better-2.gif",
-        copyrightText: "© 2025 VCN MLM. All rights reserved."
+        copyrightText: "© 2025 Falcon Marketing Pvt. Ltd. All rights reserved."
     },
 
     sidebar: [

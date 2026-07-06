@@ -11,40 +11,138 @@ const section = computed(() => cmsStore.getSectionByKey('testimonials'))
 const title = computed(() => section.value?.title || 'Thousands Are Redefining Their Health with VCN.')
 const subtitle = computed(() => section.value?.subtitle || 'Discover how VCN is helping people take control of their wellness journey.')
 
+const isMuted = ref(true)
+const isPlayingArray = ref({})
+
 // Testimonial slides from CMS items, fallback to section.image, then hardcoded
 const slides = computed(() => {
   const items = section.value?.items || []
-  // console.log('Testimonial raw CMS items:', items)
   
-  const mapped = items.map(item => ({
-    image: getCmsImageUrl(item.image, ''),
-    alt: item.title || 'Customer testimonial'
-  })).filter(s => s.image)
-
-  // console.log('Testimonial mapped CMS slides:', mapped)
+  const mapped = items.map((item, index) => {
+    return {
+      image: getCmsImageUrl(item.image, ''),
+      video: '/video/video1.mp4',
+      alt: item.title || 'Customer testimonial'
+    }
+  }).filter(s => s.image)
 
   if (mapped.length > 0) {
     return mapped
   }
 
   const sectionImage = getCmsImageUrl(section.value?.image, '')
-  // console.log('Testimonial section image fallback:', sectionImage)
   if (sectionImage) {
-    return [{ image: sectionImage, alt: section.value?.title || 'Customer testimonial' }]
+    return [{ 
+      image: sectionImage, 
+      video: '/video/video1.mp4', 
+      alt: section.value?.title || 'Customer testimonial' 
+    }]
   }
 
   const hardcoded = [
-    { image: '/img/testimonial/testimonial.png', alt: 'Customer testimonial' },
-    { image: '/img/image/testimonial.png', alt: 'Customer testimonial' },
-    { image: '/img/testimonial/testimonial.png', alt: 'Customer testimonial' },
-    { image: '/img/image/testimonial.png', alt: 'Customer testimonial' }
+    { image: '/img/testimonial/testimonial.png', video: '/video/video1.mp4', alt: 'Customer testimonial' },
+    { image: '/img/image/testimonial.png', video: '/video/video2.mp4', alt: 'Customer testimonial' },
+    { image: '/img/testimonial/testimonial.png', video: '/video/video1.mp4', alt: 'Customer testimonial' },
+    { image: '/img/image/testimonial.png', video: '/video/video2.mp4', alt: 'Customer testimonial' }
   ]
-  // console.log('Testimonial returning hardcoded fallback:', hardcoded)
   return hardcoded
 })
 
 const activeIndex = ref(0)
 let swiperInstance = null
+
+const syncVideoStates = () => {
+  if (typeof document === 'undefined') return
+  const slidesList = document.querySelectorAll('.vcn-swiper-container .swiper-slide')
+  slidesList.forEach((slide) => {
+    if (!slide.classList.contains('swiper-slide-active')) {
+      const video = slide.querySelector('.vcn-testimonial-video')
+      if (video) {
+        video.pause()
+        video.currentTime = 0
+      }
+    }
+  })
+
+  // Reset play states on slide change
+  Object.keys(isPlayingArray.value).forEach(k => {
+    isPlayingArray.value[k] = false
+  })
+  if (swiperInstance && swiperInstance.autoplay) {
+    swiperInstance.autoplay.start()
+  }
+}
+
+const handleCardClick = (index, event) => {
+  const card = event.currentTarget
+  const slide = card.closest('.swiper-slide')
+  if (!slide) return
+
+  // Check if the slide is the active one in the frame
+  const isActive = slide.classList.contains('swiper-slide-active')
+  if (!isActive) {
+    // If not active, Swiper's slideToClickedSlide option will transition it into frame
+    return
+  }
+
+  const video = card.querySelector('.vcn-testimonial-video')
+  if (!video) return
+
+  if (video.paused) {
+    // Pause all other videos
+    const allVideos = document.querySelectorAll('.vcn-testimonial-video')
+    allVideos.forEach((v) => {
+      v.pause()
+      v.currentTime = 0
+    })
+
+    // Reset playing state array
+    Object.keys(isPlayingArray.value).forEach(k => {
+      isPlayingArray.value[k] = false
+    })
+
+    // Play this video
+    video.muted = isMuted.value
+    video.play()
+      .then(() => {
+        isPlayingArray.value[index] = true
+        if (swiperInstance && swiperInstance.autoplay) {
+          swiperInstance.autoplay.stop()
+        }
+      })
+      .catch(err => console.warn('Video play failed:', err))
+  } else {
+    video.pause()
+    isPlayingArray.value[index] = false
+    if (swiperInstance && swiperInstance.autoplay) {
+      swiperInstance.autoplay.start()
+    }
+  }
+}
+
+const handleVideoPlay = (index) => {
+  isPlayingArray.value[index] = true
+  if (swiperInstance && swiperInstance.autoplay) {
+    swiperInstance.autoplay.stop()
+  }
+}
+
+const handleVideoPause = (index) => {
+  isPlayingArray.value[index] = false
+  const anyPlaying = Object.values(isPlayingArray.value).some(v => v)
+  if (!anyPlaying && swiperInstance && swiperInstance.autoplay) {
+    swiperInstance.autoplay.start()
+  }
+}
+
+const toggleMute = () => {
+  isMuted.value = !isMuted.value
+  const activeSlide = document.querySelector('.vcn-swiper-container .swiper-slide-active')
+  const activeVideo = activeSlide?.querySelector('.vcn-testimonial-video')
+  if (activeVideo) {
+    activeVideo.muted = isMuted.value
+  }
+}
 
 const initSwiper = () => {
   if (typeof window === 'undefined' || !window.Swiper) return
@@ -65,6 +163,7 @@ const initSwiper = () => {
     slidesPerView: 1,
     centeredSlides: false,
     spaceBetween: 20,
+    slideToClickedSlide: true,
     breakpoints: {
       768: {
         slidesPerView: 'auto',
@@ -84,9 +183,16 @@ const initSwiper = () => {
     on: {
       slideChange() {
         activeIndex.value = this.realIndex
+        setTimeout(() => {
+          syncVideoStates()
+        }, 50)
       }
     }
   })
+
+  setTimeout(() => {
+    syncVideoStates()
+  }, 150)
 }
 
 onMounted(() => {
@@ -117,6 +223,10 @@ onBeforeUnmount(() => {
   if (swiperInstance) {
     swiperInstance.destroy()
   }
+  const videos = document.querySelectorAll('.vcn-testimonial-video')
+  videos.forEach(video => {
+    video.pause()
+  })
 })
 </script>
 
@@ -135,16 +245,39 @@ onBeforeUnmount(() => {
       <div class="swiper vcn-swiper-container">
         <div class="swiper-wrapper">
           <div v-for="(slide, i) in slides" :key="i" class="swiper-slide">
-            <div class="vcn-testimonial-card">
-              <img :src="slide.image" :alt="slide.alt" class="vcn-testimonial-image" />
+            <div class="vcn-testimonial-card" @click="handleCardClick(i, $event)">
+              <!-- Video Element -->
+              <video 
+                :id="'video-' + i"
+                :src="slide.video" 
+                class="vcn-testimonial-video" 
+                loop 
+                playsinline 
+                preload="metadata"
+                :muted="isMuted"
+                :controls="isPlayingArray[i]"
+                controlslist="nodownload"
+                @play="handleVideoPlay(i)"
+                @pause="handleVideoPause(i)"
+              ></video>
+
+              <!-- Thumbnail Image (shows if not playing) -->
+              <div v-if="!isPlayingArray[i]" class="vcn-thumbnail-overlay">
+                <img :src="slide.image" :alt="slide.alt" class="vcn-testimonial-image" />
+              </div>
             </div>
           </div>
         </div>
         <!-- Audio Control (only once) -->
         <div class="vcn-audio-controls-global">
-          <button class="vcn-audio-button" aria-label="Play audio">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+          <button class="vcn-audio-button" @click="toggleMute" aria-label="Toggle mute state">
+            <!-- Muted Icon -->
+            <svg v-if="isMuted" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+            </svg>
+            <!-- Unmuted Icon -->
+            <svg v-else viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
             </svg>
           </button>
           <img :src="slides[activeIndex]?.image || '/img/testimonial/testimonial.png'" alt="User avatar" class="vcn-user-avatar"
@@ -217,13 +350,70 @@ onBeforeUnmount(() => {
   aspect-ratio: 16/9.3;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
+  cursor: grab;
 }
 
-.vcn-testimonial-image {
+.vcn-testimonial-image,
+.vcn-testimonial-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  cursor: grab;
+}
+
+.vcn-thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+}
+
+.vcn-play-button-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.vcn-testimonial-card:hover .vcn-play-button-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.vcn-play-button {
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  padding-left: 5px;
+}
+
+.vcn-testimonial-card:hover .vcn-play-button {
+  transform: scale(1.1);
+  background: #ffffff;
+}
+
+.vcn-play-button svg {
+  width: 32px;
+  height: 32px;
+  fill: #4a5d4a;
 }
 
 /* Audio Control */
