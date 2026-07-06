@@ -194,7 +194,7 @@
   }
 
   .health-section-below {
-    padding: 0 24px;
+    padding: 0 12px !important;
     margin-top: 24px;
 
     display: flex;
@@ -219,6 +219,7 @@
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+    padding: 16px !important;
   }
 
   .vcn-probiotic-left-content {
@@ -360,6 +361,12 @@
   .alternate-heading {
     margin-top: -10px !important;
   }
+  .health-section-bg{
+    padding-top: 24px;
+    padding-right: 12px !important;
+    padding-left: 24px !important;
+  }
+
 }
 
 @media (max-width: 575.98px) {
@@ -370,7 +377,7 @@
   }
 
   .health-section-below {
-    padding: 0 20px;
+    padding: 0 12px !important;
     margin-top: 10px;
   }
 
@@ -380,6 +387,7 @@
 
   .vcn-probiotic-content-wrapper {
     gap: 1rem;
+    padding: 12px !important;
   }
 
   .vcn-probiotic-product-display {

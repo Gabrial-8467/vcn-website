@@ -369,22 +369,24 @@ const addToCart = async (product) => {
   }
 }
 
-/* Stack buttons vertically on mobile screens for narrow width safety */
+/* Keep buttons side-by-side on mobile screens for compact and premium layout */
 @media (max-width: 576px) {
   .product-actions {
-    flex-direction: column !important;
-    align-items: stretch !important;
+    flex-direction: row !important;
+    align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
+    width: 100% !important;
   }
 
   .btn-learn,
   .btn-cart,
   .qty-box {
-    max-width: none !important;
-    width: 100% !important;
-    height: 44px !important;
-    font-size: 14px !important;
+    flex: 1 !important;
+    max-width: 50% !important;
+    height: 40px !important;
+    font-size: 12px !important;
+    padding: 0 4px !important;
   }
 }
 </style>

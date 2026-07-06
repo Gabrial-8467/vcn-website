@@ -197,4 +197,11 @@ const supportKeyPoints = computed(() => {
     scrollbar-width: auto;
 }
 }
+@media (max-width: 991px){
+  .health-section-bg{
+    padding-top: 24px;
+    padding-right: 24px !important;
+    padding-left: 24px !important;
+  }
+}
 </style>

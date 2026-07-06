@@ -152,7 +152,7 @@ const cleanUrl = (url) => {
 
 .difference-section .vcn-video-wrapper,
 .difference-section .vcn-showcase-img {
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
 }
 
@@ -187,7 +187,7 @@ const cleanUrl = (url) => {
 }
 
 .vcn-showcase-img {
-  height: 480px !important;
+  height: 550px !important;
   width: auto !important;
   max-width: 100% !important;
   object-fit: contain !important;

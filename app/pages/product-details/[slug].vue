@@ -4,7 +4,7 @@
     <!-- <ProductDetailsStrainSection /> -->
     <ProductDetailsHealthSection />
     <ProductDetailsFormulationSection />
-    <ProductDetailsBundleSection />
+    <!-- <ProductDetailsBundleSection /> -->
     <ProductDetailsBenefitsSection />
     <!-- <ProductDetailsCellularEnergySection /> -->
     <!-- <ProductDetailsCompareSection /> -->
@@ -144,16 +144,16 @@ useHead({
 }
 
 @media (max-width: 767.98px) {
-  /* Avoid doubled Bootstrap gutters from section + container nesting. */
-  .product-details-responsive-page :deep(section.px-3),
+  /* Unify horizontal container spacing on mobile to resolve uneven spacing issues */
+  .product-details-responsive-page :deep(section),
   .product-details-responsive-page :deep(.container-fluid) {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
 
-  .product-details-responsive-page :deep(.container-fluid > .container) {
-    padding-left: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
-    padding-right: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
+  .product-details-responsive-page :deep(.container) {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 
   .product-details-responsive-page :deep(.health-section) {
