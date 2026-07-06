@@ -155,8 +155,8 @@ const cleanUrl = (url) => {
 .difference-content-row,
 .difference-cards-row {
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
 }
 
 .difference-content-row {
