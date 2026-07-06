@@ -13,7 +13,7 @@
           <div class="col-lg-7 rf-cards pe-0">
             <div class="row g-3 g-md-4 justify-content-center">
               <!-- Dynamic Feature Cards from API -->
-              <div v-for="(point, index) in purityKeyPoints" :key="index" class="col-12 col-sm-6 col-lg-4 mx-auto sm-pr-0">
+              <div v-for="(point, index) in purityKeyPoints" :key="index" class=" Rigorous-card col-12 col-sm-6 col-lg-4 mx-auto sm-pr-0">
                 <div class="testing-feature-card">
                   <div class="testing-icon-wrapper">
                     <img :src="point.icon || fallbackIcons[index]" :alt="point.title" />
@@ -66,10 +66,13 @@ const cleanUrl = (url) => {
 </script>
 
 <style scoped>
+.Rigorous-card,  .testing-feature-card{
+  padding:10px;
+}
 @media (max-width: 991.98px) {
   .testing-feature-card {
     width: 100% !important;
-    max-width: 290px !important;
+    max-width: 200px !important;
     margin: 0 auto !important;
   }
 }

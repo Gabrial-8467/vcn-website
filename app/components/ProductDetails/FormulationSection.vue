@@ -86,7 +86,7 @@
 
 /* Fix the buggy global margin-top from style.css */
 .alternate-heading {
-  margin-top: 0 !important;
+  margin-top: 2px !important;
 }
 
 /* Base desktop styles (min-width: 1200px) */
