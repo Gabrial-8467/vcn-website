@@ -18,16 +18,40 @@
   </div>
 </template>
 
+
 <script setup>
 const route = useRoute()
 const productStore = useProductStore()
+const cmsStore = useCmsStore()
+const { fetchPageBySlug } = useCmsApi()
 
 const slug = computed(() => route.params.slug)
 
-// Fetch product page data when slug changes
-watchEffect(() => {
+// Fetch product page data & CMS page data when slug changes
+watchEffect(async () => {
   if (slug.value) {
+    // 1. Fetch product page metadata (for fallbacks)
     productStore.fetchProductPageBySlug(slug.value)
+
+    // 2. Fetch CMS page by slug using helper initialized synchronously in setup
+    const response = await fetchPageBySlug(slug.value)
+    if (response?.success && response.data && response.data.length > 0) {
+      cmsStore.currentPage = response.data[0]
+    } else {
+      // Fallback: If not found, try without hyphens (e.g., alpha-care -> alphacare)
+      const cleanSlug = slug.value.replace(/-/g, '')
+      const fallbackResponse = await fetchPageBySlug(cleanSlug)
+      if (fallbackResponse?.success && fallbackResponse.data && fallbackResponse.data.length > 0) {
+        cmsStore.currentPage = fallbackResponse.data[0]
+      } else {
+        cmsStore.currentPage = null
+      }
+    }
+
+    // 3. Populate selectedProduct from CMS page if available
+    if (cmsStore.currentPage?.product) {
+      productStore.selectedProduct = cmsStore.currentPage.product
+    }
   }
 })
 

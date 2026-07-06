@@ -30,11 +30,36 @@
 </template>
 
 <script setup>
-const productStore = useProductStore()
+import { useCmsStore } from '~/stores/cms'
+import { useCmsApi } from '~/composables/useCmsApi'
 
-const purityTitle = computed(() => productStore.selectedProductPage?.purityTitle)
-const purityDescription = computed(() => productStore.selectedProductPage?.purityDescription)
+const productStore = useProductStore()
+const cmsStore = useCmsStore()
+const { getCmsImageUrl } = useCmsApi()
+
+// Find CMS section by possible keys
+const rigorousSection = computed(() => 
+  cmsStore.getSectionByKey('rigorous') || 
+  cmsStore.getSectionByKey('purity') || 
+  cmsStore.getSectionByKey('testing')
+)
+
+const purityTitle = computed(() => {
+  return rigorousSection.value?.title || productStore.selectedProductPage?.purityTitle
+})
+
+const purityDescription = computed(() => {
+  return rigorousSection.value?.description || productStore.selectedProductPage?.purityDescription
+})
+
 const purityKeyPoints = computed(() => {
+  if (rigorousSection.value?.items && rigorousSection.value.items.length > 0) {
+    return rigorousSection.value.items.map(item => ({
+      icon: getCmsImageUrl(item.image) || item.icon,
+      description: item.description || item.title
+    }))
+  }
+
   const apiPoints = productStore.selectedProductPage?.purityKeyPoints || []
   if (apiPoints.length > 0) return apiPoints
   // Fallback defaults

@@ -71,14 +71,43 @@
 </template>
 
 <script setup>
+import { useCmsStore } from '~/stores/cms'
+import { useCmsApi } from '~/composables/useCmsApi'
+
 const productStore = useProductStore()
+const cmsStore = useCmsStore()
+const { getCmsImageUrl } = useCmsApi()
 
-const heroTitle = computed(() => productStore.selectedProductPage?.heroTitle || '11 Herbs that work harder to control your Blood Sugar.')
-const heroDescription = computed(() => productStore.selectedProductPage?.heroDescription || 'Chosen for their Ayurvedic potency to regulate glucose metabolism and build complete diabetic wellness.')
-const heroImage = computed(() => productStore.selectedProductPage?.heroImage || '/img/products/New-Project.png')
+// Find CMS section by possible keys
+const strainSection = computed(() => 
+  cmsStore.getSectionByKey('strain') || 
+  cmsStore.getSectionByKey('strain-section') || 
+  cmsStore.getSectionByKey('ingredients')
+)
 
+const heroTitle = computed(() => {
+  return strainSection.value?.title || productStore.selectedProductPage?.heroTitle || '11 Herbs that work harder to control your Blood Sugar.'
+})
+
+const heroDescription = computed(() => {
+  return strainSection.value?.description || productStore.selectedProductPage?.heroDescription || 'Chosen for their Ayurvedic potency to regulate glucose metabolism and build complete diabetic wellness.'
+})
+
+const heroImage = computed(() => {
+  if (strainSection.value?.image) {
+    return getCmsImageUrl(strainSection.value.image)
+  }
+  return productStore.selectedProductPage?.heroImage || '/img/products/New-Project.png'
+})
 
 const iconValues = computed(() => {
+  if (strainSection.value?.items && strainSection.value.items.length > 0) {
+    return strainSection.value.items.map(item => ({
+      icon: getCmsImageUrl(item.image) || item.icon,
+      value: item.title || item.value
+    }))
+  }
+
   const apiIcons = productStore.selectedProductPage?.iconValues || []
   if (apiIcons.length > 0) return apiIcons
   // Fallback defaults matching API structure

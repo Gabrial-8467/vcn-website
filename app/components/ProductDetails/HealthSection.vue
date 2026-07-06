@@ -5,9 +5,9 @@
         <div class="health-section" style="position: relative; min-height: 600px; overflow: hidden; border-radius: 32px;">
           <img v-if="supportBgImage" :src="supportBgImage"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
-          <div style="position: relative; z-index: 1;">
+          <div class="health-content-wrapper" style="position: relative; z-index: 1;">
             <!-- Desktop Version -->
-            <div class="d-none d-md-block px-4 px-lg-5 pt-5">
+            <div class="health-desktop-version px-4 px-lg-5 pt-5">
               <div class="px-2">
                 <h4>{{ supportMainTitle || 'Your body needs natural Ayurvedic support to fight diabetes.' }}</h4>
                 <h1 class="mb-5"
@@ -35,7 +35,7 @@
             </div>
 
             <!-- Mobile Version: Horizontal Glassmorphic Slider -->
-            <div class="d-block d-md-none mobile-health-layout">
+            <div class="health-mobile-version mobile-health-layout">
               <div class="text-start px-3">
                 <h4 class="mobile-subtitle">{{ supportMainTitle || 'Your body needs natural Ayurvedic support to fight diabetes.' }}</h4>
                 <h1 class="mobile-title" v-html="supportTitle || 'DBT Care Plus is the herbal juice <br />to fuel your body and control blood sugar.'"></h1>
@@ -61,18 +61,49 @@
 </template>
 
 <script setup>
+import { useCmsStore } from '~/stores/cms'
+import { useCmsApi } from '~/composables/useCmsApi'
+
 const productStore = useProductStore()
+const cmsStore = useCmsStore()
+const { getCmsImageUrl } = useCmsApi()
+
+// Find CMS section by possible keys
+const healthSection = computed(() => 
+  cmsStore.getSectionByKey('health') || 
+  cmsStore.getSectionByKey('health-section') || 
+  cmsStore.getSectionByKey('support')
+)
 
 const supportBgImage = computed(() => {
+  if (healthSection.value?.image) {
+    return getCmsImageUrl(healthSection.value.image)
+  }
   const image = productStore.selectedProductPage?.supportBackgroundImage
   console.log('HealthSection background image:', image)
   return image
 })
-const supportTitle = computed(() => productStore.selectedProductPage?.supportTitle)
-const supportMainTitle = computed(() => productStore.selectedProductPage?.supportMainTitle)
+
+const supportMainTitle = computed(() => {
+  return healthSection.value?.title || productStore.selectedProductPage?.supportMainTitle
+})
+
+const supportTitle = computed(() => {
+  return healthSection.value?.description || productStore.selectedProductPage?.supportTitle
+})
+
 const supportKeyPoints = computed(() => {
+  if (healthSection.value?.items && healthSection.value.items.length > 0) {
+    return healthSection.value.items.map(item => ({
+      title: item.title,
+      description: item.description,
+      icon: getCmsImageUrl(item.image) || item.icon
+    }))
+  }
+
   const apiPoints = productStore.selectedProductPage?.supportKeyPoints || []
   if (apiPoints.length > 0) return apiPoints
+  
   // Fallback defaults
   return [
     {
@@ -95,6 +126,22 @@ const supportKeyPoints = computed(() => {
 </script>
 
 <style scoped>
+.health-desktop-version {
+  display: none !important;
+}
+.health-mobile-version {
+  display: block !important;
+}
+
+@media (min-width: 772px) {
+  .health-desktop-version {
+    display: block !important;
+  }
+  .health-mobile-version {
+    display: none !important;
+  }
+}
+
 .health-section-bg{
   padding-top: 60px;
 }
@@ -126,7 +173,7 @@ const supportKeyPoints = computed(() => {
 
 .mobile-scroll-container {
   overflow: hidden;
-  margin: 0 -10px; /* Allow cards to slide edge-to-edge */
+  margin: 0 5px; /* Allow cards to slide edge-to-edge */
 }
 
 .features-scroll-wrapper {
@@ -137,10 +184,12 @@ const supportKeyPoints = computed(() => {
   -webkit-overflow-scrolling: touch !important;
   gap: 16px !important;
   padding: 10px 15px 30px 15px !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important;  /* IE and Edge */
 }
 
 .features-scroll-wrapper::-webkit-scrollbar {
-  display: none !important; /* Hide scrollbar for native app feel */
+  display: none !important; /* Chrome, Safari and Opera */
 }
 
 .feature-card-mobile {
@@ -192,16 +241,45 @@ const supportKeyPoints = computed(() => {
   margin: 0 !important;
 }
 @media (max-width: 676px) {
-  * {
+  *:not(.features-scroll-wrapper) {
     scrollbar-color: auto;
     scrollbar-width: auto;
-}
+  }
 }
 @media (max-width: 991px){
   .health-section-bg{
     padding-top: 24px;
     padding-right: 24px !important;
     padding-left: 24px !important;
+  }
+}
+
+@media (max-width: 771px) {
+  .health-section {
+    min-height: 600px !important;
+  }
+  .health-content-wrapper {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .mobile-health-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    flex-grow: 1 !important;
+    height: 100% !important;
+    padding-top: 40px !important;
+    padding-bottom: 20px !important;
+  }
+  .features-scroll-wrapper {
+    padding-bottom: 15px !important;
   }
 }
 </style>

@@ -10,7 +10,7 @@
     </div>
   </div>
   <section class="vcn-product-section py-5">
-    <div class="container">
+    <div class="vcn-container">
       <!-- Error state -->
       <div v-if="error" class="alert alert-danger text-center py-5">
         {{ error.message || error }}
@@ -354,6 +354,10 @@ const addToCart = async (product) => {
 </script>
 
 <style scoped>
+.vcn-container{
+  padding-left: 125px !important;
+  padding-right: 155px !important;
+}
 .featured-thumbnails {
   display: flex;
   justify-content: center;

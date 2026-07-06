@@ -2315,8 +2315,8 @@ body.home-page main {
 /* Align footer with navbar on large screens */
 @media (min-width: 1200px) {
   .vcn-footer-section {
-    padding-left: 80px !important;
-    padding-right: 80px !important;
+    padding-left: 60px !important;
+    padding-right: 60px !important;
   }
 }
 
@@ -3780,7 +3780,7 @@ body.home-page main {
 }
 
 .health-section {
-  background-image: url(/img/productsdetails/dbtpageimage.png);
+  background-image: url("/img/bg/health section.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -4578,7 +4578,7 @@ body.home-page main {
 
   color: var(--vcn-footer);
 
-  padding-right: 40px;
+  /* padding-right: 40px; */
 }
 
 .section-content {

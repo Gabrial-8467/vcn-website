@@ -74,13 +74,53 @@
 </template>
 
 <script setup>
-const productStore = useProductStore()
+import { useCmsStore } from '~/stores/cms'
+import { useCmsApi } from '~/composables/useCmsApi'
 
-const journeyTitle = computed(() => productStore.selectedProductPage?.journeyTitle)
-const journeySubTitle = computed(() => productStore.selectedProductPage?.journeySubTitle)
-const journeyMainImage = computed(() => productStore.selectedProductPage?.journeyMainImage)
-const journeySideImages = computed(() => productStore.selectedProductPage?.journeySideImages || [])
+const productStore = useProductStore()
+const cmsStore = useCmsStore()
+const { getCmsImageUrl } = useCmsApi()
+
+// Find CMS section by possible keys
+const journeySection = computed(() => 
+  cmsStore.getSectionByKey('benefits') || 
+  cmsStore.getSectionByKey('benefits-section') || 
+  cmsStore.getSectionByKey('journey')
+)
+
+const journeyTitle = computed(() => {
+  return journeySection.value?.title || productStore.selectedProductPage?.journeyTitle
+})
+
+const journeySubTitle = computed(() => {
+  return journeySection.value?.description || productStore.selectedProductPage?.journeySubTitle
+})
+
+const journeyMainImage = computed(() => {
+  if (journeySection.value?.image) {
+    return getCmsImageUrl(journeySection.value.image)
+  }
+  return productStore.selectedProductPage?.journeyMainImage
+})
+
+const journeySideImages = computed(() => {
+  if (journeySection.value?.extraData?.journeySideImages) {
+    return journeySection.value.extraData.journeySideImages.map(img => getCmsImageUrl(img))
+  }
+  return productStore.selectedProductPage?.journeySideImages || []
+})
+
 const journeyKeyPoints = computed(() => {
+  if (journeySection.value?.items && journeySection.value.items.length > 0) {
+    return journeySection.value.items.map(item => ({
+      timeLabel: item.subtitle || item.timeLabel || '',
+      title: item.title || '',
+      points: Array.isArray(item.points) 
+        ? item.points 
+        : (item.description ? item.description.split('\n') : [])
+    }))
+  }
+
   const apiPoints = productStore.selectedProductPage?.journeyKeyPoints || []
   if (apiPoints.length > 0) return apiPoints
   // Fallback defaults
@@ -114,7 +154,12 @@ const journeyKeyPoints = computed(() => {
     }
   ]
 })
+
 const journeyHowToUse = computed(() => {
+  if (journeySection.value?.extraData?.journeyHowToUse) {
+    return journeySection.value.extraData.journeyHowToUse
+  }
+
   const apiSteps = productStore.selectedProductPage?.journeyHowToUse || []
   if (apiSteps.length > 0) return apiSteps
   // Fallback defaults

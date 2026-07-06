@@ -2,55 +2,57 @@
   <section class="health-section-bg">
     <div class="container">
       <div class="row">
-      <div class="col-12 col-xl-3 health-section-below d-flex align-items-center justify-content-center order-2 order-xl-1">
-        <video src="" class="video-centered" autoplay muted loop playsinline ></video>
-      </div>
-      <div class="col-12 col-xl-9 order-1 order-xl-2 sm-pr-0">
-        <div class="vcn-viacap-hero-area-below h-100">
-          <div class="vcn-probiotic-container">
-            <div class="vcn-probiotic-content-wrapper">
-              <!-- Left Content -->
-              <div class="vcn-probiotic-left-content">
-                <div class="vcn-probiotic-heading-group">
-                  <h2 class="alternate-heading">
-                    2-in-1 Ayurvedic Formula Optimized for Complete Diabetic Wellness
-                  </h2>
-                  <div class="vcn-probiotic-callout-text">
-                    DBT Care Plus unique herbal blend is engineered for targeted
-                    action — controlling blood sugar while healing the body from within.
+        <div
+          class="col-12 col-xl-3 health-section-below d-flex align-items-center justify-content-center order-2 order-xl-1">
+          <video src="" class="video-centered" autoplay muted loop playsinline></video>
+        </div>
+        <div class="col-12 col-xl-9 order-1 order-xl-2 sm-pr-0">
+          <div class="vcn-viacap-hero-area-below h-100">
+            <div class="vcn-probiotic-container">
+              <div class="vcn-probiotic-content-wrapper">
+                <!-- Left Content -->
+                <div class="vcn-probiotic-left-content">
+                  <div class="vcn-probiotic-heading-group">
+                    <h2 class="alternate-heading">
+                      2-in-1 Ayurvedic Formula Optimized for Complete Diabetic Wellness
+                    </h2>
+                    <div class="vcn-probiotic-callout-text">
+                      DBT Care Plus unique herbal blend is engineered for targeted
+                      action — controlling blood sugar while healing the body from within.
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="vcn-probiotic-right-content">
-                <div class="vcn-probiotic-product-display">
-                  <!-- Example with alternative styling -->
-                  <div class="vcn-probiotic-callout alternative-callout-top">
-                    <div class="vcn-probiotic-callout-title">
-                      Blood Sugar Control Blend — For Immediate Relief
+                <div class="vcn-probiotic-right-content">
+                  <div class="vcn-probiotic-product-display">
+                    <!-- Example with alternative styling -->
+                    <div class="vcn-probiotic-callout alternative-callout-top">
+                      <div class="vcn-probiotic-callout-title">
+                        Blood Sugar Control Blend — For Immediate Relief
+                      </div>
+                      <div class="vcn-probiotic-callout-text">
+                        Karela, Gurmar, Neem & Vijayasar actively reduce high blood
+                        glucose levels, stimulate insulin production and purify
+                        the blood from Day 1.*
+                      </div>
                     </div>
-                    <div class="vcn-probiotic-callout-text">
-                      Karela, Gurmar, Neem & Vijayasar actively reduce high blood
-                      glucose levels, stimulate insulin production and purify
-                      the blood from Day 1.*
+
+                    <div class="alternate-image">
+
+
+
+                      <img src="/gif/Capsule-GIF-2.gif" class="w-100" />
                     </div>
-                  </div>
 
-                  <div class="alternate-image">
-
-                    
-
-                    <img src="/gif/Capsule-GIF-2.gif" class="w-100"/>
-                  </div>
-
-                  <div class="vcn-probiotic-callout alternative-callout-bottom">
-                    <div class="vcn-probiotic-callout-title">
-                      Organ Repair & Detox Blend — For Long Term Wellness
-                    </div>
-                    <div class="vcn-probiotic-callout-text">
-                      Shudh Shilajit, Punarnava, Aloe Vera & Chirata repair
-                      damaged pancreatic cells, detoxify the body and support
-                      liver, kidney and eye health over time.*
+                    <div class="vcn-probiotic-callout alternative-callout-bottom">
+                      <div class="vcn-probiotic-callout-title">
+                        Organ Repair & Detox Blend — For Long Term Wellness
+                      </div>
+                      <div class="vcn-probiotic-callout-text">
+                        Shudh Shilajit, Punarnava, Aloe Vera & Chirata repair
+                        damaged pancreatic cells, detoxify the body and support
+                        liver, kidney and eye health over time.*
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -59,14 +61,12 @@
           </div>
         </div>
       </div>
-      </div>
     </div>
   </section>
 
 </template>
 
 <style scoped>
-
 .health-section-bg {
   padding: 20px 0;
 }
@@ -75,6 +75,7 @@
   max-width: 240px;
   width: 100%;
   height: auto;
+  background: transparent;
   display: block;
 }
 
@@ -139,6 +140,7 @@
     left: -80px !important;
     bottom: -10% !important;
   }
+
   /* Left Column (Video/Graphic) */
   .health-section-below.col-xl-3 {
     padding-left: 12px !important;
@@ -328,7 +330,8 @@
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-    width: 100% !important; /* extends to the end of the callout */
+    width: 100% !important;
+    /* extends to the end of the callout */
     height: 1px !important;
     background-color: rgba(255, 255, 255, 0.4) !important;
     background-image: none !important;
@@ -345,7 +348,8 @@
     content: "" !important;
     position: absolute !important;
     top: -2.5px !important;
-    right: -2px !important; /* places dot exactly at the end of the line */
+    right: -2px !important;
+    /* places dot exactly at the end of the line */
     left: auto !important;
     width: 6px !important;
     height: 6px !important;
@@ -361,7 +365,8 @@
   .alternate-heading {
     margin-top: -10px !important;
   }
-  .health-section-bg{
+
+  .health-section-bg {
     padding-top: 24px;
     padding-right: 24px !important;
     padding-left: 24px !important;
@@ -417,5 +422,4 @@
     line-height: 1.35 !important;
   }
 }
-
 </style>

@@ -68,12 +68,44 @@
 </template>
 
 <script setup>
-const productStore = useProductStore()
+import { useCmsStore } from '~/stores/cms'
+import { useCmsApi } from '~/composables/useCmsApi'
 
-const featureHeading = computed(() => productStore.selectedProductPage?.featureHeading)
-const featureSubHeading = computed(() => productStore.selectedProductPage?.featureSubHeading)
-const featureImage = computed(() => productStore.selectedProductPage?.featureImage)
+const productStore = useProductStore()
+const cmsStore = useCmsStore()
+const { getCmsImageUrl } = useCmsApi()
+
+// Find CMS section by possible keys
+const differenceSection = computed(() => 
+  cmsStore.getSectionByKey('difference') || 
+  cmsStore.getSectionByKey('difference-section') || 
+  cmsStore.getSectionByKey('feature')
+)
+
+const featureHeading = computed(() => {
+  return differenceSection.value?.title || productStore.selectedProductPage?.featureHeading
+})
+
+const featureSubHeading = computed(() => {
+  return differenceSection.value?.description || productStore.selectedProductPage?.featureSubHeading
+})
+
+const featureImage = computed(() => {
+  if (differenceSection.value?.image) {
+    return getCmsImageUrl(differenceSection.value.image)
+  }
+  return productStore.selectedProductPage?.featureImage
+})
+
 const featureKeyPoints = computed(() => {
+  if (differenceSection.value?.items && differenceSection.value.items.length > 0) {
+    return differenceSection.value.items.map(item => ({
+      icon: getCmsImageUrl(item.image) || item.icon,
+      title: item.title,
+      description: item.description
+    }))
+  }
+
   const apiPoints = productStore.selectedProductPage?.featureKeyPoints || []
   if (apiPoints.length > 0) return apiPoints
   // Fallback defaults

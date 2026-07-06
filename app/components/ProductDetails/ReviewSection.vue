@@ -2,7 +2,7 @@
 
   <div class="reviews-section">
     <div class="container">
-      <h2 class="section-title">Member<br />Reviews</h2>
+      <h2 class="section-title">Member Reviews</h2>
 
     <!-- Write Review Button -->
     <button class="btn-write-review" @click="showForm = !showForm">
