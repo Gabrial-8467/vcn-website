@@ -359,7 +359,14 @@ export const ABOUT_PAGE_DATA = {
                 title: "Celebrating Milestones Together",
 
                 description:
-                    "At VCN India, we believe in nurturing talent and celebrating growth while building a strong culture of collaboration and achievement."
+                    "At VCN India, we believe in nurturing talent and celebrating growth while building a strong culture of collaboration and achievement.",
+
+                gallery: [
+                    "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600&h=800",
+                    "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&q=80&w=600&h=450",
+                    "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600&h=400",
+                    "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=600&h=800"
+                ]
             },
 
             vicePresident: {

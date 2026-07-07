@@ -40,30 +40,9 @@
 
               <!-- Staggered Gallery Collage -->
               <div class="staggered-gallery">
-                <!-- Column 1 -->
-                <div class="gallery-col col-left">
-                  <div class="gallery-item item-tall">
-                    <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600&h=800" alt="Modern Wellness Herb Workspace" class="gallery-img" />
-                  </div>
-                  <div class="gallery-item item-medium">
-                    <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&q=80&w=600&h=450" alt="Organic Essential Oils" class="gallery-img" />
-                  </div>
-                </div>
-
-                <!-- Column 2 -->
-                <div class="gallery-col col-center">
-                  <div class="gallery-item item-landscape">
-                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600&h=400" alt="Team Wellness Meeting" class="gallery-img" />
-                  </div>
-                  <div class="gallery-item item-portrait">
-                    <img :src="careers.overview.vicePresident.image || '/img/leadership/our team 2.png'" alt="VP of HR Ritika Malik" class="gallery-img" />
-                  </div>
-                </div>
-
-                <!-- Column 3 -->
-                <div class="gallery-col col-right">
-                  <div class="gallery-item item-very-tall">
-                    <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=600&h=1000" alt="Green Reforestation Nature" class="gallery-img" />
+                <div v-for="(col, colIdx) in galleryColumns" :key="colIdx" class="gallery-col" :class="col.colClass">
+                  <div v-for="(item, itemIdx) in col.items" :key="itemIdx" class="gallery-item" :class="item.class">
+                    <img :src="item.src" :alt="item.alt" class="gallery-img" />
                   </div>
                 </div>
               </div>
@@ -137,7 +116,7 @@ const cmsStore = useCmsStore()
 const { getCmsImageUrl } = useCmsApi()
 
 // Fetch page sections from API during SSR/routing
-await useAsyncData('careers-cms', () => cmsStore.fetchSectionsBySlug('careers'))
+await cmsStore.fetchSectionsBySlug('careers')
 
 // Fetch fallback about page content from Pinia/constants
 const fallbackAbout = computed(() => {
@@ -146,87 +125,93 @@ const fallbackAbout = computed(() => {
 
 const careers = computed(() => {
   const sections = cmsStore.currentPage?.sections || []
-  
-  // Find sections
+  const fallback = cmsStore.getPageSection('about', 'careers') || {}
+
+  // If no CMS data exists yet, return the fallback constants object directly
+  if (sections.length === 0) {
+    return fallback
+  }
+
+  // Deep clone fallback to preserve constant integrity
+  const merged = JSON.parse(JSON.stringify(fallback))
+
   const heroSec = sections.find(s => s.name === 'hero' || s.sectionKey === 'careers-hero')
   const cultureSec = sections.find(s => s.name === 'culture' || s.sectionKey === 'careers-culture')
   const vpSec = sections.find(s => s.name === 'vicePresident' || s.sectionKey === 'careers-vp')
-  
-  // Fallbacks
-  const fallback = cmsStore.getPageSection('about', 'careers')
-  
-  // Resolve hero image
-  const rawHeroImage = heroSec?.image || heroSec?.extraData?.image
-  let heroImage = ''
-  if (rawHeroImage) {
-    if (typeof rawHeroImage === 'string') {
-      heroImage = rawHeroImage
-    } else {
-      heroImage = getCmsImageUrl(rawHeroImage)
+
+  // Merge Hero Section
+  if (heroSec) {
+    merged.overview.hero.title = heroSec.title || merged.overview.hero.title
+    if (heroSec.description) {
+      merged.overview.hero.description = heroSec.description.split('\n').filter(p => p.trim())
     }
-  }
-
-  // Parse hero description
-  let heroDescription = fallback?.overview?.hero?.description || []
-  if (heroSec?.description) {
-    heroDescription = heroSec.description.split('\n').filter(p => p.trim())
-  }
-
-  // Parse culture section extraData
-  const cultureExtra = cultureSec?.extraData?._extraData || cultureSec?.extraData || {}
-  const rawCultureImage = cultureSec?.image || cultureExtra.image
-  let cultureImage = ''
-  if (rawCultureImage) {
-    if (typeof rawCultureImage === 'string') {
-      cultureImage = rawCultureImage
-    } else {
-      cultureImage = getCmsImageUrl(rawCultureImage)
+    const rawHeroImg = heroSec.image || heroSec.extraData?.image
+    if (rawHeroImg) {
+      merged.overview.hero.image = typeof rawHeroImg === 'string' ? rawHeroImg : getCmsImageUrl(rawHeroImg)
     }
+    merged.overview.hero.buttonText = heroSec.buttonText || merged.overview.hero.buttonText
   }
 
-  // Parse VP section extraData
-  const vpExtra = vpSec?.extraData?._extraData || vpSec?.extraData || {}
-  const rawVpImage = vpSec?.image || vpExtra.image
-  let vpImage = ''
-  if (rawVpImage) {
-    if (typeof rawVpImage === 'string') {
-      vpImage = rawVpImage
-    } else {
-      vpImage = getCmsImageUrl(rawVpImage)
+  // Merge Culture Section
+  if (cultureSec) {
+    const cultureExtra = cultureSec.extraData?._extraData || cultureSec.extraData || {}
+    merged.overview.culture.hashTag = cultureExtra.hashTag || merged.overview.culture.hashTag
+    merged.overview.culture.title = cultureSec.title || merged.overview.culture.title
+    merged.overview.culture.description = cultureSec.description || merged.overview.culture.description
+    const rawCultureImg = cultureSec.image || cultureExtra.image
+    if (rawCultureImg) {
+      merged.overview.culture.image = typeof rawCultureImg === 'string' ? rawCultureImg : getCmsImageUrl(rawCultureImg)
     }
-  }
-
-  return {
-    overview: {
-      hero: {
-        title: heroSec?.title || fallback?.overview?.hero?.title || 'Be a part of the VCN Family',
-        description: heroDescription,
-        image: heroImage || fallback?.overview?.hero?.image || '/img/careers/careers-banner.png',
-        buttonText: heroSec?.buttonText || fallback?.overview?.hero?.buttonText || 'FIND OPEN POSITIONS'
-      },
-      culture: {
-        hashTag: cultureExtra.hashTag || fallback?.overview?.culture?.hashTag || '#IVCN',
-        title: cultureSec?.title || fallback?.overview?.culture?.title || 'Celebrating Milestones Together',
-        description: cultureSec?.description || fallback?.overview?.culture?.description || 'At VCN India, we believe in nurturing talent and celebrating growth while building a strong culture of collaboration and achievement.',
-        image: cultureImage || fallback?.overview?.culture?.image || '/img/careers/culture.png'
-      },
-      vicePresident: {
-        heading: vpSec?.title || fallback?.overview?.vicePresident?.heading || 'Words from our Vice President (HR)',
-        name: vpExtra.name || fallback?.overview?.vicePresident?.name || 'Ritika Malik',
-        designation: vpExtra.designation || fallback?.overview?.vicePresident?.designation || 'Vice President - Human Resources',
-        quote: vpExtra.quote || fallback?.overview?.vicePresident?.quote || "Culture is the silent heartbeat of VCN. We don't just build careers; we nurture the whole human.",
-        messages: vpExtra.messages || fallback?.overview?.vicePresident?.messages || [
-          "At VCN, we believe in the power of people. Our vision of helping people live better lives starts with our team. We nurture passion, encourage innovation and provide opportunities for employees to grow and succeed.",
-          "Being a part of VCN means working with talented people from across the globe while making a meaningful impact in communities and markets."
-        ],
-        image: vpImage || fallback?.overview?.vicePresident?.image || '/img/careers/vp.png'
+    if (cultureSec.items?.length > 0) {
+      const parsedGallery = cultureSec.items.map(item => item.image ? (typeof item.image === 'string' ? item.image : getCmsImageUrl(item.image)) : '').filter(Boolean)
+      if (parsedGallery.length > 0) {
+        merged.overview.culture.gallery = parsedGallery
       }
-    },
-    cultureTab: {
-      heading: fallback?.cultureTab?.heading || 'Related Articles',
-      articles: fallback?.cultureTab?.articles || []
     }
   }
+
+  // Merge Vice President Section
+  if (vpSec) {
+    const vpExtra = vpSec.extraData?._extraData || vpSec.extraData || {}
+    merged.overview.vicePresident.heading = vpSec.title || merged.overview.vicePresident.heading
+    merged.overview.vicePresident.name = vpExtra.name || merged.overview.vicePresident.name
+    merged.overview.vicePresident.designation = vpExtra.designation || merged.overview.vicePresident.designation
+    merged.overview.vicePresident.quote = vpExtra.quote || merged.overview.vicePresident.quote
+    merged.overview.vicePresident.messages = vpExtra.messages || merged.overview.vicePresident.messages
+    const rawVpImage = vpSec.image || vpExtra.image
+    if (rawVpImage) {
+      merged.overview.vicePresident.image = typeof rawVpImage === 'string' ? rawVpImage : getCmsImageUrl(rawVpImage)
+    }
+  }
+
+  return merged
+})
+
+const galleryColumns = computed(() => {
+  const c = careers.value
+  if (!c || !c.overview || !c.overview.culture) return []
+  return [
+    {
+      colClass: 'col-left',
+      items: [
+        { class: 'item-tall', src: c.overview.culture.gallery?.[0] || '', alt: 'Modern Wellness Herb Workspace' },
+        { class: 'item-medium', src: c.overview.culture.gallery?.[1] || '', alt: 'Organic Essential Oils' }
+      ]
+    },
+    {
+      colClass: 'col-center',
+      items: [
+        { class: 'item-landscape', src: c.overview.culture.gallery?.[2] || '', alt: 'Team Wellness Meeting' },
+        { class: 'item-portrait', src: c.overview.vicePresident?.image || '/img/leadership/our team 2.png', alt: 'VP of HR Ritika Malik' }
+      ]
+    },
+    {
+      colClass: 'col-right',
+      items: [
+        { class: 'item-very-tall', src: c.overview.culture.gallery?.[3] || '', alt: 'Green Reforestation Nature' }
+      ]
+    }
+  ]
 })
 
 useHead({
@@ -270,6 +255,7 @@ useHead({
 .careers-hero {
   position: relative;
   height: 480px;
+  padding: 80px 0;
   border-radius: 24px;
   overflow: hidden;
   display: flex;
@@ -454,7 +440,7 @@ useHead({
 }
 
 .item-medium {
-  height: 260px;
+  height: 240px;
 }
 
 .item-landscape {
@@ -466,7 +452,7 @@ useHead({
 }
 
 .item-very-tall {
-  height: 520px;
+  height: 420px;
 }
 
 /* Notification bell badge */
@@ -1027,56 +1013,136 @@ useHead({
     font-size: 1.1rem !important;
   }
 
-  /* Responsive Hero Stacking */
+  /* Responsive Hero Cover Banner */
   .careers-hero {
-    flex-direction: column;
-    height: auto;
-    background: #FAF6F0;
-    align-items: flex-start;
+    position: relative !important;
+    min-height: 380px !important;
+    height: auto !important;
+    padding: 60px 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    background: transparent !important;
+    margin: 15px 15px 0 15px !important;
   }
   .careers-hero-bg-wrap {
-    position: relative;
-    width: 100%;
-    height: 260px;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1 !important;
   }
   .careers-hero-overlay {
-    background: linear-gradient(to top, #FAF6F0 0%, transparent 100%);
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(to bottom, rgba(29, 69, 3, 0.85) 0%, rgba(29, 69, 3, 0.45) 100%) !important;
+    z-index: 2 !important;
   }
   .careers-hero-content {
-    padding: 30px 20px;
-    max-width: 100%;
+    position: relative !important;
+    z-index: 3 !important;
+    padding: 30px 20px !important;
+    max-width: 100% !important;
+  }
+  .careers-hero-content .careers-eyebrow {
+    color: var(--vcn-badge, #d3fa99) !important;
+    margin-bottom: 8px !important;
+  }
+  .careers-hero-title {
+    color: white !important;
+    font-size: 30px !important;
+    margin-bottom: 12px !important;
+  }
+  .careers-hero-desc {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.88rem !important;
+    margin-bottom: 20px !important;
   }
   .careers-hero-actions {
-    flex-direction: column;
-    gap: 12px;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 12px !important;
   }
   .careers-hero-actions .btn-filled,
   .careers-hero-actions .btn-outline {
-    text-align: center;
-    width: 100%;
+    width: auto !important;
+    padding: 10px 20px !important;
+    font-size: 0.85rem !important;
+  }
+  .careers-hero-actions .btn-outline {
+    border-color: rgba(255, 255, 255, 0.6) !important;
+    color: white !important;
   }
 
-  /* Gallery Staggered to Grid */
-  .staggered-gallery {
-    flex-direction: column;
-    gap: 15px;
+  /* Keep 3 columns staggered on Tablet (768px to 991px) */
+  @media (min-width: 768px) {
+    .staggered-gallery {
+      flex-direction: row !important;
+      gap: 12px !important;
+    }
+    .col-left, .col-center, .col-right {
+      width: calc(33.333% - 8px) !important;
+    }
+    .col-center {
+      margin-top: 20px !important;
+    }
+    .gallery-item {
+      height: 320px !important;
+    }
   }
-  .col-left, .col-center, .col-right {
-    width: 100% !important;
-  }
-  .col-center {
-    margin-top: 0 !important;
-  }
-  .gallery-item {
-    height: 250px !important;
+
+  /* Premium Polaroid Horizontal Carousel on Mobile (< 768px) */
+  @media (max-width: 767.98px) {
+    .staggered-gallery {
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory !important;
+      gap: 20px !important;
+      padding: 10px 20px 24px 20px !important;
+      margin: 0 -15px !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important; /* Hide scrollbar for Firefox */
+      -ms-overflow-style: none !important;  /* Hide scrollbar for IE/Edge */
+    }
+    .staggered-gallery::-webkit-scrollbar {
+      display: none !important; /* Hide scrollbar for Chrome/Safari */
+    }
+    .col-left, .col-center, .col-right {
+      display: contents !important;
+    }
+    .gallery-item {
+      flex: 0 0 86vw !important;
+      scroll-snap-align: center !important;
+      height: 230px !important;
+      border: 5px solid #ffffff !important;
+      box-shadow: 0 10px 25px rgba(29, 69, 3, 0.1) !important;
+      border-radius: 16px !important;
+      transition: transform 0.3s ease !important;
+    }
+    .gallery-item:nth-child(odd) {
+      transform: rotate(-1.5deg) translateY(4px);
+    }
+    .gallery-item:nth-child(even) {
+      transform: rotate(1.5deg) translateY(-2px);
+    }
   }
 
   /* Spotlight Stacking */
   .spotlight-container {
     flex-direction: column;
-    padding: 35px 20px;
+    padding: 40px 24px;
     gap: 40px;
     text-align: center;
+    margin: 0 15px !important;
   }
   .spotlight-visual-col {
     width: 100% !important;
@@ -1085,13 +1151,15 @@ useHead({
     width: 240px;
     height: 240px;
     margin: 0 auto;
+    position: relative;
   }
-  .quote-badge {
-    position: static;
-    margin: 20px auto 0;
-    max-width: 100%;
-    text-align: left;
+  /* Hide the quote badge on mobile screens to keep layout clean */
+  @media (max-width: 575.98px) {
+    .quote-badge {
+      display: none !important;
+    }
   }
+
   .spotlight-text-col {
     width: 100% !important;
   }
@@ -1103,6 +1171,7 @@ useHead({
   .purpose-container {
     flex-direction: column;
     gap: 30px;
+    margin: 0 15px !important;
   }
   .purpose-text-col {
     width: 100% !important;
@@ -1114,14 +1183,21 @@ useHead({
     height: 350px;
   }
   .stats-badge {
-    position: static;
-    margin-top: 20px;
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    top: auto !important;
+    right: auto !important;
+    margin: 0 !important;
+    padding: 16px 20px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
     max-width: fit-content;
   }
 
   /* CTA */
   .cta-banner-card {
     padding: 45px 24px;
+    margin: 0 15px !important;
   }
   .cta-actions {
     flex-direction: column;
@@ -1131,6 +1207,16 @@ useHead({
   .cta-btn-outline {
     width: 100%;
     margin-right: 0 !important;
+  }
+  @media (min-width: 576px) {
+    .cta-actions {
+      flex-direction: row !important;
+      justify-content: center !important;
+    }
+    .cta-btn-white,
+    .cta-btn-outline {
+      width: auto !important;
+    }
   }
 }
 </style>
