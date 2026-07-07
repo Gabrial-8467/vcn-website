@@ -408,7 +408,11 @@ const addToCart = async (product) => {
   padding-top: 85px !important;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 992px) {
+  .vcn-container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
   .vcn-breadcrumb-container {
     margin-top: -140px !important;
   }
@@ -773,6 +777,39 @@ h1.vcn-breadcrumb-title {
     width: 100% !important;
     max-width: 250px;
     margin: 0 auto !important;
+  }
+}
+@media (max-width: 240px) {
+  /* 1. Maximize available space */
+  .vcn-container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  /* 2. Stack badge and price to prevent horizontal overflow */
+  .d-flex.justify-content-between.align-items-center.w-100.mb-3.d-lg-none {
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: center !important;
+  }
+
+  /* 3. Normalize row/col structure for tiny screens */
+  .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .col-lg-9.px-3 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* 4. Ensure buttons and text scale down */
+  .vcn-product-title {
+    font-size: 1.6rem !important;
+  }
+  .vcn-btn-secondary, .cart-box, .btn-cart {
+    font-size: 0.85rem !important;
+    padding: 10px 15px !important;
   }
 }
 </style>
