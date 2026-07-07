@@ -1,6 +1,6 @@
 <template>
   <section class="product-detail-section mt-3">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <!-- Left Sidebar Navigation -->
         <div class="col-lg-3 sidebar-section">
@@ -749,7 +749,7 @@ useHead({
 /* RESPONSIVE */
 @media (max-width: 991px) {
   .news-content-wrapper {
-    padding: 20px;
+    padding: 20px 0;
   }
 }
 
@@ -832,7 +832,7 @@ useHead({
   ===========================================================
 */
 .product-detail-section,
-.product-detail-section .container-fluid,
+.product-detail-section .container,
 .product-detail-section .row {
   overflow: visible !important;
   transform: none !important;
@@ -869,9 +869,9 @@ useHead({
     margin-top: 0 !important;
   }
 
-  .product-detail-section>.container-fluid {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  .product-detail-section>.container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   .product-detail-section .row {
