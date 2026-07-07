@@ -157,7 +157,7 @@ export const ABOUT_PAGE_DATA = {
         },
 
         boardSection: {
-            title: "Board of directors",
+            title: "Board of Directors",
 
             members: [
                 {
@@ -366,6 +366,8 @@ export const ABOUT_PAGE_DATA = {
                 name: "Ritika Malik",
 
                 designation: "Vice President - Human Resources",
+
+                quote: "Culture is the silent heartbeat of VCN. We don't just build careers; we nurture the whole human.",
 
                 messages: [
                     "At VCN, we believe in the power of people. Our vision of helping people live better lives starts with our team. We nurture passion, encourage innovation and provide opportunities for employees to grow and succeed.",

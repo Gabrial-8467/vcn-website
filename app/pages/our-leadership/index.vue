@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <!-- Left Sidebar Navigation -->
-        <div class="col-md-3 col-lg-3 sidebar-section">
+        <div class="col-lg-3 sidebar-section">
           <AboutSidebar />
         </div>
 
@@ -11,16 +11,20 @@
           <div class="lp-root">
 
             <!-- ═══════════════════════════════════════════
-                 HERO  –  centered, plain white bg
+                 HERO – banner with image and transparent overlay
             ═══════════════════════════════════════════ -->
-            <div class="lp-hero" data-aos="fade-up" data-aos-duration="700">
-              <p class="lp-eyebrow">LEGACY OF TRUST</p>
-              <h1 class="lp-headline">Our leadership</h1>
-              <p class="lp-hero-body">
-                At VCN Lifestyle, our board is guided by a collective vision of radical transparency
-                and holistic integrity. We believe that true wellness stems from ethical foundations
-                and a steadfast commitment to scientific excellence.
-              </p>
+            <div class="lp-hero" :style="{ backgroundImage: `url(${leadership.hero.image})` }" data-aos="fade-up" data-aos-duration="700">
+              <div class="lp-hero-overlay"></div>
+              <div class="lp-hero-content">
+                <p class="lp-eyebrow">LEGACY OF TRUST</p>
+                <h1 class="lp-headline">{{ leadership.hero.title }}</h1>
+                <p class="lp-hero-body" v-if="leadership.hero.description">{{ leadership.hero.description }}</p>
+                <p class="lp-hero-body" v-else>
+                  At VCN Lifestyle, our board is guided by a collective vision of radical transparency
+                  and holistic integrity. We believe that true wellness stems from ethical foundations
+                  and a steadfast commitment to scientific excellence.
+                </p>
+              </div>
             </div>
 
             <!-- ═══════════════════════════════════════════
@@ -71,33 +75,29 @@
                  CONNECT SECTION  –  dark olive card
             ═══════════════════════════════════════════ -->
             <div class="lp-connect" data-aos="fade-up" data-aos-duration="700">
-              <!-- decorative circle top-right -->
+              <!-- Background highlights -->
+              <div class="lp-connect-bg-glow"></div>
               <div class="lp-connect-orb"></div>
 
               <div class="lp-connect-inner">
+                <!-- Left Content Block -->
                 <div class="lp-connect-text">
+                  <span class="lp-connect-eyebrow">Direct Channel</span>
                   <h2 class="lp-ct-title">{{ leadership.connectSection.title }}</h2>
                   <p class="lp-ct-body">{{ leadership.connectSection.description }}</p>
-                  <div class="lp-ct-btns">
-                    <button class="lp-btn-primary">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
-                      </svg>
-                      {{ leadership.connectSection.buttonText }}
-                    </button>
-                  </div>
                 </div>
 
-                <div class="lp-connect-icon">
-                  <div class="lp-icon-ring">
-                    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                      <circle cx="9" cy="7" r="4"/>
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
+                <!-- Right Action Block -->
+                <div class="lp-connect-action-block">
+                  <div class="lp-connect-icon">
+                    <div class="lp-icon-ring">
+                      <i class="bi bi-envelope-open-fill"></i>
+                    </div>
                   </div>
+                  <button class="lp-btn-primary lp-connect-btn">
+                    <span>{{ leadership.connectSection.buttonText }}</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -208,7 +208,7 @@ const leadership = computed(() => {
       image:       heroImage
     },
     boardSection: {
-      title:   boardSec?.title || fallback?.boardSection?.title || 'Board of directors',
+      title:   boardSec?.title || fallback?.boardSection?.title || 'Board of Directors',
       btntext: boardSec?.items?.[0]?.extraData?.btntext || fallback?.boardSection?.btntext || 'View Bio',
       members: parsedMembers
     },
@@ -250,35 +250,63 @@ const closeBio = () => {
 
 /* ─── HERO ──────────────────────────────────────────── */
 .lp-hero {
-  text-align: center;
-  padding: 56px 60px 44px;
-  background: #ffffff;
+  position: relative;
+  height: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 24px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 10px 30px rgba(29, 69, 3, 0.03);
+  text-align: left;
+}
+
+.lp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(29, 69, 3, 0.72) 0%,
+    rgba(29, 69, 3, 0.30) 60%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+.lp-hero-content {
+  position: relative;
+  padding: 45px;
+  z-index: 2;
+  max-width: 650px;
+  text-align: left;
 }
 
 .lp-eyebrow {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 3.5px;
+  font-size: 12px !important;
+  font-weight: 400 !important;
   text-transform: uppercase;
-  color: #8c9e93;
-  margin: 0 0 16px;
+  letter-spacing: 2px;
+  color: var(--vcn-badge, #d3fa99) !important;
+  margin: 0 0 12px !important;
+  display: block;
 }
 
 .lp-headline {
-  font-size: 46px;
-  font-weight: 700;
-  color: #1c3625;
-  line-height: 1.15;
-  margin: 0 0 22px;
-  font-family: 'Outfit', 'Inter', serif;
+  font-size: 48px !important;
+  font-weight: 400 !important;
+  color: var(--vcn-white, #fff) !important;
+  margin: 0 0 16px 0 !important;
+  line-height: 1.1 !important;
 }
 
 .lp-hero-body {
-  font-size: 15.5px;
-  line-height: 1.85;
-  color: #5e7265;
-  max-width: 580px;
-  margin: 0 auto;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  max-width: 650px !important;
+  margin: 0 !important;
 }
 
 /* ─── BOARD ─────────────────────────────────────────── */
@@ -291,10 +319,10 @@ const closeBio = () => {
 }
 
 .lp-board-title {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 400;
   color: #1c3625;
-  margin: 0 0 10px;
+  margin: 60px 0 10px;
 }
 
 .lp-board-bar {
@@ -357,15 +385,15 @@ const closeBio = () => {
 }
 
 .lp-mname {
-  font-size: 21px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 400;
   color: #1c3625;
   margin: 0 0 4px;
 }
 
 .lp-mrole {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 16px !important;
+  font-weight: 400;
   color: #8c9e93;
   text-transform: capitalize;
   letter-spacing: 0.3px;
@@ -373,7 +401,7 @@ const closeBio = () => {
 }
 
 .lp-mbio {
-  font-size: 14.5px;
+  font-size: 16px !important;
   line-height: 1.75;
   color: #5e7265;
   margin: 0 0 18px;
@@ -390,7 +418,7 @@ const closeBio = () => {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: #2a4a33;
+  background: linear-gradient(135deg, #1D4503 0%, #112902 100%) !important;
   color: #ffffff;
   border: none;
   border-radius: 7px;
@@ -419,118 +447,149 @@ const closeBio = () => {
 
 /* ─── CONNECT CARD ──────────────────────────────────── */
 .lp-connect {
-  margin: 16px 60px 0;
-  background: #3d5c46;
-  border-radius: 18px;
-  padding: 48px 52px;
+  margin: 40px 24px 0;
+  background: linear-gradient(135deg, #1D4503 0%, #112902 100%) !important;
+  border-radius: 24px !important;
+  padding: 60px 70px !important;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 20px 50px rgba(29, 69, 3, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  width: auto !important;
 }
 
-/* decorative orb top-right */
+.lp-connect-bg-glow {
+  position: absolute;
+  top: -50%;
+  left: -20%;
+  width: 70%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(211, 250, 153, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .lp-connect-orb {
   position: absolute;
-  top: -70px;
-  right: -70px;
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle, rgba(255,255,255,0.09) 0%, transparent 70%);
+  bottom: -90px;
+  right: -90px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
+  z-index: 1;
 }
 
 .lp-connect-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
+  gap: 50px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
-.lp-connect-text { flex: 1; }
+.lp-connect-text {
+  flex: 1;
+  max-width: 580px;
+}
+
+.lp-connect-eyebrow {
+  color: var(--vcn-badge, #d3fa99);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
 
 .lp-ct-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.25;
-  margin: 0 0 14px;
-  max-width: 300px;
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 40px !important;
+  font-weight: 400 !important;
+  color: #ffffff !important;
+  line-height: 1.2 !important;
+  margin: 0 0 16px !important;
+  max-width: 100% !important;
 }
 
 .lp-ct-body {
-  font-size: 14px;
-  line-height: 1.75;
-  color: rgba(255,255,255,0.75);
-  margin: 0 0 28px;
-  max-width: 400px;
+  font-size: 1.05rem !important;
+  line-height: 1.65 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  margin: 0 !important;
+  max-width: 100% !important;
 }
 
-/* stacked buttons (match reference) */
-.lp-ct-btns {
+.lp-connect-action-block {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.lp-btn-primary {
-  display: inline-flex;
   align-items: center;
-  gap: 9px;
-  background: #ffffff;
-  color: #1c3625;
-  border: none;
-  border-radius: 9px;
-  padding: 12px 26px;
-  font-size: 13.5px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
-}
-
-.lp-btn-primary:hover {
-  background: #f0f5f1;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
-}
-
-.lp-btn-outline {
-  display: inline-flex;
-  align-items: center;
-  background: transparent;
-  color: #ffffff;
-  border: 1.5px solid rgba(255,255,255,0.45);
-  border-radius: 9px;
-  padding: 11px 26px;
-  font-size: 13.5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: border-color 0.25s, background 0.25s, transform 0.2s;
-}
-
-.lp-btn-outline:hover {
-  border-color: rgba(255,255,255,0.9);
-  background: rgba(255,255,255,0.08);
-  transform: translateY(-2px);
-}
-
-/* icon circle (right side of connect card) */
-.lp-connect-icon {
+  gap: 24px;
   flex-shrink: 0;
 }
 
+.lp-connect-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .lp-icon-ring {
-  width: 88px;
-  height: 88px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.14);
-  border: 1.5px solid rgba(255,255,255,0.22);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255,255,255,0.88);
+  color: var(--vcn-badge, #d3fa99);
+  font-size: 34px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+
+.lp-connect:hover .lp-icon-ring {
+  transform: scale(1.05) rotate(5deg);
+  border-color: var(--vcn-badge, #d3fa99);
+  color: white;
+  background: rgba(211, 250, 153, 0.1);
+  box-shadow: 0 15px 40px rgba(211, 250, 153, 0.15);
+}
+
+.lp-connect-btn {
+  background: white !important;
+  color: var(--vcn-darker, #1C3A13) !important;
+  border: 1px solid white !important;
+  padding: 14px 36px !important;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.lp-connect-btn i {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.lp-connect-btn:hover {
+  background: var(--vcn-badge, #d3fa99) !important;
+  color: var(--vcn-darker, #1C3A13) !important;
+  border-color: var(--vcn-badge, #d3fa99) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 15px 35px rgba(211, 250, 153, 0.25) !important;
+}
+
+.lp-connect-btn:hover i {
+  transform: translateX(4px);
 }
 
 /* ─── MODAL ─────────────────────────────────────────── */
@@ -587,7 +646,7 @@ const closeBio = () => {
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .lp-modal-grid { grid-template-columns: 40% 60%; }
 }
 
@@ -597,7 +656,7 @@ const closeBio = () => {
   overflow: hidden;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .lp-modal-photo { min-height: 520px; }
 }
 
@@ -617,15 +676,15 @@ const closeBio = () => {
 }
 
 .lp-modal-name {
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 32px !important;
+  font-weight: 400;
   color: #1c3625;
   margin: 0 0 6px;
 }
 
 .lp-modal-role {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px !important;
+  font-weight: 400 !important;
   color: #8c9e93;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -639,7 +698,7 @@ const closeBio = () => {
 }
 
 .lp-modal-bio {
-  font-size: 15px;
+  font-size: 16px !important;
   line-height: 1.85;
   color: #4a5568;
   margin: 0 0 24px;
@@ -685,14 +744,23 @@ const closeBio = () => {
 
 /* ─── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 991px) {
-  .lp-hero   { padding: 40px 28px 32px; }
   .lp-board  { padding: 0 28px 40px; }
-  .lp-connect { margin: 16px 28px 0; padding: 36px 32px; }
+  .lp-connect { margin: 16px 24px 0; padding: 36px 32px; }
 }
 
-@media (max-width: 767px) {
-  .lp-hero   { padding: 32px 20px 28px; }
-  .lp-headline { font-size: 32px; }
+@media (max-width: 991px) {
+  .lp-hero {
+    height: auto;
+    min-height: 250px;
+    align-items: center;
+    margin: 20px 20px 10px 20px;
+  }
+  .lp-hero-content {
+    padding: 30px 20px;
+  }
+  .lp-headline {
+    font-size: 32px !important;
+  }
 
   .lp-board  { padding: 0 20px 32px; }
 
@@ -708,9 +776,27 @@ const closeBio = () => {
 
   .lp-bio-btn { align-self: center; }
 
-  .lp-connect { margin: 12px 0 0; border-radius: 14px; padding: 28px 22px; }
-  .lp-connect-icon { display: none; }
-  .lp-ct-title { max-width: 100%; }
+  .lp-connect {
+    margin: 30px 15px 0 15px !important;
+    border-radius: 20px !important;
+    padding: 40px 30px !important;
+    width: auto !important;
+  }
+  .lp-connect-inner {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 30px !important;
+  }
+  .lp-connect-action-block {
+    width: 100% !important;
+  }
+  .lp-connect-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .lp-connect-icon {
+    display: flex !important;
+  }
 
   .lp-modal-creds { grid-template-columns: 1fr; }
   .lp-modal-info  { padding: 28px 24px; }

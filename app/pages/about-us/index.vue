@@ -269,6 +269,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 16px;
+  margin: 24px;
 }
 
 .ab-hero-bg {
@@ -303,7 +305,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 .ab-eyebrow {
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 12px;
   color: var(--vcn-badge, #d3fa99);
   letter-spacing: 1px;
   margin-bottom: 10px;
@@ -404,14 +406,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-welcome-title {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   margin-bottom: 10px;
   color: var(--vcn-badge, #d3fa99);
 }
 
 .ab-welcome-text {
-  font-size: 0.82rem;
+  font-size: 16px !important;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
@@ -487,8 +489,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 .ab-tag {
   display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 400;
   letter-spacing: 2px;
   color: var(--vcn-dark, #1D4503);
   opacity: 0.55;
@@ -497,15 +499,15 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-section-h {
-  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin-bottom: 20px;
   line-height: 1.2;
 }
 
 .ab-para {
-  font-size: 0.96rem;
+  font-size: 16px !important;
   line-height: 1.85;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.85;
@@ -550,8 +552,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 .ab-story-title {
   text-align: center;
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin-bottom: 10px;
 }
@@ -580,15 +582,15 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-story-year {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-dark, #1D4503);
   margin-bottom: 4px;
 }
 
 .ab-story-phase {
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 400;
   color: var(--vcn-primary, #5E6C1F);
   letter-spacing: 0.5px;
   margin-bottom: 14px;
@@ -596,7 +598,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-story-desc {
-  font-size: 0.9rem;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.8;
@@ -640,8 +642,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-info-h {
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin-bottom: 12px;
   display: flex;
@@ -650,7 +652,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-info-p {
-  font-size: 0.95rem;
+  font-size: 16px !important;
   line-height: 1.80;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.8;
@@ -665,8 +667,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 .ab-more-dark-h {
   text-align: center;
-  font-size: 1.7rem;
-  font-weight: 600;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-white, #fff);
   margin-bottom: 36px;
 }
@@ -681,8 +683,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   align-items: center;
   gap: 12px;
   color: var(--vcn-white, #fff);
-  font-size: 0.88rem;
-  font-weight: 500;
+  font-size: 16px !important;
+  font-weight: 400 !important;
   text-align: center;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -743,14 +745,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-cta-title {
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin: 0;
 }
 
 .ab-cta-desc {
-  font-size: 0.9rem;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.8;
@@ -766,8 +768,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   color: var(--vcn-white, #fff);
   border-radius: 50px;
   padding: 10px 22px;
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 16px !important;
+  font-weight: 400 !important;
   text-decoration: none;
   width: fit-content;
   transition: all 0.25s ease;
@@ -881,6 +883,9 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
         /* Ensure the width takes this padding into account */
         box-sizing: border-box;
     }
+  .ab-hero {
+    margin: 20px 0 10px 0;
+  }
 }
 
 @media (max-width: 767.98px) {

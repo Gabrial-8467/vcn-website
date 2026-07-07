@@ -57,6 +57,7 @@ onBeforeUnmount(() => {
          actually sticks, so the nav links pin near the top while the
          beige panel itself continues all the way to the bottom of the
          content column — no empty gap underneath. -->
+    <!-- Desktop Sidebar (visible on screens >= 768px) -->
     <div class="about-sidebar-bg d-none d-lg-flex">
       <div class="about-sidebar-wrapper">
         <div class="sidebar-top-section">
@@ -76,7 +77,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <!-- Mobile Dropdown Selector (visible on screens < 992px) -->
+    <!-- Mobile Dropdown Selector (visible on screens < 768px) -->
     <div class="about-sidebar-mobile d-lg-none" ref="dropdownRef">
       <div class="mobile-dropdown-wrapper">
         <button
@@ -227,7 +228,8 @@ onBeforeUnmount(() => {
   justify-content: flex-end;
   width: 100%;
   padding: 12px 20px;
-  background: #EBDFD1;
+  background: var(--vcn-white, #fff);
+  border-bottom: 1px solid rgba(29, 69, 3, 0.08);
   position: relative;
   z-index: 100;
 }
@@ -272,7 +274,8 @@ onBeforeUnmount(() => {
 
   min-width: 240px;
 
-  background: #EBDFD1;
+  background: var(--vcn-white, #fff);
+  border: 1px solid rgba(29, 69, 3, 0.08);
   border-radius: 12px;
   overflow: hidden;
 

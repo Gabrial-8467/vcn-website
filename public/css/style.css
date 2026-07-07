@@ -103,7 +103,7 @@ a {
 
 html,
 body {
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   max-width: 100% !important;
 }
 
@@ -9881,17 +9881,17 @@ body.home-page main {
 
   .section-title-timeline {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 400;
     margin-bottom: 0.5rem;
     color: var(--vcn-footer);
   }
 
   .section-subtitle {
-    font-size: 0.9rem;
+    font-size: 16px !important;
     color: var(--vcn-footer);
-    max-width: 700px;
+    max-width: 540px;
     margin: 0 auto 2rem;
-    text-align: center;
+    text-align: left;
   }
 
   /* Timeline Styles */
@@ -13291,7 +13291,7 @@ body.home-page main {
   html,
   body {
     max-width: 100% !important;
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
   }
 
   * {

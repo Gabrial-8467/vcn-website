@@ -120,18 +120,21 @@ useHead({
     <div class="container-fluid">
       <div class="row">
         <!-- Left Sidebar Navigation -->
-        <div class="col-md-3 col-lg-3 sidebar-section">
+        <div class="col-lg-3 sidebar-section">
           <AboutSidebar />
         </div>
 
         <!-- Main Content Area -->
-        <div class="col-md-9 col-lg-9">
+        <div class="col-lg-9">
           <div class="journey-container">
-            <!-- Header Section -->
-            <div class="journey-header">
-              <span class="legacy-tag">OUR LEGACY</span>
-              <h1 class="journey-main-title">{{ journey.hero.title }}</h1>
-              <p class="journey-main-desc">{{ journey.hero.description }}</p>
+            <!-- Header Section with Image and Transparent Overlay -->
+            <div class="journey-header" :style="{ backgroundImage: `url(${journey.hero.image})` }">
+              <div class="journey-header-overlay"></div>
+              <div class="journey-header-content">
+                <span class="legacy-tag">OUR LEGACY</span>
+                <h1 class="journey-main-title">{{ journey.hero.title }}</h1>
+                <p class="journey-main-desc">{{ journey.hero.description }}</p>
+              </div>
             </div>
 
             <!-- Vertical Timeline Section -->
@@ -204,33 +207,62 @@ useHead({
 
 /* Header styling */
 .journey-header {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 60px;
+  position: relative;
+  height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 10px 30px rgba(29, 69, 3, 0.03);
+  text-align: left;
+}
+
+.journey-header-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(29, 69, 3, 0.72) 0%,
+    rgba(29, 69, 3, 0.30) 60%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+.journey-header-content {
+  position: relative;
+  padding: 45px;
+  z-index: 2;
+  max-width: 650px;
+  text-align: left;
 }
 
 .legacy-tag {
   display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--vcn-dark, #1D4503); /* Brand dark color */
+  color: var(--vcn-badge, #d3fa99) !important;
   margin-bottom: 12px;
 }
 
 .journey-main-title {
-  font-size: 3.2rem;
-  font-weight: 500;
-  color: var(--vcn-darker, #1C3A13) !important; /* Brand darker forest green */
-  margin-bottom: 20px;
-  line-height: 1.2;
+  font-size: 48px !important;
+  font-weight: 400 !important;
+  color: var(--vcn-white, #fff) !important;
+  margin: 0 0 16px 0 !important;
+  line-height: 1.1 !important;
 }
 
 .journey-main-desc {
-  font-size: 1.15rem;
-  color: var(--vcn-darker, #1C3A13); /* Brand darker forest green */
-  line-height: 1.6;
-  opacity: 0.85;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  margin: 0 !important;
 }
 
 /* Timeline layout styling */
@@ -287,14 +319,14 @@ useHead({
 }
 
 .phase-title {
-  font-size: 1.7rem;
-  font-weight: 600;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13) !important; /* Brand darker forest green */
   margin-bottom: 15px;
 }
 
 .phase-desc {
-  font-size: 1.05rem;
+  font-size: 16px;
   color: var(--vcn-darker, #1C3A13); /* Brand darker text */
   line-height: 1.65;
   margin-bottom: 20px;
@@ -469,12 +501,22 @@ useHead({
 
 @media (max-width: 768px) {
   .journey-container {
-    padding: 110px 15px 30px !important; /* Mobile padding top adjusted for floating navbar */
+    padding: 20px 15px 30px !important; /* Fixed excessive spacing gap on mobile */
     border-radius: 0;
   }
 
+  .journey-header {
+    height: auto;
+    min-height: 250px;
+    align-items: center;
+  }
+
+  .journey-header-content {
+    padding: 30px 20px;
+  }
+
   .journey-main-title {
-    font-size: 2.4rem;
+    font-size: 32px !important;
   }
 
   .journey-timeline-line {

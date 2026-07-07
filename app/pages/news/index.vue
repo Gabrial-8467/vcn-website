@@ -3,23 +3,19 @@
     <div class="container-fluid">
       <div class="row">
         <!-- Left Sidebar Navigation -->
-        <div class="col-md-3 col-lg-3 sidebar-section">
+        <div class="col-lg-3 sidebar-section">
           <AboutSidebar />
         </div>
 
         <!-- Right Main News Content -->
-        <div class="col-md-9 col-lg-9">
+        <div class="col-lg-9">
           <div class="news-content-wrapper">
             
             <!-- HERO BANNER -->
             <section class="news-hero" :style="{ backgroundImage: `url(${heroBgImage})` }">
               <div class="news-hero-overlay"></div>
               <div class="news-hero-content">
-                <span class="press-media-tag">Press & Media</span>
                 <h1>{{ newsData.hero.title }}</h1>
-                <p class="news-hero-desc">
-                  Tracing our global impact and thought leadership in the modern wellness landscape. From breakthrough clinical research to lifestyle innovations.
-                </p>
               </div>
             </section>
 
@@ -53,10 +49,6 @@
                   <p class="featured-excerpt">
                     {{ featuredArticle.excerpt || 'The brand\'s commitment to ethical sourcing and clinical transparency has set a new benchmark for the wellness industry, according to recent analysts.' }}
                   </p>
-                  <NuxtLink to="/blog" class="read-article-link">
-                    <span>Read Full Article</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </NuxtLink>
                 </div>
                 <div class="featured-news-media">
                   <img src="/img/news/featured-leaves.jpg" alt="Featured Article Image" class="featured-image" />
@@ -73,11 +65,6 @@
                     <h4 class="news-row-title">
                       {{ item.title }}
                     </h4>
-                  </div>
-                  <div class="news-row-action">
-                    <NuxtLink to="/blog" class="external-link-btn" aria-label="Read Article">
-                      <i class="bi bi-box-arrow-up-right"></i>
-                    </NuxtLink>
                   </div>
                 </div>
               </div>
@@ -289,7 +276,7 @@ useHead({
   font-weight: 700;
   color: var(--vcn-white, #fff);
   margin: 0 0 16px 0;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   line-height: 1.1;
 }
 
@@ -332,6 +319,7 @@ useHead({
   color: var(--vcn-darker, #1C3A13);
   font-family: 'Outfit', sans-serif;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
 }
 
 .year-pill:hover {
@@ -344,13 +332,15 @@ useHead({
   background-color: var(--vcn-dark, #1D4503);
   color: var(--vcn-white, #fff);
   border-color: var(--vcn-dark, #1D4503);
+  font-size: 16px !important;
+  font-weight: 400 !important;
 }
 
 .all-publications-btn {
   background: transparent;
   border: none;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 400;
   letter-spacing: 1.5px;
   color: var(--vcn-darker, #1C3A13);
   cursor: pointer;
@@ -400,7 +390,7 @@ useHead({
 
 .featured-meta {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: #6b7280;
@@ -409,16 +399,16 @@ useHead({
 }
 
 .featured-title {
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   line-height: 1.35;
   margin: 0 0 16px 0;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 .featured-excerpt {
-  font-size: 15px;
+  font-size: 16px !important;
   color: rgba(28, 58, 19, 0.8);
   line-height: 1.65;
   margin: 0 0 28px 0;
@@ -493,8 +483,8 @@ useHead({
 }
 
 .news-row-meta {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px !important;
+  font-weight: 400 !important;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: #9ca3af;
@@ -504,12 +494,12 @@ useHead({
 }
 
 .news-row-title {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px !important;
+  font-weight: 400 !important;
   color: var(--vcn-darker, #1C3A13);
   margin: 0;
   line-height: 1.45;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 .external-link-btn {
@@ -574,7 +564,7 @@ useHead({
 .quote-symbol {
   font-size: 90px;
   line-height: 0.1;
-  font-family: Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   color: rgba(255, 255, 255, 0.12);
   position: absolute;
   top: 45px;
@@ -582,9 +572,9 @@ useHead({
 }
 
 .quote-text {
-  font-size: 20px;
+  font-size: 16px;
   font-style: italic;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
   line-height: 1.7;
   margin: 30px 0 40px 0;
   position: relative;
@@ -605,8 +595,8 @@ useHead({
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: 400 !important;
+  font-size: 16px !important;
   font-family: 'Outfit', sans-serif;
 }
 
@@ -616,15 +606,15 @@ useHead({
 }
 
 .author-name {
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 400;
+  font-size: 16px;
   color: var(--vcn-white, #fff);
   font-style: normal;
   font-family: 'Outfit', sans-serif;
 }
 
 .author-title {
-  font-size: 12px;
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.7);
   font-family: 'Outfit', sans-serif;
 }
@@ -643,15 +633,15 @@ useHead({
 }
 
 .widget-inquiry-card h3 {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin-bottom: 12px;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 .widget-inquiry-card p {
-  font-size: 14px;
+  font-size: 16px !important;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.85;
   line-height: 1.6;
@@ -666,8 +656,8 @@ useHead({
   border: 2px solid var(--vcn-dark, #1D4503);
   padding: 12px 32px;
   border-radius: 24px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px !important;
+  font-weight: 400 !important;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.25s ease;
@@ -712,8 +702,6 @@ useHead({
 /* Sidebar overrides to match website theme on this page */
 :deep(.about-sidebar-bg) {
   background: var(--vcn-white, #fff) !important;
-  border: 1px solid rgba(29, 69, 3, 0.08) !important;
-  box-shadow: 0 10px 30px rgba(29, 69, 3, 0.04) !important;
 }
 
 :deep(.sidebar-menu-item) {
@@ -785,6 +773,22 @@ useHead({
     align-items: stretch;
     gap: 15px;
   }
+
+  .year-tabs-pills {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .year-tabs-pills::-webkit-scrollbar {
+    display: none;
+  }
   
   .all-publications-btn {
     justify-content: center;
@@ -821,4 +825,74 @@ useHead({
   }
 }
 </style>
+<style>
+/*
+  ===========================================================
+  STICKY-SAFE LAYOUT OVERRIDES (unscoped)
+  ===========================================================
+*/
+.product-detail-section,
+.product-detail-section .container-fluid,
+.product-detail-section .row {
+  overflow: visible !important;
+  transform: none !important;
+  filter: none !important;
+  contain: none !important;
+  will-change: auto !important;
+}
+
+@media (min-width: 992px) {
+  .product-detail-section .row {
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  .sidebar-section {
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: stretch !important;
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    transform: none !important;
+    background: transparent !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .product-detail-section {
+    padding: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .product-detail-section>.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .product-detail-section .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .sidebar-section {
+    height: auto !important;
+    min-height: auto !important;
+    position: relative !important;
+    top: 0 !important;
+    overflow: visible !important;
+    border-right: none !important;
+    background: transparent !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+</style>
+
  
