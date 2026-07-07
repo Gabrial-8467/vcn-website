@@ -1,6 +1,6 @@
 <template>
   <section class="product-detail-section mt-3">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <!-- Left Sidebar Navigation -->
         <div class="col-lg-3 sidebar-section">
@@ -966,9 +966,9 @@ useHead({
     margin-top: 0 !important;
   }
 
-  .product-detail-section>.container-fluid {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  .product-detail-section>.container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   .product-detail-section .row {
@@ -1027,7 +1027,7 @@ useHead({
     justify-content: center !important;
     text-align: center !important;
     background: transparent !important;
-    margin: 15px 15px 0 15px !important;
+    margin: 15px 0 0 0 !important;
   }
   .careers-hero-bg-wrap {
     position: absolute !important;
@@ -1108,7 +1108,7 @@ useHead({
       scroll-snap-type: x mandatory !important;
       gap: 20px !important;
       padding: 10px 20px 24px 20px !important;
-      margin: 0 -15px !important;
+      margin: 0 -20px !important;
       -webkit-overflow-scrolling: touch !important;
       scrollbar-width: none !important; /* Hide scrollbar for Firefox */
       -ms-overflow-style: none !important;  /* Hide scrollbar for IE/Edge */
@@ -1142,7 +1142,7 @@ useHead({
     padding: 40px 24px;
     gap: 40px;
     text-align: center;
-    margin: 0 15px !important;
+    margin: 0 !important;
   }
   .spotlight-visual-col {
     width: 100% !important;
@@ -1171,7 +1171,7 @@ useHead({
   .purpose-container {
     flex-direction: column;
     gap: 30px;
-    margin: 0 15px !important;
+    margin: 0 !important;
   }
   .purpose-text-col {
     width: 100% !important;
@@ -1197,7 +1197,7 @@ useHead({
   /* CTA */
   .cta-banner-card {
     padding: 45px 24px;
-    margin: 0 15px !important;
+    margin: 0 !important;
   }
   .cta-actions {
     flex-direction: column;
