@@ -90,7 +90,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 <template>
   <section class="product-detail-section mt-3">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row g-0">
 
         <!-- Sidebar -->
@@ -865,11 +865,11 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   .ab-info-cols,
   .ab-more-dark,
   .ab-cta-section {
-    padding: 40px 20px;
+    padding: 40px 0 !important;
   }
 
   .ab-mission-visual {
-    padding-left: 20px;
+    padding-left: 0 !important;
   }
 
   .ab-right-panel {
@@ -877,11 +877,10 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
     border-top: 1px solid rgba(29, 69, 3, 0.08);
   }
   .ab-top-row {
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        /* Ensure the width takes this padding into account */
-        box-sizing: border-box;
-    }
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box;
+  }
   .ab-hero {
     margin: 20px 0 10px 0;
   }
@@ -939,7 +938,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   ===========================================================
 */
 .product-detail-section,
-.product-detail-section .container-fluid,
+.product-detail-section .container,
 .product-detail-section .row {
   overflow: visible !important;
   transform: none !important;
@@ -976,9 +975,9 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
     margin-top: 0 !important;
   }
 
-  .product-detail-section>.container-fluid {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  .product-detail-section>.container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   .product-detail-section .row {
