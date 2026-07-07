@@ -1,6 +1,6 @@
 <template>
   <section class="product-detail-section mt-3">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <!-- Left Sidebar Navigation -->
         <div class="col-lg-3 sidebar-section">
@@ -744,16 +744,11 @@ const closeBio = () => {
 
 /* ─── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 991px) {
-  .lp-board  { padding: 0 28px 40px; }
-  .lp-connect { margin: 16px 24px 0; padding: 36px 32px; }
-}
-
-@media (max-width: 991px) {
   .lp-hero {
     height: auto;
     min-height: 250px;
     align-items: center;
-    margin: 20px 20px 10px 20px;
+    margin: 20px 0 10px 0 !important;
   }
   .lp-hero-content {
     padding: 30px 20px;
@@ -762,7 +757,9 @@ const closeBio = () => {
     font-size: 32px !important;
   }
 
-  .lp-board  { padding: 0 20px 32px; }
+  .lp-board {
+    padding: 0 0 32px 0 !important;
+  }
 
   .lp-member {
     flex-direction: column;
@@ -777,7 +774,7 @@ const closeBio = () => {
   .lp-bio-btn { align-self: center; }
 
   .lp-connect {
-    margin: 30px 15px 0 15px !important;
+    margin: 30px 0 0 0 !important;
     border-radius: 20px !important;
     padding: 40px 30px !important;
     width: auto !important;
@@ -809,7 +806,7 @@ const closeBio = () => {
   ===========================================================
 */
 .product-detail-section,
-.product-detail-section .container-fluid,
+.product-detail-section .container,
 .product-detail-section .row {
   overflow: visible !important;
   transform: none !important;
@@ -846,9 +843,9 @@ const closeBio = () => {
     margin-top: 0 !important;
   }
 
-  .product-detail-section > .container-fluid {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  .product-detail-section > .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   .product-detail-section .row {
