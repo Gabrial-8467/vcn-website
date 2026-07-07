@@ -44,7 +44,8 @@ const about = computed(() => {
       parsedMoreAboutItems = navItems.map(item => ({
         title: item.extraData?.title || item.title || '',
         icon: item.extraData?.icon || item.icon || 'bi-bullseye',
-        iconClass: item.extraData?.iconClass || 'icon-journey'
+        iconClass: item.extraData?.iconClass || 'icon-journey',
+        link: item.extraData?.link || item.link || ''
       }))
     }
     const ctaItems = moreAboutSec.items.filter(i => i.name?.startsWith('cta-card'))
@@ -143,10 +144,10 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
               <!-- 4 small icon cards in 2x2 grid -->
               <div class="row g-2 ab-grid-cards">
                 <div v-for="(item, i) in moreAbout.items" :key="i" class="col-6">
-                  <div class="ab-grid-card">
+                  <NuxtLink :to="item.link" class="ab-grid-card">
                     <i class="bi" :class="item.icon"></i>
                     <span>{{ item.title }}</span>
-                  </div>
+                  </NuxtLink>
                 </div>
               </div>
 
@@ -206,10 +207,10 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
             <h2 class="ab-more-dark-h">{{ moreAbout.heading }}</h2>
             <div class="row g-3 justify-content-center">
               <div v-for="(item, i) in moreAbout.items" :key="i" class="col-6 col-md-3">
-                <div class="ab-more-nav-card">
+                <NuxtLink :to="item.link" class="ab-more-nav-card">
                   <i class="bi" :class="item.icon"></i>
                   <span>{{ item.title }}</span>
-                </div>
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -222,11 +223,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
                     <i class="bi" :class="card.icon"></i>
                   </div>
                   <h3 class="ab-cta-title">{{ card.title }}</h3>
-                  <p v-if="i === 0" class="ab-cta-desc">Take our wellness quiz to find the perfect supplements and
-                    routines for your unique lifestyle.</p>
-                  <p v-else class="ab-cta-desc">Join our network of partners and build a sustainable business while
-                    promoting health and happiness.</p>
-                  <a href="#" class="ab-cta-btn-link">{{ card.buttonText }} ↗</a>
+                  <NuxtLink to="/all-products" class="ab-cta-btn-link">{{ card.buttonText }} ↗</NuxtLink>
                 </div>
               </div>
             </div>
@@ -441,6 +438,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-grid-card {
+  text-decoration: none !important;
   background: var(--vcn-base-bg, #F6F7EE);
   border-radius: 10px;
   padding: 14px 12px;
@@ -674,6 +672,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-more-nav-card {
+  text-decoration: none !important;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;

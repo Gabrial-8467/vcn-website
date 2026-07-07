@@ -112,22 +112,26 @@ export const ABOUT_PAGE_DATA = {
                     {
                         title: "Our Journey",
                         icon: "bi-bullseye",
-                        iconClass: "icon-journey"
+                        iconClass: "icon-journey",
+                        link: "/our-journey"
                     },
                     {
                         title: "Top News",
                         icon: "bi-globe",
-                        iconClass: "icon-news"
+                        iconClass: "icon-news",
+                        link: "/news"
                     },
                     {
                         title: "Our Brands",
                         icon: "bi-bag",
-                        iconClass: "icon-brands"
+                        iconClass: "icon-brands",
+                        link: "/all-products"
                     },
                     {
                         title: "FAQs",
                         icon: "bi-chat-dots",
-                        iconClass: "icon-faqs"
+                        iconClass: "icon-faqs",
+                        link: "/faqs"
                     }
                 ],
 
