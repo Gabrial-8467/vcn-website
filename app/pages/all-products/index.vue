@@ -779,7 +779,7 @@ h1.vcn-breadcrumb-title {
     margin: 0 auto !important;
   }
 }
-@media (max-width: 240px) {
+@media (max-width: 340px) {
   /* 1. Maximize available space */
   .vcn-container {
     padding-left: 10px !important;
