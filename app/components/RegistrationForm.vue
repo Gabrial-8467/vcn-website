@@ -36,6 +36,14 @@
               <span v-if="errors.firstName" class="error">{{ errors.firstName }}</span>
             </div>
 
+            <!-- Username -->
+            <div class="form-group">
+              <label for="username">Username <span class="required">*</span></label>
+              <input type="text" id="username" v-model="form.username" placeholder="Choose a username"
+                class="form-input" />
+              <span v-if="errors.username" class="error">{{ errors.username }}</span>
+            </div>
+
             <!-- Email Address -->
             <div class="form-group">
               <label for="email">Email Address <span class="required">*</span></label>
@@ -189,6 +197,7 @@ let countdownInterval = null
 // Form Data
 const form = reactive({
   firstName: '',
+  username: '',
   email: '',
   mobile: '',
   password: '',
@@ -341,6 +350,14 @@ const validateForm = () => {
 
   if (!form.firstName.trim()) {
     errors.firstName = 'First and Middle Name is required'
+    isValid = false
+  }
+
+  if (!form.username.trim()) {
+    errors.username = 'Username is required'
+    isValid = false
+  } else if (form.username.trim().length < 3) {
+    errors.username = 'Username must be at least 3 characters'
     isValid = false
   }
 

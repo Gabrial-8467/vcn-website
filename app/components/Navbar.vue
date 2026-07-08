@@ -157,8 +157,8 @@
 
                 <form @submit.prevent="handleLogin">
                   <div class="form-group">
-                    <label for="mobile">Mobile Number</label>
-                    <input type="tel" id="mobile" v-model="formData.mobile" placeholder="+91" class="form-input">
+                    <label for="login-identifier">Username, Email, or Mobile Number</label>
+                    <input type="text" id="login-identifier" v-model="formData.identifier" placeholder="Username, email, or mobile" class="form-input">
                   </div>
 
                   <div class="form-group">
@@ -390,7 +390,7 @@ onMounted(() => {
 const isOpen = ref(false)
 const showPassword = ref(false)
 const formData = reactive({
-  mobile: '',
+  identifier: '',
   password: ''
 })
 
@@ -403,7 +403,7 @@ const closeForm = () => {
   isOpen.value = false
   document.body.style.overflow = ''
   // Reset form
-  formData.mobile = ''
+  formData.identifier = ''
   formData.password = ''
 }
 
@@ -1753,7 +1753,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 30px;
+    font-size: 40px !important;
     background: none;
     border: none;
     cursor: pointer;
