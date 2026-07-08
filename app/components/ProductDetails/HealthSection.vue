@@ -133,7 +133,7 @@ const supportKeyPoints = computed(() => {
   display: block !important;
 }
 
-@media (min-width: 772px) {
+@media (min-width: 992px) {
   .health-desktop-version {
     display: block !important;
   }
@@ -254,32 +254,30 @@ const supportKeyPoints = computed(() => {
   }
 }
 
-@media (max-width: 771px) {
+@media (max-width: 991px) {
   .health-section {
-    min-height: 600px !important;
+    min-height: auto !important;
+    padding-bottom: 20px;
   }
   .health-content-wrapper {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
+    position: relative !important;
     width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
+    height: auto !important;
+    display: block !important;
   }
   .mobile-health-layout {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
-    flex-grow: 1 !important;
-    height: 100% !important;
+    display: block !important;
     padding-top: 40px !important;
     padding-bottom: 20px !important;
   }
   .features-scroll-wrapper {
     padding-bottom: 15px !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+  .feature-card-mobile {
+    flex: 0 0 45% !important;
   }
 }
 </style>
