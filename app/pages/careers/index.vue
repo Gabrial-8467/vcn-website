@@ -254,7 +254,7 @@ useHead({
 /* ─── HERO SECTION ───────────────────────────────────── */
 .careers-hero {
   position: relative;
-  height: 480px;
+  height: 450px;
   padding: 80px 0;
   border-radius: 24px;
   overflow: hidden;
