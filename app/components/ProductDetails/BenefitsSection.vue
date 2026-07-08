@@ -40,7 +40,7 @@
           </div>
 
           <!-- Right Column: Images -->
-          <div class="col-lg-7 pe-0 benefits-images-column">
+          <div class="col-lg-7 benefits-images-column">
             <div class="image-grid">
               <!-- Large Image -->
               <div class="image-large">
@@ -341,6 +341,7 @@ const journeyHowToUse = computed(() => {
   .benefits-images-column {
     min-width: 0;
     overflow: hidden;
+    padding-right: 0 !important;
   }
 
   .image-grid {
