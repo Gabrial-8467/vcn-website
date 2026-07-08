@@ -6,7 +6,7 @@
           class="col-12 col-xl-3 health-section-below d-flex align-items-center justify-content-center order-2 order-xl-1">
           <video src="" class="video-centered" autoplay muted loop playsinline></video>
         </div>
-        <div class="col-12 col-xl-9 order-1 order-xl-2 sm-pr-0">
+        <div class="col-12 col-xl-9 order-1 order-xl-2">
           <div class="vcn-viacap-hero-area-below h-100">
             <div class="vcn-probiotic-container">
               <div class="vcn-probiotic-content-wrapper">
@@ -148,7 +148,7 @@
   }
 
   /* Right Column (Content) */
-  .col-xl-9.sm-pr-0 {
+  .col-xl-9 {
     padding-left: 12px !important;
     padding-right: 12px !important;
   }
