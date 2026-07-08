@@ -372,7 +372,7 @@ export const ABOUT_PAGE_DATA = {
             vicePresident: {
                 heading: "Words from our Vice President (HR)",
 
-                image: "/img/careers/vp.png",
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWGrc3whMMuknwA3fR1LwhaPDa-31CY8l-LkqfkeR4WPwKYUpNOq0Ni8at7WB7HGWM9fPWpG10NHMxdoGajqBKgWgwBvwcq2l0Ta6tK1bglCKTzrbtD9patsp_tXLUeyVNqGP1t5z1_-5OHbZpz-9H5RbbUv-qAlnpCgezSVfsD_NZqUhrvND1BQMi18WjvYT7fNwA75FNooRFWFAudZe-MpugQHkjZsj-uKfOQW9Z6mB2hNmQGPR_YnH5gjuPwhXsQLa8HXPJT6w",
 
                 name: "Ritika Malik",
 
