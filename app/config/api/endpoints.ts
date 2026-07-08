@@ -15,6 +15,9 @@ export const API_ENDPOINTS = {
   CART_DELETE_ITEM: 'common/cart/delete/item',
   CART_CLEAR: 'common/cart/delete/clear',
 
+  // Auth endpoints
+  LOGIN: 'users/auth/login',
+
   // Review endpoints
   REVIEW_CREATE: 'users/product-reviews/create',
 

@@ -47,3 +47,11 @@ export type {
   CmsQueryParams,
   CmsState
 } from './cms.ts'
+
+// Auth Types
+export type {
+  Credentials,
+  User,
+  LoginResponse
+} from './auth.ts'
+
