@@ -786,40 +786,27 @@ h1.vcn-breadcrumb-title {
   padding-left: 15px !important;
 }
 
-/* 2. Center and pad the product card for mobile readability */
-.vcn-product-card {
-  text-align: center;
-  padding: 30px 15px !important;
-}
+@media (max-width: 768px) {
+  /* 2. Center and pad the product card for mobile readability */
+  .vcn-product-card {
+    text-align: left !important;
+    padding: 30px 15px !important;
+  }
 
-/* 3. Improve title scale and spacing */
-.vcn-product-title {
-  font-size: 2rem !important;
-  line-height: 1.2 !important;
-  margin-bottom: 15px !important;
-}
+  /* 3. Improve title scale and spacing */
+  .vcn-product-title {
+    font-size: 32px !important;
+    font-weight: 400 !important;
+    line-height: 1.2 !important;
+    margin-bottom: 15px !important;
+  }
 
-/* 4. Center the bottle image and limit its width */
-.vcn-product-bottle {
-  max-width: 150px !important;
-  margin-bottom: 20px;
-  height: auto;
-}
-
-/* 5. Stack and center buttons for better mobile UX */
-.vcn-product-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.vcn-btn-secondary,
-.cart-box,
-.btn-cart {
-  width: 100% !important;
-  max-width: 250px;
-  margin: 0 auto !important;
+  /* 4. Center the bottle image and limit its width */
+  .vcn-product-bottle {
+    max-width: 150px !important;
+    margin-bottom: 20px;
+    height: auto;
+  }
 }
 
 
