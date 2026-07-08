@@ -31,9 +31,9 @@
               </div>
 
               <!-- Thumbnail Gallery -->
-              <div v-if="featuredProductImages.length > 1" class="featured-thumbnails d-flex justify-content-center gap-2 mt-3 w-100">
-                <div v-for="(img, idx) in featuredProductImages" :key="idx" 
-                  class="featured-thumbnail-item" 
+              <div v-if="featuredProductImages.length > 1"
+                class="featured-thumbnails d-flex justify-content-center gap-2 mt-3 w-100">
+                <div v-for="(img, idx) in featuredProductImages" :key="idx" class="featured-thumbnail-item"
                   :class="{ active: (selectedFeaturedImage === img) || (!selectedFeaturedImage && img === getPrimaryImage(product)) }"
                   @click="selectedFeaturedImage = img">
                   <img :src="img" :alt="product.name + ' thumbnail ' + idx" />
@@ -45,22 +45,31 @@
             <div class="col-lg-8">
               <!-- Mobile only badge & price row -->
               <div class="d-flex justify-content-between align-items-center w-100 mb-3 d-lg-none">
-                <div class="vcn-whole-body-product-badges m-0 p-0" style="width: auto !important; box-shadow: none !important;">
+                <div class="vcn-whole-body-product-badges m-0 p-0"
+                  style="width: auto !important; box-shadow: none !important;">
                   <span v-if="product.isNew" class="vcn-whole-body-badge vcn-whole-body-badge-new">NEW</span>
-                  <span v-if="allProducts.labels.bestseller" class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{ allProducts.labels.bestseller }}</span>
-                  <span v-if="product.label" class="vcn-whole-body-badge vcn-whole-body-badge-new">{{ product.label }}</span>
+                  <span v-if="allProducts.labels.bestseller"
+                    class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{ allProducts.labels.bestseller
+                    }}</span>
+                  <span v-if="product.label" class="vcn-whole-body-badge vcn-whole-body-badge-new">{{ product.label
+                    }}</span>
                 </div>
                 <div class="vcn-product-price m-0 p-0" style="width: auto !important;">
                   <span class="price-current">₹{{ getProductPricing(product).price }}</span>
-                  <span v-if="getProductPricing(product).oldPrice" class="price-old text-decoration-line-through text-white-50 ms-2" style="font-size: 0.85em; opacity: 0.6;">₹{{ getProductPricing(product).oldPrice }}</span>
+                  <span v-if="getProductPricing(product).oldPrice"
+                    class="price-old text-decoration-line-through text-white-50 ms-2"
+                    style="font-size: 0.85em; opacity: 0.6;">₹{{ getProductPricing(product).oldPrice }}</span>
                 </div>
               </div>
 
               <!-- Desktop only badges -->
               <div class="vcn-whole-body-product-badges d-none d-lg-flex">
                 <span v-if="product.isNew" class="vcn-whole-body-badge vcn-whole-body-badge-new">NEW</span>
-                <span v-if="allProducts.labels.bestseller" class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{ allProducts.labels.bestseller }}</span>
-                <span v-if="product.label" class="vcn-whole-body-badge vcn-whole-body-badge-new">{{ product.label }}</span>
+                <span v-if="allProducts.labels.bestseller"
+                  class="vcn-whole-body-badge vcn-whole-body-badge-bestseller">{{ allProducts.labels.bestseller
+                  }}</span>
+                <span v-if="product.label" class="vcn-whole-body-badge vcn-whole-body-badge-new">{{ product.label
+                  }}</span>
               </div>
 
               <h2 class="vcn-product-title">{{ product.name }}</h2>
@@ -158,12 +167,12 @@ const { data: pageData } = await useAsyncData(`products-cms-${route.path}`, asyn
       try {
         // Clear any existing page state before fetching on the server
         cmsStore.clearPage()
-        
+
         await Promise.all([
           cmsStore.fetchSectionsBySlug('products'),
           productStore.fetchProducts(true)
         ])
-        
+
         sections = cmsStore.currentPage?.sections || null
         products = productStore.products || []
       } catch (err) {
@@ -180,7 +189,7 @@ const { data: pageData } = await useAsyncData(`products-cms-${route.path}`, asyn
 watch(pageData, (newData) => {
   if (newData) {
     cmsStore.clearPage() // Clear to prevent section bleeding across page transitions
-    
+
     if (newData.sections) {
       cmsStore.currentPage = {
         id: 0,
@@ -354,10 +363,11 @@ const addToCart = async (product) => {
 </script>
 
 <style scoped>
-.vcn-container{
+.vcn-container {
   padding-left: 125px !important;
   padding-right: 155px !important;
 }
+
 .featured-thumbnails {
   display: flex;
   justify-content: center;
@@ -413,13 +423,14 @@ const addToCart = async (product) => {
     padding-left: 15px !important;
     padding-right: 15px !important;
   }
+
   .vcn-breadcrumb-container {
     margin-top: -140px !important;
   }
 
   .vcn-product-section {
     padding: 40px 10px !important;
-    
+
   }
 
   .vcn-product-card {
@@ -521,7 +532,8 @@ const addToCart = async (product) => {
     padding: 5px 12px !important;
   }
 
-  .qty-btn, .qty-value {
+  .qty-btn,
+  .qty-value {
     color: #ffffff !important;
   }
 
@@ -672,6 +684,7 @@ const addToCart = async (product) => {
   min-width: 15px !important;
   text-align: center !important;
 }
+
 /* Ensure the breadcrumb container never exceeds the screen width */
 .vcn-breadcrumb-container {
   width: 100% !important;
@@ -679,6 +692,7 @@ const addToCart = async (product) => {
   overflow: hidden !important;
   box-sizing: border-box !important;
 }
+
 h1.vcn-breadcrumb-title {
   position: relative;
   left: 0 !important;
@@ -689,10 +703,13 @@ h1.vcn-breadcrumb-title {
   overflow-wrap: break-word !important;
   white-space: normal !important;
 }
+
 /* Make the content area responsive and centered */
 .vcn-breadcrumb-content {
-  width: 92% !important; /* Provides a small gutter on mobile */
-  max-width: 1200px !important; /* Matches your desktop container */
+  width: 92% !important;
+  /* Provides a small gutter on mobile */
+  max-width: 1200px !important;
+  /* Matches your desktop container */
   margin-left: auto !important;
   margin-right: auto !important;
   padding-left: 0 !important;
@@ -707,100 +724,107 @@ h1.vcn-breadcrumb-title {
 
 /* Ensure the hovered card is on top of its neighbors */
 .vcn-new-product .product-card:hover {
-    z-index: 10 !important;
-    position: relative; /* Required for z-index to work */
+  z-index: 10 !important;
+  position: relative;
+  /* Required for z-index to work */
 }
 
 /* Optional: Add a small gap between cards so they don't overlap as easily */
-.vcn-new-product .row > [class^="col-"] {
-    padding: 10px !important;
+.vcn-new-product .row>[class^="col-"] {
+  padding: 10px !important;
 }
+
 @media (min-width: 1200px) {
+
   /* Unify container widths and centering */
   section.vcn-product-section .container,
   section.vcn-new-product .container,
   header .container,
   footer .container {
-    max-width: 1140px; /* Standard Bootstrap 1200px container width, or adjust to your preference */
+    max-width: 1140px;
+    /* Standard Bootstrap 1200px container width, or adjust to your preference */
     padding-left: 40px !important;
     padding-right: 74px !important;
   }
 }
+
 @media (max-width: 1399px) {
   .vcn-container {
     padding-left: 59px !important;
     padding-right: 92px !important;
+  }
+
+  .vcn-breadcrumb-title {
+    padding-left: 50px !important;
+  }
 }
-.vcn-breadcrumb-title{
-  padding-left: 50px !important;
-}
-}
+
 @media (max-width: 1199px) {
   .vcn-container {
     padding-left: 0px !important;
     padding-right: 15px !important;
+  }
 }
-}
-@media (max-width: 1650){
-  .vcn-container{
+
+@media (max-width: 1650) {
+  .vcn-container {
     padding-left: 0px !important;
     padding-right: 0px !important;
   }
 }
-  /* Specific override for the breadcrumb content which had fixed margins */
-  .vcn-breadcrumb-content {
-    margin: 0 auto !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .row{
-    padding-left: 15px !important;
-  }
 
-@media (max-width: 768px) {
-  /* 1. Reduce the extreme container padding to 20px on mobile */
-  .vcn-container[data-v-2bf99518] {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-
-  /* 2. Center and pad the product card for mobile readability */
-  .vcn-product-card {
-    text-align: center;
-    padding: 30px 15px !important;
-  }
-
-  /* 3. Improve title scale and spacing */
-  .vcn-product-title {
-    font-size: 2rem !important;
-    line-height: 1.2 !important;
-    margin-bottom: 15px !important;
-  }
-
-  /* 4. Center the bottle image and limit its width */
-  .vcn-product-bottle {
-    max-width: 150px !important;
-    margin-bottom: 20px;
-    height: auto;
-  }
-
-  /* 5. Stack and center buttons for better mobile UX */
-  .vcn-product-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .vcn-btn-secondary, .cart-box, .btn-cart {
-    width: 100% !important;
-    max-width: 250px;
-    margin: 0 auto !important;
-  }
+/* Specific override for the breadcrumb content which had fixed margins */
+.vcn-breadcrumb-content {
+  margin: 0 auto !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+.row {
+  padding-left: 15px !important;
+}
+
+/* 2. Center and pad the product card for mobile readability */
+.vcn-product-card {
+  text-align: center;
+  padding: 30px 15px !important;
+}
+
+/* 3. Improve title scale and spacing */
+.vcn-product-title {
+  font-size: 2rem !important;
+  line-height: 1.2 !important;
+  margin-bottom: 15px !important;
+}
+
+/* 4. Center the bottle image and limit its width */
+.vcn-product-bottle {
+  max-width: 150px !important;
+  margin-bottom: 20px;
+  height: auto;
+}
+
+/* 5. Stack and center buttons for better mobile UX */
+.vcn-product-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.vcn-btn-secondary,
+.cart-box,
+.btn-cart {
+  width: 100% !important;
+  max-width: 250px;
+  margin: 0 auto !important;
+}
+
+
 @media (max-width: 340px) {
+
   /* 1. Maximize available space */
   .vcn-container {
     padding-left: 10px !important;
@@ -819,6 +843,7 @@ h1.vcn-breadcrumb-title {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
+
   .col-lg-9.px-3 {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -828,10 +853,12 @@ h1.vcn-breadcrumb-title {
   .vcn-product-title {
     font-size: 1.6rem !important;
   }
-  .vcn-btn-secondary, .cart-box, .btn-cart {
+
+  .vcn-btn-secondary,
+  .cart-box,
+  .btn-cart {
     font-size: 0.85rem !important;
     padding: 10px 15px !important;
   }
 }
-
 </style>
