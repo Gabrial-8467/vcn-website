@@ -682,7 +682,7 @@ const addToCart = async (product) => {
 h1.vcn-breadcrumb-title {
   position: relative;
   left: 0 !important;
-  text-align: center !important;
+  text-align: left !important;
   width: 100% !important;
   max-width: 100% !important;
   word-wrap: break-word !important;
@@ -725,7 +725,28 @@ h1.vcn-breadcrumb-title {
     padding-left: 40px !important;
     padding-right: 74px !important;
   }
-
+}
+@media (max-width: 1399px) {
+  .vcn-container {
+    padding-left: 59px !important;
+    padding-right: 92px !important;
+}
+.vcn-breadcrumb-title{
+  padding-left: 50px !important;
+}
+}
+@media (max-width: 1199px) {
+  .vcn-container {
+    padding-left: 0px !important;
+    padding-right: 15px !important;
+}
+}
+@media (max-width: 1650){
+  .vcn-container{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+}
   /* Specific override for the breadcrumb content which had fixed margins */
   .vcn-breadcrumb-content {
     margin: 0 auto !important;
@@ -737,7 +758,7 @@ h1.vcn-breadcrumb-title {
   .row{
     padding-left: 15px !important;
   }
-} 
+
 @media (max-width: 768px) {
   /* 1. Reduce the extreme container padding to 20px on mobile */
   .vcn-container[data-v-2bf99518] {
@@ -812,4 +833,5 @@ h1.vcn-breadcrumb-title {
     padding: 10px 15px !important;
   }
 }
+
 </style>
