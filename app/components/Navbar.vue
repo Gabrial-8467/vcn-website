@@ -238,9 +238,7 @@
                     <button type="button" class="register-btn" @click="openRegistration('preferred-customer')">
                       PREFERRED CUSTOMER
                     </button>
-                    <button type="button" class="register-btn" @click="openRegistration('abo')">
-                      VCN BUSINESS OWNER
-                    </button>
+                    <button type="button" class="register-btn" @click="openDirectSeller">DIRECT SELLER / VCN BUSINESS OWNER</button>
                   </div>
 
                   <div class="footer-links">
@@ -371,6 +369,7 @@ const { getFromEndpoint } = useApi()
 const { authState, loginWithPersistence, logoutWithCleanup, initializeCart } = useAuthCart()
 
 const route = useRoute()
+const router = useRouter()
 
 // Close mobile menu helper
 const closeMobileMenu = () => {
@@ -506,6 +505,11 @@ const selectedUserType = ref('preferred-customer')
 const openRegistration = (type) => {
   selectedUserType.value = type
   showRegistration.value = true
+}
+
+const openDirectSeller = () => {
+  closeForm()
+  router.push('/direct-seller')
 }
 
 const handleRegistrationComplete = (data) => {
