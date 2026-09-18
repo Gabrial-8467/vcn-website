@@ -543,6 +543,11 @@
             </button>
           </div>
 
+          <div v-if="submitError" class="ds-submit-error">
+            <span class="ds-submit-error-icon">⚠</span>
+            {{ submitError }}
+          </div>
+
         </template>
 
         <!-- Success Screen -->
@@ -563,6 +568,9 @@
 
 <script setup>
 import { ref, reactive, computed, onUnmounted } from 'vue'
+import { useDirectSellerApi } from '~/composables/useDirectSeller'
+
+const { submitDirectSellerApplication } = useDirectSellerApi()
 
 const steps = [
   { key: 'consent', label: 'Consent & Declaration', subtitle: 'Agree to terms' },
@@ -583,6 +591,7 @@ const currentStep = ref(0)
 const isSubmitting = ref(false)
 const submitted = ref(false)
 const shaking = ref(false)
+const submitError = ref('')
 const errors = reactive({})
 
 const form = reactive({
@@ -782,15 +791,88 @@ const goToStep = (index) => {
   currentStep.value = index
 }
 
-const submitForm = () => {
-  if (validateStep(currentStep.value)) {
-    isSubmitting.value = true
-    setTimeout(() => {
-      isSubmitting.value = false
-      submitted.value = true
-    }, 1200)
-  } else {
+const submitForm = async () => {
+  if (!validateStep(currentStep.value)) {
     failValidation()
+    return
+  }
+
+  const payload = buildDirectSellerPayload()
+  isSubmitting.value = true
+  submitError.value = ''
+
+  try {
+    const { data, error } = await submitDirectSellerApplication(payload)
+    if (error || !data) {
+      submitError.value = error || 'Something went wrong. Please try again.'
+      failValidation()
+      return
+    }
+    submitted.value = true
+  } catch (err) {
+    console.error('Direct seller submit error:', err)
+    submitError.value = 'An unexpected error occurred. Please try again.'
+    failValidation()
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+// Builds a normalized payload for the backend from the current form state.
+const buildDirectSellerPayload = () => {
+  const otp = aadhaarOtp.value.join('').trim()
+  const idProofFileName = selectedFileName.value
+
+  return {
+    consent: {
+      declared18AndCitizen: form.decl1,
+      noEntryFeePaid: form.decl2,
+      readCompanyPolicies: form.decl3,
+      awareOfBusinessPlan: form.decl4,
+      eligibleToContract: form.decl5,
+      infoTrueAndLiable: form.decl6
+    },
+    personalDetails: {
+      firstName: form.firstName.trim(),
+      middleName: form.middleName.trim(),
+      lastName: form.lastName.trim(),
+      dateOfBirth: form.dob,
+      gender: form.gender,
+      maritalStatus: form.marital,
+      email: form.email.trim(),
+      mobile: normalizeValue('mobile', form.mobile),
+      sponsorVcnId: form.sponsor.trim() || null
+    },
+    kyc: {
+      pan: normalizeValue('pan', form.pan),
+      aadhaar: normalizeValue('aadhaar', form.aadhaar),
+      kycType: form.kycType,
+      // TODO(backend): real file upload will be wired here (multipart/object key).
+      idProofFileName: idProofFileName || null
+    },
+    address: {
+      addressLine1: form.address1.trim(),
+      addressLine2: form.address2.trim() || null,
+      city: form.city.trim(),
+      state: form.state,
+      pincode: form.pincode.trim()
+    },
+    nominee: {
+      name: form.nomineeName.trim(),
+      relation: form.nomineeRelation,
+      dateOfBirth: form.nomineeDob,
+      sharePercentage: Number(form.nomineeShare) || 0
+    },
+    bankDetails: {
+      accountHolderName: form.bankHolder.trim(),
+      accountNumber: form.bankAccount.trim(),
+      ifscCode: normalizeValue('ifsc', form.ifsc),
+      bankName: form.bankName.trim()
+    },
+    verification: {
+      // Only sent when the user actually entered a complete Aadhaar OTP.
+      aadhaarOtp: otp.length === 5 ? otp : null
+    }
   }
 }
 
@@ -1375,6 +1457,27 @@ useHead({
   color: #d9381e;
   font-weight: 600;
   margin-top: 6px;
+}
+
+/* Submit-level error banner */
+.ds-submit-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #fdf0ed;
+  border: 1.5px solid #f3c3b6;
+  color: #b3261e;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.ds-submit-error-icon {
+  font-size: 15px;
+  line-height: 1;
 }
 
 /* Declarations (Step 0) */

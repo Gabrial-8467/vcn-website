@@ -7,6 +7,7 @@ export const API_ENDPOINTS = {
   // Form submission endpoints
   SUBSCRIBE: 'common/subscribe/create',
   CONTACT_US: 'common/contact-us/create',
+  DIRECT_SELLER_CREATE: 'common/direct-seller/create',
 
   // Cart endpoints
   CART_CREATE: 'common/cart/create',
