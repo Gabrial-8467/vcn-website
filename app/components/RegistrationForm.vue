@@ -10,10 +10,10 @@
         <div v-if="step === 'welcome'" class="step-content welcome-step">
           <h1 class="welcome-title">Welcome!</h1>
           <p class="welcome-text">
-            Let's start your journey with Amway by getting you onboard.
+            Let's start your journey with VCN by getting you onboard.
           </p>
           <p class="requirements-text">
-            You must be at least 18 years old and an Indian citizen to register with Amway India.
+            You must be at least 18 years old and an Indian citizen to register with VCN India.
           </p>
           <button class="btn-register" @click="step = 'form'">
             REGISTER
@@ -89,8 +89,8 @@
             <!-- Know an ABO? -->
             <div class="form-group">
               <label class="abo-label">
-                Do you know an Amway Business Owner (ABO)? <span class="required">*</span>
-                <span class="info-icon" title="Amway Business Owner">ⓘ</span>
+                Do you know an VCN Business Owner (VBO)? <span class="required">*</span>
+                <span class="info-icon" title="VCN Business Owner">ⓘ</span>
               </label>
               <div class="radio-group">
                 <label class="radio-label">
@@ -139,7 +139,7 @@
                 <strong>Mobile verification</strong>
               </label>
               <p class="otp-text">
-                Amway verification number sent to +91 {{ form.mobile }}
+                VCN verification number sent to +91 {{ form.mobile }}
               </p>
 
               <div class="otp-inputs">
@@ -172,7 +172,7 @@
           <div class="success-icon">✓</div>
           <h2 class="success-title">Registration Successful! 🎉</h2>
           <p class="success-text">
-            Welcome to Amway! Your registration has been completed successfully.
+            Welcome to VCN! Your registration has been completed successfully.
           </p>
           <button class="btn-continue" @click="$emit('complete', form)">
             CONTINUE TO SHOPPING
