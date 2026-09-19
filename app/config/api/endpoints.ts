@@ -18,6 +18,7 @@ export const API_ENDPOINTS = {
 
   // Auth endpoints
   LOGIN: 'users/auth/login',
+  REGISTER: 'users/auth/register',
 
   // Review endpoints
   REVIEW_CREATE: 'users/product-reviews/create',

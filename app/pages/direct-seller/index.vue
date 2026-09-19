@@ -256,6 +256,128 @@
                   <input v-model="form.sponsor" type="text" placeholder="Optional" class="ds-input ds-has-left-icon" />
                 </div>
               </div>
+
+              <!-- Username -->
+              <div class="ds-field-group ds-full-width">
+                <label>Username *</label>
+                <input v-model="form.userName" type="text" placeholder="Choose a username" class="ds-input" @blur="onBlur('userName')" @input="onInput('userName')" />
+                <span class="ds-hint">Username will be used as your login ID</span>
+                <span v-if="errors.userName" class="ds-error-msg">{{ errors.userName }}</span>
+              </div>
+
+              <!-- Placement Preference -->
+              <div class="ds-field-group">
+                <label>Placement Preference *</label>
+                <div class="ds-select-wrapper">
+                  <select v-model="form.placement" class="ds-select" @blur="onBlur('placement')" @change="onInput('placement')">
+                    <option value="" disabled>Select Placement</option>
+                    <option value="LEFT">Left</option>
+                    <option value="RIGHT">Right</option>
+                  </select>
+                  <span class="ds-select-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </div>
+                <span v-if="errors.placement" class="ds-error-msg">{{ errors.placement }}</span>
+              </div>
+
+              <!-- Title -->
+              <div class="ds-field-group">
+                <label>Title</label>
+                <div class="ds-select-wrapper">
+                  <select v-model="form.title" class="ds-select">
+                    <option value="" disabled>Select Title</option>
+                    <option value="MR">Mr</option>
+                    <option value="MRS">Mrs</option>
+                    <option value="MS">Ms</option>
+                    <option value="SMT">Smt</option>
+                  </select>
+                  <span class="ds-select-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Profession -->
+              <div class="ds-field-group">
+                <label>Profession</label>
+                <div class="ds-select-wrapper">
+                  <select v-model="form.profession" class="ds-select">
+                    <option value="" disabled>Select Profession</option>
+                    <option value="BUSINESS">Business</option>
+                    <option value="SERVICE">Service</option>
+                    <option value="SELF_EMPLOYED">Self Employed</option>
+                    <option value="STUDENT">Student</option>
+                    <option value="HOMEMAKER">Homemaker</option>
+                    <option value="RETIRED">Retired</option>
+                    <option value="OTHER">Other</option>
+                  </select>
+                  <span class="ds-select-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Parent / Spouse Title -->
+              <div class="ds-field-group">
+                <label>Parent / Spouse Title</label>
+                <div class="ds-select-wrapper">
+                  <select v-model="form.parentSpouseTitle" class="ds-select">
+                    <option value="" disabled>Select</option>
+                    <option value="S_O">Spouse of</option>
+                    <option value="D_O">Daughter of</option>
+                    <option value="S">Son of</option>
+                    <option value="W_O">Wife of</option>
+                    <option value="H_O">Husband of</option>
+                  </select>
+                  <span class="ds-select-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Parent / Spouse Name -->
+              <div class="ds-field-group">
+                <label>Parent / Spouse Name</label>
+                <input v-model="form.parentSpouseName" type="text" placeholder="Full name" class="ds-input" />
+              </div>
+
+              <!-- Password -->
+              <div class="ds-field-group">
+                <label>Password *</label>
+                <div class="ds-input-wrapper">
+                  <input v-model="form.password" :type="showPassword ? 'text' : 'password'" placeholder="Example - My@password1" class="ds-input" @blur="onBlur('password')" @input="onInput('password')" />
+                  <button type="button" class="ds-input-icon-right" aria-label="Toggle password visibility" @click="showPassword = !showPassword">
+                    <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                      <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                      <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                      <line x1="2" y1="2" x2="22" y2="22"></line>
+                    </svg>
+                  </button>
+                </div>
+                <span class="ds-hint">At least 8 characters with letters and numbers</span>
+                <span v-if="errors.password" class="ds-error-msg">{{ errors.password }}</span>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="ds-field-group">
+                <label>Confirm Password *</label>
+                <input v-model="form.confirmPassword" type="password" placeholder="Re-enter password" class="ds-input" @blur="onBlur('confirmPassword')" @input="onInput('confirmPassword')" />
+                <span v-if="errors.confirmPassword" class="ds-error-msg">{{ errors.confirmPassword }}</span>
+              </div>
             </div>
           </div>
 
@@ -322,6 +444,20 @@
                       <input type="file" ref="fileInputRef" class="ds-hidden-file" @change="onFileSelected" />
                     </div>
                     <span class="ds-hint">PDF, JPG, PNG (Max 5 MB)</span>
+                  </div>
+
+                  <!-- KYC Issuer -->
+                  <div class="ds-field-group">
+                    <label>KYC Issuer</label>
+                    <input v-model="form.kycIssuer" type="text" placeholder="e.g. UIDAI" class="ds-input" />
+                    <span class="ds-hint">Optional</span>
+                  </div>
+
+                  <!-- KYC DigiLocker Reference -->
+                  <div class="ds-field-group">
+                    <label>DigiLocker Reference URL</label>
+                    <input v-model="form.kycDigilockerUri" type="url" placeholder="https://example.com/digilocker/..." class="ds-input" />
+                    <span class="ds-hint">Optional</span>
                   </div>
                 </div>
               </div>
@@ -419,6 +555,55 @@
                 <input v-model="form.pincode" type="text" maxlength="6" placeholder="6-digit pincode" class="ds-input" @blur="onBlur('pincode')" @input="onInput('pincode')" />
                 <span v-if="errors.pincode" class="ds-error-msg">{{ errors.pincode }}</span>
               </div>
+              <div class="ds-field-group">
+                <label>Landmark</label>
+                <input v-model="form.landmark" type="text" placeholder="e.g. City Mall" class="ds-input" />
+              </div>
+              <div class="ds-field-group">
+                <label>District</label>
+                <input v-model="form.district" type="text" placeholder="District" class="ds-input" />
+              </div>
+              <div class="ds-field-group">
+                <label>Post Office</label>
+                <input v-model="form.postOffice" type="text" placeholder="Post office" class="ds-input" />
+              </div>
+            </div>
+
+            <div class="ds-section-divider">
+              <h3>Business Details</h3>
+            </div>
+
+            <div class="ds-form-grid">
+              <div class="ds-field-group ds-full-width">
+                <label>Company Name *</label>
+                <input v-model="form.companyName" type="text" placeholder="Company / business name" class="ds-input" @blur="onBlur('companyName')" @input="onInput('companyName')" />
+                <span v-if="errors.companyName" class="ds-error-msg">{{ errors.companyName }}</span>
+              </div>
+              <div class="ds-field-group">
+                <label>Company Type *</label>
+                <div class="ds-select-wrapper">
+                  <select v-model="form.companyType" class="ds-select" @blur="onBlur('companyType')" @change="onInput('companyType')">
+                    <option value="" disabled>Select Company Type</option>
+                    <option value="PROPRIETORSHIP">Proprietorship</option>
+                    <option value="PARTNERSHIP">Partnership</option>
+                    <option value="LLP">LLP</option>
+                    <option value="PRIVATE_LIMITED">Private Limited</option>
+                    <option value="PUBLIC_LIMITED">Public Limited</option>
+                    <option value="OTHER">Other</option>
+                  </select>
+                  <span class="ds-select-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </div>
+                <span v-if="errors.companyType" class="ds-error-msg">{{ errors.companyType }}</span>
+              </div>
+              <div class="ds-field-group">
+                <label>GST Number</label>
+                <input v-model="form.gstNumber" type="text" maxlength="15" placeholder="GSTIN (optional)" class="ds-input uppercase-text" @input="form.gstNumber = form.gstNumber.toUpperCase()" />
+                <span class="ds-hint">Optional</span>
+              </div>
             </div>
 
             <div class="ds-section-divider">
@@ -509,6 +694,11 @@
                 <input v-model="form.bankName" type="text" placeholder="e.g. State Bank of India" class="ds-input" @blur="onBlur('bankName')" @input="onInput('bankName')" />
                 <span v-if="errors.bankName" class="ds-error-msg">{{ errors.bankName }}</span>
               </div>
+              <div class="ds-field-group">
+                <label>UPI ID</label>
+                <input v-model="form.upi" type="text" placeholder="name@upi (optional)" class="ds-input" />
+                <span class="ds-hint">Optional</span>
+              </div>
             </div>
           </div>
 
@@ -596,12 +786,14 @@ const errors = reactive({})
 
 const form = reactive({
   decl1: true, decl2: true, decl3: true, decl4: true, decl5: true, decl6: true,
+  userName: '', title: '', placement: '', profession: '', parentSpouseTitle: '', parentSpouseName: '',
   firstName: '', middleName: '', lastName: '', dob: '', gender: '', marital: '',
-  email: '', mobile: '', sponsor: '',
-  pan: '', aadhaar: '', kycType: 'Aadhaar Based eKYC',
-  address1: '', address2: '', city: '', state: '', pincode: '',
+  email: '', mobile: '', sponsor: '', password: '', confirmPassword: '',
+  pan: '', aadhaar: '', kycType: 'Aadhaar Based eKYC', kycIssuer: 'UIDAI', kycDigilockerUri: '',
+  address1: '', address2: '', landmark: '', city: '', district: '', state: '', pincode: '', postOffice: '',
+  companyName: '', companyType: '', gstNumber: '',
   nomineeName: '', nomineeRelation: '', nomineeDob: '', nomineeShare: '100',
-  bankHolder: '', bankAccount: '', bankAccountConfirm: '', ifsc: '', bankName: ''
+  bankHolder: '', bankAccount: '', bankAccountConfirm: '', ifsc: '', bankName: '', upi: ''
 })
 
 // File Upload State
@@ -623,6 +815,7 @@ const onFileSelected = (e) => {
 const aadhaarOtp = ref(['', '', '', '', ''])
 const aadhaarCountdown = ref(30)
 const canResendAadhaarOtp = ref(false)
+const showPassword = ref(false)
 let aadhaarTimer = null
 
 const sendAadhaarOtp = () => {
@@ -691,12 +884,16 @@ const isAtLeast18 = (dob) => {
 }
 
 const FIELD_RULES = {
+  userName: { required: true, requiredMsg: 'Username is required', pattern: /^[A-Za-z][A-Za-z0-9_.]{2,19}$/, message: 'Username must be 3-20 characters (letters, numbers, _ or .)' },
   firstName: { required: true, requiredMsg: 'First name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid first name' },
   lastName: { required: true, requiredMsg: 'Last name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid last name' },
   dob: { required: true, requiredMsg: 'Date of birth is required', validator: isAtLeast18, message: 'You must be at least 18 years old to register' },
   gender: { required: true, requiredMsg: 'Please select a gender' },
   email: { required: true, requiredMsg: 'Email is required', pattern: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, message: 'Enter a valid email address' },
   mobile: { required: true, requiredMsg: 'Mobile number is required', pattern: /^[6-9]\d{9}$/, message: 'Enter a valid 10-digit mobile number starting with 6-9' },
+  placement: { required: true, requiredMsg: 'Please select a placement preference' },
+  password: { required: true, requiredMsg: 'Password is required', pattern: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/, message: 'Password must be at least 8 characters with letters and numbers' },
+  confirmPassword: { required: true, requiredMsg: 'Please confirm the password', equals: 'password', equalsMsg: 'Passwords do not match' },
   pan: { required: true, requiredMsg: 'PAN number is required', pattern: /^[A-Z]{5}\d{4}[A-Z]$/, message: 'Enter a valid PAN (e.g. ABCDE1234F)' },
   aadhaar: { required: true, requiredMsg: 'Aadhaar number is required', pattern: /^\d{12}$/, message: 'Enter a valid 12-digit Aadhaar number' },
   kycType: { required: true, requiredMsg: 'Please select a KYC type' },
@@ -705,6 +902,8 @@ const FIELD_RULES = {
   city: { required: true, requiredMsg: 'City is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid city name' },
   state: { required: true, requiredMsg: 'Please select a state' },
   pincode: { required: true, requiredMsg: 'Pincode is required', pattern: /^\d{6}$/, message: 'Enter a valid 6-digit pincode' },
+  companyName: { required: true, requiredMsg: 'Company name is required' },
+  companyType: { required: true, requiredMsg: 'Please select a company type' },
   nomineeName: { required: true, requiredMsg: 'Nominee name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid nominee name' },
   nomineeRelation: { required: true, requiredMsg: 'Please select a relation' },
   nomineeDob: { required: true, requiredMsg: 'Nominee date of birth is required', validator: (v) => { const d = new Date(v); return !isNaN(d.getTime()) && d <= new Date(); }, message: 'Enter a valid nominee date of birth' },
@@ -718,9 +917,9 @@ const FIELD_RULES = {
 
 const STEP_FIELDS = {
   0: ['consent'],
-  1: ['firstName', 'lastName', 'dob', 'gender', 'email', 'mobile'],
+  1: ['userName', 'firstName', 'lastName', 'dob', 'gender', 'email', 'mobile', 'placement', 'password', 'confirmPassword'],
   2: ['pan', 'aadhaar', 'kycType'],
-  3: ['address1', 'city', 'state', 'pincode', 'nomineeName', 'nomineeRelation', 'nomineeDob', 'nomineeShare'],
+  3: ['address1', 'city', 'state', 'pincode', 'companyName', 'companyType', 'nomineeName', 'nomineeRelation', 'nomineeDob', 'nomineeShare'],
   4: ['bankHolder', 'bankAccount', 'bankAccountConfirm', 'ifsc', 'bankName']
 }
 
@@ -788,6 +987,19 @@ const prevStep = () => {
 }
 
 const goToStep = (index) => {
+  if (index < currentStep.value) {
+    currentStep.value = index
+    return
+  }
+  if (index === currentStep.value) return
+
+  // Validate every step between the current one and the target
+  for (let i = currentStep.value; i < index; i++) {
+    if (!validateStep(i)) {
+      failValidation()
+      return
+    }
+  }
   currentStep.value = index
 }
 
@@ -818,61 +1030,72 @@ const submitForm = async () => {
   }
 }
 
-// Builds a normalized payload for the backend from the current form state.
+// Builds a flat payload matching the backend `auth/register` Direct Seller shape.
+const KYC_TYPE_MAP = {
+  'Aadhaar Based eKYC': 'AADHAAR',
+  'PAN Card': 'PAN',
+  'Passport': 'PASSPORT',
+  'Voter ID': 'VOTER_ID'
+}
+
 const buildDirectSellerPayload = () => {
   const otp = aadhaarOtp.value.join('').trim()
   const idProofFileName = selectedFileName.value
 
   return {
-    consent: {
-      declared18AndCitizen: form.decl1,
-      noEntryFeePaid: form.decl2,
-      readCompanyPolicies: form.decl3,
-      awareOfBusinessPlan: form.decl4,
-      eligibleToContract: form.decl5,
-      infoTrueAndLiable: form.decl6
-    },
-    personalDetails: {
-      firstName: form.firstName.trim(),
-      middleName: form.middleName.trim(),
-      lastName: form.lastName.trim(),
-      dateOfBirth: form.dob,
-      gender: form.gender,
-      maritalStatus: form.marital,
-      email: form.email.trim(),
-      mobile: normalizeValue('mobile', form.mobile),
-      sponsorVcnId: form.sponsor.trim() || null
-    },
-    kyc: {
-      pan: normalizeValue('pan', form.pan),
-      aadhaar: normalizeValue('aadhaar', form.aadhaar),
-      kycType: form.kycType,
-      // TODO(backend): real file upload will be wired here (multipart/object key).
-      idProofFileName: idProofFileName || null
-    },
-    address: {
-      addressLine1: form.address1.trim(),
-      addressLine2: form.address2.trim() || null,
-      city: form.city.trim(),
-      state: form.state,
-      pincode: form.pincode.trim()
-    },
-    nominee: {
-      name: form.nomineeName.trim(),
-      relation: form.nomineeRelation,
-      dateOfBirth: form.nomineeDob,
-      sharePercentage: Number(form.nomineeShare) || 0
-    },
-    bankDetails: {
-      accountHolderName: form.bankHolder.trim(),
-      accountNumber: form.bankAccount.trim(),
-      ifscCode: normalizeValue('ifsc', form.ifsc),
-      bankName: form.bankName.trim()
-    },
-    verification: {
-      // Only sent when the user actually entered a complete Aadhaar OTP.
-      aadhaarOtp: otp.length === 5 ? otp : null
-    }
+    userName: form.userName.trim(),
+    firstName: form.firstName.trim(),
+    middleName: form.middleName.trim() || '',
+    lastName: form.lastName.trim(),
+    email: form.email.trim(),
+    phone: normalizeValue('mobile', form.mobile),
+    password: form.password,
+    confirmPassword: form.confirmPassword,
+    sponsorUsername: form.sponsor.trim() || '',
+
+    desiredMembershipType: 'DIRECT_SELLER',
+    placementPreference: form.placement,
+
+    termsAccepted: [form.decl1, form.decl2, form.decl3, form.decl4, form.decl5, form.decl6].every(Boolean),
+    title: form.title || '',
+    parentSpouseTitle: form.parentSpouseTitle || '',
+    parentSpouseName: form.parentSpouseName.trim() || '',
+    gender: (form.gender || '').toUpperCase(),
+    dateOfBirth: form.dob,
+    maritalStatus: (form.marital || '').toUpperCase(),
+    profession: form.profession || '',
+
+    addressLine1: form.address1.trim(),
+    addressLine2: form.address2.trim() || '',
+    landmark: form.landmark.trim() || '',
+    city: form.city.trim(),
+    district: form.district.trim() || '',
+    state: form.state,
+    pincode: form.pincode.trim(),
+    postOffice: form.postOffice.trim() || '',
+
+    companyName: form.companyName.trim() || '',
+    companyType: form.companyType || '',
+    gstNumber: form.gstNumber.trim() || '',
+
+    nomineeName: form.nomineeName.trim(),
+    nomineeRelation: (form.nomineeRelation || '').toUpperCase(),
+    nomineeDateOfBirth: form.nomineeDob,
+
+    kycDocumentType: KYC_TYPE_MAP[form.kycType] || 'AADHAAR',
+    kycDocumentNumber: normalizeValue('aadhaar', form.aadhaar) || normalizeValue('pan', form.pan),
+    kycDigilockerUri: form.kycDigilockerUri.trim() || '',
+    kycIssuer: form.kycIssuer.trim() || '',
+
+    bankAccountHolderName: form.bankHolder.trim(),
+    bankName: form.bankName.trim(),
+    bankAccountNumber: form.bankAccount.trim(),
+    bankIfscCode: normalizeValue('ifsc', form.ifsc),
+    bankUpiId: form.upi.trim() || '',
+
+    // Only sent when the user actually entered a complete Aadhaar OTP.
+    idProofFileName: idProofFileName || null,
+    aadhaarOtp: otp.length === 5 ? otp : null
   }
 }
 

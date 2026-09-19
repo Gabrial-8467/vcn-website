@@ -5696,6 +5696,22 @@ body.home-page main {
   right: 0;
 }
 
+.auth-error-message {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: center;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.auth-submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .auth-field-group {
   margin-bottom: 20px;
 }

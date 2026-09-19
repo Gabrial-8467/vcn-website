@@ -1,22 +1,24 @@
-import { useApi } from '~/config/api/useApi'
+import { useAuthApi } from '~/composables/useAuthApi'
+import type { RegisterPayload } from '~/types'
 
-// Backend is not connected yet. Set this to `false` (and adjust the endpoint if
-// needed) once the `common/direct-seller/create` API is ready.
-const USE_MOCK_SUBMIT = true
-const MOCK_DELAY_MS = 1200
-
+// Submits a Direct Seller registration payload to the real backend
+// (`users/auth/register` with `desiredMembershipType: DIRECT_SELLER`).
 export const useDirectSellerApi = () => {
-  const { postToEndpoint } = useApi()
+  const authApi = useAuthApi()
 
-  // Submits a Direct Seller registration payload to the backend.
-  // While USE_MOCK_SUBMIT is on, it just simulates network latency and returns a
-  // success payload so the UI flow keeps working.
   const submitDirectSellerApplication = async (payload: Record<string, any>) => {
-    if (USE_MOCK_SUBMIT) {
-      await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY_MS))
-      return { data: { referenceId: `DS-${Date.now()}`, status: 'submitted' }, error: null }
+    try {
+      const response = await authApi.register(payload as RegisterPayload)
+
+      if (response && response.success) {
+        return { data: response.data || { success: true }, error: null }
+      }
+
+      return { data: null, error: response?.message || 'Registration failed. Please try again.' }
+    } catch (err: any) {
+      console.error('❌ Direct seller registration error:', err?.message || err)
+      return { data: null, error: err?.message || 'Something went wrong. Please try again.' }
     }
-    return postToEndpoint('DIRECT_SELLER_CREATE', payload)
   }
 
   return {

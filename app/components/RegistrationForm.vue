@@ -36,6 +36,13 @@
               <span v-if="errors.firstName" class="error">{{ errors.firstName }}</span>
             </div>
 
+            <!-- Last Name -->
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" v-model="form.lastName" placeholder="As per ID proof"
+                class="form-input" />
+            </div>
+
             <!-- Username -->
             <div class="form-group">
               <label for="username">Username <span class="required">*</span></label>
@@ -161,6 +168,7 @@
             </div>
 
             <!-- Submit Button -->
+            <div v-if="apiError" class="form-api-error">{{ apiError }}</div>
             <button type="submit" class="btn-submit" :disabled="isSubmitting">
               {{ isSubmitting ? 'SUBMITTING...' : 'SUBMIT' }}
             </button>
@@ -186,7 +194,16 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 
+const props = defineProps({
+  userType: {
+    type: String,
+    default: 'preferred-customer'
+  }
+})
+
 const emit = defineEmits(['close', 'complete'])
+
+const toast = useToast()
 
 // State
 const mounted = ref(false)
@@ -201,11 +218,13 @@ const canResend = ref(false)
 const countdown = ref(30)
 const pincodeVerified = ref(false)
 const locationText = ref('')
+const apiError = ref('')
 let countdownInterval = null
 
 // Form Data
 const form = reactive({
   firstName: '',
+  lastName: '',
   username: '',
   email: '',
   mobile: '',
@@ -408,14 +427,8 @@ const validateForm = () => {
   }
 
   const otpValue = otp.value.join('')
-  if (!otpSent.value) {
-    errors.mobile = 'Please enter mobile number to receive OTP'
-    isValid = false
-  } else if (otpValue.length !== 6) {
+  if (otpSent.value && otpValue.length !== 6) {
     otpError.value = 'Please enter complete 6-digit OTP'
-    isValid = false
-  } else if (otpValue !== '123456') {
-    otpError.value = 'Invalid OTP. Please use 123456 for demo.'
     isValid = false
   }
 
@@ -423,7 +436,7 @@ const validateForm = () => {
 }
 
 // Form Submit
-const submitForm = () => {
+const submitForm = async () => {
   if (!validateForm()) {
     const firstError = document.querySelector('.error')
     firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -431,12 +444,44 @@ const submitForm = () => {
   }
 
   isSubmitting.value = true
+  apiError.value = ''
 
-  setTimeout(() => {
-    console.log('✅ Registration Complete:', { ...form, otp: otp.value.join('') })
-    step.value = 'success'
+  const membershipType = props.userType === 'abo' ? 'ABO' : 'PREFERRED_CUSTOMER'
+  const payload = {
+    firstName: form.firstName,
+    lastName: form.lastName,
+    email: form.email,
+    phone: form.mobile,
+    password: form.password,
+    confirmPassword: form.password,
+    sponsorUsername: form.aboNumber,
+    desiredMembershipType: membershipType,
+    placementPreference: 'LEFT'
+  }
+
+  try {
+    const authApi = useAuthApi()
+    const response = await authApi.register(payload)
+
+    if (response && response.success) {
+      toast.success({
+        message: response.message || 'Registration successful!'
+      })
+      step.value = 'success'
+    } else {
+      apiError.value = response?.message || 'Registration failed. Please try again.'
+      toast.error({
+        message: apiError.value
+      })
+    }
+  } catch (error) {
+    apiError.value = error?.message || 'Registration failed. Please try again.'
+    toast.error({
+      message: apiError.value
+    })
+  } finally {
     isSubmitting.value = false
-  }, 1500)
+  }
 }
 
 onUnmounted(() => {
@@ -593,6 +638,17 @@ onUnmounted(() => {
   margin-top: 6px;
   font-size: 12px;
   color: #e74c3c;
+}
+
+.form-api-error {
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: #e74c3c;
+  text-align: center;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 10px 12px;
 }
 
 /* Mobile Input */
