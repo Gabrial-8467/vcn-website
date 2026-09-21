@@ -4,8 +4,8 @@
     <!-- Decorative Leaf Backgrounds -->
     <div class="ds-bg-leaf ds-leaf-left" aria-hidden="true">
       <svg width="240" height="420" viewBox="0 0 240 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g opacity="0.38" fill="#7ba662">
-          <path d="M-50,420 C30,340 70,200 110,0 C111,0 113,2 112,5 C73,202 33,341 -48,420 Z" fill="#699450"/>
+        <g opacity="0.38" fill="var(--vcn-primary)">
+          <path d="M-50,420 C30,340 70,200 110,0 C111,0 113,2 112,5 C73,202 33,341 -48,420 Z" fill="var(--vcn-mobile)"/>
           <path d="M40,310 C65,275 125,250 160,275 C135,310 75,335 40,310 Z"/>
           <path d="M10,240 C-25,205 -60,205 -85,225 C-60,250 -25,260 10,240 Z"/>
           <path d="M75,190 C110,155 165,145 195,170 C165,200 110,210 75,190 Z"/>
@@ -17,8 +17,8 @@
 
     <div class="ds-bg-leaf ds-leaf-right" aria-hidden="true">
       <svg width="240" height="420" viewBox="0 0 240 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g opacity="0.38" fill="#7ba662">
-          <path d="M290,420 C210,340 170,200 130,0 C129,0 127,2 128,5 C167,202 207,341 288,420 Z" fill="#699450"/>
+        <g opacity="0.38" fill="var(--vcn-primary)">
+          <path d="M290,420 C210,340 170,200 130,0 C129,0 127,2 128,5 C167,202 207,341 288,420 Z" fill="var(--vcn-mobile)"/>
           <path d="M200,310 C175,275 115,250 80,275 C105,310 165,335 200,310 Z"/>
           <path d="M230,240 C265,205 300,205 325,225 C300,250 265,260 230,240 Z"/>
           <path d="M165,190 C130,155 75,145 45,170 C75,200 130,210 165,190 Z"/>
@@ -212,7 +212,8 @@
                     <option value="" disabled>Select Status</option>
                     <option value="Single">Single</option>
                     <option value="Married">Married</option>
-                    <option value="Other">Other</option>
+                    <option value="Divorced">Divorced</option>
+                    <option value="Widowed">Widowed</option>
                   </select>
                   <span class="ds-select-arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -305,7 +306,8 @@
                     <option value="MR">Mr</option>
                     <option value="MRS">Mrs</option>
                     <option value="MS">Ms</option>
-                    <option value="SMT">Smt</option>
+                    <option value="MISS">Miss</option>
+                    <option value="DR">Dr</option>
                   </select>
                   <span class="ds-select-arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -317,13 +319,14 @@
 
               <!-- Profession -->
               <div class="ds-field-group">
-                <label>Profession</label>
+                <label>Profession *</label>
                 <div class="ds-select-wrapper">
-                  <select v-model="form.profession" class="ds-select">
+                  <select v-model="form.profession" class="ds-select" @blur="onBlur('profession')">
                     <option value="" disabled>Select Profession</option>
                     <option value="BUSINESS">Business</option>
                     <option value="SERVICE">Service</option>
-                    <option value="SELF_EMPLOYED">Self Employed</option>
+                    <option value="FARMER">Farmer</option>
+                    <option value="PROFESSIONAL">Professional</option>
                     <option value="STUDENT">Student</option>
                     <option value="HOMEMAKER">Homemaker</option>
                     <option value="RETIRED">Retired</option>
@@ -335,13 +338,14 @@
                     </svg>
                   </span>
                 </div>
+                <span v-if="errors.profession" class="ds-error-msg">{{ errors.profession }}</span>
               </div>
 
               <!-- Parent / Spouse Title -->
               <div class="ds-field-group">
-                <label>Parent / Spouse Title</label>
+                <label>Parent / Spouse Title *</label>
                 <div class="ds-select-wrapper">
-                  <select v-model="form.parentSpouseTitle" class="ds-select">
+                  <select v-model="form.parentSpouseTitle" class="ds-select" @blur="onBlur('parentSpouseTitle')">
                     <option value="" disabled>Select</option>
                     <option value="S_O">Spouse of</option>
                     <option value="D_O">Daughter of</option>
@@ -354,6 +358,7 @@
                     </svg>
                   </span>
                 </div>
+                <span v-if="errors.parentSpouseTitle" class="ds-error-msg">{{ errors.parentSpouseTitle }}</span>
               </div>
 
               <!-- Parent / Spouse Name -->
@@ -468,9 +473,9 @@
 
                   <!-- KYC DigiLocker Reference -->
                   <div class="ds-field-group">
-                    <label>DigiLocker Reference URL</label>
-                    <input v-model="form.kycDigilockerUri" type="url" placeholder="https://example.com/digilocker/..." class="ds-input" />
-                    <span class="ds-hint">Optional</span>
+                    <label>DigiLocker Reference URL *</label>
+                    <input v-model="form.kycDigilockerUri" type="url" placeholder="https://nl.digilocker.gov.in/dx/v3/..." class="ds-input" @blur="onBlur('kycDigilockerUri')" @input="onInput('kycDigilockerUri')" />
+                    <span v-if="errors.kycDigilockerUri" class="ds-error-msg">{{ errors.kycDigilockerUri }}</span>
                   </div>
                 </div>
               </div>
@@ -635,7 +640,8 @@
                 <div class="ds-select-wrapper">
                   <select v-model="form.nomineeRelation" class="ds-select" @blur="onBlur('nomineeRelation')" @change="onInput('nomineeRelation')">
                     <option value="" disabled>Select Relation</option>
-                    <option value="Spouse">Spouse</option>
+                    <option value="Husband">Husband</option>
+                    <option value="Wife">Wife</option>
                     <option value="Father">Father</option>
                     <option value="Mother">Mother</option>
                     <option value="Son">Son</option>
@@ -961,10 +967,12 @@ const isAtLeast18 = (dob) => {
 
 const FIELD_RULES = {
   userName: { required: true, requiredMsg: 'Username is required', pattern: /^[A-Za-z][A-Za-z0-9_.]{2,19}$/, message: 'Username must be 3-20 characters (letters, numbers, _ or .)' },
-  firstName: { required: true, requiredMsg: 'First name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid first name' },
+  firstName: { required: true, requiredMsg: 'First name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{1,49}$/, message: 'Enter a valid first name (at least 2 letters)' },
   lastName: { required: true, requiredMsg: 'Last name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid last name' },
   dob: { required: true, requiredMsg: 'Date of birth is required', validator: isAtLeast18, message: 'You must be at least 18 years old to register' },
   gender: { required: true, requiredMsg: 'Please select a gender' },
+  title: { required: true, requiredMsg: 'Please select your title' },
+  marital: { required: true, requiredMsg: 'Please select your marital status' },
   email: { required: true, requiredMsg: 'Email is required', pattern: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, message: 'Enter a valid email address' },
   mobile: { required: true, requiredMsg: 'Mobile number is required', pattern: /^[6-9]\d{9}$/, message: 'Enter a valid 10-digit mobile number starting with 6-9' },
   placement: { required: true, requiredMsg: 'Please select a placement preference' },
@@ -973,12 +981,15 @@ const FIELD_RULES = {
   pan: { required: true, requiredMsg: 'PAN number is required', pattern: /^[A-Z]{5}\d{4}[A-Z]$/, message: 'Enter a valid PAN (e.g. ABCDE1234F)' },
   aadhaar: { required: true, requiredMsg: 'Aadhaar number is required', pattern: /^\d{12}$/, message: 'Enter a valid 12-digit Aadhaar number' },
   kycType: { required: true, requiredMsg: 'Please select a KYC type' },
+  kycDigilockerUri: { required: true, requiredMsg: 'DigiLocker Reference URL is required for KYC verification', pattern: /^https?:\/\/[^\s]+$/i, message: 'Enter a valid URL (https://...)' },
   address1: { required: true, requiredMsg: 'Address is required' },
   address2: { pattern: /^[A-Za-z0-9#,.()\-/\s.']*$/, message: 'Address contains invalid characters' },
   city: { required: true, requiredMsg: 'City is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid city name' },
   state: { required: true, requiredMsg: 'Please select a state' },
   pincode: { required: true, requiredMsg: 'Pincode is required', pattern: /^\d{6}$/, message: 'Enter a valid 6-digit pincode' },
   parentSpouseName: { required: true, requiredMsg: 'Parent / spouse name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid parent / spouse name' },
+  parentSpouseTitle: { required: true, requiredMsg: 'Parent / spouse title is required' },
+  profession: { required: true, requiredMsg: 'Profession is required' },
   district: { required: true, requiredMsg: 'District is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid district name' },
   postOffice: { required: true, requiredMsg: 'Post office is required', pattern: /^[A-Za-z0-9][A-Za-z0-9\s.'_-]{0,49}$/, message: 'Enter a valid post office name' },
   companyName: { required: true, requiredMsg: 'Company name is required' },
@@ -996,8 +1007,8 @@ const FIELD_RULES = {
 
 const STEP_FIELDS = {
   0: ['consent'],
-  1: ['userName', 'firstName', 'lastName', 'dob', 'gender', 'email', 'mobile', 'placement', 'password', 'confirmPassword', 'parentSpouseName'],
-  2: ['pan', 'aadhaar', 'kycType'],
+  1: ['userName', 'firstName', 'lastName', 'dob', 'gender', 'title', 'marital', 'email', 'mobile', 'placement', 'password', 'confirmPassword', 'parentSpouseTitle', 'profession', 'parentSpouseName'],
+  2: ['pan', 'aadhaar', 'kycType', 'kycDigilockerUri'],
   3: ['address1', 'city', 'state', 'pincode', 'district', 'postOffice', 'companyName', 'companyType', 'nomineeName', 'nomineeRelation', 'nomineeDob', 'nomineeShare'],
   4: ['bankHolder', 'bankAccount', 'bankAccountConfirm', 'ifsc', 'bankName']
 }
@@ -1131,9 +1142,13 @@ const buildDirectSellerPayload = () => {
     placementPreference: form.placement,
 
     termsAccepted: [form.decl1, form.decl2, form.decl3, form.decl4, form.decl5, form.decl6].every(Boolean),
+    title: form.title,
+    maritalStatus: (form.marital || '').toUpperCase(),
     gender: (form.gender || '').toUpperCase(),
     dateOfBirth: form.dob,
+    parentSpouseTitle: form.parentSpouseTitle,
     parentSpouseName: form.parentSpouseName.trim(),
+    profession: form.profession,
 
     addressLine1: form.address1.trim(),
     city: form.city.trim(),
@@ -1141,9 +1156,6 @@ const buildDirectSellerPayload = () => {
     pincode: form.pincode.trim(),
     district: form.district.trim(),
     postOffice: form.postOffice.trim(),
-
-    companyName: form.companyName.trim() || '',
-    companyType: form.companyType || '',
 
     nomineeName: form.nomineeName.trim(),
     nomineeRelation: (form.nomineeRelation || '').toUpperCase(),
@@ -1166,13 +1178,12 @@ const buildDirectSellerPayload = () => {
 
   addIfPresent('middleName', form.middleName)
   addIfPresent('sponsorUsername', form.sponsor)
-  addIfPresent('title', form.title)
-  addIfPresent('parentSpouseTitle', form.parentSpouseTitle)
-  addIfPresent('maritalStatus', (form.marital || '').toUpperCase())
-  addIfPresent('profession', form.profession)
 
   addIfPresent('addressLine2', form.address2)
   addIfPresent('landmark', form.landmark)
+
+  addIfPresent('companyName', form.companyName)
+  addIfPresent('companyType', form.companyType)
 
   addIfPresent('gstNumber', form.gstNumber)
   addIfPresent('kycIssuer', form.kycIssuer)
@@ -1191,13 +1202,13 @@ useHead({
 
 <style scoped>
 :global(body.direct-seller-page) {
-  background-color: #f7f9f4 !important;
+  background-color: var(--vcn-base-bg) !important;
 }
 
 .ds-wrapper {
   position: relative;
   min-height: 100vh;
-  background-color: #f7f9f4;
+  background-color: var(--vcn-base-bg);
   padding: 20px 16px 60px;
   overflow-x: hidden;
 }
@@ -1241,7 +1252,7 @@ useHead({
   border: 1px solid #cde3c1;
   font-size: 12.5px;
   font-weight: 600;
-  color: #0d4018;
+  color: var(--vcn-footer);
   margin-bottom: 10px;
 }
 
@@ -1252,7 +1263,7 @@ useHead({
 .ds-main-title {
   font-size: 30px;
   font-weight: 800;
-  color: #0d4018;
+  color: var(--vcn-footer);
   margin-bottom: 6px;
   letter-spacing: -0.02em;
 }
@@ -1282,7 +1293,7 @@ useHead({
 .ds-mobile-step-num {
   font-size: 11px;
   font-weight: 700;
-  color: #0d4018;
+  color: var(--vcn-footer);
   background: #eaf3e2;
   border: 1px solid #cde3c1;
   padding: 3px 10px;
@@ -1294,7 +1305,7 @@ useHead({
 .ds-mobile-step-name {
   font-size: 14px;
   font-weight: 800;
-  color: #0d4018;
+  color: var(--vcn-footer);
 }
 
 .ds-stepper {
@@ -1323,7 +1334,7 @@ useHead({
 .ds-step-item.active {
   background: #f1f7ea;
   border-color: #bfe0aa;
-  box-shadow: 0 4px 14px rgba(13, 64, 24, 0.06);
+  box-shadow: 0 4px 14px rgba(29, 69, 3, 0.06);
 }
 
 .ds-step-item.completed {
@@ -1357,8 +1368,8 @@ useHead({
 
 .ds-step-item.active .ds-step-circle,
 .ds-step-item.completed .ds-step-circle {
-  background: #0d4018;
-  border-color: #0d4018;
+  background: var(--vcn-footer);
+  border-color: var(--vcn-footer);
   color: #ffffff;
 }
 
@@ -1372,7 +1383,7 @@ useHead({
 .ds-step-title {
   font-size: 12.5px;
   font-weight: 700;
-  color: #0d4018;
+  color: var(--vcn-footer);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1398,7 +1409,7 @@ useHead({
 }
 
 .ds-step-line.filled {
-  background: #0d4018;
+  background: var(--vcn-footer);
 }
 
 /* Card Section */
@@ -1407,13 +1418,13 @@ useHead({
   border: 1.5px solid #e1e9da;
   border-radius: 20px;
   padding: 32px 38px;
-  box-shadow: 0 12px 36px rgba(13, 64, 24, 0.05);
+  box-shadow: 0 12px 36px rgba(29, 69, 3, 0.05);
 }
 
 .ds-card-title {
   font-size: 24px;
   font-weight: 800;
-  color: #0d4018;
+  color: var(--vcn-footer);
   margin-bottom: 4px;
 }
 
@@ -1467,9 +1478,9 @@ useHead({
 .ds-input:focus,
 .ds-select:focus {
   outline: none;
-  border-color: #0d4018;
+  border-color: var(--vcn-footer);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(13, 64, 24, 0.1);
+  box-shadow: 0 0 0 3px rgba(29, 69, 3, 0.1);
 }
 
 .uppercase-text {
@@ -1534,13 +1545,13 @@ useHead({
   border-radius: 12px 0 0 12px;
   font-size: 14px;
   font-weight: 700;
-  color: #0d4018;
+  color: var(--vcn-footer);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .ds-badge-icon {
-  color: #0d4018;
+  color: var(--vcn-footer);
 }
 
 .ds-mobile-input {
@@ -1609,7 +1620,7 @@ useHead({
 }
 
 .ds-file-dropzone:hover {
-  border-color: #0d4018;
+  border-color: var(--vcn-footer);
   background: #f2f7ef;
 }
 
@@ -1675,7 +1686,7 @@ useHead({
 .ds-aadhaar-heading h3 {
   font-size: 16px;
   font-weight: 800;
-  color: #0d4018;
+  color: var(--vcn-footer);
   margin-bottom: 4px;
 }
 
@@ -1689,7 +1700,7 @@ useHead({
   width: 100%;
   height: 46px;
   border-radius: 10px;
-  background: #0d4018;
+  background: var(--vcn-footer);
   color: #ffffff;
   border: none;
   font-size: 14px;
@@ -1700,11 +1711,11 @@ useHead({
   gap: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(13, 64, 24, 0.15);
+  box-shadow: 0 4px 12px rgba(29, 69, 3, 0.15);
 }
 
 .ds-btn-send-otp:hover {
-  background: #082d11;
+  background: var(--vcn-primary);
 }
 
 /* OTP Section */
@@ -1747,8 +1758,8 @@ useHead({
 
 .ds-otp-cell:focus {
   outline: none;
-  border-color: #0d4018;
-  box-shadow: 0 0 0 3px rgba(13, 64, 24, 0.1);
+  border-color: var(--vcn-footer);
+  box-shadow: 0 0 0 3px rgba(29, 69, 3, 0.1);
 }
 
 .ds-resend-btn {
@@ -1829,7 +1840,7 @@ useHead({
 }
 
 .ds-decl-item:hover {
-  border-color: #0d4018;
+  border-color: var(--vcn-footer);
   background: #f8faf6;
 }
 
@@ -1853,7 +1864,7 @@ useHead({
 
 .ds-check-custom {
   opacity: 0;
-  color: #0d4018;
+  color: var(--vcn-footer);
   font-size: 14px;
   font-weight: 800;
   transform: scale(0.6);
@@ -1861,7 +1872,7 @@ useHead({
 }
 
 .ds-decl-item input[type="checkbox"]:checked + .ds-decl-box {
-  border-color: #0d4018;
+  border-color: var(--vcn-footer);
   background: #ffffff;
 }
 
@@ -1905,20 +1916,20 @@ useHead({
 }
 
 .ds-btn-prev:hover {
-  border-color: #0d4018;
-  color: #0d4018;
+  border-color: var(--vcn-footer);
+  color: var(--vcn-footer);
   background: #f4f8f1;
 }
 
 .ds-btn-next {
-  background: #0d4018;
+  background: var(--vcn-footer);
   border: none;
   color: #ffffff;
-  box-shadow: 0 6px 18px rgba(13, 64, 24, 0.18);
+  box-shadow: 0 6px 18px rgba(29, 69, 3, 0.18);
 }
 
 .ds-btn-next:hover:not(:disabled) {
-  background: #093012;
+  background: var(--vcn-primary);
 }
 
 .ds-btn-next:disabled {
@@ -1949,7 +1960,7 @@ useHead({
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: #0d4018;
+  background: var(--vcn-footer);
   color: #ffffff;
   font-size: 32px;
   font-weight: 800;
@@ -1962,7 +1973,7 @@ useHead({
 .ds-success-box h2 {
   font-size: 26px;
   font-weight: 800;
-  color: #0d4018;
+  color: var(--vcn-footer);
   margin-bottom: 12px;
 }
 
