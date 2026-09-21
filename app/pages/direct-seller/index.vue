@@ -156,11 +156,24 @@
               <div class="ds-field-group">
                 <label>Date of Birth *</label>
                 <div class="ds-input-wrapper ds-date-wrapper">
-                  <input v-model="form.dob" type="date" class="ds-date-native" @blur="onBlur('dob')" @input="onInput('dob')" />
-                  <span class="ds-date-display" :class="{ empty: !form.dob }">
-                    {{ formattedDob || 'mm / dd / yyyy' }}
-                  </span>
-                  <button type="button" class="ds-input-icon-right" aria-label="Open Calendar">
+                  <input
+                    type="text"
+                    class="ds-input ds-has-right-icon"
+                    placeholder="DD/MM/YYYY"
+                    inputmode="numeric"
+                    :value="dobText"
+                    @input="onDateTextInput($event, 'dob')"
+                    @blur="commitDateText('dob'); onBlur('dob')"
+                  />
+                  <input
+                    ref="dobInputRef"
+                    type="date"
+                    class="ds-native-hidden"
+                    v-model="form.dob"
+                    @input="onNativeDateValue($event, 'dob')"
+                    @change="onNativeDateValue($event, 'dob')"
+                  />
+                  <button type="button" class="ds-input-icon-right" aria-label="Open Calendar" @click="openDatePicker(dobInputRef)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                       <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -332,7 +345,6 @@
                     <option value="" disabled>Select</option>
                     <option value="S_O">Spouse of</option>
                     <option value="D_O">Daughter of</option>
-                    <option value="S">Son of</option>
                     <option value="W_O">Wife of</option>
                     <option value="H_O">Husband of</option>
                   </select>
@@ -346,8 +358,9 @@
 
               <!-- Parent / Spouse Name -->
               <div class="ds-field-group">
-                <label>Parent / Spouse Name</label>
-                <input v-model="form.parentSpouseName" type="text" placeholder="Full name" class="ds-input" />
+                <label>Parent / Spouse Name *</label>
+                <input v-model="form.parentSpouseName" type="text" placeholder="Full name" class="ds-input" @blur="onBlur('parentSpouseName')" @input="onInput('parentSpouseName')" />
+                <span v-if="errors.parentSpouseName" class="ds-error-msg">{{ errors.parentSpouseName }}</span>
               </div>
 
               <!-- Password -->
@@ -560,12 +573,14 @@
                 <input v-model="form.landmark" type="text" placeholder="e.g. City Mall" class="ds-input" />
               </div>
               <div class="ds-field-group">
-                <label>District</label>
-                <input v-model="form.district" type="text" placeholder="District" class="ds-input" />
+                <label>District *</label>
+                <input v-model="form.district" type="text" placeholder="District" class="ds-input" @blur="onBlur('district')" @input="onInput('district')" />
+                <span v-if="errors.district" class="ds-error-msg">{{ errors.district }}</span>
               </div>
               <div class="ds-field-group">
-                <label>Post Office</label>
-                <input v-model="form.postOffice" type="text" placeholder="Post office" class="ds-input" />
+                <label>Post Office *</label>
+                <input v-model="form.postOffice" type="text" placeholder="Post office" class="ds-input" @blur="onBlur('postOffice')" @input="onInput('postOffice')" />
+                <span v-if="errors.postOffice" class="ds-error-msg">{{ errors.postOffice }}</span>
               </div>
             </div>
 
@@ -584,12 +599,11 @@
                 <div class="ds-select-wrapper">
                   <select v-model="form.companyType" class="ds-select" @blur="onBlur('companyType')" @change="onInput('companyType')">
                     <option value="" disabled>Select Company Type</option>
+                    <option value="INDIVIDUAL">Individual</option>
                     <option value="PROPRIETORSHIP">Proprietorship</option>
                     <option value="PARTNERSHIP">Partnership</option>
                     <option value="LLP">LLP</option>
                     <option value="PRIVATE_LIMITED">Private Limited</option>
-                    <option value="PUBLIC_LIMITED">Public Limited</option>
-                    <option value="OTHER">Other</option>
                   </select>
                   <span class="ds-select-arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -641,11 +655,24 @@
               <div class="ds-field-group">
                 <label>Nominee DOB *</label>
                 <div class="ds-input-wrapper ds-date-wrapper">
-                  <input v-model="form.nomineeDob" type="date" class="ds-date-native" @blur="onBlur('nomineeDob')" @input="onInput('nomineeDob')" />
-                  <span class="ds-date-display" :class="{ empty: !form.nomineeDob }">
-                    {{ formattedNomineeDob || 'Select date' }}
-                  </span>
-                  <button type="button" class="ds-input-icon-right" aria-label="Open Calendar">
+                  <input
+                    type="text"
+                    class="ds-input ds-has-right-icon"
+                    placeholder="DD/MM/YYYY"
+                    inputmode="numeric"
+                    :value="nomineeDobText"
+                    @input="onDateTextInput($event, 'nomineeDob')"
+                    @blur="commitDateText('nomineeDob'); onBlur('nomineeDob')"
+                  />
+                  <input
+                    ref="nomineeDobInputRef"
+                    type="date"
+                    class="ds-native-hidden"
+                    v-model="form.nomineeDob"
+                    @input="onNativeDateValue($event, 'nomineeDob')"
+                    @change="onNativeDateValue($event, 'nomineeDob')"
+                  />
+                  <button type="button" class="ds-input-icon-right" aria-label="Open Calendar" @click="openDatePicker(nomineeDobInputRef)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                       <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -757,7 +784,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onUnmounted } from 'vue'
+import { ref, reactive, onUnmounted } from 'vue'
 import { useDirectSellerApi } from '~/composables/useDirectSeller'
 
 const { submitDirectSellerApplication } = useDirectSellerApi()
@@ -799,6 +826,73 @@ const form = reactive({
 // File Upload State
 const fileInputRef = ref(null)
 const selectedFileName = ref('')
+
+// Date Picker State
+const dobInputRef = ref(null)
+const nomineeDobInputRef = ref(null)
+const dobText = ref('')
+const nomineeDobText = ref('')
+
+const dateToDisplay = (iso) => {
+  if (!iso) return ''
+  const parts = iso.split('-')
+  if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`
+  return iso
+}
+
+const getDateText = (key) => (key === 'dob' ? dobText : nomineeDobText)
+
+const syncTextFromForm = (key) => {
+  getDateText(key).value = dateToDisplay(form[key])
+}
+
+const onDateTextInput = (e, key) => {
+  const digits = (e.target.value || '').replace(/\D/g, '').slice(0, 8)
+  let txt = digits
+  if (digits.length > 4) txt = `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`
+  else if (digits.length > 2) txt = `${digits.slice(0, 2)}/${digits.slice(2)}`
+  getDateText(key).value = txt
+  e.target.value = txt
+}
+
+const onNativeDateValue = (e, key) => {
+  const iso = e.target.value
+  form[key] = iso
+  getDateText(key).value = dateToDisplay(iso)
+  onInput(key)
+}
+
+const commitDateText = (key) => {
+  const m = String(getDateText(key).value).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
+  if (!m) {
+    syncTextFromForm(key)
+    return
+  }
+  const d = +m[1]
+  const mo = +m[2]
+  const y = +m[3]
+  const dt = new Date(y, mo - 1, d)
+  const isValid = y >= 1900 && dt.getFullYear() === y && dt.getMonth() === mo - 1 && dt.getDate() === d && dt <= new Date()
+  if (isValid) {
+    form[key] = `${y}-${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}`
+  }
+  syncTextFromForm(key)
+}
+
+const openDatePicker = (target) => {
+  const input = target && target.nodeType === 1 ? target : target?.value
+  if (!input) return
+  if (typeof input.showPicker === 'function') {
+    try {
+      input.showPicker()
+    } catch {
+      input.focus()
+    }
+    return
+  }
+  input.focus()
+  if (typeof input.click === 'function') input.click()
+}
 
 const triggerFileInput = () => {
   if (fileInputRef.value) fileInputRef.value.click()
@@ -851,24 +945,6 @@ onUnmounted(() => {
   if (aadhaarTimer) clearInterval(aadhaarTimer)
 })
 
-const formattedDob = computed(() => {
-  if (!form.dob) return ''
-  const parts = form.dob.split('-')
-  if (parts.length === 3) {
-    return `${parts[1]} / ${parts[2]} / ${parts[0]}`
-  }
-  return form.dob
-})
-
-const formattedNomineeDob = computed(() => {
-  if (!form.nomineeDob) return ''
-  const parts = form.nomineeDob.split('-')
-  if (parts.length === 3) {
-    return `${parts[1]} / ${parts[2]} / ${parts[0]}`
-  }
-  return form.nomineeDob
-})
-
 const normalizeValue = (field, value) => {
   const v = (value ?? '').toString().trim()
   if (field === 'pan') return v.toUpperCase()
@@ -902,6 +978,9 @@ const FIELD_RULES = {
   city: { required: true, requiredMsg: 'City is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid city name' },
   state: { required: true, requiredMsg: 'Please select a state' },
   pincode: { required: true, requiredMsg: 'Pincode is required', pattern: /^\d{6}$/, message: 'Enter a valid 6-digit pincode' },
+  parentSpouseName: { required: true, requiredMsg: 'Parent / spouse name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid parent / spouse name' },
+  district: { required: true, requiredMsg: 'District is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid district name' },
+  postOffice: { required: true, requiredMsg: 'Post office is required', pattern: /^[A-Za-z0-9][A-Za-z0-9\s.'_-]{0,49}$/, message: 'Enter a valid post office name' },
   companyName: { required: true, requiredMsg: 'Company name is required' },
   companyType: { required: true, requiredMsg: 'Please select a company type' },
   nomineeName: { required: true, requiredMsg: 'Nominee name is required', pattern: /^[A-Za-z][A-Za-z\s.'-]{0,49}$/, message: 'Enter a valid nominee name' },
@@ -917,9 +996,9 @@ const FIELD_RULES = {
 
 const STEP_FIELDS = {
   0: ['consent'],
-  1: ['userName', 'firstName', 'lastName', 'dob', 'gender', 'email', 'mobile', 'placement', 'password', 'confirmPassword'],
+  1: ['userName', 'firstName', 'lastName', 'dob', 'gender', 'email', 'mobile', 'placement', 'password', 'confirmPassword', 'parentSpouseName'],
   2: ['pan', 'aadhaar', 'kycType'],
-  3: ['address1', 'city', 'state', 'pincode', 'companyName', 'companyType', 'nomineeName', 'nomineeRelation', 'nomineeDob', 'nomineeShare'],
+  3: ['address1', 'city', 'state', 'pincode', 'district', 'postOffice', 'companyName', 'companyType', 'nomineeName', 'nomineeRelation', 'nomineeDob', 'nomineeShare'],
   4: ['bankHolder', 'bankAccount', 'bankAccountConfirm', 'ifsc', 'bankName']
 }
 
@@ -1039,44 +1118,32 @@ const KYC_TYPE_MAP = {
 }
 
 const buildDirectSellerPayload = () => {
-  const otp = aadhaarOtp.value.join('').trim()
-  const idProofFileName = selectedFileName.value
-
-  return {
+  const payload = {
     userName: form.userName.trim(),
     firstName: form.firstName.trim(),
-    middleName: form.middleName.trim() || '',
     lastName: form.lastName.trim(),
     email: form.email.trim(),
     phone: normalizeValue('mobile', form.mobile),
     password: form.password,
     confirmPassword: form.confirmPassword,
-    sponsorUsername: form.sponsor.trim() || '',
 
     desiredMembershipType: 'DIRECT_SELLER',
     placementPreference: form.placement,
 
     termsAccepted: [form.decl1, form.decl2, form.decl3, form.decl4, form.decl5, form.decl6].every(Boolean),
-    title: form.title || '',
-    parentSpouseTitle: form.parentSpouseTitle || '',
-    parentSpouseName: form.parentSpouseName.trim() || '',
     gender: (form.gender || '').toUpperCase(),
     dateOfBirth: form.dob,
-    maritalStatus: (form.marital || '').toUpperCase(),
-    profession: form.profession || '',
+    parentSpouseName: form.parentSpouseName.trim(),
 
     addressLine1: form.address1.trim(),
-    addressLine2: form.address2.trim() || '',
-    landmark: form.landmark.trim() || '',
     city: form.city.trim(),
-    district: form.district.trim() || '',
     state: form.state,
     pincode: form.pincode.trim(),
-    postOffice: form.postOffice.trim() || '',
+    district: form.district.trim(),
+    postOffice: form.postOffice.trim(),
 
     companyName: form.companyName.trim() || '',
     companyType: form.companyType || '',
-    gstNumber: form.gstNumber.trim() || '',
 
     nomineeName: form.nomineeName.trim(),
     nomineeRelation: (form.nomineeRelation || '').toUpperCase(),
@@ -1084,19 +1151,36 @@ const buildDirectSellerPayload = () => {
 
     kycDocumentType: KYC_TYPE_MAP[form.kycType] || 'AADHAAR',
     kycDocumentNumber: normalizeValue('aadhaar', form.aadhaar) || normalizeValue('pan', form.pan),
-    kycDigilockerUri: form.kycDigilockerUri.trim() || '',
-    kycIssuer: form.kycIssuer.trim() || '',
 
     bankAccountHolderName: form.bankHolder.trim(),
     bankName: form.bankName.trim(),
     bankAccountNumber: form.bankAccount.trim(),
-    bankIfscCode: normalizeValue('ifsc', form.ifsc),
-    bankUpiId: form.upi.trim() || '',
-
-    // Only sent when the user actually entered a complete Aadhaar OTP.
-    idProofFileName: idProofFileName || null,
-    aadhaarOtp: otp.length === 5 ? otp : null
+    bankIfscCode: normalizeValue('ifsc', form.ifsc)
   }
+
+  // Optional fields are only sent when non-empty to avoid "too_small" errors.
+  const addIfPresent = (key, value) => {
+    const v = (value ?? '').toString().trim()
+    if (v) payload[key] = v
+  }
+
+  addIfPresent('middleName', form.middleName)
+  addIfPresent('sponsorUsername', form.sponsor)
+  addIfPresent('title', form.title)
+  addIfPresent('parentSpouseTitle', form.parentSpouseTitle)
+  addIfPresent('maritalStatus', (form.marital || '').toUpperCase())
+  addIfPresent('profession', form.profession)
+
+  addIfPresent('addressLine2', form.address2)
+  addIfPresent('landmark', form.landmark)
+
+  addIfPresent('gstNumber', form.gstNumber)
+  addIfPresent('kycIssuer', form.kycIssuer)
+  addIfPresent('kycDigilockerUri', form.kycDigilockerUri)
+
+  addIfPresent('bankUpiId', form.upi)
+
+  return payload
 }
 
 useHead({
@@ -1431,37 +1515,59 @@ useHead({
   padding-right: 44px;
 }
 
+/* Mobile Number Group */
+.ds-mobile-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.ds-mobile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  padding: 0 12px;
+  background: #eef4ea;
+  border: 1.5px solid #d8e2d2;
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0d4018;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ds-badge-icon {
+  color: #0d4018;
+}
+
+.ds-mobile-input {
+  flex: 1;
+  min-width: 0;
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+}
+
 /* Date Field */
 .ds-date-wrapper {
   position: relative;
 }
 
-.ds-date-native {
+.ds-date-wrapper .ds-input-icon-right {
+  z-index: 4;
+}
+
+.ds-native-hidden {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
-  cursor: pointer;
-  z-index: 3;
-}
-
-.ds-date-display {
-  width: 100%;
-  height: 48px;
-  border: 1.5px solid #d8e2d2;
-  border-radius: 12px;
-  padding: 0 44px 0 16px;
-  font-size: 14px;
-  color: #1a2316;
-  background: #f8faf6;
-  display: flex;
-  align-items: center;
   pointer-events: none;
-}
-
-.ds-date-display.empty {
-  color: #9aa893;
+  border: 0;
+  padding: 0;
 }
 
 /* Select Dropdown */
