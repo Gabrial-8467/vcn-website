@@ -108,12 +108,6 @@ body {
   max-width: 100% !important;
 }
 
-/* Reserve scrollbar space symmetrically so left/right gutters stay equal,
-   even when the vertical scrollbar is present on the right side. */
-html {
-  scrollbar-gutter: stable both-edges;
-}
-
 /* ========== TOP HEADER ========== */
 .top-header {
   width: 100%;
@@ -2122,7 +2116,7 @@ body.home-page main {
 .vcn-stories-section {
   background-color: var(--vcn-base-bg);
   padding: 80px 20px;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 .vcn-stories-container {
@@ -2346,14 +2340,27 @@ body.home-page main {
 }
 
 /* ========== FOOTER SECTION ========== */
-/* Side gutters match the site-wide "perfect alignment" override used by
-   every section (Stories above the footer included): 20px / 15px mobile. */
 .vcn-footer-section {
   background-color: var(--vcn-footer);
   color: rgba(255, 255, 255, 0.8);
   padding-left: 20px !important;
   padding-right: 20px !important;
   box-sizing: border-box !important;
+}
+
+/* Align footer with the page content directly above it (Stories section) */
+@media (min-width: 993px) and (max-width: 1399.98px) {
+  .vcn-footer-section {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .vcn-footer-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
 }
 
 .vcn-container-footer {
@@ -2599,7 +2606,7 @@ body.home-page main {
   }
 
   .vcn-footer-section {
-    padding: 20px 20px !important;
+    padding: 60px 20px !important;
   }
 
   .vcn-footer-links-section {
@@ -2620,17 +2627,28 @@ body.home-page main {
   }
 }
 
-/* Tablet: 768-991px, side gutters match all sections (20px) */
+/* Tablet: 768-991px, Hero/Human/Consultancy sections use 30px gutters */
 @media (min-width: 768px) and (max-width: 991.98px) {
   .vcn-footer-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
   }
 }
 
 @media (max-width: 576px) {
   .vcn-footer-section {
     padding: 40px 15px !important;
+  }
+}
+@media (max-width: 479.98px) {
+  .vcn-container-footer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .vcn-footer-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }
 
@@ -2800,37 +2818,15 @@ body.home-page main {
   overflow: hidden;
 }
 
-/* Keep the featured-product container aligned with the product grid below */
-@media (min-width: 1200px) {
-  .vcn-product-section .vcn-container {
-    max-width: 1200px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 40px !important;
-    padding-right: 74px !important;
-  }
-}
-
 .vcn-product-card {
-  background: linear-gradient(150deg, #76832c 0%, var(--vcn-primary) 52%, #4d591b 100%);
+  background: var(--vcn-primary);
   backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 28px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   height: 100%;
   margin-left: 0 !important;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.vcn-product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-}
-
-.vcn-product-card .vcn-product-bottle {
-  filter: drop-shadow(0 20px 24px rgba(0, 0, 0, 0.3));
 }
 
 .vcn-product-content {
@@ -2855,34 +2851,24 @@ body.home-page main {
 
 .vcn-product-title {
   color: #ffffff;
-  font-size: 48px;
+  font-size: 32px;
   font-weight: 600;
   margin-bottom: 12px;
   line-height: 1.2;
 }
 
 .vcn-product-description {
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 16px;
-  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  line-height: 1.6;
   margin-bottom: 20px;
 }
 
 .vcn-product-price {
-  display: flex !important;
-  align-items: baseline;
-  gap: 10px;
   color: #ffffff;
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 20px;
-}
-
-.vcn-product-price .price-old {
-  font-size: 0.72em;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.6);
-  text-decoration: line-through;
 }
 
 .vcn-product-buttons {
@@ -2913,30 +2899,23 @@ body.home-page main {
 }
 
 .vcn-btn-secondary {
-  background: #ffffff;
-  color: var(--vcn-footer);
-  padding: 14px 32px;
+  background: transparent;
+  color: #ffffff;
+  padding: 14px 28px;
   border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
   display: inline-block;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .vcn-btn-secondary:hover {
-  background: #f1f5e8;
-  color: var(--vcn-footer);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
-}
-
-.vcn-btn-secondary:hover,
-.vcn-btn-secondary:active {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .vcn-image-section {
@@ -4587,20 +4566,6 @@ body.home-page main {
   font-weight: 700;
   color: var(--vcn-footer);
   margin-bottom: 0;
-  text-align: left;
-}
-
-/* Monotonic title scale so the type never jumps as the viewport grows */
-@media (max-width: 991.98px) and (min-width: 769px) {
-  .about-title {
-    font-size: 42px !important;
-  }
-}
-
-@media (max-width: 768px) and (min-width: 577px) {
-  .about-title {
-    font-size: 36px !important;
-  }
 }
 
 
