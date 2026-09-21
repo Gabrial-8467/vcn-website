@@ -445,4 +445,11 @@ export default {
     box-sizing: border-box !important;
   }
 }
+
+/* Tiny screens: single column so disease cards don't get crushed */
+@media (max-width: 380px) {
+  .disease-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>

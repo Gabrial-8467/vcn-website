@@ -69,7 +69,7 @@ const handleSubscribe = async (event) => {
 <template>
   <!-- Footer Section -->
   <footer class="vcn-footer-section">
-    <div class="container vcn-container-footer">
+    <div class=" vcn-container-footer">
       <!-- Top Section: Brand & Newsletter -->
       <div class="row">
         <div class="col-md-5">
@@ -251,12 +251,16 @@ const handleSubscribe = async (event) => {
   padding-left: 30px !important;
 }
 @media (max-width: 767.98px) {
-  .vcn-container-footer .row {
+  .vcn-footer-links-section {
+    padding-left: 0 !important;
+  }
+
+  .row {
     margin-left: -12px !important;
     margin-right: -12px !important;
   }
 
-  .vcn-container-footer .row > [class*="col-"] {
+  .row > [class*="col-"] {
     padding-left: 12px !important;
     padding-right: 12px !important;
   }
