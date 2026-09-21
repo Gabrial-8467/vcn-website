@@ -77,7 +77,7 @@ onMounted(() => {
 
     if (sectionRect.top < windowHeight && sectionRect.bottom > 0) {
       const sectionProgress = (windowHeight - sectionRect.top) / (windowHeight + sectionRect.height)
-      const maxMove = window.innerWidth < 768 ? 650 : window.innerWidth < 992 ? 1000 : 1600
+      const maxMove = window.innerWidth < 768 ? 0 : window.innerWidth < 992 ? 1000 : 1600
       const moveAmount = sectionProgress * maxMove
       parallaxWrapper.style.transform = `translateX(-${moveAmount}px)`
     }
@@ -687,7 +687,8 @@ watch(storyCards, () => {
   }
 
   .vcn-stories-text-card {
-    height: 180px;
+    height: auto;
+    min-height: 180px;
     border-radius: 18px;
     padding: 16px;
   }
@@ -748,7 +749,8 @@ watch(storyCards, () => {
   }
 
   .vcn-stories-card-btn {
-    padding: 12px 30px !important;
+    padding: 12px 40px !important;
+    /* room on the right so the hover arrow never overlaps the text */
   }
 
   .vcn-stories-media-gallery-track {
@@ -785,7 +787,8 @@ watch(storyCards, () => {
   }
 
   .vcn-stories-text-card {
-    height: 150px;
+    height: auto;
+    min-height: 150px;
     border-radius: 14px;
     padding: 12px;
   }
@@ -846,7 +849,8 @@ watch(storyCards, () => {
   }
 
   .vcn-stories-card-btn {
-    padding: 10px 24px !important;
+    padding: 10px 40px !important;
+    /* clear the hover arrow (right: 20px) so it does not overlap the text */
   }
 
   .vcn-stories-media-gallery-track {
@@ -867,7 +871,6 @@ watch(storyCards, () => {
 
   .item-tall-capsule {
     height: 420px;
-    width: 370;
     border-radius: 14px;
   }
 
@@ -884,7 +887,8 @@ watch(storyCards, () => {
   }
 
   .vcn-stories-text-card {
-    height: 125px;
+    height: auto;
+    min-height: 125px;
     border-radius: 10px;
     padding: 8px;
   }
@@ -912,6 +916,11 @@ watch(storyCards, () => {
 }
 
 @media (max-width: 480px) {
+  .vcn-stories-section {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   .vcn-stories-title {
     font-size: 32px !important;
   }

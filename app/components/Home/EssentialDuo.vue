@@ -97,4 +97,19 @@ const offers = computed(() =>
 .vcn-cobiotics-cta-btn:hover {
   color: var(--vcn-white) !important;
 }
+
+@media (max-width: 480px) {
+  /* Stop thumbnails cramming into 3 columns on small phones */
+  .vcn-cobiotics-thumbnails-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+  }
+}
+
+@media (max-width: 379.98px) {
+  .vcn-cobiotics-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
 </style>

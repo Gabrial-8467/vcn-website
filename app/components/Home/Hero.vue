@@ -215,7 +215,6 @@ const hero = computed(() =>
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  padding-right: 55px;
 }
 
 .hero-btn:hover::after {

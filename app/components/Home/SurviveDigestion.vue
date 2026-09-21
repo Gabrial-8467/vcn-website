@@ -162,11 +162,11 @@ const probiotics = computed(() =>
   .vcn-probiotic-product-image {
     position: absolute !important;
     left: auto !important;
-    right: -50px !important;
+    right: -12px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     width: 85% !important;
-    max-width: 650px !important;
+    max-width: 480px !important;
     height: auto !important;
     object-fit: contain !important;
     z-index: 5 !important;

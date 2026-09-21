@@ -296,7 +296,7 @@ onMounted(async () => {
 }
 
 .vcn-whole-body-view-link {
-    text-decoration: underline !important;
+    text-decoration: none !important;
     margin-top: 0 !important;
     text-underline-offset: 6px;
 }
@@ -365,15 +365,13 @@ onMounted(async () => {
         /* reduced margin to make card shorter */
     }
 
-    .vcn-whole-body-product-image {
-        width: 195px !important;
-        height: 195px !important;
-        max-width: 100% !important;
-        /* increased size of images on mobile */
-        aspect-ratio: 1 / 1 !important;
-        margin: 6px auto !important;
-        /* reduced margin to make card shorter */
-    }
+.vcn-whole-body-product-image {
+    width: 100% !important;
+    max-width: 220px !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 6px auto !important;
+    /* reduced margin to make card shorter */
+}
 
     .vcn-whole-body-badge {
         font-size: 0.55rem !important;
@@ -398,8 +396,8 @@ onMounted(async () => {
     }
 
     .vcn-whole-body-shop-btn {
-        padding: 8px 20px !important;
-        /* reduced button padding to make card shorter */
+        padding: 8px 32px !important;
+        /* increased padding so the hover arrow does not overlap the text */
         font-size: 0.85rem !important;
         /* reduced button font size */
     }

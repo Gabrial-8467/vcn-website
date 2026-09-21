@@ -787,7 +787,7 @@ body.menu-open .custom-navbar-toggler .hamburger-line:nth-child(3) {
 
 /* Show state - Expand */
 .navbar-collapse.show {
-  width: calc(100% - 0px);
+  width: 100%;
   padding: 4px;
   opacity: 1;
 }
@@ -987,7 +987,7 @@ body.menu-open .custom-navbar-toggler .hamburger-line:nth-child(3) {
 
 /* Show state - Expand */
 .navbar-collapse.show {
-  width: calc(100% - 0px);
+  width: 100%;
   /* Full width minus margins */
   padding: 4px;
   opacity: 1;
@@ -1786,6 +1786,12 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
 @media (max-width: 992px) {
   .navbar {
     padding: 10px 20px !important;
+  }
+
+  /* Solid background once scrolled so links don't float over content */
+  .navbar.scrolled {
+    background: var(--vcn-footer) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   }
 
   .navbar-collapse {
