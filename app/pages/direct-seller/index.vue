@@ -1266,6 +1266,7 @@ useHead({
   color: var(--vcn-footer);
   margin-bottom: 6px;
   letter-spacing: -0.02em;
+  margin-top: 40px !important;
 }
 
 .ds-main-subtitle {
