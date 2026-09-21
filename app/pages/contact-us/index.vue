@@ -612,7 +612,6 @@
             </div>
 
             <!-- ✅ jalandhar — v-show only, no extra class -->
-
             <div v-if="activeOffice">
               <div class="office-img-wrapper">
                 <img :src="activeOffice.image" :alt="activeOffice.city" />
@@ -671,7 +670,7 @@
       </div>
 
       <!-- Right Side: Contact Form -->
-      <div class="col-lg-6 col-12">
+      <div class=" col-12">
         <div class="contact-form-container">
           <div class="contact-form-header">
             <h1 class="contact-form-title">{{ contact.contactForm.title }}</h1>
