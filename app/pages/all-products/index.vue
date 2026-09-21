@@ -61,7 +61,6 @@
                     style="font-size: 0.85em; opacity: 0.6;">₹{{ getProductPricing(product).oldPrice }}</span>
                 </div>
               </div>
-
               <!-- Desktop only badges -->
               <div class="vcn-whole-body-product-badges d-none d-lg-flex">
                 <span v-if="product.isNew" class="vcn-whole-body-badge vcn-whole-body-badge-new">NEW</span>
@@ -78,7 +77,11 @@
               </p>
 
               <!-- Desktop only price -->
-              <div class="vcn-product-price d-none d-lg-block">₹{{ getProductPricing(product).price }}</div>
+              <div class="vcn-product-price d-none d-lg-block">
+                <span class="price-current">₹{{ getProductPricing(product).price }}</span>
+                <span v-if="getProductPricing(product).oldPrice" class="price-old">₹{{
+                  getProductPricing(product).oldPrice }}</span>
+              </div>
 
               <div class="vcn-product-buttons">
                 <NuxtLink :to="`/product-details/${product.slug}`" class="vcn-btn-secondary">
@@ -434,13 +437,14 @@ const addToCart = async (product) => {
   }
 
   .vcn-product-card {
-    background: var(--vcn-primary) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: linear-gradient(150deg, #76832c 0%, var(--vcn-primary) 52%, #4d591b 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
     backdrop-filter: blur(10px) !important;
-    border-radius: 20px !important;
+    border-radius: 22px !important;
     padding: 16px !important;
     max-width: 100% !important;
     margin: 0 auto !important;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2) !important;
   }
 
   .vcn-product-bottle {
@@ -475,7 +479,7 @@ const addToCart = async (product) => {
 
   /* Title overrides on mobile */
   .vcn-product-title {
-    font-size: 48px !important;
+    font-size: 40px !important;
     font-weight: 400 !important;
     color: #ffffff !important;
     margin-top: 10px !important;
@@ -696,7 +700,7 @@ const addToCart = async (product) => {
 h1.vcn-breadcrumb-title {
   position: relative;
   left: 0 !important;
-  text-align: left !important;
+  text-align: center !important;
   width: 100% !important;
   max-width: 100% !important;
   word-wrap: break-word !important;
@@ -755,7 +759,7 @@ h1.vcn-breadcrumb-title {
   }
 
   .vcn-breadcrumb-title {
-    padding-left: 50px !important;
+    padding-left: 0 !important;
   }
 }
 

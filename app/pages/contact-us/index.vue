@@ -609,7 +609,6 @@
             </div>
 
             <!-- ✅ jalandhar — v-show only, no extra class -->
-
             <div v-if="activeOffice">
               <div class="office-img-wrapper">
                 <img :src="activeOffice.image" :alt="activeOffice.city" />

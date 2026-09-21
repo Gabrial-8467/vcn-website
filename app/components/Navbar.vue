@@ -279,7 +279,7 @@
               </li>
             </template>
             <li class="nav-item" v-else>
-              <NuxtLink class="nav-link" to="#" @click.prevent="openFormFromMobile">Login</NuxtLink>
+              <NuxtLink class="nav-link" to="/login">Login</NuxtLink>
             </li>
           </ul>
 
@@ -449,11 +449,6 @@ const formData = reactive({
 const openForm = () => {
   isOpen.value = true
   document.body.style.overflow = 'hidden'
-}
-
-const openFormFromMobile = () => {
-  closeMobileMenu()
-  openForm()
 }
 
 const closeForm = () => {
@@ -654,7 +649,7 @@ body.checkout-page .navbar.scrolled .login-link {
   left: 0;
   right: 0;
   z-index: 9999;
-  padding: 8px 15px !important;
+  padding: 20px 20px !important;
   background: transparent !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -796,7 +791,7 @@ body.menu-open .custom-navbar-toggler .hamburger-line:nth-child(3) {
 
 /* Show state - Expand */
 .navbar-collapse.show {
-  width: 100%;
+  width: calc(100% - 0px);
   padding: 4px;
   opacity: 1;
 }
@@ -996,7 +991,7 @@ body.menu-open .custom-navbar-toggler .hamburger-line:nth-child(3) {
 
 /* Show state - Expand */
 .navbar-collapse.show {
-  width: 100%;
+  width: calc(100% - 0px);
   /* Full width minus margins */
   padding: 4px;
   opacity: 1;
@@ -1427,16 +1422,16 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   /* Large screens only */
   @media (min-width: 992px) {
     .navbar {
-      padding-left: 40px !important;
-      padding-right: 40px !important;
+      padding-left: 80px !important;
+      padding-right: 80px !important;
     }
   }
 
   /* Extra Large screens */
   @media (min-width: 1400px) {
     .navbar {
-      padding-left: 60px !important;
-      padding-right: 60px !important;
+      padding-left: 160px !important;
+      padding-right: 160px !important;
     }
   }
 
@@ -1648,16 +1643,16 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     /* Large screens only */
     @media (min-width: 992px) {
       .navbar {
-        padding-left: 40px !important;
-        padding-right: 40px !important;
+        padding-left: 80px !important;
+        padding-right: 80px !important;
       }
     }
 
     /* Extra Large screens */
     @media (min-width: 1400px) {
       .navbar {
-        padding-left: 60px !important;
-        padding-right: 60px !important;
+        padding-left: 160px !important;
+        padding-right: 160px !important;
       }
     }
 
@@ -1765,7 +1760,6 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
 
     /* Hide mobile menu on desktop */
     .navbar-collapse {
-      display: none !important;
       position: static;
       transform: none;
       background: transparent;
@@ -1784,7 +1778,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
 /* ========== RESPONSIVE ========== */
 @media (max-width: 992px) {
   .navbar {
-    padding: 10px 15px !important;
+    padding: 12px 20px !important;
   }
 
   .nav-left-wrapper {
@@ -1814,13 +1808,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
    ========================================================================== */
 @media (max-width: 992px) {
   .navbar {
-    padding: 8px 15px !important;
-  }
-
-  /* Solid background once scrolled so links don't float over content */
-  .navbar.scrolled {
-    background: var(--vcn-footer) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    padding: 10px 20px !important;
   }
 
   .navbar-collapse {
@@ -2394,31 +2382,5 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     margin-top: -10px;
     margin-bottom: 15px;
     text-align: left;
-  }
-
-  /* Mobile: make the toggler white only while the menu is open */
-  body.menu-open .custom-navbar-toggler {
-    color: #ffffff !important;
-    background: transparent !important;
-  }
-
-  body.menu-open .custom-navbar-toggler .hamburger-line {
-    background: #ffffff !important;
-  }
-
-  /* Checkout page: mobile menu links white only while the menu is open */
-  body.checkout-page.menu-open .navbar .nav-link,
-  body.checkout-page.menu-open .navbar-collapse .dropdown-item,
-  body.checkout-page.menu-open .navbar-collapse .dropdown-item strong,
-  body.checkout-page.menu-open .navbar-collapse .dropdown-item span,
-  body.checkout-page.menu-open .navbar-collapse .dropdown-item div,
-  body.checkout-page.menu-open .navbar-collapse .shop-all-link,
-  body.checkout-page.menu-open .navbar-collapse .shop-all-link span {
-    color: #ffffff !important;
-  }
-
-  body.checkout-page.menu-open .navbar .nav-link:hover,
-  body.checkout-page.menu-open .navbar-collapse .dropdown-item:hover {
-    color: #ffffff !important;
   }
 </style>
