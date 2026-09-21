@@ -3,6 +3,18 @@ export interface Credentials {
   password?: string
 }
 
+export interface RegisterPayload {
+  firstName: string
+  lastName?: string
+  email: string
+  phone: string
+  password: string
+  confirmPassword: string
+  sponsorUsername?: string
+  desiredMembershipType: string
+  placementPreference?: string
+}
+
 export interface User {
   id: string
   userName: string
@@ -16,5 +28,14 @@ export interface LoginResponse {
     token: string
     expiresAt: number
     user: User
+  } | null
+}
+
+export interface RegisterResponse {
+  success: boolean
+  message: string
+  data: {
+    user: User
+    referenceId?: string
   } | null
 }

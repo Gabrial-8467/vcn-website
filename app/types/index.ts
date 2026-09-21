@@ -52,6 +52,8 @@ export type {
 export type {
   Credentials,
   User,
-  LoginResponse
+  LoginResponse,
+  RegisterPayload,
+  RegisterResponse
 } from './auth.ts'
 
