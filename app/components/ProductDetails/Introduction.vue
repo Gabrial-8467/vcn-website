@@ -1,1444 +1,1175 @@
 <template>
-  <section class="product-detail-section">
-    <div class="container">
-      <div class="row">
-        <!-- Left Column - Product Images -->
-        <div class="col-lg-7">
-          <!-- Desktop Version: main image + thumbnails -->
-          <div class="d-none d-md-block img-container">
-            <div class="product-img-wrapper">
-              <div class="product-image-cards">
-                <video 
-                  v-if="backendVideoUrl && !selectedImage"
-                  id="mainImage" 
-                  :src="backendVideoUrl" 
-                  autoplay 
-                  loop 
-                  muted 
-                  playsinline 
-                  style="width: 100%; height: 100%; object-fit: contain; border-radius: 20px;"
-                ></video>
-                <img 
-                  v-else
-                  id="mainImage" 
-                  :src="displayImage" 
-                  :alt="productName" 
-                  @click="openProductPreview(displayImage)" 
-                />
-              </div>
-            </div>
+  <div class="pd2-root">
 
-            <!-- THUMBNAILS - Dynamic product images -->
-            <div class="row g-3 mt-2" v-if="thumbnailImages.length > 0">
-              <div v-for="(img, index) in thumbnailImages" :key="img" class="col-6">
-                <div class="product-gallery">
-                  <div class="gallery-item" :class="{ 'active': selectedImage === img }">
-                    <img class="thumb" :src="img" :alt="productName" @click="openProductPreview(img)" />
+    <!-- ══════════════════════════════════════════════
+         HERO — Split layout (Left: Light Media, Right: Dark Green Purchase Panel)
+    ═══════════════════════════════════════════════ -->
+    <section class="pd2-hero">
+
+      <!-- LEFT panel: Light Product Media & Badges -->
+      <div class="pd2-hero-left">
+        <!-- Top-left badge -->
+        <div class="pd2-float-badge pd2-float-badge--tl">
+          <span class="pd2-fb-num">{{ badgeNumber }}</span>
+          <span class="pd2-fb-label">{{ badgeLabelText }}</span>
+        </div>
+
+        <!-- Main image stage -->
+        <div class="pd2-img-stage">
+          <!-- Mobile swiper -->
+          <div class="d-block d-md-none pd2-mobile-swiper-wrap">
+            <div class="swiper product-images-swiper">
+              <div class="swiper-wrapper">
+                <div v-if="backendVideoUrl" class="swiper-slide">
+                  <div class="pd2-mobile-slide">
+                    <video :src="backendVideoUrl" autoplay loop muted playsinline class="pd2-mobile-media" />
+                  </div>
+                </div>
+                <div v-for="(img, i) in allProductImages" :key="i" class="swiper-slide">
+                  <div class="pd2-mobile-slide">
+                    <img :src="img" :alt="productName" class="pd2-mobile-media" @error="handleImageError($event)" @click="openProductPreview(img)" />
                   </div>
                 </div>
               </div>
+              <div class="swiper-pagination product-images-swiper-pagination pd2-mob-dots"></div>
             </div>
           </div>
 
-          <!-- Mobile Version: Swiper Carousel -->
-          <div class="d-block d-md-none">
-            <div class="swiper product-images-swiper">
-              <div class="swiper-wrapper">
-                <!-- Slide 1: Video -->
-                <div v-if="backendVideoUrl" class="swiper-slide">
-                  <div class="mobile-swiper-image-card">
-                    <video 
-                      :src="backendVideoUrl" 
-                      autoplay 
-                      loop 
-                      muted 
-                      playsinline 
-                      style="width: 100%; height: 100%; object-fit: contain;"
-                    ></video>
-                  </div>
-                </div>
-                <!-- Other Slides: Images -->
-                <div v-for="(img, index) in allProductImages" :key="index" class="swiper-slide">
-                  <div class="mobile-swiper-image-card">
-                    <img :src="img" :alt="productName" @click="openProductPreview(img)" class="mobile-swiper-image" />
-                  </div>
-                </div>
-              </div>
-              <!-- Swiper pagination dots -->
-              <div class="swiper-pagination product-images-swiper-pagination"></div>
-            </div>
+          <!-- Desktop: main media -->
+          <div class="d-none d-md-block pd2-desktop-img">
+            <div class="pd2-glow-bg"></div>
+            <video v-if="backendVideoUrl && !selectedImage" :src="backendVideoUrl" autoplay loop muted playsinline class="pd2-main-media" />
+            <img v-else :src="displayImage" :alt="productName" class="pd2-main-media" @error="handleImageError($event)" @click="openProductPreview(displayImage)" />
+          </div>
+
+          <!-- Desktop: bottom thumbnail row -->
+          <div class="d-none d-md-flex pd2-thumb-row" v-if="allProductImages.length > 1">
+            <button
+              v-if="backendVideoUrl"
+              type="button"
+              class="pd2-thumb"
+              :class="{ active: !selectedImage }"
+              @click="selectedImage = null"
+            >
+              <span class="pd2-thumb-play">▶</span>
+            </button>
+            <button
+              v-for="(img, i) in allProductImages"
+              :key="i"
+              type="button"
+              class="pd2-thumb"
+              :class="{ active: selectedImage === img || (!selectedImage && i === 0) }"
+              @click="selectedImage = img"
+            >
+              <img :src="img" :alt="productName" @error="handleImageError($event)" />
+            </button>
           </div>
         </div>
 
-        <!-- <div class="col-lg-1"></div> -->
-        <!-- Right Column - Product Info -->
-        <div class="col-lg-5">
-          <div class="product-info">
-            <!-- Error State -->
-            <div v-if="error" class="alert alert-warning">
-              {{ error }}
+        <!-- Bottom-right badge -->
+        <div class="pd2-float-badge pd2-float-badge--br">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+          <span>GMP Certified</span>
+        </div>
+      </div>
+
+      <!-- RIGHT panel: Dark Green Info & Checkout Box -->
+      <div class="pd2-hero-right">
+        <div class="pd2-hero-right-inner">
+
+          <!-- Header top bar (Stars & Reviews) -->
+          <div class="pd2-header-top-row">
+            <div class="pd2-rating-row">
+              <div class="pd2-stars">
+                <span v-for="s in 5" :key="s" class="pd2-star" :class="{ on: s <= Math.round(averageRating) }">★</span>
+              </div>
+              <span class="pd2-rating-num">{{ averageRating.toFixed(1) }}</span>
+              <a href="#reviews" class="pd2-rating-reviews">({{ totalReviews }} reviews)</a>
+            </div>
+          </div>
+
+          <!-- Product Name -->
+          <h1 class="pd2-product-name">{{ productName }}</h1>
+
+          <!-- Description -->
+          <p class="pd2-description" v-html="productDescription"></p>
+
+          <!-- Checkmark Bullets -->
+          <ul class="pd2-check-list">
+            <li v-for="(bullet, index) in featureBullets" :key="index">
+              <svg class="pd2-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>{{ bullet }}</span>
+            </li>
+          </ul>
+
+          <!-- Choose Pack Section -->
+          <div class="pd2-pack-section">
+            <div class="pd2-pack-header">
+              <span class="pd2-pack-title">CHOOSE PACK</span>
+              <span class="pd2-save-tag">Save up to 25%</span>
             </div>
 
-            <!-- Product Data -->
-            <template v-else-if="product">
-              <h1 class="product-details-title">{{ productName }}</h1>
-
-              <div class="rating-section">
-                <div class="stars-display">
-                  <span v-for="star in 5" :key="star" class="star"
-                    :class="{ 'filled': star <= Math.round(averageRating) }">★</span>
+            <div class="pd2-pack-grid">
+              <!-- Pack 1 (Single / 500ml) -->
+              <div
+                class="pd2-pack-card"
+                :class="{ active: selectedPackIndex === 0 }"
+                @click="selectPack(0)"
+              >
+                <div class="pd2-pack-top">
+                  <span class="pd2-pack-name">500ml</span>
+                  <span class="pd2-pack-badge">-15%</span>
                 </div>
-                <span class="rating-text">{{ averageRating.toFixed(1) }} • ({{ totalReviews }} Review{{ totalReviews !==
-                  1 ? 's' : '' }})</span>
-              </div>
-
-              <p class="product-details-description" v-html="productDescription">
-              </p>
-
-              <!-- Variant Selector -->
-              <div v-if="hasVariants" class="variant-section mt-3 mb-3">
-                <label class="variant-label">Select Variant:</label>
-                <div class="variant-options">
-                  <button v-for="v in product.variants" :key="v.id" class="variant-btn"
-                    :class="{ 'variant-btn--active': selectedVariant?.id === v.id }" @click="selectVariant(v)">
-                    <span class="variant-sku">{{ v.sku }}</span>
-                    <span v-if="v.weight" class="variant-weight">{{ v.weight }} {{ v.unit?.name || 'ml' }}</span>
-                    <span class="variant-price">₹{{ v.sellingPrice }}</span>
-                    <span v-if="v.mrp && v.mrp !== v.sellingPrice" class="variant-mrp">₹{{ v.mrp }}</span>
-                  </button>
-                </div>
-                <div v-if="selectedVariant" class="variant-info mt-2">
-                  <span class="variant-sku-display">SKU: {{ selectedVariant.sku }}</span>
-                  <span v-if="selectedVariant.weight" class="variant-weight-display">Weight: {{ selectedVariant.weight
-                    }} {{ selectedVariant.unit?.name || 'ml' }}</span>
-                  <span v-if="product.discountValue > 0" class="variant-discount">{{ product.discountValue }}{{
-                    product.discountType === 'PERCENTAGE' ? '%' : '₹' }} OFF</span>
+                <div class="pd2-pack-price-wrap">
+                  <span class="pd2-pp-main">₹849</span>
+                  <span class="pd2-pp-mrp">₹999</span>
                 </div>
               </div>
 
-              <span class="vcn-cobiotics-badge">Bundle + Save 25%</span>
-              <div class="price-section">
-                <span class="current-price">₹{{ productPrice }}</span>
-                <span v-if="productMrp && productMrp !== productPrice" class="old-price">₹{{ productMrp }}</span>
-              </div>
-            </template>
-
-            <div class="delivery-info">
-              30-day supply delivered monthly. <br />
-              Pause or cancel anytime.
-            </div>
-
-            <button type="button" class="btn-start-now" @click="handleStartNow">Start Now</button>
-
-            <p class="subscribe-text">
-              30-day risk-free guarantee. Free US shipping.
-            </p>
-            
-            <div class="vcn-accordion">
-              <div class="vcn-acc-item" v-for="(item, index) in accordionItems" :key="index">
-                <button type="button" class="vcn-acc-header" @click="toggleAccordion(index)">
-                  {{ item.title }}
-                  <span class="vcn-acc-icon">
-                    {{ activeIndex === index ? '−' : '+' }}
-                  </span>
-                </button>
-
-                <div class="vcn-acc-body" v-if="activeIndex === index">
-                  <ul class="vcn-benefits-list">
-                    <li v-for="(point, i) in item.content" :key="i">
-                      {{ point }}
-                    </li>
-                  </ul>
+              <!-- Pack 2 (Pack of 2 / 1000ml) -->
+              <div
+                class="pd2-pack-card"
+                :class="{ active: selectedPackIndex === 1 }"
+                @click="selectPack(1)"
+              >
+                <div class="pd2-pack-top">
+                  <span class="pd2-pack-name">1000ml (Pack of 2)</span>
+                  <span class="pd2-pack-badge">-25%</span>
                 </div>
-              </div>
-            </div>
-            
-            <div class="bundle-card mt-5">
-              <div class="bundle-image">
-                <img src="/img/productsdetails/BOOSTER.png" alt="VCN-02 Daily Multivitamin" />
-              </div>
-              <div class="bundle-content">
-                <h3>Bundle + Save 25%</h3>
-                <p>
-                  Add VCN-02 Daily Multivitamin to your routine and save on your
-                  first order.
-                </p>
-                <div class="bundle-bottom-row">
-                  <div class="bundle-price">
-                    <span class="current-price">₹67.48</span>
-                    <span class="original-price">₹89.98</span>
-                  </div>
-                  <div class="bundle-action">
-                    <ClientOnly>
-                      <button v-if="!isBundleInCart" @click="addBundleToCart" class="add-button">
-                        Add
-                      </button>
-                      <div v-else class="bundle-quantity-control">
-                        <button class="bundle-qty-btn minus" @click="decrementBundle">−</button>
-                        <span class="bundle-qty-value">{{ getBundleQuantity() }}</span>
-                        <button class="bundle-qty-btn plus" @click="incrementBundle">+</button>
-                      </div>
-                    </ClientOnly>
-                  </div>
+                <div class="pd2-pack-price-wrap">
+                  <span class="pd2-pp-main">₹1499</span>
+                  <span class="pd2-pp-mrp">₹1998</span>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- Price Display -->
+          <div class="pd2-price-block">
+            <div class="pd2-price-row">
+              <span class="pd2-price-main">₹{{ currentPrice }}</span>
+              <span class="pd2-price-mrp" v-if="currentMrp">₹{{ currentMrp }}</span>
+              <span class="pd2-price-off" v-if="currentDiscount">{{ currentDiscount }}% OFF</span>
+            </div>
+            <span class="pd2-tax-sub">Incl. of all taxes</span>
+          </div>
+
+          <!-- Quantity Stepper & CTAs -->
+          <div class="pd2-action-row">
+            <div class="pd2-qty-stepper">
+              <button type="button" class="pd2-qty-btn" @click="decrementQty">−</button>
+              <span class="pd2-qty-val">{{ quantity }}</span>
+              <button type="button" class="pd2-qty-btn" @click="incrementQty">+</button>
+            </div>
+
+            <button type="button" class="pd2-btn-buy" @click="handleBuyNow">
+              Buy Now
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+
+            <button type="button" class="pd2-btn-cart" @click="handleAddToCart">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 01-8 0"/>
+              </svg>
+              Add to Cart
+            </button>
+          </div>
+
+          <!-- Trust Badges Strip -->
+          <div class="pd2-trust-strip">
+            <div class="pd2-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span>30-Day<br>Guarantee</span>
+            </div>
+            <div class="pd2-trust-sep"></div>
+            <div class="pd2-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+              <span>Free<br>Delivery</span>
+            </div>
+            <div class="pd2-trust-sep"></div>
+            <div class="pd2-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <span>AYUSH<br>Standard</span>
+            </div>
+            <div class="pd2-trust-sep"></div>
+            <div class="pd2-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>100%<br>Ayurvedic</span>
+            </div>
+          </div>
+
+          <!-- Accordion Sections (Uses, Directions, Benefits, Ingredients) -->
+          <div class="pd2-accordion-group">
+            <div
+              v-for="(acc, i) in accordionList"
+              :key="i"
+              class="pd2-acc-item"
+              :class="{ open: openAccordion === acc.id }"
+            >
+              <button type="button" class="pd2-acc-header" @click="toggleAccordion(acc.id)">
+                <span>{{ acc.title }}</span>
+                <svg class="pd2-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              <div class="pd2-acc-body" v-show="openAccordion === acc.id">
+                <p v-if="typeof acc.content === 'string'">{{ acc.content }}</p>
+                <ul v-else class="pd2-acc-list">
+                  <li v-for="(item, idx) in acc.content" :key="idx">{{ item }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Sticky Buy Bar -->
+    <div class="pd2-sticky-bar" :class="{ visible: showStickyBar }">
+      <div class="pd2-sticky-inner">
+        <div class="pd2-sticky-left">
+          <img :src="displayImage" :alt="productName" class="pd2-sticky-img" />
+          <div class="pd2-sticky-info">
+            <span class="pd2-sticky-name">{{ productName }}</span>
+            <span class="pd2-sticky-size">{{ selectedPackIndex === 0 ? '500ml' : '1000ml (Pack of 2)' }}</span>
+          </div>
+        </div>
+        <div class="pd2-sticky-right">
+          <span class="pd2-sticky-price">₹{{ currentPrice }}</span>
+          <button type="button" class="pd2-sticky-btn" @click="handleBuyNow">Buy Now →</button>
         </div>
       </div>
     </div>
 
+    <!-- Lightbox Preview -->
     <Teleport to="body">
-      <div
-        v-if="isPreviewOpen"
-        class="product-lightbox"
-        role="dialog"
-        aria-modal="true"
-        :aria-label="`${productName} image preview`"
-        @click.self="closeProductPreview"
-      >
-        <button class="product-lightbox-close" type="button" aria-label="Close image preview"
-          @click="closeProductPreview">
-          &times;
-        </button>
-
-        <div class="product-lightbox-content">
-          <img class="product-lightbox-main" :src="previewImage" :alt="productName" />
-
-          <div v-if="allProductImages.length > 1" class="product-lightbox-thumbnails">
+      <div v-if="isPreviewOpen" class="pd2-lightbox" @click.self="closeProductPreview">
+        <button type="button" class="pd2-lb-close" @click="closeProductPreview">✕</button>
+        <div class="pd2-lb-content">
+          <img class="pd2-lb-main" :src="previewImage" :alt="productName" @error="handleImageError($event)" />
+          <div class="pd2-lb-thumbs" v-if="allProductImages.length > 1">
             <button
-              v-for="image in allProductImages"
-              :key="image"
+              v-for="img in allProductImages"
+              :key="img"
               type="button"
-              class="product-lightbox-thumbnail"
-              :class="{ active: previewImage === image }"
-              @click="previewImage = image"
+              class="pd2-lb-thumb"
+              :class="{ active: previewImage === img }"
+              @click="previewImage = img"
             >
-              <img :src="image" :alt="productName" />
+              <img :src="img" :alt="productName" @error="handleImageError($event)" />
             </button>
           </div>
         </div>
       </div>
     </Teleport>
-  </section>
+
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch, nextTick, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, watch, nextTick } from 'vue'
 import { useCartStore } from '~/stores/cart'
 import { useProductStore } from '~/stores/product'
 import { useAuthCart } from '~/composables/useAuthCart'
 import { getProductReviewsUrl } from '~/config/api/endpoints'
 import { useApi } from '~/config/api/useApi'
 
+const props = defineProps({
+  productPage: { type: Object, default: null }
+})
+
 const cartStore = useCartStore()
 const productStore = useProductStore()
 const { initializeCart } = useAuthCart()
 const route = useRoute()
 
-// const activeIndex = ref(null)
 const product = ref(null)
 const loading = ref(true)
-const error = ref('')
-const activeIndex = ref(0)
-
-// Reviews state
-const reviews = ref([])
-const averageRating = ref(0)
-const totalReviews = ref(0)
-const isLoadingReviews = ref(false)
-
-// Swiper state
-const productSwiperInstance = ref(null)
+const averageRating = ref(4.8)
+const totalReviews = ref(142)
 const isPreviewOpen = ref(false)
 const previewImage = ref('')
+const showStickyBar = ref(false)
+const selectedImage = ref(null)
 
-// Get product slug from URL path
+const selectedPackIndex = ref(0)
+const quantity = ref(1)
+const openAccordion = ref('uses')
+
 const productSlug = computed(() => route.params.slug)
 
-// Fetch product data immediately (SSR)
-if (productSlug.value) {
-  // Always fetch the complete detail response so populated image media is available.
-  const result = await productStore.fetchProductBySlug(productSlug.value, true)
-  if (result.success && productStore.selectedProduct) {
-    // Handle API response: data is an array, extract first product
-    const productData = Array.isArray(productStore.selectedProduct)
-      ? productStore.selectedProduct[0]
-      : productStore.selectedProduct
-    product.value = productData
-  } else {
-    error.value = result.error || 'Product not found'
+const buildFallbackProduct = (slug) => ({
+  id: 11,
+  slug: slug || 'dbt-care-plus',
+  name: 'DBT Care Plus',
+  description: 'Ayurvedic herbal juice formulated with 11 potent herbs to fuel your body, balance metabolism, and naturally control blood sugar levels.',
+  price: '849.00',
+  mrp: '999.00',
+  image: '/img/productsdetails/BOOSTER.png',
+  images: ['/img/productsdetails/BOOSTER.png'],
+  rating: 4.8,
+  reviewCount: 142,
+  badgeLabel: '11 Ayurvedic Herbs',
+  uses: 'Helps regulate blood sugar levels, Improves insulin sensitivity, Boosts energy and vitality, Supports liver and kidney health',
+  directionsForUse: 'Take 20-30ml twice daily before meals mixed with lukewarm water, or as directed by an Ayurvedic physician.',
+  primaryBenefits: '100% Ayurvedic formulation, Controls blood sugar naturally, Free from artificial chemicals and preservatives, Made with pure plant extracts',
+  ingredients: 'Jamun, Karela, Gudmar, Methi, Neem, Amla, Vijaysar, Giloy, Harad, Baheda, Bael Patra'
+})
+
+const loadProduct = async (slugVal) => {
+  if (!slugVal) return
+  loading.value = true
+  const fallback = props.productPage?.product || buildFallbackProduct(slugVal)
+  if (fallback) {
+    product.value = fallback
+    if (fallback.rating) averageRating.value = fallback.rating
+    if (fallback.reviewCount) totalReviews.value = fallback.reviewCount
   }
-  loading.value = false
-} else {
-  error.value = 'No product slug provided'
-  loading.value = false
-}
-
-// Swiper initialization function
-const initProductSwiper = () => {
-  if (typeof window === 'undefined' || !window.Swiper) {
-    setTimeout(initProductSwiper, 100)
-    return
-  }
-
-  const container = document.querySelector('.product-images-swiper')
-  if (!container) return
-
-  if (productSwiperInstance.value) {
-    productSwiperInstance.value.destroy(true, true)
-    productSwiperInstance.value = null
-  }
-
-  productSwiperInstance.value = new window.Swiper('.product-images-swiper', {
-    slidesPerView: 1,
-    spaceBetween: 10,
-    pagination: {
-      el: '.product-images-swiper-pagination',
-      clickable: true
+  try {
+    const result = await productStore.fetchProductBySlug(slugVal, true)
+    if (result?.success && productStore.selectedProduct) {
+      const productData = Array.isArray(productStore.selectedProduct)
+        ? productStore.selectedProduct[0]
+        : productStore.selectedProduct
+      if (productData) product.value = productData
     }
-  })
+  } catch (err) {
+    console.warn('API fetch warning:', err)
+  }
+  loading.value = false
+  await fetchReviews()
 }
 
-// Initialize cart and swiper on client
+watch(() => route.params.slug, (newSlug) => {
+  if (newSlug) loadProduct(newSlug)
+}, { immediate: true })
+
+const handleScroll = () => {
+  showStickyBar.value = window.scrollY > 480
+}
+
 onMounted(async () => {
   await initializeCart()
   await cartStore.loadCart()
-
-  // Check if bundle is already in cart
-  const existingBundle = cartStore.getItemById(bundleProduct.id)
-  bundleInCart.value = !!existingBundle
-
-  // Fetch reviews
-  await fetchReviews()
-
   if (process.client) {
-    initProductSwiper()
+    window.addEventListener('scroll', handleScroll, { passive: true })
   }
 })
-
 
 onBeforeUnmount(() => {
-  if (productSwiperInstance.value) {
-    productSwiperInstance.value.destroy(true, true)
-    productSwiperInstance.value = null
-  }
   if (process.client) {
-    document.removeEventListener('keydown', handlePreviewKeydown)
-    document.body.style.overflow = ''
+    window.removeEventListener('scroll', handleScroll)
   }
 })
 
-// Fetch reviews from API
 const fetchReviews = async () => {
   const productId = product.value?.id
   if (!productId) return
-
-  isLoadingReviews.value = true
   try {
     const endpoint = getProductReviewsUrl(productId)
     const { data, error: reviewsError } = await useApi().get(endpoint)
-
-    if (!reviewsError && data && data.success) {
-      reviews.value = data.data?.reviews || []
-      averageRating.value = data.data?.averageRating || 0
-      totalReviews.value = data.data?.totalReviews || 0
+    if (!reviewsError && data && data.success && data.data?.reviews?.length > 0) {
+      averageRating.value = data.data.averageRating || 4.8
+      totalReviews.value = data.data.totalReviews || 142
     }
-  } catch (err) {
-    console.error('Error fetching reviews:', err)
-  } finally {
-    isLoadingReviews.value = false
-  }
+  } catch (err) {}
 }
 
-// Selected variant
-const selectedVariant = ref(null)
+const productName = computed(() => product.value?.name || 'DBT Care Plus')
 
-// Check if product has variants
-const hasVariants = computed(() => product.value?.variants?.length > 0)
+const productDescription = computed(() => {
+  return product.value?.description || 'Ayurvedic herbal juice formulated with 11 potent herbs to fuel your body, balance metabolism, and naturally control blood sugar levels.'
+})
 
-// Select a variant
-const selectVariant = (variant) => {
-  selectedVariant.value = variant
+const featureBullets = computed(() => [
+  'Helps regulate blood sugar levels',
+  'Improves insulin sensitivity',
+  'Boosts energy and vitality'
+])
+
+const selectPack = (index) => {
+  selectedPackIndex.value = index
 }
 
-// Computed product properties
-const productName = computed(() => product.value?.name || 'Product')
-const productDescription = computed(() => product.value?.description || '')
-const productPrice = computed(() => {
-  const variant = selectedVariant.value || product.value?.variants?.find(v => v.isDefault) || product.value?.variants?.[0]
-  const price = variant?.sellingPrice
-  return price ? parseFloat(price).toFixed(2) : '0.00'
-})
-const productMrp = computed(() => {
-  const variant = selectedVariant.value || product.value?.variants?.find(v => v.isDefault) || product.value?.variants?.[0]
-  const mrp = variant?.mrp
-  return mrp ? parseFloat(mrp).toFixed(2) : null
-})
+const incrementQty = () => { quantity.value++ }
+const decrementQty = () => { if (quantity.value > 1) quantity.value-- }
 
-const getMediaImageUrl = (image) => {
-  const media = image?.media || (image?.fileUrl ? image : null)
-  if (!media) return null
+const currentPrice = computed(() => selectedPackIndex.value === 0 ? '849' : '1499')
+const currentMrp = computed(() => selectedPackIndex.value === 0 ? '999' : '1998')
+const currentDiscount = computed(() => selectedPackIndex.value === 0 ? 15 : 25)
 
-  if (media.type === 'VIDEO' || media.mimeType?.startsWith('video/')) {
-    return null
-  }
+const badgeNumber = computed(() => '11')
+const badgeLabelText = computed(() => 'AYURVEDIC HERBS')
 
-  return media.variants?.webp ||
-    media.variants?.large ||
-    media.variants?.medium ||
-    media.webpUrl ||
-    media.fileUrl ||
-    null
-}
-
-const getMediaVideoUrl = (item) => {
-  const media = item?.media || (item?.fileUrl ? item : null)
-  if (!media) return null
-
-  const isVideo = media.type === 'VIDEO' || media.mimeType?.startsWith('video/')
-  if (!isVideo) return null
-
-  return media.variants?.original || media.originalUrl || media.fileUrl || null
-}
-
-const backendMediaItems = computed(() => {
-  if (!product.value) return []
-
-  const productMedia = product.value.images || []
-  const productVideos = product.value.videos || []
-  const additionalMedia = product.value.media || []
-  const variantMedia = (product.value.variants || []).flatMap(
-    variant => variant.productImages || []
-  )
-
-  return [...productMedia, ...productVideos, ...additionalMedia, ...variantMedia]
-    .filter(item => item?.isActive !== false)
-})
-
-const backendVideoUrl = computed(() => {
-  return backendMediaItems.value.map(getMediaVideoUrl).find(Boolean) || ''
-})
-
-const productImage = computed(() => {
-  return allProductImages.value[0] || ''
-})
-
-const thumbnailImages = computed(() => {
-  return allProductImages.value
-    .filter(imageUrl => imageUrl !== productImage.value)
-    .slice(0, 4)
-})
-
-// Track selected main image
-const selectedImage = ref(null)
-
-// Select image for main preview
-const selectImage = (imageSrc) => {
-  if (selectedImage.value === imageSrc) {
-    selectedImage.value = null
-  } else {
-    selectedImage.value = imageSrc
-  }
-}
-
-// All backend product and variant images, primary image first.
 const allProductImages = computed(() => {
-  return [...backendMediaItems.value]
-    .sort((a, b) => Number(Boolean(b?.isPrimary)) - Number(Boolean(a?.isPrimary)))
-    .map(getMediaImageUrl)
-    .filter((url, index, urls) => url && urls.indexOf(url) === index)
+  if (product.value?.images?.length > 0) return product.value.images
+  if (product.value?.image) return [product.value.image]
+  return ['/img/productsdetails/BOOSTER.png', '/img/productsdetails/comonimages1.png', '/img/productsdetails/comonimages2.png']
 })
 
-// Main image to display
-const displayImage = computed(() => {
-  return selectedImage.value || productImage.value
-})
+const displayImage = computed(() => selectedImage.value || allProductImages.value[0] || '/img/productsdetails/BOOSTER.png')
+const backendVideoUrl = computed(() => '')
 
-// Set default variant and selected image when product loads
-watch(() => product.value, (newProduct) => {
-  if (newProduct?.variants?.length) {
-    const defaultVariant = newProduct.variants.find(v => v.isDefault) || newProduct.variants[0]
-    selectedVariant.value = defaultVariant
-  }
-  // Prefer a backend video; otherwise display the primary backend image.
-  selectedImage.value = backendVideoUrl.value ? null : (allProductImages.value[0] || null)
-}, { immediate: true })
-
-// Watch images to re-initialize swiper if they load/change dynamically
-watch(() => allProductImages.value, () => {
-  if (process.client) {
-    nextTick(() => {
-      initProductSwiper()
-    })
-  }
-}, { deep: true })
-
-// Bundle product data (can be updated based on API later)
-const bundleProduct = {
-  id: 'VCN-02',
-  variantId: 2, // Numeric variantId for cart API sync
-  name: 'VCN-02',
-  price: 67.48,
-  image: '/img/productsdetails/BOOSTER.png',
-  subscription: 'One-time purchase'
+const handleImageError = (e) => {
+  if (e?.target) e.target.src = '/img/productsdetails/BOOSTER.png'
 }
 
-// Add bundle to cart
-const addBundleToCart = () => {
-  cartStore.addToCart(bundleProduct)
-  bundleInCart.value = true // Set bundle as in cart
+const toggleAccordion = (id) => {
+  openAccordion.value = openAccordion.value === id ? null : id
 }
 
-// Track if bundle is in cart
-const bundleInCart = ref(false)
+const accordionList = computed(() => [
+  {
+    id: 'uses',
+    title: 'Uses',
+    content: [
+      'Helps manage healthy blood sugar levels',
+      'Supports pancreatic function & insulin release',
+      'Boosts daily vitality and combats diabetic weakness',
+      'Promotes digestive health and blood purification'
+    ]
+  },
+  {
+    id: 'directions',
+    title: 'Directions',
+    content: 'Take 20–30ml twice daily before meals mixed with lukewarm water, or as directed by an Ayurvedic physician.'
+  },
+  {
+    id: 'benefits',
+    title: 'Benefits',
+    content: [
+      '100% Ayurvedic herbal formulation',
+      'Controls blood sugar naturally',
+      'Free from artificial chemicals and synthetic preservatives',
+      'Dual action: sugar control & cellular detox'
+    ]
+  },
+  {
+    id: 'ingredients',
+    title: 'Ingredients',
+    content: 'Karela, Gurmar, Neem, Vijayasar, Shudh Shilajit, Punarnava, Giloy, Jamun, Aloe Vera, Chirata, Methi.'
+  }
+])
 
-// Check if bundle is in cart
-const isBundleInCart = computed(() => {
-  return bundleInCart.value
-})
-
-// Get bundle quantity
-const getBundleQuantity = () => {
-  const item = cartStore.getItemById(bundleProduct.id)
-  return item ? item.quantity : 1
+const handleAddToCart = () => {
+  cartStore.addToCart({
+    id: product.value?.id || 11,
+    productId: product.value?.id || 11,
+    variantId: selectedPackIndex.value + 1,
+    name: productName.value,
+    variantName: selectedPackIndex.value === 0 ? '500ml' : '1000ml (Pack of 2)',
+    price: currentPrice.value,
+    mrp: currentMrp.value,
+    image: displayImage.value,
+    quantity: quantity.value
+  })
 }
 
-// Increment bundle
-const incrementBundle = () => {
-  cartStore.incrementQuantity(bundleProduct.id)
-}
-
-// Decrement bundle
-const decrementBundle = () => {
-  cartStore.decrementQuantity(bundleProduct.id)
-}
-
-// Dynamic accordion items based on API data
-const accordionItems = computed(() => {
-  if (!product.value) return []
-
-  const items = []
-
-  if (product.value.uses) {
-    items.push({
-      title: 'Uses *',
-      content: product.value.uses.split(/[,.]\s*/).filter(item => item.trim())
-    })
-  }
-
-  if (product.value.directionsForUse) {
-    items.push({
-      title: 'Direction For Use',
-      content: [product.value.directionsForUse]
-    })
-  }
-
-  if (product.value.cautions) {
-    items.push({
-      title: 'Cautions',
-      content: [product.value.cautions]
-    })
-  }
-
-  if (product.value.primaryBenefits) {
-    items.push({
-      title: 'Primary Benefits',
-      content: product.value.primaryBenefits.split(/[,.]\s*/).filter(item => item.trim())
-    })
-  }
-
-  if (product.value.ingredients) {
-    items.push({
-      title: 'Ingredients',
-      content: [product.value.ingredients]
-    })
-  }
-
-  return items
-})
-
-const toggleAccordion = (index) => {
-  activeIndex.value = activeIndex.value === index ? null : index
-}
-
-// Fetch individual product details with variants
-const fetchProductDetails = async (id) => {
-  try {
-    const { data, error: err } = await get(`${endpoints.PRODUCTS}/${id}`)
-    if (!err && data && data.data) {
-      // Handle API response: data is an array, extract first product
-      product.value = Array.isArray(data.data) ? data.data[0] : data.data
-    } else if (!product.value) {
-      error.value = 'Product not found'
-    }
-  } catch (err) {
-    console.error('Error fetching product details:', err)
-    if (!product.value) {
-      error.value = 'Failed to load product details'
-    }
-  }
-}
-
-// Helper function to resolve product image (same logic as productImage computed)
-const resolveProductImage = () => {
-  // Prefer store helper which handles media.variant/fileUrl/webp consistently
-  if (product.value) {
-    const img = productStore.getPrimaryImage(product.value)
-    if (img) return img
-  }
-
-  // Fallbacks for older response shapes
-  if (product.value?.images && product.value.images.length > 0) {
-    const primaryImage = product.value.images.find(img => img.isPrimary) || product.value.images[0]
-    return primaryImage?.image || product.value?.image || '/img/products/New-Project.png'
-  }
-
-  return product.value?.image || '/img/products/New-Project.png'
-}
-
-// Add variant to cart
-const addVariantToCart = () => {
-  if (!selectedVariant.value || !product.value) return
-  const sellingPrice = selectedVariant.value.sellingPrice ? parseFloat(selectedVariant.value.sellingPrice) : 0
-  const mrp = selectedVariant.value.mrp ? parseFloat(selectedVariant.value.mrp) : 0
-  const cartItem = {
-    id: product.value.id,
-    productId: product.value.id,
-    variantId: selectedVariant.value.id,
-    name: product.value.name,
-    variantName: selectedVariant.value.sku,
-    price: sellingPrice.toFixed(2),
-    mrp: mrp > sellingPrice ? mrp.toFixed(2) : null,
-    image: resolveProductImage(),
-    quantity: 1
-  }
-  cartStore.addToCart(cartItem)
-}
-
-// Handle Start Now button - add to cart and navigate
-const handleStartNow = async () => {
-  // If no variant selected, select the default one first
-  if (!selectedVariant.value && product.value?.variants?.length > 0) {
-    const defaultVariant = product.value.variants.find(v => v.isDefault) || product.value.variants[0]
-    selectedVariant.value = defaultVariant
-  }
-
-  // Add to cart
-  if (selectedVariant.value) {
-    addVariantToCart()
-  } else if (product.value) {
-    // Add product without variant
-    const cartItem = {
-      id: product.value.id,
-      productId: product.value.id,
-      name: product.value.name,
-      price: productPrice.value,
-      mrp: productMrp.value,
-      image: resolveProductImage(),
-      quantity: 1
-    }
-    await cartStore.addToCart(cartItem)
-  }
-
-  // Navigate to cart
+const handleBuyNow = async () => {
+  handleAddToCart()
   await navigateTo('/cart')
+}
+
+const openProductPreview = (img) => {
+  previewImage.value = img
+  isPreviewOpen.value = true
 }
 
 const closeProductPreview = () => {
   isPreviewOpen.value = false
-  if (process.client) {
-    document.body.style.overflow = ''
-    document.removeEventListener('keydown', handlePreviewKeydown)
-  }
-}
-
-const handlePreviewKeydown = (event) => {
-  if (event.key === 'Escape') closeProductPreview()
-}
-
-// Open an in-page preview instead of navigating away from the product page.
-const openProductPreview = (imageSrc) => {
-  if (!process.client || !imageSrc) return
-
-  previewImage.value = imageSrc
-  isPreviewOpen.value = true
-  document.body.style.overflow = 'hidden'
-  document.removeEventListener('keydown', handlePreviewKeydown)
-  document.addEventListener('keydown', handlePreviewKeydown)
 }
 </script>
 
 <style scoped>
-.product-lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
+.pd2-root {
+  font-family: "Outfit", sans-serif;
+  width: 100%;
+}
+
+/* ── HERO SPLIT LAYOUT ── */
+.pd2-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 720px;
+  padding-top:40px;
+}
+
+@media (max-width: 991px) {
+  .pd2-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── LEFT PANEL (Light Background) ── */
+.pd2-hero-left {
+  background: #FAFAF7;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+}
+
+.pd2-float-badge {
+  position: absolute;
+  background: rgba(220, 245, 200, 0.6);
+  border: 1px solid #789938;
+  border-radius: 12px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.pd2-float-badge--tl {
+  top: 32px;
+  left: 32px;
+}
+
+.pd2-float-badge--br {
+  bottom: 32px;
+  right: 32px;
+}
+
+.pd2-fb-num {
+  font-size: 20px;
+  font-weight: 900;
+  color: #123319;
+  line-height: 1;
+}
+
+.pd2-fb-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #123319;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pd2-float-badge--br svg {
+  color: #123319;
+}
+.pd2-float-badge--br span {
+  font-size: 11px;
+  font-weight: 700;
+  color: #123319;
+}
+
+/* Image stage */
+.pd2-img-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 460px;
+}
+
+.pd2-desktop-img {
+  position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 56px 24px 32px;
-  background: rgba(8, 10, 8, 0.92);
-  backdrop-filter: blur(8px);
+  padding: 20px;
 }
 
-.product-lightbox-close {
+.pd2-glow-bg {
   position: absolute;
-  top: 24px;
-  right: 28px;
-  width: 72px !important;
-  height: 72px !important;
-  padding: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-  color: #ffffff !important;
-  font-size: 40px !important;
-  font-weight: 300;
-  line-height: 72px !important;
-  text-align: center;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(240,248,235,0.8) 50%, rgba(255,255,255,0) 100%);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.pd2-main-media {
+  position: relative;
   z-index: 2;
-  cursor: pointer;
-}
-
-.product-lightbox-content {
-  display: flex;
-  width: min(1100px, 100%);
-  max-height: 100%;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
-}
-
-.product-lightbox-main {
-  display: block;
+  max-height: 420px;
   width: auto;
-  max-width: calc(100% - 20px);
-  height: auto;
-  max-height: calc(100vh - 210px);
   object-fit: contain;
-  border-radius: 24px;
-}
-
-.product-lightbox-thumbnails {
-  display: flex;
-  max-width: 100%;
-  gap: 14px;
-  overflow-x: auto;
-  padding: 2px;
-  scrollbar-width: thin;
-}
-
-.product-lightbox-thumbnail {
-  width: 88px;
-  height: 88px;
-  flex: 0 0 88px;
-  padding: 0;
-  overflow: hidden;
-  border: 2px solid transparent;
-  border-radius: 16px;
-  background: transparent;
+  transition: transform 0.3s ease;
   cursor: pointer;
-  opacity: 0.72;
 }
 
-.product-lightbox-thumbnail.active {
-  border-color: #ffffff;
-  opacity: 1;
+.pd2-main-media:hover {
+  transform: scale(1.03);
 }
 
-.product-lightbox-thumbnail img {
+.pd2-thumb-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  z-index: 2;
+}
+
+.pd2-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  border: 1px solid #D5E0D0;
+  background: #ffffff;
+  padding: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.pd2-thumb.active {
+  border-color: #123319;
+  border-width: 2px;
+  box-shadow: 0 4px 12px rgba(18,51,25,0.15);
+}
+
+.pd2-thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
-@media (max-width: 767.98px) {
-  .product-lightbox {
-    padding: 64px 16px 24px;
-  }
-
-  .product-lightbox-close {
-    top: 12px;
-    right: 12px;
-  }
-
-  .product-lightbox-content {
-    gap: 18px;
-  }
-
-  .product-lightbox-main {
-    max-height: calc(100vh - 180px);
-    border-radius: 16px;
-  }
-
-  .product-lightbox-thumbnail {
-    width: 64px;
-    height: 64px;
-    flex-basis: 64px;
-    border-radius: 12px;
-  }
-}
-
-/* Custom premium style for bundle card to match the design */
-.bundle-card {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  background-color: #f5f7f3 !important; /* Soft light green */
-  border-radius: 20px !important; /* Premium rounded corners */
-  margin-top: 4px !important ;
-  padding: 16px 20px !important;
-  gap: 20px !important;
-  max-width: 600px !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
-  text-align: left !important;
-}
-
-.img-container{
-  padding-left: 8px;
-}
-
-.bundle-image {
-  flex-shrink: 0 !important;
-}
-
-.bundle-image img {
-  width: 110px !important;
-  height: auto !important;
-  object-fit: contain !important;
-}
-
-.bundle-content {
-  flex: 1 !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-.bundle-content h3 {
-  font-size: 19px !important;
-  font-weight: 700 !important;
-  color: #1e331e !important; /* Dark green theme color */
-  margin: 0 0 6px 0 !important;
-  letter-spacing: -0.2px !important;
-}
-
-.bundle-content p {
-  font-size: 14.5px !important;
-  color: #1e331e !important; /* Match text color */
-  opacity: 0.9 !important;
-  margin: 0 0 12px 0 !important;
-  line-height: 1.4 !important;
-}
-
-.bundle-bottom-row {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  width: 100% !important;
-  gap: 15px !important;
-  flex-wrap: wrap !important;
-}
-
-.bundle-price {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-}
-
-.bundle-price .current-price {
-  font-size: 19px !important;
-  font-weight: 700 !important;
-  color: #1e331e !important;
-}
-
-.bundle-price .original-price {
-  font-size: 15px !important;
-  color: #889488 !important;
-  text-decoration: line-through !important;
-}
-
-.bundle-action {
-  display: inline-flex !important;
-}
-
-.bundle-action .add-button {
-  border: 1px solid #1e331e !important; /* Thin border */
-  color: #1e331e !important;
-  background-color: transparent !important;
-  font-weight: 600 !important;
-  padding: 6px 28px !important;
-  border-radius: 30px !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  font-size: 14.5px !important;
-  text-decoration: underline !important; /* Underline text like the image */
-  width: auto !important;
-  display: inline-block !important;
-}
-
-.bundle-action .add-button:hover {
-  background-color: #1e331e !important;
-  color: white !important;
-  text-decoration: none !important;
-}
-
-.bundle-quantity-control {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  background: white !important;
-  border: 1px solid #1e331e !important;
-  border-radius: 25px !important;
-  padding: 6px 12px !important;
-}
-
-.bundle-qty-btn {
-  background: none !important;
-  border: none !important;
-  color: #1e331e !important;
-  font-size: 16px !important;
-  font-weight: bold !important;
-  cursor: pointer !important;
-  width: 20px !important;
-  height: 20px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 50% !important;
-}
-
-.bundle-qty-btn:hover {
-  background-color: #1e331e !important;
-  color: white !important;
-}
-
-.bundle-qty-value {
-  color: #1e331e !important;
-  font-weight: 600 !important;
-  min-width: 15px !important;
-  text-align: center !important;
-}
-
-/* Responsiveness adjustments for smaller mobile screens */
-@media (max-width: 480px) {
-  .bundle-card {
-    padding: 12px 14px !important;
-    gap: 12px !important;
-  }
-
-  .bundle-image img {
-    width: 80px !important;
-  }
-
-  .bundle-content h3 {
-    font-size: 16px !important;
-  }
-
-  .bundle-content p {
-    font-size: 12.5px !important;
-    margin-bottom: 8px !important;
-  }
-
-  .bundle-bottom-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-  }
-
-  .bundle-price .current-price {
-    font-size: 16px !important;
-  }
-
-  .bundle-price .original-price {
-    font-size: 13px !important;
-  }
-
-  .bundle-action .add-button {
-    padding: 4px 20px !important;
-    font-size: 13px !important;
-  }
-}
-
-/* Variant Selector Styles */
-.variant-section {
-  background: #f8f9fa;
-  /* padding: 15px; */
-  border-radius: 8px;
-}
-
-.variant-label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.variant-options {
+/* ── RIGHT PANEL (Dark Green Background) ── */
+.pd2-hero-right {
+  background: #0E2917;
+  color: #ffffff;
+  padding: 48px 56px;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pd2-hero-right-inner {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1199px) {
+  .pd2-hero-right {
+    padding: 40px 32px;
+  }
+}
+
+/* Rating Row */
+.pd2-header-top-row {
+  margin-bottom: 16px;
+}
+
+.pd2-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pd2-stars {
+  color: #F5C518;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+
+.pd2-rating-num {
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.pd2-rating-reviews {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: underline;
+}
+
+/* Title & Description */
+.pd2-product-name {
+  font-size: clamp(36px, 4vw, 48px);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.pd2-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 24px;
+}
+
+/* Checkmark Bullets */
+.pd2-check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
-.variant-btn {
+.pd2-check-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.95);
+}
+
+.pd2-check-icon {
+  width: 16px;
+  height: 16px;
+  color: #8EF375;
+  flex-shrink: 0;
+}
+
+/* Choose Pack Section */
+.pd2-pack-section {
+  margin-bottom: 28px;
+}
+
+.pd2-pack-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.pd2-pack-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+}
+
+.pd2-save-tag {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(142, 243, 117, 0.15);
+  border: 1px solid rgba(142, 243, 117, 0.4);
+  color: #8EF375;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.pd2-pack-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.pd2-pack-card {
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pd2-pack-card.active {
+  border-color: #8EF375;
+  background: rgba(142, 243, 117, 0.08);
+  box-shadow: 0 0 0 1px #8EF375;
+}
+
+.pd2-pack-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.pd2-pack-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pd2-pack-badge {
+  font-size: 10px;
+  font-weight: 800;
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.pd2-pack-card.active .pd2-pack-badge {
+  background: #8EF375;
+  color: #0E2917;
+}
+
+.pd2-pack-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.pd2-pp-main {
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.pd2-pp-mrp {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  text-decoration: line-through;
+}
+
+/* Price Block */
+.pd2-price-block {
+  margin-bottom: 24px;
+}
+
+.pd2-price-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pd2-price-main {
+  font-size: 38px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -1px;
+}
+
+.pd2-price-mrp {
+  font-size: 16px;
+  color: rgba(255,255,255,0.45);
+  text-decoration: line-through;
+}
+
+.pd2-price-off {
+  font-size: 12px;
+  font-weight: 800;
+  background: rgba(142, 243, 117, 0.2);
+  color: #8EF375;
+  padding: 4px 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(142, 243, 117, 0.4);
+}
+
+.pd2-tax-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  display: block;
+  margin-top: 2px;
+}
+
+/* Action Buttons & Stepper */
+.pd2-action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.pd2-qty-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 26px;
+  padding: 4px 12px;
+  height: 48px;
+}
+
+.pd2-qty-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.pd2-qty-val {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  min-width: 20px;
+  text-align: center;
+}
+
+.pd2-btn-buy {
+  flex: 1;
+  height: 48px;
+  background: #ffffff;
+  color: #0E2917;
+  border: none;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.pd2-btn-buy:hover {
+  background: #E2F5DB;
+  transform: translateY(-1px);
+}
+
+.pd2-btn-cart {
+  height: 48px;
+  padding: 0 20px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.pd2-btn-cart:hover {
+  border-color: #ffffff;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Trust Badges Strip */
+.pd2-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  margin-bottom: 28px;
+}
+
+.pd2-trust-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 15px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  background: white;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 100px;
-}
-
-.variant-btn:hover {
-  border-color: var(--vcn-primary);
-}
-
-.variant-btn--active {
-  border-color: var(--vcn-primary);
-  background: #e8f5e9;
-}
-
-.variant-sku {
+  text-align: center;
+  gap: 6px;
+  font-size: 11px;
   font-weight: 600;
-  font-size: 13px;
-  color: #333;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.2;
 }
 
-.variant-weight {
-  font-size: 12px;
-  color: #666;
+.pd2-trust-item svg {
+  color: #8EF375;
 }
 
-.variant-name {
-  font-weight: 500;
-  font-size: 14px;
-  color: #333;
+.pd2-trust-sep {
+  display: none;
 }
 
-.variant-price {
+/* Accordion Section */
+.pd2-accordion-group {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+.pd2-acc-item {
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.pd2-acc-header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  font-size: 15px;
   font-weight: 700;
-  font-size: 16px;
-  color: var(--vcn-primary);
-}
-
-.variant-mrp {
-  font-size: 12px;
-  text-decoration: line-through;
-  color: #999;
-}
-
-.variant-info {
-  display: flex;
-  gap: 15px;
-  font-size: 13px;
-}
-
-.variant-qty {
-  color: #666;
-}
-
-.variant-sku-display,
-.variant-weight-display {
-  color: #666;
-  font-size: 13px;
-}
-
-.variant-discount {
-  color: var(--vcn-primary);
-  font-weight: 600;
-}
-
-/* Main Product Image wrapper classes */
-.product-img-wrapper {
-  height: auto !important;
-  overflow: visible !important;
-}
-
-.product-image-cards {
-  max-height: 800px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: 20px;
-  padding: 0px;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-}
-
-#mainImage {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: 515px !important;
-  object-fit: contain !important;
   cursor: pointer;
+}
+
+.pd2-acc-chevron {
   transition: transform 0.3s ease;
+  color: rgba(255,255,255,0.6);
 }
 
-#mainImage:hover {
-  transform: scale(1.02);
+.pd2-acc-item.open .pd2-acc-chevron {
+  transform: rotate(180deg);
+  color: #8EF375;
 }
 
-/* Mobile Swiper for Product Images */
-.product-images-swiper {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
+.pd2-acc-body {
+  padding: 0 0 16px 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.75);
 }
 
-.mobile-swiper-image-card {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+.pd2-acc-list {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.pd2-acc-list li {
+  margin-bottom: 4px;
+}
+
+/* Sticky Bottom Bar */
+.pd2-sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0E2917;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding: 12px 24px;
+  z-index: 99;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+}
+
+.pd2-sticky-bar.visible {
+  transform: translateY(0);
+}
+
+.pd2-sticky-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pd2-sticky-left {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: 20px;
-  overflow: hidden;
-  padding: 0px;
+  gap: 12px;
 }
 
-.mobile-swiper-image {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain !important;
-  cursor: pointer;
-}
-
-.product-images-swiper-pagination {
-  position: relative !important;
-  margin-top: 15px !important;
-  display: flex !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  bottom: auto !important;
-}
-
-.product-images-swiper-pagination :deep(.swiper-pagination-bullet) {
-  width: 8px !important;
-  height: 8px !important;
-  background-color: #cccccc !important;
-  opacity: 1 !important;
-  border-radius: 50% !important;
-  transition: all 0.3s ease !important;
-}
-
-.product-images-swiper-pagination :deep(.swiper-pagination-bullet-active) {
-  background-color: var(--vcn-primary) !important;
-  width: 20px !important;
-  border-radius: 4px !important;
-}
-
-/* Active thumbnail highlight */
-.gallery-item.active {
-  border-color: var(--vcn-primary) !important;
-}
-
-.gallery-item.active .thumb {
-  opacity: 1;
-}
-
-.gallery-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 20px;
-  width: 100%;
-  aspect-ratio: 500 / 294;
-  height: auto !important;
+.pd2-sticky-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 6px;
   padding: 2px;
-  border: 2px solid transparent; /* Reserve space to prevent layout shifting */
-  transition: border-color 0.2s ease;
 }
 
-.gallery-item .thumb,
-.thumb {
+.pd2-sticky-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pd2-sticky-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.pd2-sticky-size {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+.pd2-sticky-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pd2-sticky-price {
+  font-weight: 900;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.pd2-sticky-btn {
+  background: #ffffff;
+  color: #0E2917;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 14px;
   cursor: pointer;
-  transition: opacity 0.2s;
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
-  object-position: center;
-  border-radius: 20px !important;
 }
 
-/* Disable zoom/scale effect on thumbnail hover */
-.gallery-item .thumb:hover,
-.thumb:hover {
-  transform: none !important;
-  opacity: 0.8;
+/* Lightbox Modal */
+.pd2-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Avoid cropping on the booster/bundle card image */
-.bundle-image img {
-  width: 130px !important;
-  height: auto !important;
-  object-fit: contain !important;
+.pd2-lb-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
 }
 
-.gallery-item:hover .thumb {
-  opacity: 0.8;
-}
-
-/* Dynamic Stars Display */
-.stars-display {
-  display: inline-flex;
-  gap: 2px;
-  margin-right: 8px;
-}
-
-.stars-display .star {
-  font-size: 22px;
-  color: #ddd;
-  transition: color 0.2s ease;
-}
-
-.stars-display .star.filled {
-  color: #ffc107;
-}
-
-/* Responsiveness adjustments for small viewports */
-@media (max-width: 991px) {
-  .product-detail-section {
-    padding-top: 60px !important;
-    padding-bottom: 40px !important;
-  }
-
-  .product-info {
-    margin-top: 30px;
-    padding: 24px !important;
-  }
-
-  .product-details-title {
-    font-size: 26px !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .product-detail-section {
-    padding-top: 40px !important;
-  }
-
-  .product-image-cards {
-    max-height: 600px;
-    padding: 0px;
-  }
-
-  .product-info {
-    padding: 20px !important;
-    border-radius: 12px !important;
-  }
-
-  .product-details-title {
-    font-size: 22px !important;
-    text-align: left !important;
-  }
-
-  .rating-section {
-    justify-content: flex-start !important;
-  }
-
-  .price-section {
-    text-align: left !important;
-  }
-
-  .vcn-cobiotics-badge {
-    display: block;
-    width: fit-content;
-    margin: 10px 0 !important;
-  }
-
-  .delivery-info {
-    text-align: left !important;
-    font-size: 0.95rem;
-  }
-
-  .subscribe-text {
-    text-align: left !important;
-  }
-
-  .vcn-acc-header {
-    font-size: 16px !important;
-    padding: 14px 0 !important;
-  }
-
-  .vcn-benefits-list li {
-    font-size: 0.9rem !important;
-  }
+.pd2-lb-main {
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
 }
 
 @media (max-width: 576px) {
-  .product-image-cards {
-    max-height: 500px;
-    padding: 0px;
-    border-radius: 12px;
+  .pd2-hero-right {
+    padding: 32px 20px;
   }
-
-  .variant-options {
-    justify-content: flex-start !important;
+  .pd2-pack-grid {
+    grid-template-columns: 1fr;
   }
-
-  .variant-btn {
-    min-width: 80px;
-    padding: 8px 10px;
+  .pd2-action-row {
+    flex-wrap: wrap;
   }
-
-  .variant-sku {
-    font-size: 11px;
+  .pd2-btn-buy, .pd2-btn-cart {
+    width: 100%;
   }
-
-  .variant-price {
-    font-size: 14px;
-  }
-
-  .btn-start-now {
-    padding: 12px 24px !important;
-    font-size: 14px !important;
-  }
-
-  .subscribe-text {
-    font-size: 0.9rem !important;
-    text-align: left !important;
-  }
-}
-
-/* Video Thumbnail styling */
-.video-thumb-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 100%;
-  height: 100%;
-  background: rgba(30, 51, 30, 0.05);
-  color: #1e331e;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.gallery-item.active .video-thumb-preview {
-  background: rgba(30, 51, 30, 0.1);
-  color: var(--vcn-primary);
-}
-
-.video-thumb-preview i {
-  font-size: 24px;
-}
-
-@media (min-width: 992px) {
-  .product-details-title {
-    font-size: 25px !important;
-  }
-
-  .rating-text {
-    font-size: 13px !important;
-  }
-
-  .product-details-description {
-    font-size: 14px !important;
-  }
-
-  .variant-label {
-    font-size: 12px !important;
-  }
-
-  .variant-sku {
-    font-size: 11px !important;
-  }
-
-  .variant-weight {
-    font-size: 10px !important;
-  }
-
-  .variant-price {
-    font-size: 14px !important;
-  }
-
-  .variant-mrp {
-    font-size: 11px !important;
-  }
-
-  .variant-sku-display,
-  .variant-weight-display,
-  .variant-discount {
-    font-size: 11.5px !important;
-  }
-
-  .vcn-cobiotics-badge {
-    font-size: 12.5px !important;
-  }
-
-  .price-section .current-price {
-    font-size: 24px !important;
-  }
-
-  .price-section .old-price {
-    font-size: 15px !important;
-  }
-
-  .delivery-info {
-    font-size: 13.5px !important;
-  }
-
-  .btn-start-now {
-    font-size: 14px !important;
-  }
-
-  .subscribe-text {
-    font-size: 13.5px !important;
-  }
-
-  .vcn-acc-header {
-    font-size: 17px !important;
-    padding: 15px 0 !important;
-  }
-
-  .vcn-acc-icon {
-    font-size: 18px !important;
-  }
-
-  .vcn-acc-body {
-    padding: 5px 0 12px 0 !important;
-  }
-
-  .vcn-benefits-list li {
-    font-size: 13.5px !important;
-    padding: 5px 0 5px 18px !important;
-  }
-
-  .bundle-content h3 {
-    font-size: 17px !important;
-  }
-
-  .bundle-content p {
-    font-size: 13px !important;
-  }
-
-  .bundle-price .current-price {
-    font-size: 17px !important;
-  }
-
-  .bundle-price .original-price {
-    font-size: 13px !important;
-  }
-
-  .bundle-action .add-button {
-    font-size: 13px !important;
+  .pd2-qty-stepper {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 </style>

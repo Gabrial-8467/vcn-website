@@ -271,7 +271,7 @@ const handleSubscribe = async (event) => {
 /* 1400px+ Extra Large Desktop */
 @media (min-width: 1400px) {
   .vcn-footer-section {
-    padding-left: 160px !important;
+    padding-left: 350px !important;
     padding-right: 160px !important;
   }
 }
