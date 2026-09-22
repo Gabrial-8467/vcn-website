@@ -259,6 +259,10 @@ export const useCartStore = defineStore('cart', {
           } else if (this.userId) {
             // Save user cart
             localStorage.setItem(`vcn-user-cart-${this.userId}`, JSON.stringify(cartData))
+          } else {
+            // Logged in but no usable user id (e.g. legacy 'undefined') -
+            // keep items in the guest cart so they are never lost
+            localStorage.setItem('vcn-guest-cart', JSON.stringify({ ...cartData, isGuest: true }))
           }
 
           // Note: Backend sync is now handled per-item via syncItemWithBackend()
@@ -284,6 +288,12 @@ export const useCartStore = defineStore('cart', {
           } else if (this.userId) {
             // Load user cart
             const savedCart = localStorage.getItem(`vcn-user-cart-${this.userId}`)
+            if (savedCart) {
+              cartData = JSON.parse(savedCart)
+            }
+          } else {
+            // Logged in but no usable user id - fall back to the guest cart
+            const savedCart = localStorage.getItem('vcn-guest-cart')
             if (savedCart) {
               cartData = JSON.parse(savedCart)
             }

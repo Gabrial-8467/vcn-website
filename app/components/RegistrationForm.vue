@@ -2,7 +2,7 @@
 <template>
   <ClientOnly>
     <transition name="slide-right" appear>
-      <div class="registration-container" v-if="mounted">
+      <div class="registration-container" :class="{ 'is-modal': isModal }" v-if="mounted">
         <!-- Close Button -->
         <button class="close-btn" @click="$emit('close')">×</button>
 
@@ -198,6 +198,10 @@ const props = defineProps({
   userType: {
     type: String,
     default: 'preferred-customer'
+  },
+  isModal: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -501,6 +505,21 @@ onUnmounted(() => {
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
   z-index: 10000 !important;
   overflow-y: auto;
+}
+
+.registration-container:not(.is-modal) {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+  min-height: 85vh;
+  margin: 0 auto;
+  padding: 20px 0 40px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  overflow: visible;
 }
 
 .close-btn {

@@ -472,4 +472,34 @@ const submitForm = () => {
     margin-left: -8px !important;
     margin-right: -8px !important;
 }
+
+/* Mobile: flush all sections below the form with the navbar gutter */
+@media (max-width: 991.98px) {
+  .row.g-5 > .col-lg-7 {
+    padding-left: 0 !important;
+  }
+
+  .cta-form {
+    padding-left: 0 !important;
+  }
+
+  .mid-consultation-form {
+    padding-left: 0 !important;
+  }
+
+  .mid-stats-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .row.g-4 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .row.g-4 > [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
 </style>

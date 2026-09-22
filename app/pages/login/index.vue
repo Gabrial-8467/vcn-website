@@ -92,20 +92,26 @@
                 <a
                   href="#"
                   class="auth-link-item"
-                  onclick="alert('Use social login or checkout to create account')"
+                  onclick="alert('Create a new account using the link below.')"
                 >
                   Don't have a password?
                 </a>
-
-                <NuxtLink
-                  to="/checkout"
-                  class="auth-link-item"
-                >
-                  Want to create a new account?
-                </NuxtLink>
               </div>
 
             </form>
+
+            <div class="auth-register-section">
+              <h3 class="auth-register-title">Register</h3>
+              <p class="auth-register-subtitle">Choose how you'd like to create your VCN account</p>
+
+              <NuxtLink to="/register" class="auth-register-btn">
+                PREFERRED CUSTOMER
+              </NuxtLink>
+
+              <NuxtLink to="/direct-seller" class="auth-register-btn">
+                DIRECT SELLER / VCN BUSINESS OWNER
+              </NuxtLink>
+            </div>
 
           </div>
         </div>
@@ -124,6 +130,7 @@ useHead({
 import { ref } from 'vue'
 
 const toast = useToast()
+const route = useRoute()
 const { loginWithPersistence } = useAuthCart()
 
 const identifier = ref('')
@@ -151,7 +158,10 @@ const handleLogin = async () => {
       toast.success({
         message: `Welcome back, ${result.user?.userName || 'User'}!`
       })
-      await navigateTo('/')
+      const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/')
+        ? route.query.redirect
+        : '/'
+      await navigateTo(redirect)
     } else {
       errorMessage.value = result.error || 'Login failed. Please try again.'
       toast.error({

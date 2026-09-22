@@ -1,10 +1,10 @@
-<!-- src/views/RegistrationPage.vue -->
 <template>
   <div class="registration-page-wrapper">
-    <RegistrationForm 
+    <RegistrationForm
       :userType="userType"
       :isModal="false"
-      @registrationComplete="handleRegistrationComplete"
+      @close="handleClose"
+      @complete="handleRegistrationComplete"
     />
   </div>
 </template>
@@ -14,6 +14,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import RegistrationForm from '@/components/RegistrationForm.vue'
 
+const toast = useToast()
 const route = useRoute()
 const router = useRouter()
 
@@ -25,8 +26,15 @@ onMounted(() => {
   }
 })
 
+const handleClose = () => {
+  router.push('/login')
+}
+
 const handleRegistrationComplete = (data) => {
-  console.log('✅ Registration completed:', data)
+  toast.success({
+    message: `Welcome, ${data.firstName || 'VCN member'}! You are now registered.`
+  })
+  router.push('/')
 }
 </script>
 

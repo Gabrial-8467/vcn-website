@@ -32,10 +32,14 @@ export const useAuthCart = () => {
 
       if (response && response.success && response.data) {
         const responseData = response.data
+        const rawUser: any = responseData.user || {}
+        const userId = String(
+          rawUser.id ?? rawUser.userId ?? rawUser._id ?? rawUser.customerId ?? rawUser.memberId ?? ''
+        )
         const userObj: User = {
-          id: String(responseData.user.id),
-          userName: responseData.user.userName,
-          email: responseData.user.email
+          id: userId === 'undefined' || userId === 'null' ? '' : userId,
+          userName: rawUser.userName ?? rawUser.name ?? '',
+          email: rawUser.email ?? ''
         }
         const token = responseData.token
 
@@ -89,7 +93,7 @@ export const useAuthCart = () => {
     const isLoggedIn = checkAuthStatus()
 
     const user = authState.value.user
-    if (isLoggedIn && user) {
+    if (isLoggedIn && user && user.id) {
       // User is logged in
       getCartStore().setUser(user.id, false)
       await getCartStore().loadCart()
@@ -109,6 +113,9 @@ export const useAuthCart = () => {
       if (token && userData) {
         try {
           const user = JSON.parse(userData)
+          if (user && (user.id === undefined || user.id === 'undefined' || user.id === 'null')) {
+            user.id = ''
+          }
           authState.value.user = user
           authState.value.isLoggedIn = true
           authState.value.token = token
