@@ -112,22 +112,26 @@ export const ABOUT_PAGE_DATA = {
                     {
                         title: "Our Journey",
                         icon: "bi-bullseye",
-                        iconClass: "icon-journey"
+                        iconClass: "icon-journey",
+                        link: "/our-journey"
                     },
                     {
                         title: "Top News",
                         icon: "bi-globe",
-                        iconClass: "icon-news"
+                        iconClass: "icon-news",
+                        link: "/news"
                     },
                     {
                         title: "Our Brands",
                         icon: "bi-bag",
-                        iconClass: "icon-brands"
+                        iconClass: "icon-brands",
+                        link: "/all-products"
                     },
                     {
                         title: "FAQs",
                         icon: "bi-chat-dots",
-                        iconClass: "icon-faqs"
+                        iconClass: "icon-faqs",
+                        link: "/faqs"
                     }
                 ],
 
@@ -157,7 +161,7 @@ export const ABOUT_PAGE_DATA = {
         },
 
         boardSection: {
-            title: "Board of directors",
+            title: "Board of Directors",
 
             members: [
                 {
@@ -355,17 +359,26 @@ export const ABOUT_PAGE_DATA = {
                 title: "Celebrating Milestones Together",
 
                 description:
-                    "At VCN India, we believe in nurturing talent and celebrating growth while building a strong culture of collaboration and achievement."
+                    "At VCN India, we believe in nurturing talent and celebrating growth while building a strong culture of collaboration and achievement.",
+
+                gallery: [
+                    "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80&w=600&h=800",
+                    "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&q=80&w=600&h=450",
+                    "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600&h=400",
+                    "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=600&h=800"
+                ]
             },
 
             vicePresident: {
                 heading: "Words from our Vice President (HR)",
 
-                image: "/img/careers/vp.png",
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWGrc3whMMuknwA3fR1LwhaPDa-31CY8l-LkqfkeR4WPwKYUpNOq0Ni8at7WB7HGWM9fPWpG10NHMxdoGajqBKgWgwBvwcq2l0Ta6tK1bglCKTzrbtD9patsp_tXLUeyVNqGP1t5z1_-5OHbZpz-9H5RbbUv-qAlnpCgezSVfsD_NZqUhrvND1BQMi18WjvYT7fNwA75FNooRFWFAudZe-MpugQHkjZsj-uKfOQW9Z6mB2hNmQGPR_YnH5gjuPwhXsQLa8HXPJT6w",
 
                 name: "Ritika Malik",
 
                 designation: "Vice President - Human Resources",
+
+                quote: "Culture is the silent heartbeat of VCN. We don't just build careers; we nurture the whole human.",
 
                 messages: [
                     "At VCN, we believe in the power of people. Our vision of helping people live better lives starts with our team. We nurture passion, encourage innovation and provide opportunities for employees to grow and succeed.",

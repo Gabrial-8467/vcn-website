@@ -1,15 +1,5 @@
 // Composable to handle authentication and cart synchronization (client-only)
-
-interface User {
-  id: string
-  mobile: string
-  name: string
-  email: string
-}
-
-interface Credentials {
-  mobile: string
-}
+import type { Credentials, User } from '~/types'
 
 interface AuthState {
   user: User | null
@@ -27,39 +17,46 @@ export const useAuthCart = () => {
   // Get cart store dynamically to avoid circular dependency
   const getCartStore = () => useCartStore()
 
-  // Mock auth state - replace with actual auth implementation
+  // Auth state
   const authState = useState<AuthState>('auth', () => ({
     user: null,
     isLoggedIn: false,
     token: null
   }))
 
-  // Login function
+  // Login function using useAuthApi
   const login = async (credentials: Credentials): Promise<LoginResult> => {
     try {
-      // Mock login - replace with actual auth implementation
-      // For demo purposes, we'll create a mock user
-      const mockUser = {
-        id: 'user_' + Date.now(),
-        mobile: credentials.mobile,
-        name: 'Test User',
-        email: 'test@example.com'
+      const authApi = useAuthApi()
+      const response = await authApi.login(credentials)
+
+      if (response && response.success && response.data) {
+        const responseData = response.data
+        const userObj: User = {
+          id: String(responseData.user.id),
+          userName: responseData.user.userName,
+          email: responseData.user.email
+        }
+        const token = responseData.token
+
+        // Update auth state
+        authState.value.user = userObj
+        authState.value.isLoggedIn = true
+        authState.value.token = token
+
+        // Save auth data to localStorage for persistence
+        saveAuthData(userObj, token)
+
+        // Handle cart login (merge guest cart with user cart)
+        await getCartStore().handleUserLogin(userObj.id)
+
+        return { success: true, user: userObj }
       }
 
-      const mockToken = 'mock_token_' + Date.now()
-
-      // Update auth state
-      authState.value.user = mockUser
-      authState.value.isLoggedIn = true
-      authState.value.token = mockToken
-
-      // Handle cart login (merge guest cart with user cart)
-      await getCartStore().handleUserLogin(mockUser.id)
-
-      return { success: true, user: mockUser }
-    } catch (error) {
+      return { success: false, error: response?.message || 'Login failed' }
+    } catch (error: any) {
       console.error('Login error:', error)
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' }
+      return { success: false, error: error?.message || 'Unknown error occurred' }
     }
   }
 

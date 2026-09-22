@@ -57,6 +57,7 @@ onBeforeUnmount(() => {
          actually sticks, so the nav links pin near the top while the
          beige panel itself continues all the way to the bottom of the
          content column — no empty gap underneath. -->
+    <!-- Desktop Sidebar (visible on screens >= 768px) -->
     <div class="about-sidebar-bg d-none d-lg-flex">
       <div class="about-sidebar-wrapper">
         <div class="sidebar-top-section">
@@ -76,7 +77,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <!-- Mobile Dropdown Selector (visible on screens < 992px) -->
+    <!-- Mobile Dropdown Selector (visible on screens < 768px) -->
     <div class="about-sidebar-mobile d-lg-none" ref="dropdownRef">
       <div class="mobile-dropdown-wrapper">
         <button
@@ -156,14 +157,14 @@ onBeforeUnmount(() => {
 }
 
 .about-sidebar-wrapper {
-  background: transparent; /* background now lives on .about-sidebar-bg */
-  padding: 45px 30px;
-  width: 100%;
-  position: sticky;
-  top: 120px;               /* adjust to match your fixed header height */
-  height: fit-content;      /* critical: do NOT let this stretch full height */
-  align-self: flex-start;   /* critical: stops flex from stretching it */
-  z-index: 10;
+  background: transparent !important; /* background now lives on .about-sidebar-bg */
+  padding: 45px 30px !important;
+  width: 100% !important;
+  position: sticky !important;
+  top: 120px !important;               /* adjust to match your fixed header height */
+  height: fit-content !important;      /* critical: do NOT let this stretch full height */
+  align-self: flex-start !important;   /* critical: stops flex from stretching it */
+  z-index: 10 !important;
 }
 
 .sidebar-top-section {
@@ -227,7 +228,8 @@ onBeforeUnmount(() => {
   justify-content: flex-end;
   width: 100%;
   padding: 12px 20px;
-  background: #EBDFD1;
+  background: var(--vcn-white, #fff);
+  border-bottom: 1px solid rgba(29, 69, 3, 0.08);
   position: relative;
   z-index: 100;
 }
@@ -272,7 +274,8 @@ onBeforeUnmount(() => {
 
   min-width: 240px;
 
-  background: #EBDFD1;
+  background: var(--vcn-white, #fff);
+  border: 1px solid rgba(29, 69, 3, 0.08);
   border-radius: 12px;
   overflow: hidden;
 
@@ -343,29 +346,30 @@ onBeforeUnmount(() => {
 
 @media (min-width: 992px) {
   .product-detail-section .row {
-    display: flex;
-    align-items: stretch; /* forces both columns to equal height */
+    display: flex !important;
+    align-items: stretch !important; /* forces both columns to equal height */
   }
 
   .sidebar-section {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;     /* match the height of the content column */
-    position: relative;
-    overflow: visible;       /* must stay visible or sticky breaks */
-    transform: none;
-    background: transparent;
-    padding-top: 0;
-    padding-left: 0;
-    padding-right: 0;
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: stretch !important;     /* match the height of the content column */
+    position: relative !important;
+    overflow: visible !important;       /* must stay visible or sticky breaks */
+    transform: none !important;
+    background: transparent !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    height: auto !important;            /* overrides default fixed height */
   }
 
   /* Ensure no ancestor clips the sticky context */
   .product-detail-section,
   .product-detail-section > .container-fluid,
   .product-detail-section .row {
-    overflow: visible;
-    transform: none;
+    overflow: visible !important;
+    transform: none !important;
   }
 }
 

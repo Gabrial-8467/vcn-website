@@ -263,49 +263,56 @@ export default {
 .vcn-human-section {
   box-sizing: border-box;
   width: 100%;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-}
-
-@media (max-width: 991.98px) {
-  .vcn-human-section {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-  }
-}
-
-@media (max-width: 767.98px) {
-  .vcn-human-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-}
-
-@media (max-width: 575.98px) {
-  .vcn-human-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 379.98px) {
-  .vcn-human-section {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-}
-
-@media (min-width: 1200px) {
-  .vcn-human-section {
-    padding-left: 80px !important;
-    padding-right: 80px !important;
-  }
+  padding-left: 40px !important;
+  padding-right: 40px !important;
 }
 
 @media (min-width: 1400px) {
   .vcn-human-section {
     padding-left: 160px !important;
     padding-right: 160px !important;
+  }
+}
+
+@media (max-width: 1399.98px) and (min-width: 1200px) {
+  .vcn-human-section {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+@media (max-width: 1199.98px) and (min-width: 992px) {
+  .vcn-human-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (max-width: 991.98px) and (min-width: 768px) {
+  .vcn-human-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (max-width: 767.98px) and (min-width: 576px) {
+  .vcn-human-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 575.98px) and (min-width: 480px) {
+  .vcn-human-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 479.98px) {
+  .vcn-human-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }
 
@@ -443,6 +450,13 @@ export default {
     display: inline-block !important;
     width: 100% !important;
     box-sizing: border-box !important;
+  }
+}
+
+/* Tiny screens: single column so disease cards don't get crushed */
+@media (max-width: 380px) {
+  .disease-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 </style>

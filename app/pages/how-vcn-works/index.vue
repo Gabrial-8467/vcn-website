@@ -4,12 +4,12 @@
       <div class="row g-0">
 
         <!-- Sidebar -->
-        <div class="col-md-3 col-lg-3 sidebar-section">
+        <div class="col-lg-3 sidebar-section">
           <AboutSidebar />
         </div>
 
         <!-- Main Content -->
-        <div class="col-md-9 col-lg-9">
+        <div class="col-lg-9">
 
           <!-- Hero Image -->
           <img

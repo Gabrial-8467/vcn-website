@@ -35,16 +35,18 @@
               or
             </div>
 
-            <form>
+            <form @submit.prevent="handleLogin">
 
               <div class="auth-field-group">
                 <label class="auth-field-label">
-                  Email
+                  Username / Email
                 </label>
 
                 <input
-                  type="email"
+                  v-model="identifier"
+                  type="text"
                   class="auth-input-field"
+                  autocomplete="username"
                   required
                 />
               </div>
@@ -55,17 +57,27 @@
                 </label>
 
                 <input
+                  v-model="password"
                   type="password"
                   class="auth-input-field"
+                  autocomplete="current-password"
                   required
                 />
               </div>
 
+              <p
+                v-if="errorMessage"
+                class="auth-error-message"
+              >
+                {{ errorMessage }}
+              </p>
+
               <button
                 type="submit"
                 class="auth-submit-button"
+                :disabled="isLoading"
               >
-                Sign In
+                {{ isLoading ? 'Signing in...' : 'Sign In' }}
               </button>
 
               <div class="auth-help-links">
@@ -108,4 +120,51 @@ useHead({
     class: "product-details-page"
   }
 })
+
+import { ref } from 'vue'
+
+const toast = useToast()
+const { loginWithPersistence } = useAuthCart()
+
+const identifier = ref('')
+const password = ref('')
+const errorMessage = ref('')
+const isLoading = ref(false)
+
+const handleLogin = async () => {
+  errorMessage.value = ''
+
+  if (!identifier.value || !password.value) {
+    errorMessage.value = 'Please enter your username/email and password.'
+    return
+  }
+
+  isLoading.value = true
+
+  try {
+    const result = await loginWithPersistence({
+      identifier: identifier.value,
+      password: password.value
+    })
+
+    if (result.success) {
+      toast.success({
+        message: `Welcome back, ${result.user?.userName || 'User'}!`
+      })
+      await navigateTo('/')
+    } else {
+      errorMessage.value = result.error || 'Login failed. Please try again.'
+      toast.error({
+        message: errorMessage.value
+      })
+    }
+  } catch (error) {
+    errorMessage.value = error?.message || 'Login failed. Please try again.'
+    toast.error({
+      message: errorMessage.value
+    })
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>

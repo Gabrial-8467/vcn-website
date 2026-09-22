@@ -44,7 +44,8 @@ const about = computed(() => {
       parsedMoreAboutItems = navItems.map(item => ({
         title: item.extraData?.title || item.title || '',
         icon: item.extraData?.icon || item.icon || 'bi-bullseye',
-        iconClass: item.extraData?.iconClass || 'icon-journey'
+        iconClass: item.extraData?.iconClass || 'icon-journey',
+        link: item.extraData?.link || item.link || ''
       }))
     }
     const ctaItems = moreAboutSec.items.filter(i => i.name?.startsWith('cta-card'))
@@ -89,7 +90,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 <template>
   <section class="product-detail-section mt-3">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row g-0">
 
         <!-- Sidebar -->
@@ -143,10 +144,10 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
               <!-- 4 small icon cards in 2x2 grid -->
               <div class="row g-2 ab-grid-cards">
                 <div v-for="(item, i) in moreAbout.items" :key="i" class="col-6">
-                  <div class="ab-grid-card">
+                  <NuxtLink :to="item.link" class="ab-grid-card">
                     <i class="bi" :class="item.icon"></i>
                     <span>{{ item.title }}</span>
-                  </div>
+                  </NuxtLink>
                 </div>
               </div>
 
@@ -206,10 +207,10 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
             <h2 class="ab-more-dark-h">{{ moreAbout.heading }}</h2>
             <div class="row g-3 justify-content-center">
               <div v-for="(item, i) in moreAbout.items" :key="i" class="col-6 col-md-3">
-                <div class="ab-more-nav-card">
+                <NuxtLink :to="item.link" class="ab-more-nav-card">
                   <i class="bi" :class="item.icon"></i>
                   <span>{{ item.title }}</span>
-                </div>
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -222,11 +223,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
                     <i class="bi" :class="card.icon"></i>
                   </div>
                   <h3 class="ab-cta-title">{{ card.title }}</h3>
-                  <p v-if="i === 0" class="ab-cta-desc">Take our wellness quiz to find the perfect supplements and
-                    routines for your unique lifestyle.</p>
-                  <p v-else class="ab-cta-desc">Join our network of partners and build a sustainable business while
-                    promoting health and happiness.</p>
-                  <a href="#" class="ab-cta-btn-link">{{ card.buttonText }} ↗</a>
+                  <NuxtLink to="/all-products" class="ab-cta-btn-link">{{ card.buttonText }} ↗</NuxtLink>
                 </div>
               </div>
             </div>
@@ -269,6 +266,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 16px;
+  margin: 24px;
 }
 
 .ab-hero-bg {
@@ -303,7 +302,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 .ab-eyebrow {
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 12px;
   color: var(--vcn-badge, #d3fa99);
   letter-spacing: 1px;
   margin-bottom: 10px;
@@ -404,14 +403,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-welcome-title {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   margin-bottom: 10px;
   color: var(--vcn-badge, #d3fa99);
 }
 
 .ab-welcome-text {
-  font-size: 0.82rem;
+  font-size: 16px !important;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
@@ -439,6 +438,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-grid-card {
+  text-decoration: none !important;
   background: var(--vcn-base-bg, #F6F7EE);
   border-radius: 10px;
   padding: 14px 12px;
@@ -487,8 +487,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 .ab-tag {
   display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 400;
   letter-spacing: 2px;
   color: var(--vcn-dark, #1D4503);
   opacity: 0.55;
@@ -497,15 +497,15 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-section-h {
-  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin-bottom: 20px;
   line-height: 1.2;
 }
 
 .ab-para {
-  font-size: 0.96rem;
+  font-size: 16px !important;
   line-height: 1.85;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.85;
@@ -550,8 +550,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 .ab-story-title {
   text-align: center;
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin-bottom: 10px;
 }
@@ -580,15 +580,15 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-story-year {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-dark, #1D4503);
   margin-bottom: 4px;
 }
 
 .ab-story-phase {
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 400;
   color: var(--vcn-primary, #5E6C1F);
   letter-spacing: 0.5px;
   margin-bottom: 14px;
@@ -596,7 +596,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-story-desc {
-  font-size: 0.9rem;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.8;
@@ -640,8 +640,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-info-h {
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin-bottom: 12px;
   display: flex;
@@ -650,7 +650,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-info-p {
-  font-size: 0.95rem;
+  font-size: 16px !important;
   line-height: 1.80;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.8;
@@ -665,13 +665,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
 .ab-more-dark-h {
   text-align: center;
-  font-size: 1.7rem;
-  font-weight: 600;
+  font-size: 48px;
+  font-weight: 400;
   color: var(--vcn-white, #fff);
   margin-bottom: 36px;
 }
 
 .ab-more-nav-card {
+  text-decoration: none !important;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
@@ -681,8 +682,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   align-items: center;
   gap: 12px;
   color: var(--vcn-white, #fff);
-  font-size: 0.88rem;
-  font-weight: 500;
+  font-size: 16px !important;
+  font-weight: 400 !important;
   text-align: center;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -743,14 +744,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 }
 
 .ab-cta-title {
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin: 0;
 }
 
 .ab-cta-desc {
-  font-size: 0.9rem;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--vcn-darker, #1C3A13);
   opacity: 0.8;
@@ -766,8 +767,8 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   color: var(--vcn-white, #fff);
   border-radius: 50px;
   padding: 10px 22px;
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 16px !important;
+  font-weight: 400 !important;
   text-decoration: none;
   width: fit-content;
   transition: all 0.25s ease;
@@ -864,11 +865,11 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   .ab-info-cols,
   .ab-more-dark,
   .ab-cta-section {
-    padding: 40px 20px;
+    padding: 40px 0 !important;
   }
 
   .ab-mission-visual {
-    padding-left: 20px;
+    padding-left: 0 !important;
   }
 
   .ab-right-panel {
@@ -876,11 +877,13 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
     border-top: 1px solid rgba(29, 69, 3, 0.08);
   }
   .ab-top-row {
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        /* Ensure the width takes this padding into account */
-        box-sizing: border-box;
-    }
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box;
+  }
+  .ab-hero {
+    margin: 20px 0 10px 0;
+  }
 }
 
 @media (max-width: 767.98px) {
@@ -935,7 +938,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   ===========================================================
 */
 .product-detail-section,
-.product-detail-section .container-fluid,
+.product-detail-section .container,
 .product-detail-section .row {
   overflow: visible !important;
   transform: none !important;
@@ -972,9 +975,9 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
     margin-top: 0 !important;
   }
 
-  .product-detail-section>.container-fluid {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  .product-detail-section>.container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   .product-detail-section .row {

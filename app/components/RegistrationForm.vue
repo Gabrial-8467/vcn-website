@@ -10,10 +10,10 @@
         <div v-if="step === 'welcome'" class="step-content welcome-step">
           <h1 class="welcome-title">Welcome!</h1>
           <p class="welcome-text">
-            Let's start your journey with Amway by getting you onboard.
+            Let's start your journey with VCN by getting you onboard.
           </p>
           <p class="requirements-text">
-            You must be at least 18 years old and an Indian citizen to register with Amway India.
+            You must be at least 18 years old and an Indian citizen to register with VCN India.
           </p>
           <button class="btn-register" @click="step = 'form'">
             REGISTER
@@ -34,6 +34,21 @@
               <input type="text" id="firstName" v-model="form.firstName" placeholder="As per ID proof"
                 class="form-input" />
               <span v-if="errors.firstName" class="error">{{ errors.firstName }}</span>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" v-model="form.lastName" placeholder="As per ID proof"
+                class="form-input" />
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+              <label for="username">Username <span class="required">*</span></label>
+              <input type="text" id="username" v-model="form.username" placeholder="Choose a username"
+                class="form-input" />
+              <span v-if="errors.username" class="error">{{ errors.username }}</span>
             </div>
 
             <!-- Email Address -->
@@ -61,8 +76,17 @@
               <div class="pwd-wrap">
                 <input :type="showPwd ? 'text' : 'password'" id="password" v-model="form.password"
                   placeholder="Example - My@password1" class="form-input" />
-                <button type="button" class="toggle-pwd" @click="showPwd = !showPwd">
-                  {{ showPwd ? '🙈' : '👁️' }}
+                <button type="button" class="toggle-pwd" @click="showPwd = !showPwd" aria-label="Toggle password visibility">
+                  <svg v-if="showPwd" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                    <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                    <line x1="2" y1="2" x2="22" y2="22" />
+                  </svg>
                 </button>
               </div>
               <span class="hint">Example - My@password1</span>
@@ -72,8 +96,8 @@
             <!-- Know an ABO? -->
             <div class="form-group">
               <label class="abo-label">
-                Do you know an Amway Business Owner (ABO)? <span class="required">*</span>
-                <span class="info-icon" title="Amway Business Owner">ⓘ</span>
+                Do you know an VCN Business Owner (VBO)? <span class="required">*</span>
+                <span class="info-icon" title="VCN Business Owner">ⓘ</span>
               </label>
               <div class="radio-group">
                 <label class="radio-label">
@@ -122,7 +146,7 @@
                 <strong>Mobile verification</strong>
               </label>
               <p class="otp-text">
-                Amway verification number sent to +91 {{ form.mobile }}
+                VCN verification number sent to +91 {{ form.mobile }}
               </p>
 
               <div class="otp-inputs">
@@ -144,6 +168,7 @@
             </div>
 
             <!-- Submit Button -->
+            <div v-if="apiError" class="form-api-error">{{ apiError }}</div>
             <button type="submit" class="btn-submit" :disabled="isSubmitting">
               {{ isSubmitting ? 'SUBMITTING...' : 'SUBMIT' }}
             </button>
@@ -155,7 +180,7 @@
           <div class="success-icon">✓</div>
           <h2 class="success-title">Registration Successful! 🎉</h2>
           <p class="success-text">
-            Welcome to Amway! Your registration has been completed successfully.
+            Welcome to VCN! Your registration has been completed successfully.
           </p>
           <button class="btn-continue" @click="$emit('complete', form)">
             CONTINUE TO SHOPPING
@@ -169,7 +194,16 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 
+const props = defineProps({
+  userType: {
+    type: String,
+    default: 'preferred-customer'
+  }
+})
+
 const emit = defineEmits(['close', 'complete'])
+
+const toast = useToast()
 
 // State
 const mounted = ref(false)
@@ -184,11 +218,14 @@ const canResend = ref(false)
 const countdown = ref(30)
 const pincodeVerified = ref(false)
 const locationText = ref('')
+const apiError = ref('')
 let countdownInterval = null
 
 // Form Data
 const form = reactive({
   firstName: '',
+  lastName: '',
+  username: '',
   email: '',
   mobile: '',
   password: '',
@@ -344,6 +381,14 @@ const validateForm = () => {
     isValid = false
   }
 
+  if (!form.username.trim()) {
+    errors.username = 'Username is required'
+    isValid = false
+  } else if (form.username.trim().length < 3) {
+    errors.username = 'Username must be at least 3 characters'
+    isValid = false
+  }
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!form.email.trim() || !emailRegex.test(form.email)) {
     errors.email = 'Please enter valid email address'
@@ -382,14 +427,8 @@ const validateForm = () => {
   }
 
   const otpValue = otp.value.join('')
-  if (!otpSent.value) {
-    errors.mobile = 'Please enter mobile number to receive OTP'
-    isValid = false
-  } else if (otpValue.length !== 6) {
+  if (otpSent.value && otpValue.length !== 6) {
     otpError.value = 'Please enter complete 6-digit OTP'
-    isValid = false
-  } else if (otpValue !== '123456') {
-    otpError.value = 'Invalid OTP. Please use 123456 for demo.'
     isValid = false
   }
 
@@ -397,7 +436,7 @@ const validateForm = () => {
 }
 
 // Form Submit
-const submitForm = () => {
+const submitForm = async () => {
   if (!validateForm()) {
     const firstError = document.querySelector('.error')
     firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -405,12 +444,44 @@ const submitForm = () => {
   }
 
   isSubmitting.value = true
+  apiError.value = ''
 
-  setTimeout(() => {
-    console.log('✅ Registration Complete:', { ...form, otp: otp.value.join('') })
-    step.value = 'success'
+  const membershipType = props.userType === 'abo' ? 'ABO' : 'PREFERRED_CUSTOMER'
+  const payload = {
+    firstName: form.firstName,
+    lastName: form.lastName,
+    email: form.email,
+    phone: form.mobile,
+    password: form.password,
+    confirmPassword: form.password,
+    sponsorUsername: form.aboNumber,
+    desiredMembershipType: membershipType,
+    placementPreference: 'LEFT'
+  }
+
+  try {
+    const authApi = useAuthApi()
+    const response = await authApi.register(payload)
+
+    if (response && response.success) {
+      toast.success({
+        message: response.message || 'Registration successful!'
+      })
+      step.value = 'success'
+    } else {
+      apiError.value = response?.message || 'Registration failed. Please try again.'
+      toast.error({
+        message: apiError.value
+      })
+    }
+  } catch (error) {
+    apiError.value = error?.message || 'Registration failed. Please try again.'
+    toast.error({
+      message: apiError.value
+    })
+  } finally {
     isSubmitting.value = false
-  }, 1500)
+  }
 }
 
 onUnmounted(() => {
@@ -569,6 +640,17 @@ onUnmounted(() => {
   color: #e74c3c;
 }
 
+.form-api-error {
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: #e74c3c;
+  text-align: center;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
 /* Mobile Input */
 .mobile-wrap {
   display: flex;
@@ -594,15 +676,28 @@ onUnmounted(() => {
   position: relative;
 }
 
+.pwd-wrap .form-input {
+  padding-right: 45px;
+}
+
 .toggle-pwd {
   position: absolute;
-  right: 12px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888888;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.toggle-pwd:hover {
+  color: var(--vcn-primary);
 }
 
 /* Radio Group */

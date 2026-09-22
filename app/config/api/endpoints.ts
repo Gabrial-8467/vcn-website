@@ -7,6 +7,7 @@ export const API_ENDPOINTS = {
   // Form submission endpoints
   SUBSCRIBE: 'common/subscribe/create',
   CONTACT_US: 'common/contact-us/create',
+  DIRECT_SELLER_CREATE: 'common/direct-seller/create',
 
   // Cart endpoints
   CART_CREATE: 'common/cart/create',
@@ -14,6 +15,10 @@ export const API_ENDPOINTS = {
   CART_UPDATE: 'common/cart/update',
   CART_DELETE_ITEM: 'common/cart/delete/item',
   CART_CLEAR: 'common/cart/delete/clear',
+
+  // Auth endpoints
+  LOGIN: 'users/auth/login',
+  REGISTER: 'users/auth/register',
 
   // Review endpoints
   REVIEW_CREATE: 'users/product-reviews/create',

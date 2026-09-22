@@ -129,15 +129,47 @@
           </ul>
         </div>
 
-        <div class="nav-right-wrapper d-none d-lg-flex align-items-center">
-          <NuxtLink to="#" class="login-link" @click.prevent="openForm">Login</NuxtLink>
+        <div class="nav-right-wrapper d-none d-lg-flex align-items-center gap-3">
+          <template v-if="authState.isLoggedIn">
+            <div class="user-dropdown-wrapper">
+              <span class="user-greeting">
+                <span class="user-avatar">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                Hi, {{ authState.user?.userName || 'User' }}
+              </span>
+              <div class="user-dropdown-menu">
+                <div class="user-info-header">
+                  <span class="user-email">{{ authState.user?.email }}</span>
+                </div>
+                <hr class="dropdown-divider" />
+                <a href="https://user.mlm.vcarenetwork.in/auth/login" target="_blank" class="dropdown-link panel-action">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="panel-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                  </svg>
+                  Your Direct Seller Panel
+                </a>
+                <hr class="dropdown-divider" />
+                <NuxtLink to="#" class="dropdown-link logout-action" @click.prevent="handleLogout">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="logout-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                  </svg>
+                  Logout
+                </NuxtLink>
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <NuxtLink to="#" class="login-link" @click.prevent="openForm">Login</NuxtLink>
+          </template>
           <NuxtLink to="/cart" class="navbar-btn">
             Cart
             <ClientOnly>
               <span v-if="cartStore.cartCount > 0" class="cart-count-badge">{{ cartStore.cartCount }}</span>
             </ClientOnly>
           </NuxtLink>
-
         </div>
 
         <!-- Sign In Modal (Teleport to body for proper stacking) -->
@@ -157,8 +189,8 @@
 
                 <form @submit.prevent="handleLogin">
                   <div class="form-group">
-                    <label for="mobile">Mobile Number</label>
-                    <input type="tel" id="mobile" v-model="formData.mobile" placeholder="+91" class="form-input">
+                    <label for="login-identifier">Username, Email, or Mobile Number</label>
+                    <input type="text" id="login-identifier" v-model="formData.identifier" placeholder="Username, email, or mobile" class="form-input">
                   </div>
 
                   <div class="form-group">
@@ -166,15 +198,28 @@
                     <div class="password-wrapper">
                       <input :type="showPassword ? 'text' : 'password'" id="password" v-model="formData.password"
                         placeholder="Password" class="form-input">
-                      <button type="button" class="toggle-password" @click="showPassword = !showPassword">
-                        {{ showPassword ? '🙈' : '👁️' }}
+                      <button type="button" class="toggle-password" @click="showPassword = !showPassword" aria-label="Toggle password visibility">
+                        <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                          <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                          <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                          <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                          <line x1="2" y1="2" x2="22" y2="22" />
+                        </svg>
                       </button>
                     </div>
                   </div>
 
                   <NuxtLink to="#" class="forgot-password">Forgot Password</NuxtLink>
 
-                  <button type="submit" class="signin-btn">SIGN IN</button>
+                  <div v-if="loginError" class="login-error-message text-danger mb-3">{{ loginError }}</div>
+
+                  <button type="submit" class="signin-btn" :disabled="isLoggingIn">
+                    {{ isLoggingIn ? 'SIGNING IN...' : 'SIGN IN' }}
+                  </button>
 
                   <div class="social-login">
                     <p>Sign in with</p>
@@ -193,9 +238,7 @@
                     <button type="button" class="register-btn" @click="openRegistration('preferred-customer')">
                       PREFERRED CUSTOMER
                     </button>
-                    <button type="button" class="register-btn" @click="openRegistration('abo')">
-                      VCN BUSINESS OWNER
-                    </button>
+                    <button type="button" class="register-btn" @click="openDirectSeller">DIRECT SELLER / VCN BUSINESS OWNER</button>
                   </div>
 
                   <div class="footer-links">
@@ -227,8 +270,16 @@
             <li class="nav-item">
               <NuxtLink class="nav-link" to="#" onclick="toggleAccordion(event, 'learnAccordion')">About</NuxtLink>
             </li>
-            <li class="nav-item">
-              <NuxtLink class="nav-link" to="login">Login</NuxtLink>
+            <template v-if="authState.isLoggedIn">
+              <li class="nav-item">
+                <a class="nav-link" href="https://user.mlm.vcarenetwork.in/auth/login" target="_blank" @click="closeMobileMenu">Your Direct Seller Panel</a>
+              </li>
+              <li class="nav-item">
+                <NuxtLink class="nav-link" to="#" @click.prevent="handleLogout">Logout ({{ authState.user?.userName || 'User' }})</NuxtLink>
+              </li>
+            </template>
+            <li class="nav-item" v-else>
+              <NuxtLink class="nav-link" to="/login">Login</NuxtLink>
             </li>
           </ul>
 
@@ -315,9 +366,10 @@ const cartStore = useCartStore()
 const { getFromEndpoint } = useApi()
 
 // Auth cart composable
-const { authState, initializeCart } = useAuthCart()
+const { authState, loginWithPersistence, logoutWithCleanup, initializeCart } = useAuthCart()
 
 const route = useRoute()
+const router = useRouter()
 
 // Close mobile menu helper
 const closeMobileMenu = () => {
@@ -390,7 +442,7 @@ onMounted(() => {
 const isOpen = ref(false)
 const showPassword = ref(false)
 const formData = reactive({
-  mobile: '',
+  identifier: '',
   password: ''
 })
 
@@ -403,13 +455,48 @@ const closeForm = () => {
   isOpen.value = false
   document.body.style.overflow = ''
   // Reset form
-  formData.mobile = ''
+  formData.identifier = ''
   formData.password = ''
 }
 
-const handleLogin = () => {
-  console.log('Login:', formData)
-  // Add your login logic here
+const isLoggingIn = ref(false)
+const loginError = ref('')
+
+const handleLogin = async () => {
+  if (!formData.identifier || !formData.password) {
+    loginError.value = 'Please enter both identifier and password.'
+    return
+  }
+
+  isLoggingIn.value = true
+  loginError.value = ''
+
+  try {
+    const result = await loginWithPersistence({
+      identifier: formData.identifier,
+      password: formData.password
+    })
+
+    if (result.success) {
+      closeForm()
+    } else {
+      loginError.value = result.error || 'Login failed. Please check your credentials.'
+    }
+  } catch (err) {
+    console.error('Login submit error:', err)
+    loginError.value = 'An unexpected error occurred during login.'
+  } finally {
+    isLoggingIn.value = false
+  }
+}
+
+const handleLogout = async () => {
+  try {
+    await logoutWithCleanup()
+    closeMobileMenu()
+  } catch (err) {
+    console.error('Logout error:', err)
+  }
 }
 
 const showRegistration = ref(false)
@@ -418,6 +505,11 @@ const selectedUserType = ref('preferred-customer')
 const openRegistration = (type) => {
   selectedUserType.value = type
   showRegistration.value = true
+}
+
+const openDirectSeller = () => {
+  closeForm()
+  router.push('/direct-seller')
 }
 
 const handleRegistrationComplete = (data) => {
@@ -1327,19 +1419,27 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   }
 }
 
-  /* Large screens only */
-  @media (min-width: 992px) {
-    .navbar {
-      padding-left: 80px !important;
-      padding-right: 80px !important;
-    }
-  }
-
   /* Extra Large screens */
   @media (min-width: 1400px) {
     .navbar {
       padding-left: 160px !important;
       padding-right: 160px !important;
+    }
+  }
+
+  /* Laptop/Desktop 1200-1399 */
+  @media (max-width: 1399.98px) and (min-width: 1200px) {
+    .navbar {
+      padding-left: 40px !important;
+      padding-right: 40px !important;
+    }
+  }
+
+  /* Tablet Landscape 992-1199 */
+  @media (max-width: 1199.98px) and (min-width: 992px) {
+    .navbar {
+      padding-left: 30px !important;
+      padding-right: 30px !important;
     }
   }
 
@@ -1548,14 +1648,6 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       color: white;
     }
 
-    /* Large screens only */
-    @media (min-width: 992px) {
-      .navbar {
-        padding-left: 80px !important;
-        padding-right: 80px !important;
-      }
-    }
-
     /* Extra Large screens */
     @media (min-width: 1400px) {
       .navbar {
@@ -1564,68 +1656,103 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       }
     }
 
-    /* ========== PRODUCT DETAILS PAGE OVERRIDES ========== */
-
-    /* Desktop Nav Links - Green on product details page */
-    .product-details-page .desktop-nav .nav-link {
-      color: var(--vcn-footer) !important;
-      /* Green color */
+    /* Laptop/Desktop 1200-1399 */
+    @media (max-width: 1399.98px) and (min-width: 1200px) {
+      .navbar {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+      }
     }
 
-    .product-details-page .desktop-nav .nav-link:hover {
+    /* Tablet Landscape 992-1199 */
+    @media (max-width: 1199.98px) and (min-width: 992px) {
+      .navbar {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+      }
+    }
+
+    /* ========== PRODUCT DETAILS & DIRECT SELLER PAGE OVERRIDES ========== */
+
+    /* Navbar background and compact height on direct-seller page */
+    .direct-seller-page .navbar {
+      padding: 10px 20px !important;
+    }
+
+    .direct-seller-page .navbar:not(.scrolled) {
+      background: #f7f9f4 !important;
+    }
+
+    /* Desktop Nav Links - Green on light background pages */
+    .product-details-page .desktop-nav .nav-link,
+    .direct-seller-page .desktop-nav .nav-link {
+      color: var(--vcn-footer) !important;
+    }
+
+    .product-details-page .desktop-nav .nav-link:hover,
+    .direct-seller-page .desktop-nav .nav-link:hover {
       background: rgba(90, 90, 90, 0.15) !important;
-      /* Green tinted background */
       backdrop-filter: blur(10px);
       color: var(--vcn-footer) !important;
     }
 
-    /* Mobile Nav Links - Green on product details page */
-    .product-details-page .navbar-nav .nav-link {
+    /* Mobile Nav Links - Green on light background pages */
+    .product-details-page .navbar-nav .nav-link,
+    .direct-seller-page .navbar-nav .nav-link {
       color: var(--vcn-footer) !important;
       border-color: var(--vcn-footer) !important;
     }
 
-    .product-details-page .navbar-nav .nav-link.active {
+    .product-details-page .navbar-nav .nav-link.active,
+    .direct-seller-page .navbar-nav .nav-link.active {
       background: rgba(40, 167, 69, 0.25) !important;
       border-color: var(--vcn-footer) !important;
     }
 
     /* When scrolled - Links become WHITE */
-    .product-details-page .navbar.scrolled .desktop-nav .nav-link {
+    .product-details-page .navbar.scrolled .desktop-nav .nav-link,
+    .direct-seller-page .navbar.scrolled .desktop-nav .nav-link {
       color: #fff !important;
     }
 
-    .product-details-page .navbar.scrolled .desktop-nav .nav-link:hover {
+    .product-details-page .navbar.scrolled .desktop-nav .nav-link:hover,
+    .direct-seller-page .navbar.scrolled .desktop-nav .nav-link:hover {
       background: rgba(255, 255, 255, 0.15) !important;
       color: #fff !important;
     }
 
     /* Nav Actions - Login Link GREEN */
-    .product-details-page .login-link {
+    .product-details-page .login-link,
+    .direct-seller-page .login-link {
       color: var(--vcn-footer) !important;
     }
 
-    .product-details-page .login-link:hover {
+    .product-details-page .login-link:hover,
+    .direct-seller-page .login-link:hover {
       color: var(--vcn-footer) !important;
     }
 
     /* Button GREEN background */
-    .product-details-page .navbar-btn {
+    .product-details-page .navbar-btn,
+    .direct-seller-page .navbar-btn {
       background: var(--vcn-footer) !important;
       color: white !important;
     }
 
     /* When scrolled - Button becomes WHITE with green text */
-    .product-details-page .navbar.scrolled .login-link {
+    .product-details-page .navbar.scrolled .login-link,
+    .direct-seller-page .navbar.scrolled .login-link {
       color: #fff !important;
     }
 
-    .product-details-page .navbar.scrolled .navbar-btn {
+    .product-details-page .navbar.scrolled .navbar-btn,
+    .direct-seller-page .navbar.scrolled .navbar-btn {
       background: #fff !important;
       color: var(--vcn-footer) !important;
     }
 
-    .product-details-page .navbar.scrolled .navbar-btn:hover {
+    .product-details-page .navbar.scrolled .navbar-btn:hover,
+    .direct-seller-page .navbar.scrolled .navbar-btn:hover {
       background: var(--vcn-white) !important;
     }
 
@@ -1753,7 +1880,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 30px;
+    font-size: 40px !important;
     background: none;
     border: none;
     cursor: pointer;
@@ -1805,15 +1932,28 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     position: relative;
   }
 
+  .password-wrapper .form-input {
+    padding-right: 45px;
+  }
+
   .toggle-password {
     position: absolute;
-    right: 12px;
+    right: 14px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888888;
+    padding: 0;
+    transition: color 0.2s ease;
+  }
+
+  .toggle-password:hover {
+    color: var(--vcn-primary);
   }
 
   .forgot-password {
@@ -2060,4 +2200,203 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     transition: none !important;
   }
 
+  .user-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 0;
+  }
+
+  .user-greeting {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--vcn-white);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.3s, color 0.3s;
+  }
+
+  .user-greeting:hover {
+    opacity: 0.8;
+  }
+
+  /* Cart and checkout pages (white background) */
+  body.cart-page .user-greeting,
+  body.checkout-page .user-greeting {
+    color: var(--vcn-primary) !important;
+  }
+
+  body.cart-page .user-greeting:hover,
+  body.checkout-page .user-greeting:hover {
+    color: #1c3a13 !important;
+    opacity: 1;
+  }
+
+  /* Cart and checkout pages scrolled (dark background) */
+  body.checkout-page .navbar.scrolled .user-greeting,
+  body.cart-page .navbar.scrolled .user-greeting {
+    color: #ffffff !important;
+  }
+
+  /* Product details page (white background at top) */
+  .product-details-page .user-greeting {
+    color: var(--vcn-footer) !important;
+  }
+
+  /* Product details page scrolled (dark background) */
+  .product-details-page .navbar.scrolled .user-greeting {
+    color: #ffffff !important;
+  }
+
+  .arrow-down {
+    font-size: 9px;
+    transition: transform 0.3s;
+    display: inline-block;
+  }
+
+  .user-dropdown-wrapper:hover .arrow-down {
+    transform: rotate(180deg);
+  }
+
+  .user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: rgba(85, 85, 85, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    min-width: 240px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10000;
+    padding: 8px 0;
+    backdrop-filter: blur(10px);
+  }
+
+  .user-dropdown-wrapper:hover .user-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .dropdown-link {
+    display: block;
+    padding: 10px 20px;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    text-align: left;
+    border-radius: 12px;
+    margin: 0 6px;
+  }
+
+  .dropdown-link:hover {
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--vcn-white);
+    transition: all 0.3s ease;
+  }
+
+  .navbar.scrolled .user-avatar {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--vcn-white);
+  }
+
+  /* Cart/Checkout/Product details page avatar colors when transparent */
+  body.cart-page .user-avatar,
+  body.checkout-page .user-avatar,
+  .product-details-page .user-avatar {
+    background: rgba(29, 69, 3, 0.1);
+    color: var(--vcn-primary);
+  }
+
+  /* Cart/Checkout/Product details page avatar colors when scrolled */
+  body.cart-page .navbar.scrolled .user-avatar,
+  body.checkout-page .navbar.scrolled .user-avatar,
+  .product-details-page .navbar.scrolled .user-avatar {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--vcn-white);
+  }
+
+  .user-avatar svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .user-info-header {
+    padding: 10px 20px 6px;
+    text-align: left;
+  }
+
+  .user-email {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    display: block;
+    word-break: break-all;
+    font-weight: 400;
+  }
+
+  .dropdown-divider {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 6px 0;
+  }
+
+  .logout-action {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logout-icon {
+    width: 15px;
+    height: 15px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.2s ease;
+  }
+
+  .dropdown-link:hover .logout-icon {
+    color: #ff4d4d !important;
+  }
+
+  .panel-action {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .panel-icon {
+    width: 15px;
+    height: 15px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.2s ease;
+  }
+
+  .dropdown-link:hover .panel-icon {
+    color: white !important;
+  }
+
+  .login-error-message {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    text-align: left;
+  }
 </style>

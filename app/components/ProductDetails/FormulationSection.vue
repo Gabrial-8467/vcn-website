@@ -1,421 +1,271 @@
 <template>
-  <section class="health-section-bg">
-    <div class="container">
-      <div class="row">
-      <div class="col-12 col-xl-3 health-section-below d-flex align-items-center justify-content-center order-2 order-xl-1">
-        <video src="" class="video-centered" autoplay muted loop playsinline ></video>
-      </div>
-      <div class="col-12 col-xl-9 order-1 order-xl-2 sm-pr-0">
-        <div class="vcn-viacap-hero-area-below h-100">
-          <div class="vcn-probiotic-container">
-            <div class="vcn-probiotic-content-wrapper">
-              <!-- Left Content -->
-              <div class="vcn-probiotic-left-content">
-                <div class="vcn-probiotic-heading-group">
-                  <h2 class="alternate-heading">
-                    2-in-1 Ayurvedic Formula Optimized for Complete Diabetic Wellness
-                  </h2>
-                  <div class="vcn-probiotic-callout-text">
-                    DBT Care Plus unique herbal blend is engineered for targeted
-                    action — controlling blood sugar while healing the body from within.
-                  </div>
-                </div>
-              </div>
+  <section class="fs2-section">
+    <div class="fs2-container">
 
-              <div class="vcn-probiotic-right-content">
-                <div class="vcn-probiotic-product-display">
-                  <!-- Example with alternative styling -->
-                  <div class="vcn-probiotic-callout alternative-callout-top">
-                    <div class="vcn-probiotic-callout-title">
-                      Blood Sugar Control Blend — For Immediate Relief
-                    </div>
-                    <div class="vcn-probiotic-callout-text">
-                      Karela, Gurmar, Neem & Vijayasar actively reduce high blood
-                      glucose levels, stimulate insulin production and purify
-                      the blood from Day 1.*
-                    </div>
-                  </div>
+      <!-- Left: Heading + callouts stacked -->
+      <div class="fs2-left">
+        <span class="fs2-overline">{{ overline }}</span>
+        <h2 class="fs2-title">{{ title }}</h2>
+        <p class="fs2-body">{{ body }}</p>
 
-                  <div class="alternate-image">
-
-                    
-
-                    <img src="/gif/Capsule-GIF-2.gif" class="w-100"/>
-                  </div>
-
-                  <div class="vcn-probiotic-callout alternative-callout-bottom">
-                    <div class="vcn-probiotic-callout-title">
-                      Organ Repair & Detox Blend — For Long Term Wellness
-                    </div>
-                    <div class="vcn-probiotic-callout-text">
-                      Shudh Shilajit, Punarnava, Aloe Vera & Chirata repair
-                      damaged pancreatic cells, detoxify the body and support
-                      liver, kidney and eye health over time.*
-                    </div>
-                  </div>
-                </div>
+        <div class="fs2-callout-stack">
+          <template v-for="(c, i) in callouts" :key="i">
+            <div class="fs2-callout">
+              <div class="fs2-callout-num">{{ c.num }}</div>
+              <div class="fs2-callout-content">
+                <div class="fs2-callout-title">{{ c.title }}</div>
+                <div class="fs2-callout-sub">{{ c.sub }}</div>
+                <p class="fs2-callout-body">{{ c.body }}</p>
               </div>
             </div>
+            <div v-if="i < callouts.length - 1" class="fs2-divider"></div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Right: GIF + video -->
+      <div class="fs2-right">
+        <div class="fs2-media-card">
+          <div class="fs2-gif-wrap">
+            <img :src="mediaSrc" :alt="title" class="fs2-gif" />
+          </div>
+          <video src="" class="fs2-video" autoplay muted loop playsinline></video>
+          <div class="fs2-media-badge">
+            <span class="fs2-mb-text">{{ mediaBadgeText }}</span>
           </div>
         </div>
       </div>
-      </div>
     </div>
   </section>
-
 </template>
 
-<style scoped>
+<script setup>
+import { computed } from 'vue'
+import { useCmsStore } from '~/stores/cms'
+import { useProductStore } from '~/stores/product'
+import { useCmsApi } from '~/composables/useCmsApi'
 
-.health-section-bg {
-  padding: 20px 0;
+const cmsStore = useCmsStore()
+const productStore = useProductStore()
+const { getCmsImageUrl } = useCmsApi()
+
+const formulaSection = computed(() =>
+  cmsStore.getSectionByKey('formula') ||
+  cmsStore.getSectionByKey('formulation') ||
+  cmsStore.getSectionByKey('2in1') ||
+  cmsStore.getSectionByKey('blend')
+)
+
+const overline = computed(() => formulaSection.value?.name || formulaSection.value?.subtitle || '2-in-1 Formula')
+
+const title = computed(() =>
+  formulaSection.value?.title ||
+  productStore.selectedProductPage?.supportMainTitle ||
+  productStore.selectedProduct?.name ||
+  'Engineered for Total Diabetic Wellness'
+)
+
+const body = computed(() =>
+  formulaSection.value?.description ||
+  productStore.selectedProductPage?.heroDescription ||
+  'DBT Care Plus unique herbal blend delivers targeted action — controlling blood sugar fast while repairing your body from within.'
+)
+
+const callouts = computed(() => {
+  if (formulaSection.value?.items?.length) {
+    return formulaSection.value.items.map((item, i) => ({
+      num: String(i + 1).padStart(2, '0'),
+      title: item.title,
+      sub: item.subtitle,
+      body: item.description
+    }))
+  }
+  return [
+    { num: '01', title: 'Blood Sugar Control Blend', sub: 'For Immediate Relief', body: 'Karela, Gurmar, Neem & Vijayasar actively reduce high blood glucose, stimulate insulin production and purify the blood from Day 1.*' },
+    { num: '02', title: 'Organ Repair & Detox Blend', sub: 'For Long Term Wellness', body: 'Shudh Shilajit, Punarnava, Aloe Vera & Chirata repair damaged pancreatic cells, detoxify the body and support liver, kidney and eye health.*' }
+  ]
+})
+
+const mediaBadgeText = computed(() =>
+  formulaSection.value?.config?.mediaBadge ||
+  '2-in-1\nFormula'
+)
+
+const mediaSrc = computed(() => {
+  if (formulaSection.value?.image) return getCmsImageUrl(formulaSection.value.image)
+  if (productStore.selectedProduct) {
+    const img = productStore.getPrimaryImage?.(productStore.selectedProduct)
+    if (img) return img
+  }
+  return productStore.selectedProduct?.image || '/gif/Capsule-GIF-2.gif'
+})
+</script>
+
+<style scoped>
+.fs2-section {
+  background: #ffffff;
+  padding: 80px 0;
+  overflow: hidden;
 }
 
-.video-centered {
-  max-width: 240px;
+.fs2-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  .fs2-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .fs2-section { padding: 56px 0; }
+}
+
+/* Left */
+.fs2-overline {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #5E6C1F;
+  margin-bottom: 18px;
+  padding: 5px 14px;
+  border: 1px solid rgba(94,108,31,0.3);
+  border-radius: 20px;
+}
+
+.fs2-title {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  color: #0d1f0a;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin: 0 0 20px 0;
+}
+
+.fs2-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #666;
+  margin: 0 0 40px 0;
+  max-width: 440px;
+}
+
+/* Callout stack */
+.fs2-callout-stack { display: flex; flex-direction: column; gap: 0; }
+
+.fs2-callout {
+  display: flex;
+  gap: 22px;
+  padding: 24px 0;
+  align-items: flex-start;
+}
+
+.fs2-callout-num {
+  font-size: 13px;
+  font-weight: 900;
+  color: #d3fa99;
+  background: #1C3A13;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.fs2-callout-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0d1f0a;
+  margin-bottom: 4px;
+}
+
+.fs2-callout-sub {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #5E6C1F;
+  margin-bottom: 10px;
+}
+
+.fs2-callout-body {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #777;
+  margin: 0;
+}
+
+.fs2-divider {
+  height: 1px;
+  background: #eee;
   width: 100%;
+}
+
+/* Right: media card */
+.fs2-right { display: flex; justify-content: center; }
+
+.fs2-media-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: #F6F7EE;
+  border-radius: 32px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 460px;
+}
+
+.fs2-gif-wrap {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fs2-gif {
+  width: 100%;
+  max-width: 280px;
   height: auto;
+  filter: drop-shadow(0 20px 48px rgba(0,0,0,0.18));
   display: block;
 }
 
-.vcn-probiotic-heading-group {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+.fs2-video {
+  display: none;
 }
 
-/* Fix the buggy global margin-top from style.css */
-.alternate-heading {
-  margin-top: 2px !important;
+.fs2-media-badge {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background: #1C3A13;
+  border-radius: 14px;
+  padding: 14px 18px;
+}
+.fs2-mb-text {
+  font-size: 13px;
+  font-weight: 800;
+  color: #d3fa99;
+  line-height: 1.3;
 }
 
-/* Base desktop styles (min-width: 1200px) */
-@media (min-width: 1200px) {
-  .vcn-probiotic-content-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: center;
-  }
-
-  .vcn-probiotic-left-content {
-    max-width: 440px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .vcn-probiotic-left-content .vcn-probiotic-callout-text {
-    max-width: 290px;
-    line-height: 1.65;
-  }
-
-  .vcn-probiotic-right-content {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-  }
-
-  .vcn-probiotic-callout {
-    max-width: 230px !important;
-  }
-
-  .alternate-image {
-    margin-left: -35px;
-  }
-
-  .alternate-image img {
-    max-width: 200px;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-  }
-
-  .alternative-callout-top {
-    right: -25px !important;
-    top: -8% !important;
-  }
-
-  .alternative-callout-bottom {
-    left: -80px !important;
-    bottom: -10% !important;
-  }
-  /* Left Column (Video/Graphic) */
-  .health-section-below.col-xl-3 {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-
-  /* Right Column (Content) */
-  .col-xl-9.sm-pr-0 {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
+@media (max-width: 576px) {
+  .fs2-media-card { min-height: 320px; }
+  .fs2-gif { max-width: 200px; }
 }
-
-/* Large desktops / 4K displays (min-width: 1400px) */
-@media (min-width: 1400px) {
-  .vcn-probiotic-content-wrapper {
-    gap: 70px;
-  }
-
-  .vcn-probiotic-left-content {
-    max-width: 480px;
-  }
-
-  .vcn-probiotic-callout {
-    max-width: 240px !important;
-  }
-
-  .alternate-image {
-    margin-left: -50px;
-  }
-
-  .alternate-image img {
-    max-width: 220px;
-  }
-
-  .alternative-callout-top {
-    right: -40px !important;
-    top: -40px !important;
-  }
-
-  .alternative-callout-bottom {
-    left: -101px !important;
-    bottom: -40px !important;
-  }
-}
-
-/* Responsive stack behavior for tablets/mobile */
-@media (max-width: 1199.98px) {
-
-  .health-section-bg {
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
-  }
-
-  .health-section-below {
-    padding: 0 12px !important;
-    margin-top: 24px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .video-centered {
-    width: 100%;
-    max-width: 260px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .vcn-viacap-hero-area-below {
-    padding: 0 12px;
-    overflow: hidden !important;
-  }
-
-  .vcn-probiotic-content-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    padding: 16px !important;
-  }
-
-  .vcn-probiotic-left-content {
-    display: contents !important;
-  }
-
-  .vcn-probiotic-right-content {
-    display: contents !important;
-  }
-
-  .vcn-probiotic-heading-group {
-    order: 1 !important;
-    gap: 20px;
-    width: 100% !important;
-  }
-
-  .alternate-heading {
-    font-size: 2.5rem !important;
-    line-height: 1.25;
-    margin: 0;
-    text-align: left;
-  }
-
-  .vcn-probiotic-heading-group .vcn-probiotic-callout-text {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin: 0;
-    text-align: left;
-  }
-
-  .vcn-probiotic-product-display {
-    order: 2 !important;
-    position: relative !important;
-    display: block !important;
-    width: 100% !important;
-    max-width: 540px !important;
-    min-height: 380px !important;
-    margin: 20px auto !important;
-  }
-
-  .alternate-image {
-    position: absolute !important;
-    left: auto !important;
-    right: -60px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 110% !important;
-    max-width: 440px !important;
-    height: auto !important;
-    z-index: 5 !important;
-  }
-
-  .alternate-image img {
-    width: 100% !important;
-    height: auto !important;
-    object-fit: contain !important;
-    display: block !important;
-  }
-
-  .vcn-probiotic-callout {
-    position: absolute !important;
-    width: 45% !important;
-    padding: 0 !important;
-    padding-top: 12px !important;
-    background: transparent !important;
-    border: none !important;
-    backdrop-filter: none !important;
-    box-shadow: none !important;
-    display: flex !important;
-    flex-direction: column !important;
-    z-index: 10 !important;
-    text-align: left !important;
-  }
-
-  .vcn-probiotic-callout .vcn-probiotic-callout-title {
-    font-size: 0.78rem !important;
-    margin-bottom: 5px !important;
-    font-weight: 700 !important;
-    color: #fff !important;
-  }
-
-  .vcn-probiotic-callout .vcn-probiotic-callout-text {
-    font-size: 0.72rem !important;
-    line-height: 1.45 !important;
-    color: rgba(255, 255, 255, 0.85) !important;
-  }
-
-  .alternative-callout-top {
-    top: 5% !important;
-    left: 0 !important;
-    right: auto !important;
-    bottom: auto !important;
-  }
-
-  .alternative-callout-bottom {
-    top: auto !important;
-    bottom: 5% !important;
-    left: 0 !important;
-    right: auto !important;
-  }
-
-  /* Connecting lines on mobile relative to the callouts themselves */
-  .alternative-callout-top::before,
-  .alternative-callout-bottom::before {
-    content: "" !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important; /* extends to the end of the callout */
-    height: 1px !important;
-    background-color: rgba(255, 255, 255, 0.4) !important;
-    background-image: none !important;
-    rotate: 0deg !important;
-    bottom: auto !important;
-    right: auto !important;
-    z-index: 10 !important;
-    display: block !important;
-  }
-
-  /* White dots at the end of the lines relative to the callouts */
-  .alternative-callout-top::after,
-  .alternative-callout-bottom::after {
-    content: "" !important;
-    position: absolute !important;
-    top: -2.5px !important;
-    right: -2px !important; /* places dot exactly at the end of the line */
-    left: auto !important;
-    width: 6px !important;
-    height: 6px !important;
-    background-color: #fff !important;
-    border-radius: 50% !important;
-    z-index: 11 !important;
-    display: block !important;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 991.98px) {
-  .alternate-heading {
-    margin-top: -10px !important;
-  }
-  .health-section-bg{
-    padding-top: 24px;
-    padding-right: 24px !important;
-    padding-left: 24px !important;
-  }
-
-}
-
-@media (max-width: 575.98px) {
-
-  .health-section-bg {
-    padding-top: 0.85rem !important;
-    padding-bottom: 0.85rem !important;
-  }
-
-  .health-section-below {
-    padding: 0 12px !important;
-    margin-top: 10px;
-  }
-
-  .video-centered {
-    max-width: 150px;
-  }
-
-  .vcn-probiotic-content-wrapper {
-    gap: 1rem;
-    padding: 12px !important;
-  }
-
-  .vcn-probiotic-product-display {
-    min-height: 380px !important;
-  }
-
-  .alternate-image {
-    max-width: 320px !important;
-    right: -100px !important;
-  }
-
-  .alternate-heading {
-    font-size: 1.45rem !important;
-  }
-
-  .vcn-probiotic-heading-group .vcn-probiotic-callout-text {
-    font-size: 0.82rem !important;
-    line-height: 1.4 !important;
-  }
-
-  .vcn-probiotic-callout .vcn-probiotic-callout-title {
-    font-size: 0.70rem !important;
-  }
-
-  .vcn-probiotic-callout .vcn-probiotic-callout-text {
-    font-size: 0.62rem !important;
-    line-height: 1.35 !important;
-  }
-}
-
 </style>

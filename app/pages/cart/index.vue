@@ -1,182 +1,187 @@
 <template>
   <div class="cart-main-wrapper">
-    <h1 class="cart-page-title">{{ cart.title }}</h1>
+    <div class="container p-0">
+      <h1 class="cart-page-title">{{ cart.title }}</h1>
 
-    <div class="row">
-      <div class="col-lg-12" v-if="cartStore.items.length === 0">
-        <div class="empty-cart-message">
-          <h3>{{ cart.emptyCart.heading }}</h3>
-          <p class="text-center">{{ cart.emptyCart.description }}</p>
-          <NuxtLink to="/all-products" class="btn-learn">{{ cart.emptyCart.buttonText }}</NuxtLink>
-        </div>
-      </div>
-
-      <div class="col-lg-12" v-else>
-        <!-- Cart Header -->
-        <div class="cart-table-header row d-none d-md-flex">
-          <div class="col-6 cart-header-product">{{ cart.tableHeader.product }}</div>
-          <div class="col-3 cart-header-product text-center">{{ cart.tableHeader.quantity }}</div>
-          <div class="col-3 cart-header-product text-end">{{ cart.tableHeader.price }}</div>
-        </div>
-
-        <!-- Cart Items -->
-        <div v-for="item in cartStore.items" :key="item.id" class="cart-item-wrapper row align-items-center">
-          <!-- Desktop Layout (hidden on mobile) -->
-          <div class="d-none d-md-flex col-md-12 row align-items-center w-100 m-0 p-0">
-            <div class="col-md-6 d-flex align-items-center gap-3">
-              <img :src="item.image" :alt="item.name" class="cart-product-image"
-                @error="$event.target.src = '/img/products/img1.png'" />
-              <div class="cart-product-details">
-                <div class="cart-product-name">{{ item.name }}</div>
-                <div class="cart-product-subscription">{{ item.subscription }}</div>
-              </div>
-            </div>
-            <div class="col-md-3 text-center">
-              <div class="cart-quantity-control">
-                <button class="cart-qty-button" @click="handleDecrement(item.id)">−</button>
-                <div class="cart-qty-display">{{ item.quantity }}</div>
-                <button class="cart-qty-button" @click="handleIncrement(item.id)">+</button>
-              </div>
-            </div>
-            <div class="col-md-3 text-end">
-              <div class="cart-item-price">
-                <span v-if="item.mrp" class="cart-item-mrp">₹{{ (item.mrp * item.quantity).toFixed(2) }}</span>
-                ₹{{ (item.price * item.quantity).toFixed(2) }}
-              </div>
-              <button class="cart-remove-btn" @click="cartStore.removeFromCart(item.id)">
-                {{ cart.cartItem.removeButton }}
-              </button>
-            </div>
-          </div>
-
-          <!-- Mobile Layout (hidden on desktop) -->
-          <div class="d-md-none cart-item-mobile-container w-100">
-            <img :src="item.image" :alt="item.name" class="cart-product-image-mobile"
-              @error="$event.target.src = '/img/products/img1.png'" />
-            <div class="cart-product-info-mobile">
-              <div class="cart-product-header-mobile">
-                <div class="cart-product-name-mobile">{{ item.name }}</div>
-              </div>
-              <div class="cart-product-subscription-mobile">{{ item.subscription }}</div>
-              
-              <!-- Remove button/link on mobile
-              <button class="cart-remove-btn-mobile" @click="cartStore.removeFromCart(item.id)">
-                {{ cart.cartItem.removeButton }}
-              </button> -->
-
-              <div class="cart-product-actions-mobile">
-                <div class="cart-item-price-mobile">
-                  <!-- <span v-if="item.mrp" class="cart-item-mrp-mobile">₹{{ (item.mrp * item.quantity).toFixed(2) }}</span> -->
-                  <span class="cart-current-price-mobile">₹{{ (item.price * item.quantity).toFixed(2) }}</span>
-                </div>
-                
-                <div class="cart-quantity-control-mobile">
-                  <button class="cart-qty-button-mobile" @click="handleDecrement(item.id)">−</button>
-                  <div class="cart-qty-display-mobile">{{ item.quantity }}</div>
-                  <button class="cart-qty-button-mobile" @click="handleIncrement(item.id)">+</button>
-                </div>
-              </div>
-            </div>
+      <div class="flex flex-col gap-8">
+        <div class="w-full" v-if="cartStore.items.length === 0">
+          <div class="empty-cart-message">
+            <h3>{{ cart.emptyCart.heading }}</h3>
+            <p class="text-center">{{ cart.emptyCart.description }}</p>
+            <NuxtLink to="/all-products" class="btn-learn">{{ cart.emptyCart.buttonText }}</NuxtLink>
           </div>
         </div>
-      </div>
 
-      <div class="col-lg-8" v-if="cartStore.items.length > 0">
-        <!-- Recommendations -->
-        <h2 class="cart-recommendations-title">{{ cart.recommendations.heading }}</h2>
+        <template v-else>
+          <!-- Row 1: Cart items (Full Width, matches original UI layout) -->
+          <div class="w-full">
+            <!-- Cart Header -->
+            <div class="cart-table-header hidden md:grid grid-cols-12 gap-4 pb-3 mb-5 border-b-2 border-gray-200">
+              <div class="col-span-6 cart-header-product">{{ cart.tableHeader.product }}</div>
+              <div class="col-span-3 cart-header-product text-center">{{ cart.tableHeader.quantity }}</div>
+              <div class="col-span-3 cart-header-product text-end">{{ cart.tableHeader.price }}</div>
+            </div>
 
-        <!-- Recommendations Grid for Desktop -->
-        <div class="d-none d-md-flex row g-4">
-          <div v-for="product in recommendedProducts" :key="product.id" class="col-md-4">
-            <div class="cart-product-card">
-              <div class="cart-suggested-image-wrapper">
-                <img :src="product.image" :alt="product.name" class="cart-suggested-image" />
-              </div>
-              <div class="cart-suggested-content">
-                <div class="cart-suggested-name">{{ product.name }}</div>
-                <div class="cart-suggested-description">{{ product.description }}</div>
-                <div class="cart-price-wrapper">
-                  <div class="cart-price-column">
-                    <span class="cart-current-price">₹{{ product.currentPrice }}</span>
-                    <span class="cart-original-price">₹{{ product.originalPrice }}</span>
+            <!-- Cart Items -->
+            <div v-for="item in cartStore.items" :key="item.id" class="cart-item-wrapper">
+              <!-- Desktop Layout (hidden on mobile) -->
+              <div class="hidden md:grid grid-cols-12 items-center gap-4">
+                <div class="col-span-6 flex items-center gap-3">
+                  <img :src="item.image" :alt="item.name" class="cart-product-image"
+                    @error="$event.target.src = '/img/products/img1.png'" />
+                  <div class="cart-product-details">
+                    <div class="cart-product-name">{{ item.name }}</div>
+                    <div class="cart-product-subscription">{{ item.subscription }}</div>
                   </div>
-                  <button @click="addRecommendedProduct(product)" class="cart-add-btn">
-                    {{cart.recommendations.addButton}}
+                </div>
+                <div class="col-span-3 flex justify-center">
+                  <div class="cart-quantity-control">
+                    <button class="cart-qty-button" @click="handleDecrement(item.id)">−</button>
+                    <div class="cart-qty-display">{{ item.quantity }}</div>
+                    <button class="cart-qty-button" @click="handleIncrement(item.id)">+</button>
+                  </div>
+                </div>
+                <div class="col-span-3 text-end">
+                  <div class="cart-item-price">
+                    <span v-if="item.mrp" class="cart-item-mrp">₹{{ (item.mrp * item.quantity).toFixed(2) }}</span>
+                    ₹{{ (item.price * item.quantity).toFixed(2) }}
+                  </div>
+                  <button class="cart-remove-btn" @click="cartStore.removeFromCart(item.id)">
+                    {{ cart.cartItem.removeButton }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Mobile Layout (hidden on desktop) -->
+              <div class="md:hidden cart-item-mobile-container w-full">
+                <img :src="item.image" :alt="item.name" class="cart-product-image-mobile"
+                  @error="$event.target.src = '/img/products/img1.png'" />
+                <div class="cart-product-info-mobile">
+                  <div class="cart-product-header-mobile">
+                    <div class="cart-product-name-mobile">{{ item.name }}</div>
+                  </div>
+                  <div class="cart-product-subscription-mobile">{{ item.subscription }}</div>
+                  
+                  <div class="cart-product-actions-mobile">
+                    <div class="cart-item-price-mobile">
+                      <span v-if="item.mrp" class="cart-item-mrp-mobile">₹{{ (item.mrp * item.quantity).toFixed(2) }}</span>
+                      <span class="cart-current-price-mobile">₹{{ (item.price * item.quantity).toFixed(2) }}</span>
+                    </div>
+                    
+                    <div class="cart-quantity-control-mobile">
+                      <button class="cart-qty-button-mobile" @click="handleDecrement(item.id)">−</button>
+                      <div class="cart-qty-display-mobile">{{ item.quantity }}</div>
+                      <button class="cart-qty-button-mobile" @click="handleIncrement(item.id)">+</button>
+                    </div>
+                  </div>
+
+                  <button class="cart-remove-btn-mobile" @click="cartStore.removeFromCart(item.id)">
+                    {{ cart.cartItem.removeButton }}
                   </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Recommendations Swiper for Mobile -->
-        <div class="d-md-none swiper cart-suggested-swiper">
-          <div class="swiper-wrapper">
-            <div v-for="product in recommendedProducts" :key="product.id" class="swiper-slide">
-              <div class="cart-product-card">
-                <div class="cart-suggested-image-wrapper">
-                  <img :src="product.image" :alt="product.name" class="cart-suggested-image" />
-                </div>
-                <div class="cart-suggested-content">
-                  <div class="cart-suggested-name">{{ product.name }}</div>
-                  <div class="cart-suggested-description">{{ product.description }}</div>
-                  <div class="cart-price-wrapper">
-                    <div class="cart-price-column">
-                      <span class="cart-current-price">₹{{ product.currentPrice }}</span>
-                      <span class="cart-original-price">₹{{ product.originalPrice }}</span>
+          <!-- Row 2: Recommendations (Left, 2/3 Width) and Sidebar (Right, 1/3 Width) -->
+          <div class="flex flex-col lg:flex-row gap-8 items-start w-full">
+            <!-- Recommendations Section -->
+            <div class="w-full lg:w-2/3 flex flex-col">
+              <h2 class="cart-recommendations-title">{{ cart.recommendations.heading }}</h2>
+
+              <!-- Recommendations Grid for Desktop -->
+              <div class="hidden md:grid grid-cols-3 gap-6">
+                <div v-for="product in recommendedProducts" :key="product.id" class="cart-product-card">
+                  <div class="cart-suggested-image-wrapper">
+                    <img :src="product.image" :alt="product.name" class="cart-suggested-image" />
+                  </div>
+                  <div class="cart-suggested-content">
+                    <div class="cart-suggested-name">{{ product.name }}</div>
+                    <div class="cart-suggested-description">{{ product.description }}</div>
+                    <div class="cart-price-wrapper">
+                      <div class="cart-price-column">
+                        <span class="cart-current-price">₹{{ product.currentPrice }}</span>
+                        <span class="cart-original-price">₹{{ product.originalPrice }}</span>
+                      </div>
+                      <button @click="addRecommendedProduct(product)" class="cart-add-btn">
+                        {{cart.recommendations.addButton}}
+                      </button>
                     </div>
-                    <button @click="addRecommendedProduct(product)" class="cart-add-btn">
-                      {{cart.recommendations.addButton}}
-                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recommendations Swiper for Mobile -->
+              <div class="md:hidden swiper cart-suggested-swiper">
+                <div class="swiper-wrapper">
+                  <div v-for="product in recommendedProducts" :key="product.id" class="swiper-slide">
+                    <div class="cart-product-card">
+                      <div class="cart-suggested-image-wrapper">
+                        <img :src="product.image" :alt="product.name" class="cart-suggested-image" />
+                      </div>
+                      <div class="cart-suggested-content">
+                        <div class="cart-suggested-name">{{ product.name }}</div>
+                        <div class="cart-suggested-description">{{ product.description }}</div>
+                        <div class="cart-price-wrapper">
+                          <div class="cart-price-column">
+                            <span class="cart-current-price">₹{{ product.currentPrice }}</span>
+                            <span class="cart-original-price">₹{{ product.originalPrice }}</span>
+                          </div>
+                          <button @click="addRecommendedProduct(product)" class="cart-add-btn">
+                            {{cart.recommendations.addButton}}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Sidebar -->
-      <div class="col-lg-4" v-if="cartStore.items.length > 0">
-        <div class="cart-sidebar-wrapper">
-          <!-- Promo Code -->
-          <div class="cart-promo-section">
-            <div class="cart-promo-label">{{ cart.promo.label }}</div>
-            <div class="cart-promo-input-group">
-              <input type="text" v-model="promoInput" class="cart-promo-input" :placeholder="cart.promo.placeholder"
-                @keyup.enter="applyPromo" />
-              <button class="cart-promo-apply-btn" @click="applyPromo" :disabled="!promoInput.trim()">
-                {{ cart.promo.applyButton }}
-              </button>
-            </div>
-            <div v-if="cartStore.promoCode" class="promo-applied">
-              <span class="promo-success">{{cart.promoMessages.applied}} {{ cartStore.promoCode }}</span>
-              <button @click="removePromo" class="promo-remove">{{ cart.cartActions.remove }}</button>
-            </div>
-          </div>
-          <hr />
+            <!-- Right Column: Sidebar (Promo, Subtotal, Checkout) -->
+            <div class="w-full lg:w-1/3">
+              <div class="cart-sidebar-wrapper">
+                <!-- Promo Code -->
+                <div class="cart-promo-section">
+                  <div class="cart-promo-label">{{ cart.promo.label }}</div>
+                  <div class="cart-promo-input-group">
+                    <input type="text" v-model="promoInput" class="cart-promo-input" :placeholder="cart.promo.placeholder"
+                      @keyup.enter="applyPromo" />
+                    <button class="cart-promo-apply-btn" @click="applyPromo" :disabled="!promoInput.trim()">
+                      {{ cart.promo.applyButton }}
+                    </button>
+                  </div>
+                  <div v-if="cartStore.promoCode" class="promo-applied">
+                    <span class="promo-success">{{cart.promoMessages.applied}} {{ cartStore.promoCode }}</span>
+                    <button @click="removePromo" class="promo-remove">{{ cart.cartActions.remove }}</button>
+                  </div>
+                </div>
+                <hr />
 
-          <!-- Total -->
-          <div class="cart-total-section">
-            <div class="cart-total-row" v-if="cartStore.discount > 0">
-              <span class="cart-total-label">{{ cart.total.subtotal }}</span>
-              <span class="cart-total-amount">₹{{ cartStore.cartSubtotal.toFixed(2) }}</span>
-            </div>
-            <div class="cart-total-row" v-if="cartStore.discount > 0">
-              <span class="cart-total-label">{{ cart.total.discount }}</span>
-              <span class="cart-total-amount discount">-₹{{ cartStore.discount.toFixed(2) }}</span>
-            </div>
-            <div class="cart-total-row">
-              <span class="cart-total-label">{{ cart.total.total }}</span>
-              <span class="cart-total-amount">₹{{ cartStore.cartTotal.toFixed(2) }}</span>
-            </div>
-          </div>
+                <!-- Total -->
+                <div class="cart-total-section">
+                  <div class="cart-total-row" v-if="cartStore.discount > 0">
+                    <span class="cart-total-label">{{ cart.total.subtotal }}</span>
+                    <span class="cart-total-amount">₹{{ cartStore.cartSubtotal.toFixed(2) }}</span>
+                  </div>
+                  <div class="cart-total-row" v-if="cartStore.discount > 0">
+                    <span class="cart-total-label">{{ cart.total.discount }}</span>
+                    <span class="cart-total-amount discount">-₹{{ cartStore.discount.toFixed(2) }}</span>
+                  </div>
+                  <div class="cart-total-row">
+                    <span class="cart-total-label">{{ cart.total.total }}</span>
+                    <span class="cart-total-amount">₹{{ cartStore.cartTotal.toFixed(2) }}</span>
+                  </div>
+                </div>
 
-          <!-- Checkout Button -->
-          <div class="cart-checkout-btn">
-            <NuxtLink :to="cart.checkoutButton.link" class="btn">{{ cart.checkoutButton.text }}</NuxtLink>
+                <!-- Checkout Button -->
+                <div class="cart-checkout-btn">
+                  <NuxtLink :to="cart.checkoutButton.link" class="btn">{{ cart.checkoutButton.text }}</NuxtLink>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </div>
@@ -315,8 +320,12 @@ const initSwiper = () => {
 
   swiperInstance.value = new window.Swiper('.cart-suggested-swiper', {
     slidesPerView: 1.05,
-    spaceBetween: 12,
+    spaceBetween: 10,
     breakpoints: {
+      320: {
+        slidesPerView: 1.05,
+        spaceBetween: 10
+      },
       480: {
         slidesPerView: 1.2,
         spaceBetween: 16
@@ -398,13 +407,68 @@ useHead({
 </script>
 
 <style scoped>
-@media (max-width: 991.98px) {
+.cart-main-wrapper {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 80px 40px 80px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 1400px+ Extra Large Desktop */
+@media (min-width: 1400px) {
   .cart-main-wrapper {
-    padding-top: 90px !important;
-    padding-bottom: 40px !important;
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+}
+
+/* 1200px - 1399px Laptop/Desktop */
+@media (max-width: 1399.98px) and (min-width: 1200px) {
+  .cart-main-wrapper {
     padding-left: 40px !important;
     padding-right: 40px !important;
+  }
+}
+
+/* 992px - 1199px Tablet Landscape */
+@media (max-width: 1199.98px) and (min-width: 992px) {
+  .cart-main-wrapper {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+/* 768px - 991px Tablet Portrait */
+@media (max-width: 991.98px) and (min-width: 768px) {
+  .cart-main-wrapper {
+    padding-top: 50px !important;
+    padding-bottom: 40px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     text-align: center !important;
+  }
+}
+
+/* 576px - 767px Mobile Large */
+@media (max-width: 767.98px) and (min-width: 576px) {
+  .cart-main-wrapper {
+    padding-top: 40px !important;
+    padding-bottom: 30px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    text-align: center !important;
+  }
+}
+
+/* 480px - 575px Mobile Small */
+@media (max-width: 575.98px) and (min-width: 480px) {
+  .cart-main-wrapper {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    text-align: left !important;
   }
 }
 
@@ -482,11 +546,18 @@ useHead({
   flex-direction: column !important;
   height: 100% !important;
   justify-content: space-between !important;
-  padding: 20px !important;
-  background-color: #f8f8f8 !important;
-  border: 1px solid #f0f0f0 !important;
-  border-radius: 12px !important;
-  transition: box-shadow 0.3s !important;
+  padding: 24px !important;
+  background-color: #f0efef !important;
+  border: 1px solid #b6b6b6 !important;
+  border-radius: 16px !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  text-align: center !important;
+}
+
+.cart-product-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(29, 69, 3, 0.1) !important;
 }
 
 .cart-suggested-image-wrapper {
@@ -494,11 +565,12 @@ useHead({
   align-items: center !important;
   justify-content: center !important;
   width: 100% !important;
-  height: 180px !important; /* Uniform height for desktop images */
+  height: 180px !important;
   margin-bottom: 20px !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   padding: 10px !important;
   background-color: transparent !important;
+  overflow: hidden !important;
 }
 
 .cart-suggested-image {
@@ -507,28 +579,35 @@ useHead({
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
+  transition: transform 0.3s ease !important;
+}
+
+.cart-product-card:hover .cart-suggested-image {
+  transform: scale(1.04) !important;
 }
 
 .cart-suggested-content {
   padding: 0;
-  text-align: center;
+  text-align: center !important;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .cart-suggested-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--vcn-footer);
-  margin-bottom: 5px;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: var(--vcn-footer) !important;
+  margin-bottom: 6px !important;
+  line-height: 1.4 !important;
 }
 
 .cart-suggested-description {
-  font-size: 13px;
-  color: var(--vcn-footer);
-  margin-bottom: 15px;
+  font-size: 13px !important;
+  color: #666 !important;
+  margin-bottom: 16px !important;
+  line-height: 1.5 !important;
   flex-grow: 1;
 }
 
@@ -536,8 +615,9 @@ useHead({
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  margin-top: auto !important; /* Push price and button to the bottom of the card */
+  margin-top: auto !important;
   width: 100% !important;
+  padding-top: 12px !important;
 }
 
 .cart-price-column {
@@ -545,6 +625,48 @@ useHead({
   flex-direction: column !important;
   align-items: flex-start !important;
   text-align: left !important;
+}
+
+.cart-current-price {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--vcn-footer) !important;
+  line-height: 1.2 !important;
+}
+
+.cart-original-price {
+  font-size: 13px !important;
+  color: #999 !important;
+  text-decoration: line-through !important;
+  line-height: 1.2 !important;
+  margin-top: 2px !important;
+}
+
+.cart-add-btn {
+  background-color: white !important;
+  border: 1px solid var(--vcn-primary) !important;
+  color: var(--vcn-primary) !important;
+  padding: 8px 24px !important;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  transition: all 0.25s ease !important;
+  cursor: pointer !important;
+}
+
+.cart-add-btn:hover {
+  background-color: var(--vcn-footer) !important;
+  color: white !important;
+  border-color: var(--vcn-footer) !important;
+  box-shadow: 0 4px 12px rgba(29, 69, 3, 0.15) !important;
+}
+
+/* Desktop: hide mobile elements explicitly */
+@media (min-width: 768px) {
+  .cart-suggested-swiper,
+  .cart-item-mobile-container {
+    display: none !important;
+  }
 }
 
 /* Swiper styling */
@@ -697,22 +819,23 @@ useHead({
     padding: 16px !important;
     gap: 16px !important;
     align-items: center !important;
-    background-color: #f8f8f8 !important;
-    border: 1px solid #f0f0f0 !important;
-    border-radius: 12px !important;
-    height: auto !important; /* Overrides desktop height */
+    background-color: #fcfcfc !important;
+    border: 1px solid #eeeeee !important;
+    border-radius: 16px !important;
+    height: auto !important;
   }
 
   .cart-suggested-image-wrapper {
-    width: 120px !important;
-    height: 145px !important;
+    width: 110px !important;
+    height: 120px !important;
     margin-bottom: 0 !important;
     flex-shrink: 0 !important;
-    border-radius: 8px !important;
-    padding: 4px !important;
+    border-radius: 10px !important;
+    padding: 6px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    background-color: transparent !important;
   }
 
   .cart-suggested-image {
@@ -734,7 +857,7 @@ useHead({
 
   .cart-suggested-name {
     font-size: 14px !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     margin-bottom: 4px !important;
     color: var(--vcn-footer) !important;
   }
@@ -756,7 +879,7 @@ useHead({
     width: 100% !important;
     align-items: center !important;
     justify-content: space-between !important;
-    margin-top: 0 !important;
+    margin-top: 4px !important;
     margin-bottom: 0 !important;
     gap: 10px !important;
   }
@@ -773,6 +896,7 @@ useHead({
     font-weight: 700 !important;
     margin-right: 0 !important;
     line-height: 1.2 !important;
+    color: var(--vcn-footer) !important;
   }
 
   .cart-original-price {
@@ -782,12 +906,331 @@ useHead({
   }
 
   .cart-add-btn {
-    padding: 8px 22px !important;
+    background-color: white !important;
+    border: 1px solid var(--vcn-primary) !important;
+    color: var(--vcn-primary) !important;
+    padding: 6px 20px !important;
     font-size: 13px !important;
     border-radius: 20px !important;
     margin-top: 0 !important;
     flex-shrink: 0 !important;
     font-weight: 600 !important;
+  }
+
+  .cart-add-btn:hover {
+    background-color: var(--vcn-footer) !important;
+    color: white !important;
+    border-color: var(--vcn-footer) !important;
+  }
+}
+
+/* Specific responsiveness adjustments for screen widths smaller than 480px */
+@media (max-width: 479.98px) {
+  .cart-main-wrapper {
+    padding-top: 15px !important;
+    padding-bottom: 30px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    text-align: left !important;
+    overflow-x: hidden !important;
+  }
+
+  .cart-page-title {
+    font-size: 22px !important;
+    margin-bottom: 20px !important;
+    text-align: left !important;
+  }
+
+  .empty-cart-message {
+    padding: 30px 12px !important;
+    margin: 10px 0 !important;
+  }
+
+  .empty-cart-message h3 {
+    font-size: 20px !important;
+  }
+
+  .empty-cart-message p {
+    font-size: 14px !important;
+  }
+
+  .cart-item-wrapper {
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #eeeeee !important;
+  }
+
+  .cart-item-mobile-container {
+    display: flex !important;
+    width: 100% !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+  }
+
+  .cart-product-image-mobile {
+    width: 85px !important;
+    height: 95px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+    border-radius: 8px !important;
+    background-color: #f8f9fa !important;
+    padding: 4px !important;
+  }
+
+  .cart-product-info-mobile {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+  }
+
+  .cart-product-name-mobile {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: var(--vcn-footer) !important;
+    line-height: 1.3 !important;
+    word-break: break-word !important;
+  }
+
+  .cart-product-subscription-mobile {
+    font-size: 11px !important;
+    color: #666 !important;
+    margin-top: 2px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .cart-remove-btn-mobile {
+    background: none !important;
+    border: none !important;
+    color: #dc3545 !important;
+    font-size: 12px !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    text-align: left !important;
+    margin-top: 6px !important;
+    margin-bottom: 4px !important;
+    width: fit-content !important;
+  }
+
+  .cart-product-actions-mobile {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .cart-item-price-mobile {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .cart-current-price-mobile {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: var(--vcn-footer) !important;
+    line-height: 1.2 !important;
+  }
+
+  .cart-item-mrp-mobile {
+    text-decoration: line-through !important;
+    color: #999 !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+  }
+
+  .cart-quantity-control-mobile {
+    display: flex !important;
+    align-items: center !important;
+    border: 1px solid #ddd !important;
+    border-radius: 20px !important;
+    background: white !important;
+    padding: 2px 4px !important;
+  }
+
+  .cart-qty-button-mobile {
+    background: none !important;
+    border: none !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    color: var(--vcn-footer) !important;
+    cursor: pointer !important;
+  }
+
+  .cart-qty-display-mobile {
+    width: 22px !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--vcn-footer) !important;
+  }
+
+  .cart-recommendations-title {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-bottom: 12px !important;
+    text-align: left !important;
+  }
+
+  .cart-product-card {
+    display: flex !important;
+    flex-direction: row !important;
+    text-align: left !important;
+    padding: 10px !important;
+    gap: 10px !important;
+    align-items: center !important;
+    background-color: #fcfcfc !important;
+    border: 1px solid #eeeeee !important;
+    border-radius: 12px !important;
+    height: auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .cart-suggested-image-wrapper {
+    width: 75px !important;
+    height: 85px !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+    border-radius: 8px !important;
+    padding: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #f8f9fa !important;
+  }
+
+  .cart-suggested-content {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 0 !important;
+    text-align: left !important;
+    min-width: 0 !important;
+  }
+
+  .cart-suggested-name {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    margin-bottom: 2px !important;
+    color: var(--vcn-footer) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
+  }
+
+  .cart-suggested-description {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 6px !important;
+    color: #666 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .cart-price-wrapper {
+    display: flex !important;
+    width: 100% !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-top: 2px !important;
+    margin-bottom: 0 !important;
+    gap: 6px !important;
+    padding-top: 0 !important;
+  }
+
+  .cart-price-column {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+  }
+
+  .cart-current-price {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+  }
+
+  .cart-original-price {
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+    margin-top: 0 !important;
+  }
+
+  .cart-add-btn {
+    padding: 4px 12px !important;
+    font-size: 11px !important;
+    border-radius: 16px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .cart-sidebar-wrapper {
+    margin-top: 20px !important;
+  }
+
+  .cart-promo-section {
+    margin-bottom: 15px !important;
+  }
+
+  .cart-promo-label {
+    margin: 15px 0 10px !important;
+    font-size: 14px !important;
+    text-align: left !important;
+  }
+
+  .cart-promo-input-group {
+    display: flex !important;
+    width: 100% !important;
+  }
+
+  .cart-promo-input {
+    flex: 1 !important;
+    min-width: 0 !important;
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+    border-radius: 6px 0 0 6px !important;
+  }
+
+  .cart-promo-apply-btn {
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    border-radius: 0 6px 6px 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .cart-total-section {
+    margin-bottom: 15px !important;
+  }
+
+  .cart-total-row {
+    margin-bottom: 10px !important;
+  }
+
+  .cart-total-label {
+    font-size: 14px !important;
+  }
+
+  .cart-total-amount {
+    font-size: 17px !important;
+  }
+
+  .cart-checkout-btn .btn {
+    padding: 11px !important;
+    font-size: 15px !important;
   }
 }
 </style>
