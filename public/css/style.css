@@ -9618,7 +9618,7 @@ body.home-page main {
   .checkout-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 141px 15px;
+    padding: 88px 15px 60px;
   }
 
   .checkout-step-card {

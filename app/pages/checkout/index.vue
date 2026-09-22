@@ -4,7 +4,7 @@
       <!-- Left Side - Checkout Steps -->
       <div class="col-lg-7">
         <!-- Step 1: Account Creation -->
-        <div class="checkout-step-card" id="accountStepCard">
+        <div class="checkout-step-card" id="accountStepCard" v-if="!isLoggedIn">
           <div class="checkout-step-header">
             <div class="step-indicator">
               <span class="step-count-badge">{{ checkout.accountStep.step }}</span>
@@ -12,7 +12,7 @@
             <h2 class="step-title-text">{{ checkout.accountStep.title }}</h2>
           </div>
 
-          <div class="checkout-step-body" id="accountStepContent">
+          <div class="checkout-step-body" id="accountStepContent" v-if="!isLoggedIn && !accountCompleted">
             <button class="secondary-action-btn w-100" onclick="proceedWithGoogle()">
               <span class="google-icon-text me-2">{{ checkout.accountStep.i }}</span> {{checkout.accountStep.googleButton}}
             </button>
@@ -68,11 +68,17 @@
             </div>
           </div>
 
-          <div class="checkout-step-body hide-element" id="accountStepCompleted">
+          <div class="checkout-step-body" id="accountStepCompleted" v-else>
             <p class="completion-message">
               <span class="step-check-icon">✓</span>
-              {{ checkout.accountStep.completedMessage }}
+              <template v-if="isLoggedIn">
+                Welcome{{ userName ? `, ${userName}` : '' }}! You're already signed in.
+              </template>
+              <template v-else>
+                {{ checkout.accountStep.completedMessage }}
+              </template>
             </p>
+            <p v-if="isLoggedIn && userEmail" class="completion-message">{{ userEmail }}</p>
           </div>
         </div>
 
@@ -80,7 +86,7 @@
         <div class="checkout-step-card" id="shippingStepCard">
           <div class="checkout-step-header">
             <div class="step-indicator">
-              <span class="step-count-badge">{{ checkout.shippingStep.step }}</span>
+              <span class="step-count-badge">{{ isLoggedIn ? '1 of 2' : checkout.shippingStep.step }}</span>
             </div>
             <h2 class="step-title-text">{{ checkout.shippingStep.title }}</h2>
           </div>
@@ -125,7 +131,7 @@
         <div class="checkout-step-card" id="paymentStepCard">
           <div class="checkout-step-header">
             <div class="step-indicator">
-              <span class="step-count-badge">{{ checkout.paymentStep.step }}</span>
+              <span class="step-count-badge">{{ isLoggedIn ? '2 of 2' : checkout.paymentStep.step }}</span>
             </div>
             <h2 class="step-title-text">{{ checkout.paymentStep.title }}</h2>
           </div>
@@ -252,7 +258,7 @@ import { useAuthCart } from '~/composables/useAuthCart'
 import { onMounted } from 'vue'
 import { navigateTo } from '#app'
 import { useHead } from '#app'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useCmsStore } from '~/stores/cms'
 
 const cmsStore = useCmsStore()
@@ -382,7 +388,12 @@ const checkout = computed(() => {
 })
 
 const cartStore = useCartStore()
-const { initializeCart } = useAuthCart()
+const { authState, checkAuthStatus, initializeCart } = useAuthCart()
+
+const accountCompleted = ref(false)
+const isLoggedIn = computed(() => authState.value.isLoggedIn)
+const userName = computed(() => authState.value.user?.userName || '')
+const userEmail = computed(() => authState.value.user?.email || '')
 
 // Checkout form functions
 const displayEmailForm = () => {
@@ -526,14 +537,10 @@ if (!email) {
   if (!isValid) return
 
   // Hide account step content and show completed state
-  const accountContent = document.getElementById('accountStepContent')
-  const accountCompleted = document.getElementById('accountStepCompleted')
-  const shippingCard = document.getElementById('shippingStepCard')
-
-  if (accountContent) accountContent.classList.add('hide-element')
-  if (accountCompleted) accountCompleted.classList.remove('hide-element')
+  accountCompleted.value = true
 
   // Enable shipping step
+  const shippingCard = document.getElementById('shippingStepCard')
   if (shippingCard) {
     shippingCard.classList.remove('step-disabled')
     const shippingContent = document.getElementById('shippingStepContent')
@@ -806,9 +813,17 @@ const addValidationListeners = () => {
 }
 
 onMounted(async () => {
+  checkAuthStatus()
   await initializeCart()
   if (import.meta.client && window.localStorage) {
     await cartStore.loadCart()
+  }
+
+  if (isLoggedIn.value) {
+    const shippingCard = document.getElementById('shippingStepCard')
+    if (shippingCard) shippingCard.classList.remove('step-disabled')
+    const shippingContent = document.getElementById('shippingStepContent')
+    if (shippingContent) shippingContent.classList.remove('hide-element')
   }
 
   // Expose functions to window for onclick handlers
