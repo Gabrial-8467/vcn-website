@@ -13848,3 +13848,103 @@ body.home-page main {
   margin: 0 auto 24px !important;
  }
 }
+/* ============================================================
+   FOOTER / NAVBAR HORIZONTAL ALIGNMENT
+   Mirror the fixed navbar's responsive horizontal padding so
+   the footer content lines up with the navbar on every screen.
+   ============================================================ */
+@media (min-width: 1201px) and (max-width: 1399.98px) {
+  .vcn-footer-section {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .vcn-footer-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 991.98px) {
+  .vcn-footer-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .vcn-footer-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+/* ============================================================
+   VCN R&D / APPROACH HERO HORIZONTAL ALIGNMENT
+   Mirrors the fixed navbar's responsive gutters so the hero
+   content lines up with the navbar on every screen.
+   ============================================================ */
+.approach-hero-section > .container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+}
+
+.approach-hero-section > .container-fluid > .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+@media (max-width: 380px) {
+  .approach-hero-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (min-width: 381px) and (max-width: 576px) {
+  .approach-hero-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .approach-hero-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 991.98px) {
+  .approach-hero-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .approach-hero-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1399.98px) {
+  .approach-hero-section {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .approach-hero-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+}
