@@ -130,6 +130,7 @@ useHead({
 import { ref } from 'vue'
 
 const toast = useToast()
+const route = useRoute()
 const { loginWithPersistence } = useAuthCart()
 
 const identifier = ref('')
@@ -157,7 +158,10 @@ const handleLogin = async () => {
       toast.success({
         message: `Welcome back, ${result.user?.userName || 'User'}!`
       })
-      await navigateTo('/')
+      const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/')
+        ? route.query.redirect
+        : '/'
+      await navigateTo(redirect)
     } else {
       errorMessage.value = result.error || 'Login failed. Please try again.'
       toast.error({

@@ -15,6 +15,22 @@ const cmsStore = useCmsStore()
 
 const footer = computed(() => cmsStore.topFooterData)
 
+const { authState } = useAuthCart()
+const { openAuthModal } = useAuthModal()
+
+const handleMyAccountClick = (event) => {
+  if (authState.value.isLoggedIn) {
+    return
+  }
+
+  // On desktop open the slide-in login panel; on small screens let the
+  // normal navigation happen (my-account page redirects to /login).
+  if (process.client && window.innerWidth >= 992) {
+    event.preventDefault()
+    openAuthModal()
+  }
+}
+
 const openConsentModal = () => {
   consentModal.value?.openConsentModal()
 }
@@ -203,14 +219,20 @@ const handleSubscribe = async (event) => {
                 </ul>
               </div> -->
 
-              <!-- Help Column -->
+<!-- Help Column -->
               <div class="col-lg-4 col-md-4 col-sm-6 col-6 mb-4">
                 <h4 class="vcn-footer-column-title">{{ footer.columns[2].title }}</h4>
                 <ul class="vcn-footer-links-list">
                   <li v-for="link in footer.columns[2].links" :key="link.text">
-                    <NuxtLink :to="link.link" class="vcn-footer-link">{{link.text}}</NuxtLink>
+                    <a
+                      v-if="link.link === '/my-account'"
+                      :href="'/my-account'"
+                      class="vcn-footer-link"
+                      @click="handleMyAccountClick"
+                    >{{ link.text }}</a>
+                    <NuxtLink v-else :to="link.link" class="vcn-footer-link">{{ link.text }}</NuxtLink>
                   </li>
-                  
+
                   <!-- <li>
                     <a href="/entire-world" class="vcn-footer-link">International</a>
                   </li> -->

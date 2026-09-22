@@ -145,7 +145,7 @@ export const COMMON_DATA = {
                     },
                     {
                         text: "My Account",
-                        link: "/login"
+                        link: "/my-account"
                     }
                 ]
             },
