@@ -1,20 +1,11 @@
 <template>
   <div class="product-details-responsive-page">
     <ProductDetailsIntroduction :product-page="productStore.selectedProductPage" />
-    <!-- <ProductDetailsStrainSection /> -->
     <ProductDetailsHealthSection />
     <ProductDetailsFormulationSection />
-    <!-- <ProductDetailsBundleSection /> -->
     <ProductDetailsBenefitsSection />
-    <!-- <ProductDetailsCellularEnergySection /> -->
-    <!-- <ProductDetailsCompareSection /> -->
-    <ProductDetailsRigorousSection />
-    <!-- <ProductDetailsProbioticSection /> -->
-    <ProductDetailsDifferenceSection />
-    <!-- <ProductDetailsStrengthenSection /> -->
+    <ProductDetailsCompareSection />
     <ProductDetailsProducts />
-    <ProductDetailsReviewSection
-      :product-id="productStore.selectedProduct?.id || productStore.selectedProductPage?.productId" />
   </div>
 </template>
 

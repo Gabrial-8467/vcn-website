@@ -679,4 +679,13 @@ const resetForm = () => {
 .empty-state p {
   margin: 0;
 }
+
+@media (max-width: 576px) {
+  .review-form { padding: 18px 16px; }
+  .rating-selector { font-size: 1.5rem; }
+  .form-actions { flex-direction: column; width: 100%; }
+  .form-actions .btn-primary,
+  .form-actions .btn-secondary { width: 100%; }
+  .btn-write-review { width: 100%; justify-content: center; margin-bottom: 18px; }
+}
 </style>
