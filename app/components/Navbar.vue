@@ -238,9 +238,7 @@
                     <button type="button" class="register-btn" @click="openRegistration('preferred-customer')">
                       PREFERRED CUSTOMER
                     </button>
-                    <button type="button" class="register-btn" @click="openRegistration('abo')">
-                      VCN BUSINESS OWNER
-                    </button>
+                    <button type="button" class="register-btn" @click="openDirectSeller">DIRECT SELLER / VCN BUSINESS OWNER</button>
                   </div>
 
                   <div class="footer-links">
@@ -371,6 +369,7 @@ const { getFromEndpoint } = useApi()
 const { authState, loginWithPersistence, logoutWithCleanup, initializeCart } = useAuthCart()
 
 const route = useRoute()
+const router = useRouter()
 
 // Close mobile menu helper
 const closeMobileMenu = () => {
@@ -506,6 +505,11 @@ const selectedUserType = ref('preferred-customer')
 const openRegistration = (type) => {
   selectedUserType.value = type
   showRegistration.value = true
+}
+
+const openDirectSeller = () => {
+  closeForm()
+  router.push('/direct-seller')
 }
 
 const handleRegistrationComplete = (data) => {
@@ -1652,68 +1656,87 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       }
     }
 
-    /* ========== PRODUCT DETAILS PAGE OVERRIDES ========== */
+    /* ========== PRODUCT DETAILS & DIRECT SELLER PAGE OVERRIDES ========== */
 
-    /* Desktop Nav Links - Green on product details page */
-    .product-details-page .desktop-nav .nav-link {
-      color: var(--vcn-footer) !important;
-      /* Green color */
+    /* Navbar background and compact height on direct-seller page */
+    .direct-seller-page .navbar {
+      padding: 10px 20px !important;
     }
 
-    .product-details-page .desktop-nav .nav-link:hover {
+    .direct-seller-page .navbar:not(.scrolled) {
+      background: #f7f9f4 !important;
+    }
+
+    /* Desktop Nav Links - Green on light background pages */
+    .product-details-page .desktop-nav .nav-link,
+    .direct-seller-page .desktop-nav .nav-link {
+      color: var(--vcn-footer) !important;
+    }
+
+    .product-details-page .desktop-nav .nav-link:hover,
+    .direct-seller-page .desktop-nav .nav-link:hover {
       background: rgba(90, 90, 90, 0.15) !important;
-      /* Green tinted background */
       backdrop-filter: blur(10px);
       color: var(--vcn-footer) !important;
     }
 
-    /* Mobile Nav Links - Green on product details page */
-    .product-details-page .navbar-nav .nav-link {
+    /* Mobile Nav Links - Green on light background pages */
+    .product-details-page .navbar-nav .nav-link,
+    .direct-seller-page .navbar-nav .nav-link {
       color: var(--vcn-footer) !important;
       border-color: var(--vcn-footer) !important;
     }
 
-    .product-details-page .navbar-nav .nav-link.active {
+    .product-details-page .navbar-nav .nav-link.active,
+    .direct-seller-page .navbar-nav .nav-link.active {
       background: rgba(40, 167, 69, 0.25) !important;
       border-color: var(--vcn-footer) !important;
     }
 
     /* When scrolled - Links become WHITE */
-    .product-details-page .navbar.scrolled .desktop-nav .nav-link {
+    .product-details-page .navbar.scrolled .desktop-nav .nav-link,
+    .direct-seller-page .navbar.scrolled .desktop-nav .nav-link {
       color: #fff !important;
     }
 
-    .product-details-page .navbar.scrolled .desktop-nav .nav-link:hover {
+    .product-details-page .navbar.scrolled .desktop-nav .nav-link:hover,
+    .direct-seller-page .navbar.scrolled .desktop-nav .nav-link:hover {
       background: rgba(255, 255, 255, 0.15) !important;
       color: #fff !important;
     }
 
     /* Nav Actions - Login Link GREEN */
-    .product-details-page .login-link {
+    .product-details-page .login-link,
+    .direct-seller-page .login-link {
       color: var(--vcn-footer) !important;
     }
 
-    .product-details-page .login-link:hover {
+    .product-details-page .login-link:hover,
+    .direct-seller-page .login-link:hover {
       color: var(--vcn-footer) !important;
     }
 
     /* Button GREEN background */
-    .product-details-page .navbar-btn {
+    .product-details-page .navbar-btn,
+    .direct-seller-page .navbar-btn {
       background: var(--vcn-footer) !important;
       color: white !important;
     }
 
     /* When scrolled - Button becomes WHITE with green text */
-    .product-details-page .navbar.scrolled .login-link {
+    .product-details-page .navbar.scrolled .login-link,
+    .direct-seller-page .navbar.scrolled .login-link {
       color: #fff !important;
     }
 
-    .product-details-page .navbar.scrolled .navbar-btn {
+    .product-details-page .navbar.scrolled .navbar-btn,
+    .direct-seller-page .navbar.scrolled .navbar-btn {
       background: #fff !important;
       color: var(--vcn-footer) !important;
     }
 
-    .product-details-page .navbar.scrolled .navbar-btn:hover {
+    .product-details-page .navbar.scrolled .navbar-btn:hover,
+    .direct-seller-page .navbar.scrolled .navbar-btn:hover {
       background: var(--vcn-white) !important;
     }
 
