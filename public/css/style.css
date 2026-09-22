@@ -5831,6 +5831,48 @@ body.home-page main {
   color: var(--vcn-primary);
 }
 
+.auth-register-section {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.auth-register-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--vcn-footer);
+  margin-bottom: 6px;
+}
+
+.auth-register-subtitle {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 18px;
+}
+
+.auth-register-btn {
+  display: block;
+  width: 100%;
+  padding: 13px 20px;
+  margin-bottom: 10px;
+  border: 2px solid var(--vcn-footer);
+  border-radius: 25px;
+  background: #fff;
+  color: var(--vcn-footer);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.auth-register-btn:hover {
+  background: var(--vcn-footer);
+  color: #fff;
+}
+
 @media (max-width:991px) {
 
   .auth-wrapper-main {

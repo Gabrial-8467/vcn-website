@@ -281,6 +281,9 @@
             <li class="nav-item" v-else>
               <NuxtLink class="nav-link" to="#" @click.prevent="openFormFromMobile">Login</NuxtLink>
             </li>
+            <li class="nav-item" v-if="!authState.isLoggedIn">
+              <NuxtLink class="nav-link" to="/register" @click="closeMobileMenu">Create Account</NuxtLink>
+            </li>
           </ul>
 
           <!-- Shop Accordion -->
