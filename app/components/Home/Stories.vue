@@ -256,7 +256,7 @@ watch(storyCards, () => {
 .vcn-stories-section {
   background-color: var(--vcn-base-bg);
   padding: 80px 20px;
-  overflow-x: hidden;
+  overflow-x: clip;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
