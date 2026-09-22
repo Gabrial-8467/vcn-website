@@ -85,7 +85,7 @@ const handleSubscribe = async (event) => {
 <template>
   <!-- Footer Section -->
   <footer class="vcn-footer-section">
-    <div class=" vcn-container-footer">
+    <div class="vcn-container-footer">
       <!-- Top Section: Brand & Newsletter -->
       <div class="row">
         <div class="col-md-5">
@@ -269,12 +269,64 @@ const handleSubscribe = async (event) => {
 </template>
 
 <style scoped>
-.vcn-footer-links-section{
-  padding-left: 30px !important;
+.vcn-footer-section {
+  background-color: var(--vcn-footer);
+  color: rgba(255, 255, 255, 0.8);
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
-@media (max-width: 767.98px) {
-  .vcn-footer-links-section {
-    padding-left: 0 !important;
+
+.vcn-container-footer {
+  margin: 0 auto !important;
+  max-width: 1400px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.vcn-footer-links-section {
+  padding-left: 0 !important;
+}
+
+/* 1400px+ Extra Large Desktop */
+@media (min-width: 1400px) {
+  .vcn-footer-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+}
+
+/* 1200px - 1399px Laptop/Desktop */
+@media (max-width: 1399.98px) and (min-width: 1200px) {
+  .vcn-footer-section {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+/* 992px - 1199px Tablet Landscape */
+@media (max-width: 1199.98px) and (min-width: 992px) {
+  .vcn-footer-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+/* 768px - 991px Tablet Portrait */
+@media (max-width: 991.98px) and (min-width: 768px) {
+  .vcn-footer-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* 576px - 767px Mobile Large */
+@media (max-width: 767.98px) and (min-width: 576px) {
+  .vcn-footer-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
 
   .row {
@@ -285,6 +337,22 @@ const handleSubscribe = async (event) => {
   .row > [class*="col-"] {
     padding-left: 12px !important;
     padding-right: 12px !important;
+  }
+}
+
+/* 480px - 575px Mobile Small */
+@media (max-width: 575.98px) and (min-width: 480px) {
+  .vcn-footer-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+/* Below 480px Extra Small Mobile */
+@media (max-width: 479.98px) {
+  .vcn-footer-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }
 </style>

@@ -1458,19 +1458,27 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   }
 }
 
-  /* Large screens only */
-  @media (min-width: 992px) {
-    .navbar {
-      padding-left: 80px !important;
-      padding-right: 80px !important;
-    }
-  }
-
   /* Extra Large screens */
   @media (min-width: 1400px) {
     .navbar {
       padding-left: 160px !important;
       padding-right: 160px !important;
+    }
+  }
+
+  /* Laptop/Desktop 1200-1399 */
+  @media (max-width: 1399.98px) and (min-width: 1200px) {
+    .navbar {
+      padding-left: 40px !important;
+      padding-right: 40px !important;
+    }
+  }
+
+  /* Tablet Landscape 992-1199 */
+  @media (max-width: 1199.98px) and (min-width: 992px) {
+    .navbar {
+      padding-left: 30px !important;
+      padding-right: 30px !important;
     }
   }
 
@@ -1679,19 +1687,27 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       color: white;
     }
 
-    /* Large screens only */
-    @media (min-width: 992px) {
-      .navbar {
-        padding-left: 80px !important;
-        padding-right: 80px !important;
-      }
-    }
-
     /* Extra Large screens */
     @media (min-width: 1400px) {
       .navbar {
         padding-left: 160px !important;
         padding-right: 160px !important;
+      }
+    }
+
+    /* Laptop/Desktop 1200-1399 */
+    @media (max-width: 1399.98px) and (min-width: 1200px) {
+      .navbar {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+      }
+    }
+
+    /* Tablet Landscape 992-1199 */
+    @media (max-width: 1199.98px) and (min-width: 992px) {
+      .navbar {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
       }
     }
 

@@ -145,10 +145,10 @@ export const useProductStore = defineStore('product', {
       }
     },
 
-    // Fetch single product by slug
+    // Fetch single product by slug or id
     async fetchProductBySlug(slug: string, force = false) {
       // Check if already in store
-      const existing = this.getProductBySlug(slug)
+      const existing = this.getProductBySlug(slug) || this.getProductById(slug)
       if (existing && !force) {
         this.selectedProduct = existing
         return { success: true }
@@ -161,14 +161,22 @@ export const useProductStore = defineStore('product', {
         const config = useRuntimeConfig()
         const baseURL = config.public.apiBaseUrl
 
-        const data = await $fetch(`${baseURL}common/product/read/slug/${slug}`)
+        let data = await $fetch(`${baseURL}common/product/read/slug/${slug}`).catch(() => null)
+
+        // Fallback: If slug fetch returned no data, attempt fetching by ID endpoint
+        if (!data || !(data as any).data || (Array.isArray((data as any).data) && (data as any).data.length === 0)) {
+          data = await $fetch(`${baseURL}common/product/read/${slug}`).catch(() => null)
+        }
 
         if (data && (data as any).data) {
-          this.selectedProduct = (data as any).data
+          const productData = (data as any).data
+          this.selectedProduct = Array.isArray(productData) ? productData[0] : productData
+          this.loading = false
+          return { success: true }
         }
 
         this.loading = false
-        return { success: true }
+        return { success: false, error: 'Product not found' }
       } catch (err: any) {
         this.error = err.message || 'Network error'
         this.loading = false
