@@ -164,8 +164,57 @@ onMounted(async () => {
 .vcn-whole-body-section {
     box-sizing: border-box;
     width: 100%;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+}
+
+@media (min-width: 1400px) {
+    .vcn-whole-body-section {
+        padding-left: 160px !important;
+        padding-right: 160px !important;
+    }
+}
+
+@media (max-width: 1399.98px) and (min-width: 1200px) {
+    .vcn-whole-body-section {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+    }
+}
+
+@media (max-width: 1199.98px) and (min-width: 992px) {
+    .vcn-whole-body-section {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+}
+
+@media (max-width: 991.98px) and (min-width: 768px) {
+    .vcn-whole-body-section {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+@media (max-width: 767.98px) and (min-width: 576px) {
+    .vcn-whole-body-section {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
+
+@media (max-width: 575.98px) and (min-width: 480px) {
+    .vcn-whole-body-section {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
+
+@media (max-width: 479.98px) {
+    .vcn-whole-body-section {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
 }
 
 /* * This affects screens below 768px where 'col-6' is active  */
@@ -174,53 +223,6 @@ onMounted(async () => {
     /* Adds 20px total space between cards */
     margin-bottom: 20px;
     /* Adds vertical space if they wrap */
-}
-
-@media (max-width: 991.98px) {
-    .vcn-whole-body-section {
-        padding-left: 30px !important;
-        padding-right: 30px !important;
-    }
-}
-
-@media (max-width: 767.98px) {
-    .vcn-whole-body-section {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-    }
-
-    .vcn-whole-body-swiper-container .row>div {
-        padding: 0 15px;
-        /* Slightly more space for tablets */
-    }
-}
-
-@media (max-width: 575.98px) {
-    .vcn-whole-body-section {
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-}
-
-@media (max-width: 379.98px) {
-    .vcn-whole-body-section {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-    }
-}
-
-@media (min-width: 1200px) {
-    .vcn-whole-body-section {
-        padding-left: 80px !important;
-        padding-right: 80px !important;
-    }
-}
-
-@media (min-width: 1400px) {
-    .vcn-whole-body-section {
-        padding-left: 160px !important;
-        padding-right: 160px !important;
-    }
 }
 
 @media (max-width: 767.98px) {

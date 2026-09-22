@@ -595,6 +595,201 @@ watch(storyCards, () => {
 .vcn-stories-card-btn:hover {
   background-color: var(--vcn-primary);
   color: var(--vcn-white);
+}
+
+.vcn-stories-text-card.card-dark {
+  background-color: #122410;
+  color: #ffffff;
+}
+
+.card-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.card-share-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.card-light .card-share-btn {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #1a3417;
+}
+
+.card-light .card-share-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.card-dark .card-share-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.card-dark .card-share-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.card-quote {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  font-weight: 500;
+  margin: 0;
+  text-align: left;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.card-logo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.card-logo.fast-company {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.card-logo.forbes {
+  font-family: 'Georgia', serif;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: -0.2px;
+}
+
+/* Content Cards Grid */
+.vcn-stories-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+}
+
+.vcn-stories-card {
+  position: relative;
+  border-radius: 25px;
+  overflow: hidden;
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 40px;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vcn-stories-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.vcn-stories-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vcn-stories-card:hover::before {
+  transform: scale(1.08);
+}
+
+.vcn-stories-card:nth-child(1)::before {
+  background-image: url("/img/image/Section Above footer.png");
+}
+
+.vcn-stories-card:nth-child(2)::before {
+  background-color: var(--vcn-primary);
+  background-image: url("/img/stories/changeyourhealth.png");
+}
+
+.vcn-stories-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(69, 102, 60, 0.85) 0%, rgba(58, 95, 48, 0.75) 100%);
+  z-index: 2;
+}
+
+.vcn-stories-card-content {
+  position: relative;
+  z-index: 3;
+  color: var(--vcn-white);
+}
+
+.vcn-stories-card-title {
+  font-size: 48px;
+  font-weight: 400;
+  margin-bottom: 15px;
+  color: var(--vcn-white);
+}
+
+.vcn-stories-card-description {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.vcn-stories-card-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  background-color: var(--vcn-white);
+  color: var(--vcn-primary);
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 16px !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.vcn-stories-card-btn::after {
+  content: "→";
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.vcn-stories-card-btn:hover {
+  background-color: var(--vcn-primary);
+  color: var(--vcn-white);
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   padding-right: 55px;
@@ -612,17 +807,24 @@ watch(storyCards, () => {
 /* Responsive Overrides */
 @media (min-width: 1400px) {
   .vcn-stories-section {
-    padding-left: 160px;
-    padding-right: 160px;
+    padding-left: 160px !important;
+    padding-right: 160px !important;
     padding-top: 25px;
     padding-bottom: 25px;
   }
 }
 
-@media (max-width: 1399px) {
+@media (max-width: 1399.98px) and (min-width: 1200px) {
   .vcn-stories-section {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+@media (max-width: 1199.98px) and (min-width: 992px) {
+  .vcn-stories-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
   }
 }
 
@@ -636,15 +838,16 @@ watch(storyCards, () => {
   }
 }
 
-@media (max-width: 992px) {
-
+@media (max-width: 991.98px) and (min-width: 768px) {
   .vcn-stories-section {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     padding-top: 60px;
     padding-bottom: 60px;
   }
+}
 
+@media (max-width: 992px) {
   .vcn-stories-title {
     font-size: 2.5rem !important;
   }
@@ -706,9 +909,11 @@ watch(storyCards, () => {
     width: 30px;
     height: 30px;
   }
+
   .vcn-stories-media-item .card-body {
     padding: 24px 12px 12px 12px;
   }
+
   .vcn-stories-media-item .card-quote {
     font-size: 0.75rem;
     line-height: 1.35;
@@ -750,7 +955,6 @@ watch(storyCards, () => {
 
   .vcn-stories-card-btn {
     padding: 12px 40px !important;
-    /* room on the right so the hover arrow never overlaps the text */
   }
 
   .vcn-stories-media-gallery-track {
@@ -806,19 +1010,33 @@ watch(storyCards, () => {
     width: 24px;
     height: 24px;
   }
+
   .vcn-stories-media-item .card-body {
     padding: 20px 10px 10px 10px;
   }
+
   .vcn-stories-media-item .card-quote {
     font-size: 0.65rem;
     line-height: 1.3;
   }
 }
 
+@media (max-width: 767.98px) and (min-width: 576px) {
+  .vcn-stories-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 575.98px) and (min-width: 480px) {
+  .vcn-stories-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
 @media (max-width: 576px) {
   .vcn-stories-section {
-    padding-left: 15px;
-    padding-right: 15px;
     padding-top: 40px;
     padding-bottom: 40px;
   }
@@ -850,7 +1068,6 @@ watch(storyCards, () => {
 
   .vcn-stories-card-btn {
     padding: 10px 40px !important;
-    /* clear the hover arrow (right: 20px) so it does not overlap the text */
   }
 
   .vcn-stories-media-gallery-track {
@@ -906,21 +1123,25 @@ watch(storyCards, () => {
     width: 20px;
     height: 20px;
   }
+
   .vcn-stories-media-item .card-body {
     padding: 16px 8px 8px 8px;
   }
+
   .vcn-stories-media-item .card-quote {
     font-size: 0.55rem;
     line-height: 1.25;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 479.98px) {
   .vcn-stories-section {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
+}
 
+@media (max-width: 480px) {
   .vcn-stories-title {
     font-size: 32px !important;
   }
