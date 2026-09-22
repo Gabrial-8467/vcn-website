@@ -61,10 +61,67 @@ export const ABOUT_PAGE_DATA = {
     },
     about: {
         heroImage: "/img/about/about-us.png",
+        heroBadges: [
+            { text: "ESTD. 2009", accent: false },
+            { text: "100% PURE & NATURAL", accent: true }
+        ],
+        heroButton: {
+            text: "Discover Our Story",
+            link: "/our-journey"
+        },
 
         welcome: {
+            tag: "WELCOME TO VCN",
             title: "Welcome to the world of VCN!",
-            subtitle: "Helping people live better lives"
+            subtitle: "Helping people live better lives",
+            heading: "Holistic Health Meets Modern Science",
+            philosophyTitle: "Our Philosophy",
+            philosophyText:
+                "We believe nature holds the key to a healthier, more balanced life. By combining traditional herbal practices with modern scientific research, we develop wellness products that support everyday health."
+        },
+
+        metrics: [
+            { value: "17+", label: "Years of Trust" },
+            { value: "100%", label: "Pure Formulations" },
+            { value: "100k+", label: "Empowered Leaders" },
+            { value: "Pan-India", label: "Active Presence" }
+        ],
+
+        values: {
+            tag: "OUR CORE PILLARS",
+            title: "What Defines VCN",
+            items: [
+                { icon: "bi-flower1", title: "Nature & Purity", text: "Sourcing clean, natural, and premium organic ingredients. Every formulation honors the traditional roots of healing while ensuring ultimate freshness." },
+                { icon: "bi-lightbulb", title: "Scientific Innovation", text: "Backed by rigorous research and development, our laboratory partners test every batch to guarantee potency, safety, and modern wellness standards." },
+                { icon: "bi-people-fill", title: "Direct Empowerment", text: "Providing opportunities for individuals to build independent careers. We foster leadership and personal growth through a supportive community." },
+                { icon: "bi-recycle", title: "Eco-Sustainability", text: "Committing to eco-conscious packaging, ethical sourcing protocols, and minimizing carbon footprint to protect our planet for future generations." }
+            ]
+        },
+
+        mission: {
+            tag: "THE MISSION",
+            quote: "Making Life Better Since 2009",
+            fallbackText: "To enhance the quality of life for our customers and distributors by offering a wide range of organic, natural, and wellness-focused products."
+        },
+
+        timeline: {
+            tag: "OUR JOURNEY",
+            title: "Milestones of Progress",
+            buttonText: "View Full Timeline",
+            buttonLink: "/our-journey",
+            items: [
+                { year: "2009", phase: "Foundation & Legacy", desc: "VCN began its journey with a single office, a limited range of health products, and a small yet highly committed team. The focus during these early years was on building a strong and ethical foundation." },
+                { year: "2015", phase: "Expansion & Growth", desc: "With a strong base in place, VCN began expanding its presence across multiple locations in India. The product portfolio grew steadily, catering to daily wellness and long-term health benefits." },
+                { year: "Present Day", phase: "Leading the Future", desc: "Today, VCN Lifestyle is a household name, synonymous with modern wellness and a commitment to sustainable growth." }
+            ]
+        },
+
+        leadership: {
+            tag: "OUR LEADERSHIP",
+            heading: "Driven by Vision & Integrity",
+            text: "Our directors guide the organization with a focus on innovation, certified quality, and social empowerment. They inspire a culture of trust and support nationwide.",
+            buttonText: "Meet Our Leadership",
+            buttonLink: "/our-leadership"
         },
 
         heading: "This is VCN",
