@@ -5,7 +5,7 @@
 
         <!-- Large display text -->
         <div class="rs2-display">
-          <span class="rs2-overline">Quality Standards</span>
+          <span class="rs2-overline">{{ qualityOverline }}</span>
           <h2 class="rs2-title">{{ purityTitle || 'Ayurvedic purity that sets<br>a higher standard.' }}</h2>
         </div>
 
@@ -43,6 +43,11 @@ const { getCmsImageUrl } = useCmsApi()
 
 const rigorousSection = computed(() =>
   cmsStore.getSectionByKey('rigorous') || cmsStore.getSectionByKey('purity') || cmsStore.getSectionByKey('testing')
+)
+const qualityOverline = computed(() =>
+  rigorousSection.value?.name ||
+  rigorousSection.value?.subtitle ||
+  'Quality Standards'
 )
 const purityTitle = computed(() => rigorousSection.value?.title || productStore.selectedProductPage?.purityTitle)
 const purityDescription = computed(() => rigorousSection.value?.description || productStore.selectedProductPage?.purityDescription)

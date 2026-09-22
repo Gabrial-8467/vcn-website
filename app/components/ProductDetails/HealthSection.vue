@@ -5,7 +5,7 @@
       <!-- Top header row -->
       <div class="hs2-top-row">
         <div class="hs2-label-col">
-          <span class="hs2-overline">Why It Works</span>
+          <span class="hs2-overline">{{ sectionOverline }}</span>
           <h2 class="hs2-heading" v-html="sectionHeading" />
         </div>
         <p class="hs2-subtext">{{ sectionSubtext }}</p>
@@ -72,6 +72,12 @@ const sectionHeading = computed(() => {
   }
   return `${productName.value} delivers targeted herbal action<br>to revitalize and support your daily wellness.`
 })
+
+const sectionOverline = computed(() =>
+  healthSection.value?.name ||
+  healthSection.value?.subtitle ||
+  'Why It Works'
+)
 
 const sectionSubtext = computed(() => {
   if (healthSection.value?.title) return healthSection.value.title

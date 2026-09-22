@@ -5,11 +5,11 @@
       <!-- Header -->
       <div class="rp-header">
         <div class="rp-header-left">
-          <span class="rp-overline">Complete Your Wellness</span>
-          <h2 class="rp-title">You May Also <em>Like</em></h2>
+          <span class="rp-overline">{{ rpOverline }}</span>
+          <h2 class="rp-title" v-html="rpTitle"></h2>
         </div>
         <NuxtLink to="/all-products" class="rp-view-all">
-          Explore All Products
+          {{ rpViewAll }}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </NuxtLink>
       </div>
@@ -64,7 +64,7 @@
 
       <!-- Empty state -->
       <div class="rp-empty" v-else>
-        <p>Loading products…</p>
+        <p>{{ emptyText }}</p>
       </div>
 
     </div>
@@ -72,13 +72,25 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useProductStore } from '~/stores/product'
 import { useCartStore } from '~/stores/cart'
+import { useCmsStore } from '~/stores/cms'
 
 const productStore = useProductStore()
 const cartStore = useCartStore()
+const cmsStore = useCmsStore()
 const products = ref([])
+
+const relatedSection = computed(() =>
+  cmsStore.getSectionByKey('related') ||
+  cmsStore.getSectionByKey('products') ||
+  cmsStore.getSectionByKey('recommendations')
+)
+const rpOverline = computed(() => relatedSection.value?.name || relatedSection.value?.subtitle || 'Complete Your Wellness')
+const rpTitle = computed(() => relatedSection.value?.title || 'You May Also <em>Like</em>')
+const rpViewAll = computed(() => relatedSection.value?.buttonText || 'Explore All Products')
+const emptyText = computed(() => relatedSection.value?.config?.emptyText || 'Loading products…')
 
 onMounted(async () => {
   await productStore.fetchProducts()

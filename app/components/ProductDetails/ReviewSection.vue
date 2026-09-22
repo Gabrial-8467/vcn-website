@@ -2,7 +2,7 @@
 
   <div class="reviews-section">
     <div class="container">
-      <h2 class="section-title">Member Reviews</h2>
+      <h2 class="section-title">{{ sectionTitle }}</h2>
 
     <!-- Write Review Button -->
     <button class="btn-write-review" @click="showForm = !showForm">
@@ -160,6 +160,7 @@
 <script setup lang="ts">
 import { API_ENDPOINTS, getProductReviewsUrl } from '~/config/api/endpoints'
 import { useApi } from '~/config/api/useApi'
+import { useCmsStore } from '~/stores/cms'
 
 // Types
 interface Review {
@@ -192,6 +193,14 @@ interface ReviewsResponse {
 const props = defineProps<{
   productId?: number
 }>()
+
+const cmsStore = useCmsStore()
+
+const sectionTitle = computed(() =>
+  cmsStore.getSectionByKey('reviews')?.title ||
+  cmsStore.getSectionByKey('reviews')?.name ||
+  'Member Reviews'
+)
 
 // Get product store for product ID
 const productStore = useProductStore()

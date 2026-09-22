@@ -4,28 +4,22 @@
 
       <!-- Left: Heading + callouts stacked -->
       <div class="fs2-left">
-        <span class="fs2-overline">2-in-1 Formula</span>
-        <h2 class="fs2-title">Engineered for Total Diabetic Wellness</h2>
-        <p class="fs2-body">DBT Care Plus unique herbal blend delivers targeted action — controlling blood sugar fast while repairing your body from within.</p>
+        <span class="fs2-overline">{{ overline }}</span>
+        <h2 class="fs2-title">{{ title }}</h2>
+        <p class="fs2-body">{{ body }}</p>
 
         <div class="fs2-callout-stack">
-          <div class="fs2-callout">
-            <div class="fs2-callout-num">01</div>
-            <div class="fs2-callout-content">
-              <div class="fs2-callout-title">Blood Sugar Control Blend</div>
-              <div class="fs2-callout-sub">For Immediate Relief</div>
-              <p class="fs2-callout-body">Karela, Gurmar, Neem & Vijayasar actively reduce high blood glucose, stimulate insulin production and purify the blood from Day 1.*</p>
+          <template v-for="(c, i) in callouts" :key="i">
+            <div class="fs2-callout">
+              <div class="fs2-callout-num">{{ c.num }}</div>
+              <div class="fs2-callout-content">
+                <div class="fs2-callout-title">{{ c.title }}</div>
+                <div class="fs2-callout-sub">{{ c.sub }}</div>
+                <p class="fs2-callout-body">{{ c.body }}</p>
+              </div>
             </div>
-          </div>
-          <div class="fs2-divider"></div>
-          <div class="fs2-callout">
-            <div class="fs2-callout-num">02</div>
-            <div class="fs2-callout-content">
-              <div class="fs2-callout-title">Organ Repair & Detox Blend</div>
-              <div class="fs2-callout-sub">For Long Term Wellness</div>
-              <p class="fs2-callout-body">Shudh Shilajit, Punarnava, Aloe Vera & Chirata repair damaged pancreatic cells, detoxify the body and support liver, kidney and eye health.*</p>
-            </div>
-          </div>
+            <div v-if="i < callouts.length - 1" class="fs2-divider"></div>
+          </template>
         </div>
       </div>
 
@@ -33,17 +27,79 @@
       <div class="fs2-right">
         <div class="fs2-media-card">
           <div class="fs2-gif-wrap">
-            <img src="/gif/Capsule-GIF-2.gif" alt="DBT Care Plus capsule animation" class="fs2-gif" />
+            <img :src="mediaSrc" :alt="title" class="fs2-gif" />
           </div>
           <video src="" class="fs2-video" autoplay muted loop playsinline></video>
           <div class="fs2-media-badge">
-            <span class="fs2-mb-text">2-in-1<br>Formula</span>
+            <span class="fs2-mb-text">{{ mediaBadgeText }}</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useCmsStore } from '~/stores/cms'
+import { useProductStore } from '~/stores/product'
+import { useCmsApi } from '~/composables/useCmsApi'
+
+const cmsStore = useCmsStore()
+const productStore = useProductStore()
+const { getCmsImageUrl } = useCmsApi()
+
+const formulaSection = computed(() =>
+  cmsStore.getSectionByKey('formula') ||
+  cmsStore.getSectionByKey('formulation') ||
+  cmsStore.getSectionByKey('2in1') ||
+  cmsStore.getSectionByKey('blend')
+)
+
+const overline = computed(() => formulaSection.value?.name || formulaSection.value?.subtitle || '2-in-1 Formula')
+
+const title = computed(() =>
+  formulaSection.value?.title ||
+  productStore.selectedProductPage?.supportMainTitle ||
+  productStore.selectedProduct?.name ||
+  'Engineered for Total Diabetic Wellness'
+)
+
+const body = computed(() =>
+  formulaSection.value?.description ||
+  productStore.selectedProductPage?.heroDescription ||
+  'DBT Care Plus unique herbal blend delivers targeted action — controlling blood sugar fast while repairing your body from within.'
+)
+
+const callouts = computed(() => {
+  if (formulaSection.value?.items?.length) {
+    return formulaSection.value.items.map((item, i) => ({
+      num: String(i + 1).padStart(2, '0'),
+      title: item.title,
+      sub: item.subtitle,
+      body: item.description
+    }))
+  }
+  return [
+    { num: '01', title: 'Blood Sugar Control Blend', sub: 'For Immediate Relief', body: 'Karela, Gurmar, Neem & Vijayasar actively reduce high blood glucose, stimulate insulin production and purify the blood from Day 1.*' },
+    { num: '02', title: 'Organ Repair & Detox Blend', sub: 'For Long Term Wellness', body: 'Shudh Shilajit, Punarnava, Aloe Vera & Chirata repair damaged pancreatic cells, detoxify the body and support liver, kidney and eye health.*' }
+  ]
+})
+
+const mediaBadgeText = computed(() =>
+  formulaSection.value?.config?.mediaBadge ||
+  '2-in-1\nFormula'
+)
+
+const mediaSrc = computed(() => {
+  if (formulaSection.value?.image) return getCmsImageUrl(formulaSection.value.image)
+  if (productStore.selectedProduct) {
+    const img = productStore.getPrimaryImage?.(productStore.selectedProduct)
+    if (img) return img
+  }
+  return productStore.selectedProduct?.image || '/gif/Capsule-GIF-2.gif'
+})
+</script>
 
 <style scoped>
 .fs2-section {

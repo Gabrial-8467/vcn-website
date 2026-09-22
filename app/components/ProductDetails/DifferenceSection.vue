@@ -6,7 +6,7 @@
         <!-- Top: full-width heading -->
         <div class="ds2-header">
           <div class="ds2-header-left">
-            <span class="ds2-overline">Why DBT Care Plus</span>
+            <span class="ds2-overline">{{ featureOverline }}</span>
             <h2 class="ds2-title" v-html="featureHeading || 'Natural blood sugar solution<br>backed by Ayurveda'" />
           </div>
           <p class="ds2-header-right" v-html="featureSubHeading || 'Our Ayurvedic formulation combines 11 powerful herbs, clinically trusted to manage blood sugar naturally.'" />
@@ -21,9 +21,9 @@
               <img :src="featureImage || '/img/dbt/389size.png'" alt="Product doctor" class="ds2-img" />
               <div class="ds2-img-overlay"></div>
               <div class="ds2-img-caption">
-                <span>Trusted by</span>
-                <strong>50,000+</strong>
-                <span>Customers</span>
+                <span>{{ trustedCaption.pre }}</span>
+                <strong>{{ trustedCaption.num }}</strong>
+                <span>{{ trustedCaption.post }}</span>
               </div>
             </div>
           </div>
@@ -60,6 +60,15 @@ const { getCmsImageUrl } = useCmsApi()
 
 const differenceSection = computed(() =>
   cmsStore.getSectionByKey('difference') || cmsStore.getSectionByKey('feature')
+)
+const featureOverline = computed(() =>
+  differenceSection.value?.name ||
+  differenceSection.value?.subtitle ||
+  'Why DBT Care Plus'
+)
+const trustedCaption = computed(() =>
+  differenceSection.value?.config?.trustedCaption ||
+  { pre: 'Trusted by', num: '50,000+', post: 'Customers' }
 )
 const featureHeading = computed(() => differenceSection.value?.title || productStore.selectedProductPage?.featureHeading)
 const featureSubHeading = computed(() => differenceSection.value?.description || productStore.selectedProductPage?.featureSubHeading)

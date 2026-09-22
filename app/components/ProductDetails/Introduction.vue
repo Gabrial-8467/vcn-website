@@ -72,7 +72,7 @@
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             <polyline points="9 12 11 14 15 10"/>
           </svg>
-          <span>GMP Certified</span>
+          <span>{{ qualityBadgeText }}</span>
         </div>
       </div>
 
@@ -110,40 +110,25 @@
           <!-- Choose Pack Section -->
           <div class="pd2-pack-section">
             <div class="pd2-pack-header">
-              <span class="pd2-pack-title">CHOOSE PACK</span>
-              <span class="pd2-save-tag">Save up to 25%</span>
+              <span class="pd2-pack-title">{{ packSectionLabel }}</span>
+              <span class="pd2-save-tag">{{ packSaveTag }}</span>
             </div>
 
             <div class="pd2-pack-grid">
-              <!-- Pack 1 (Single / 500ml) -->
               <div
+                v-for="(pack, pIndex) in packs"
+                :key="pIndex"
                 class="pd2-pack-card"
-                :class="{ active: selectedPackIndex === 0 }"
-                @click="selectPack(0)"
+                :class="{ active: selectedPackIndex === pIndex }"
+                @click="selectPack(pIndex)"
               >
                 <div class="pd2-pack-top">
-                  <span class="pd2-pack-name">500ml</span>
-                  <span class="pd2-pack-badge">-15%</span>
+                  <span class="pd2-pack-name">{{ pack.sku }}</span>
+                  <span class="pd2-pack-badge" v-if="pack.badge">-{{ pack.badge }}%</span>
                 </div>
                 <div class="pd2-pack-price-wrap">
-                  <span class="pd2-pp-main">₹849</span>
-                  <span class="pd2-pp-mrp">₹999</span>
-                </div>
-              </div>
-
-              <!-- Pack 2 (Pack of 2 / 1000ml) -->
-              <div
-                class="pd2-pack-card"
-                :class="{ active: selectedPackIndex === 1 }"
-                @click="selectPack(1)"
-              >
-                <div class="pd2-pack-top">
-                  <span class="pd2-pack-name">1000ml (Pack of 2)</span>
-                  <span class="pd2-pack-badge">-25%</span>
-                </div>
-                <div class="pd2-pack-price-wrap">
-                  <span class="pd2-pp-main">₹1499</span>
-                  <span class="pd2-pp-mrp">₹1998</span>
+                  <span class="pd2-pp-main">₹{{ pack.price }}</span>
+                  <span class="pd2-pp-mrp" v-if="pack.mrp">₹{{ pack.mrp }}</span>
                 </div>
               </div>
             </div>
@@ -156,7 +141,7 @@
               <span class="pd2-price-mrp" v-if="currentMrp">₹{{ currentMrp }}</span>
               <span class="pd2-price-off" v-if="currentDiscount">{{ currentDiscount }}% OFF</span>
             </div>
-            <span class="pd2-tax-sub">Incl. of all taxes</span>
+            <span class="pd2-tax-sub">{{ taxNotice }}</span>
           </div>
 
           <!-- Quantity Stepper & CTAs -->
@@ -168,8 +153,7 @@
             </div>
 
             <button type="button" class="pd2-btn-buy" @click="handleBuyNow">
-              Buy Now
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              {{ heroCtaPrimary }}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="5" y1="12" x2="19" y2="12"/>
                 <polyline points="12 5 19 12 12 19"/>
               </svg>
@@ -181,42 +165,33 @@
                 <line x1="3" y1="6" x2="21" y2="6"/>
                 <path d="M16 10a4 4 0 01-8 0"/>
               </svg>
-              Add to Cart
+              {{ heroCtaSecondary }}
             </button>
           </div>
 
           <!-- Trust Badges Strip -->
           <div class="pd2-trust-strip">
-            <div class="pd2-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-              <span>30-Day<br>Guarantee</span>
-            </div>
-            <div class="pd2-trust-sep"></div>
-            <div class="pd2-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="1" y="3" width="15" height="13"/>
-                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-                <circle cx="5.5" cy="18.5" r="2.5"/>
-                <circle cx="18.5" cy="18.5" r="2.5"/>
-              </svg>
-              <span>Free<br>Delivery</span>
-            </div>
-            <div class="pd2-trust-sep"></div>
-            <div class="pd2-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-              </svg>
-              <span>AYUSH<br>Standard</span>
-            </div>
-            <div class="pd2-trust-sep"></div>
-            <div class="pd2-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              <span>100%<br>Ayurvedic</span>
-            </div>
+            <template v-for="(g, gi) in guaranteeItems" :key="g.text">
+              <div class="pd2-trust-item">
+                <svg v-if="g.icon === 'truck'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="1" y="3" width="15" height="13"/>
+                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                  <circle cx="5.5" cy="18.5" r="2.5"/>
+                  <circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+                <svg v-else-if="g.icon === 'check'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <svg v-else-if="g.icon === 'star'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>{{ g.text }}</span>
+              </div>
+              <div v-if="gi < guaranteeItems.length - 1" class="pd2-trust-sep"></div>
+            </template>
           </div>
 
           <!-- Accordion Sections (Uses, Directions, Benefits, Ingredients) -->
@@ -254,12 +229,12 @@
           <img :src="displayImage" :alt="productName" class="pd2-sticky-img" />
           <div class="pd2-sticky-info">
             <span class="pd2-sticky-name">{{ productName }}</span>
-            <span class="pd2-sticky-size">{{ selectedPackIndex === 0 ? '500ml' : '1000ml (Pack of 2)' }}</span>
+            <span class="pd2-sticky-size">{{ currentPack.sku }}</span>
           </div>
         </div>
         <div class="pd2-sticky-right">
           <span class="pd2-sticky-price">₹{{ currentPrice }}</span>
-          <button type="button" class="pd2-sticky-btn" @click="handleBuyNow">Buy Now →</button>
+          <button type="button" class="pd2-sticky-btn" @click="handleBuyNow">{{ heroCtaPrimary }} →</button>
         </div>
       </div>
     </div>
@@ -293,6 +268,7 @@
 import { ref, onMounted, onBeforeUnmount, computed, watch, nextTick } from 'vue'
 import { useCartStore } from '~/stores/cart'
 import { useProductStore } from '~/stores/product'
+import { useCmsStore } from '~/stores/cms'
 import { useAuthCart } from '~/composables/useAuthCart'
 import { getProductReviewsUrl } from '~/config/api/endpoints'
 import { useApi } from '~/config/api/useApi'
@@ -303,6 +279,7 @@ const props = defineProps({
 
 const cartStore = useCartStore()
 const productStore = useProductStore()
+const cmsStore = useCmsStore()
 const { initializeCart } = useAuthCart()
 const route = useRoute()
 
@@ -333,6 +310,10 @@ const buildFallbackProduct = (slug) => ({
   rating: 4.8,
   reviewCount: 142,
   badgeLabel: '11 Ayurvedic Herbs',
+  variants: [
+    { id: 1, sku: '500ml', sellingPrice: '849.00', mrp: '999.00', isDefault: true },
+    { id: 2, sku: '1000ml (Pack of 2)', sellingPrice: '1499.00', mrp: '1998.00' }
+  ],
   uses: 'Helps regulate blood sugar levels, Improves insulin sensitivity, Boosts energy and vitality, Supports liver and kidney health',
   directionsForUse: 'Take 20-30ml twice daily before meals mixed with lukewarm water, or as directed by an Ayurvedic physician.',
   primaryBenefits: '100% Ayurvedic formulation, Controls blood sugar naturally, Free from artificial chemicals and preservatives, Made with pure plant extracts',
@@ -404,11 +385,17 @@ const productDescription = computed(() => {
   return product.value?.description || 'Ayurvedic herbal juice formulated with 11 potent herbs to fuel your body, balance metabolism, and naturally control blood sugar levels.'
 })
 
-const featureBullets = computed(() => [
-  'Helps regulate blood sugar levels',
-  'Improves insulin sensitivity',
-  'Boosts energy and vitality'
-])
+const featureBullets = computed(() => {
+  const src = product.value?.uses || product.value?.primaryBenefits
+  if (src) {
+    return src.split(/[,.]\s*/).map(s => s.trim()).filter(Boolean).slice(0, 3)
+  }
+  return [
+    'Helps regulate blood sugar levels',
+    'Improves insulin sensitivity',
+    'Boosts energy and vitality'
+  ]
+})
 
 const selectPack = (index) => {
   selectedPackIndex.value = index
@@ -417,21 +404,89 @@ const selectPack = (index) => {
 const incrementQty = () => { quantity.value++ }
 const decrementQty = () => { if (quantity.value > 1) quantity.value-- }
 
-const currentPrice = computed(() => selectedPackIndex.value === 0 ? '849' : '1499')
-const currentMrp = computed(() => selectedPackIndex.value === 0 ? '999' : '1998')
-const currentDiscount = computed(() => selectedPackIndex.value === 0 ? 15 : 25)
+// ── Packs & pricing (variant-driven, fallback only) ──
+const packs = computed(() => {
+  const variants = product.value?.variants || []
+  if (variants.length > 0) {
+    return variants.map((v) => {
+      const price = parseFloat(v.sellingPrice)
+      const mrp = parseFloat(v.mrp)
+      return {
+        sku: v.sku || 'Standard Pack',
+        price: isFinite(price) ? price.toFixed(0) : '849',
+        mrp: isFinite(mrp) && mrp > 0 ? mrp.toFixed(0) : null,
+        badge: isFinite(price) && isFinite(mrp) && mrp > price ? Math.round((1 - price / mrp) * 100) : null
+      }
+    })
+  }
+  return [
+    { sku: '500ml', price: '849', mrp: '999', badge: 15 },
+    { sku: '1000ml (Pack of 2)', price: '1499', mrp: '1998', badge: 25 }
+  ]
+})
 
-const badgeNumber = computed(() => '11')
-const badgeLabelText = computed(() => 'AYURVEDIC HERBS')
+const currentPack = computed(() => packs.value[selectedPackIndex.value] || packs.value[0])
+const currentPrice = computed(() => currentPack.value.price)
+const currentMrp = computed(() => currentPack.value.mrp || '')
+const currentDiscount = computed(() => currentPack.value.badge || 0)
+
+const packSaveTag = computed(() => {
+  const max = Math.max(...packs.value.map(p => p.badge || 0))
+  return max ? `Save up to ${max}%` : ''
+})
+
+// ── Badges (product-driven, fallback only) ──
+const badgeNumber = computed(() => {
+  const bl = product.value?.badgeLabel || ''
+  const match = bl.match(/^\d+/)
+  return match ? match[0] : '11'
+})
+const badgeLabelText = computed(() => {
+  const bl = product.value?.badgeLabel || ''
+  if (bl) return bl.replace(/^\d+\s*/, '').toUpperCase()
+  return 'AYURVEDIC HERBS'
+})
+
+// ── Media extraction (backend media objects → URLs) ──
+const getMediaImageUrl = (image) => {
+  if (!image) return null
+  if (typeof image === 'string') return image
+  const media = image?.media || image
+  if (!media || media.type === 'VIDEO' || media.mimeType?.startsWith('video/')) return null
+  return media.variants?.large || media.variants?.medium || media.webpUrl || media.fileUrl || null
+}
+
+const getMediaVideoUrl = (item) => {
+  if (!item) return null
+  const media = item?.media || item
+  if (!media) return null
+  const isVideo = media.type === 'VIDEO' || media.mimeType?.startsWith('video/')
+  if (!isVideo) return null
+  return media.variants?.original || media.originalUrl || media.fileUrl || null
+}
 
 const allProductImages = computed(() => {
-  if (product.value?.images?.length > 0) return product.value.images
+  const variants = product.value?.variants || []
+  const source = [
+    ...(product.value?.images || []),
+    ...(product.value?.media || []),
+    ...variants.flatMap(v => v.productImages || [])
+  ]
+  const urls = Array.from(new Set(source.map(getMediaImageUrl).filter(Boolean)))
+  if (urls.length > 0) return urls
   if (product.value?.image) return [product.value.image]
   return ['/img/productsdetails/BOOSTER.png', '/img/productsdetails/comonimages1.png', '/img/productsdetails/comonimages2.png']
 })
 
 const displayImage = computed(() => selectedImage.value || allProductImages.value[0] || '/img/productsdetails/BOOSTER.png')
-const backendVideoUrl = computed(() => '')
+const backendVideoUrl = computed(() => {
+  const variants = product.value?.variants || []
+  return [
+    ...(product.value?.videos || []),
+    ...(product.value?.media || []),
+    ...variants.flatMap(v => v.productImages || [])
+  ].map(getMediaVideoUrl).find(Boolean) || ''
+})
 
 const handleImageError = (e) => {
   if (e?.target) e.target.src = '/img/productsdetails/BOOSTER.png'
@@ -441,38 +496,28 @@ const toggleAccordion = (id) => {
   openAccordion.value = openAccordion.value === id ? null : id
 }
 
-const accordionList = computed(() => [
-  {
-    id: 'uses',
-    title: 'Uses',
-    content: [
-      'Helps manage healthy blood sugar levels',
-      'Supports pancreatic function & insulin release',
-      'Boosts daily vitality and combats diabetic weakness',
-      'Promotes digestive health and blood purification'
-    ]
-  },
-  {
+const accordionList = computed(() => {
+  const items = []
+  const uses = product.value?.uses || 'Helps manage healthy blood sugar levels, Supports pancreatic function & insulin release, Boosts daily vitality and combats diabetic weakness, Promotes digestive health and blood purification'
+  items.push({ id: 'uses', title: 'Uses', content: uses.split(/[,.]\s*/).filter(Boolean) })
+
+  items.push({
     id: 'directions',
     title: 'Directions',
-    content: 'Take 20–30ml twice daily before meals mixed with lukewarm water, or as directed by an Ayurvedic physician.'
-  },
-  {
-    id: 'benefits',
-    title: 'Benefits',
-    content: [
-      '100% Ayurvedic herbal formulation',
-      'Controls blood sugar naturally',
-      'Free from artificial chemicals and synthetic preservatives',
-      'Dual action: sugar control & cellular detox'
-    ]
-  },
-  {
+    content: product.value?.directionsForUse || 'Take 20–30ml twice daily before meals mixed with lukewarm water, or as directed by an Ayurvedic physician.'
+  })
+
+  const benefits = product.value?.primaryBenefits || '100% Ayurvedic herbal formulation, Controls blood sugar naturally, Free from artificial chemicals and synthetic preservatives, Dual action: sugar control & cellular detox'
+  items.push({ id: 'benefits', title: 'Benefits', content: benefits.split(/[,.]\s*/).filter(Boolean) })
+
+  items.push({
     id: 'ingredients',
     title: 'Ingredients',
-    content: 'Karela, Gurmar, Neem, Vijayasar, Shudh Shilajit, Punarnava, Giloy, Jamun, Aloe Vera, Chirata, Methi.'
-  }
-])
+    content: product.value?.ingredients || 'Karela, Gurmar, Neem, Vijayasar, Shudh Shilajit, Punarnava, Giloy, Jamun, Aloe Vera, Chirata, Methi.'
+  })
+
+  return items
+})
 
 const handleAddToCart = () => {
   cartStore.addToCart({
@@ -480,7 +525,7 @@ const handleAddToCart = () => {
     productId: product.value?.id || 11,
     variantId: selectedPackIndex.value + 1,
     name: productName.value,
-    variantName: selectedPackIndex.value === 0 ? '500ml' : '1000ml (Pack of 2)',
+    variantName: currentPack.value.sku,
     price: currentPrice.value,
     mrp: currentMrp.value,
     image: displayImage.value,
@@ -501,6 +546,54 @@ const openProductPreview = (img) => {
 const closeProductPreview = () => {
   isPreviewOpen.value = false
 }
+
+// ── UI copy (CMS / product-page driven with fallbacks) ──
+const packSectionLabel = computed(() =>
+  cmsStore.getSectionByKey('pricing')?.title ||
+  productStore.selectedProductPage?.heroTitle ||
+  'CHOOSE PACK'
+)
+
+const taxNotice = computed(() =>
+  cmsStore.getSectionByKey('pricing')?.subtitle ||
+  'Incl. of all taxes'
+)
+
+const heroCtaPrimary = computed(() =>
+  cmsStore.heroSection?.buttonText ||
+  cmsStore.heroSection?.config?.primaryButtonText ||
+  'Buy Now'
+)
+
+const heroCtaSecondary = computed(() =>
+  cmsStore.heroSection?.config?.secondaryButtonText ||
+  cmsStore.getSectionByKey('cart')?.buttonText ||
+  'Add to Cart'
+)
+
+const qualityBadgeText = computed(() =>
+  cmsStore.getSectionByKey('quality')?.name ||
+  cmsStore.getSectionByKey('quality')?.title ||
+  'GMP Certified'
+)
+
+const guaranteeItems = computed(() => {
+  const section = cmsStore.getSectionByKey('guarantee') ||
+    cmsStore.getSectionByKey('trust') ||
+    cmsStore.getSectionByKey('rewards')
+  if (section?.items?.length) {
+    return section.items.map(item => ({
+      text: item.title || item.description || item.name,
+      icon: item.subtitle || 'shield'
+    }))
+  }
+  return [
+    { text: '30-Day Guarantee', icon: 'shield' },
+    { text: 'Free Delivery', icon: 'truck' },
+    { text: 'AYUSH Standard', icon: 'star' },
+    { text: '100% Ayurvedic', icon: 'check' }
+  ]
+})
 </script>
 
 <style scoped>

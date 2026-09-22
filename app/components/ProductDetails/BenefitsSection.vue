@@ -4,9 +4,9 @@
 
       <!-- Header -->
       <div class="tl-header">
-        <span class="tl-overline">Expected Progress</span>
-        <h2 class="tl-title">Your Wellness Timeline</h2>
-        <p class="tl-sub">Real results. Tracked. Transparent.</p>
+        <span class="tl-overline">{{ journeyOverline }}</span>
+        <h2 class="tl-title">{{ timelineTitle }}</h2>
+        <p class="tl-sub">{{ timelineSub }}</p>
       </div>
 
       <!-- Timeline steps -->
@@ -29,8 +29,8 @@
       <!-- How to use panel -->
       <div class="tl-htu">
         <div class="tl-htu-left">
-          <span class="tl-htu-overline">Daily Routine</span>
-          <h3 class="tl-htu-title">How to Use</h3>
+          <span class="tl-htu-overline">{{ htuOverline }}</span>
+          <h3 class="tl-htu-title">{{ htuTitle }}</h3>
           <ol class="tl-htu-steps">
             <li v-for="(step, i) in howToUse" :key="i">
               <span class="tl-step-num">{{ i + 1 }}</span>
@@ -46,7 +46,7 @@
           <img :src="productImg" alt="Product" class="tl-htu-img" @error="onImgErr" />
           <div class="tl-htu-cert">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>AYUSH Certified<br>100% Natural</span>
+            <span>{{ certText }}</span>
           </div>
         </div>
       </div>
@@ -70,6 +70,39 @@ const journeySection = computed(() =>
   cmsStore.getSectionByKey('journey') ||
   cmsStore.getSectionByKey('timeline') ||
   cmsStore.getSectionByKey('benefits')
+)
+
+const journeyOverline = computed(() =>
+  journeySection.value?.name ||
+  journeySection.value?.subtitle ||
+  'Expected Progress'
+)
+
+const timelineTitle = computed(() =>
+  productStore.selectedProductPage?.journeyTitle ||
+  journeySection.value?.title ||
+  'Your Wellness Timeline'
+)
+
+const timelineSub = computed(() =>
+  journeySection.value?.subtitle ||
+  productStore.selectedProductPage?.journeyTitle ||
+  'Real results. Tracked. Transparent.'
+)
+
+const htuOverline = computed(() =>
+  journeySection.value?.config?.htuOverline ||
+  'Daily Routine'
+)
+
+const htuTitle = computed(() =>
+  journeySection.value?.config?.htuTitle ||
+  'How to Use'
+)
+
+const certText = computed(() =>
+  journeySection.value?.config?.certificateLabel ||
+  'AYUSH Certified 100% Natural'
 )
 
 const DEFAULT_TIMELINE = [
