@@ -162,7 +162,7 @@ const cleanUrl = (url) => {
   .health-section-bg .col-xl-3.health-section-below,
   .health-section-bg .col-xl-9.sm-pr-0 {
     padding-left: 12px !important;
-    padding-right: 12px !important;
+    /* padding-right: 12px !important; */
   }
 }
 
