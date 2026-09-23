@@ -173,7 +173,7 @@ const handleIconError = (event) => {
 }
 
 .hs2-heading {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-size: clamp(26px, 3.5vw, 40px);
   font-weight: 900;
   color: #0e1a0b;
@@ -298,7 +298,7 @@ const handleIconError = (event) => {
   color: #0e1a0b;
   margin: 0;
   line-height: 1.25;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .hs2-card-desc {

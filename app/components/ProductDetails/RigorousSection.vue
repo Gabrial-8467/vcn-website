@@ -114,7 +114,7 @@ const fallbackIcons = ['/img/productsdetails/ayurvedic.png', '/img/productsdetai
 }
 
 .rs2-title {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-size: clamp(30px, 3.5vw, 48px);
   font-weight: 800;
   color: #0d1f0a;

@@ -87,16 +87,12 @@ export default defineNuxtConfig({
           href: 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css'
         },
 
-        // 🔸 Google Fonts
+        // 🔸 Google Fonts preconnect (fonts are loaded via public/css/style.css)
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         {
           rel: 'preconnect',
           href: 'https://fonts.gstatic.com',
           crossorigin: ''
-        },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap'
         },
 
         // 🔸 Swiper CSS (CDN – optional if already using module css)

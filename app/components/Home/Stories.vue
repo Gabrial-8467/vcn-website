@@ -470,14 +470,14 @@ watch(storyCards, () => {
 }
 
 .card-logo.fast-company {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
 
 .card-logo.forbes {
-  font-family: 'Georgia', serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-style: normal;
   font-weight: 900;
   letter-spacing: -0.2px;
@@ -665,14 +665,14 @@ watch(storyCards, () => {
 }
 
 .card-logo.fast-company {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
 
 .card-logo.forbes {
-  font-family: 'Georgia', serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-style: normal;
   font-weight: 900;
   letter-spacing: -0.2px;

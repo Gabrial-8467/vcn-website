@@ -1,33 +1,6 @@
 <template>
   <ClientOnly>
     <div class="ds-wrapper">
-    <!-- Decorative Leaf Backgrounds -->
-    <div class="ds-bg-leaf ds-leaf-left" aria-hidden="true">
-      <svg width="240" height="420" viewBox="0 0 240 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g opacity="0.38" fill="var(--vcn-primary)">
-          <path d="M-50,420 C30,340 70,200 110,0 C111,0 113,2 112,5 C73,202 33,341 -48,420 Z" fill="var(--vcn-mobile)"/>
-          <path d="M40,310 C65,275 125,250 160,275 C135,310 75,335 40,310 Z"/>
-          <path d="M10,240 C-25,205 -60,205 -85,225 C-60,250 -25,260 10,240 Z"/>
-          <path d="M75,190 C110,155 165,145 195,170 C165,200 110,210 75,190 Z"/>
-          <path d="M45,130 C20,95 -25,85 -60,105 C-35,130 10,140 45,130 Z"/>
-          <path d="M100,85 C140,50 185,40 215,68 C185,98 140,108 100,85 Z"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="ds-bg-leaf ds-leaf-right" aria-hidden="true">
-      <svg width="240" height="420" viewBox="0 0 240 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g opacity="0.38" fill="var(--vcn-primary)">
-          <path d="M290,420 C210,340 170,200 130,0 C129,0 127,2 128,5 C167,202 207,341 288,420 Z" fill="var(--vcn-mobile)"/>
-          <path d="M200,310 C175,275 115,250 80,275 C105,310 165,335 200,310 Z"/>
-          <path d="M230,240 C265,205 300,205 325,225 C300,250 265,260 230,240 Z"/>
-          <path d="M165,190 C130,155 75,145 45,170 C75,200 130,210 165,190 Z"/>
-          <path d="M195,130 C220,95 265,85 300,105 C275,130 230,140 195,130 Z"/>
-          <path d="M140,85 C100,50 55,40 25,68 C55,98 100,108 140,85 Z"/>
-        </g>
-      </svg>
-    </div>
-
     <section class="ds-container">
       <!-- Main Title Block -->
       <div class="ds-header-block">
@@ -1202,31 +1175,15 @@ useHead({
 
 <style scoped>
 :global(body.direct-seller-page) {
-  background-color: var(--vcn-base-bg) !important;
+  background-color: #ffffff !important;
 }
 
 .ds-wrapper {
   position: relative;
   min-height: 100vh;
-  background-color: var(--vcn-base-bg);
+  background-color: #ffffff;
   padding: 20px 16px 60px;
   overflow-x: hidden;
-}
-
-.ds-bg-leaf {
-  position: absolute;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ds-leaf-left {
-  top: 140px;
-  left: -20px;
-}
-
-.ds-leaf-right {
-  top: 180px;
-  right: -20px;
 }
 
 .ds-container {
@@ -1266,7 +1223,7 @@ useHead({
   color: var(--vcn-footer);
   margin-bottom: 6px;
   letter-spacing: -0.02em;
-  margin-top: 40px !important;
+  margin-top: 48px !important;
 }
 
 .ds-main-subtitle {
@@ -1333,9 +1290,20 @@ useHead({
 }
 
 .ds-step-item.active {
-  background: #f1f7ea;
-  border-color: #bfe0aa;
-  box-shadow: 0 4px 14px rgba(29, 69, 3, 0.06);
+  background: var(--vcn-footer);
+  border-color: var(--vcn-footer);
+  box-shadow: 0 4px 14px rgba(29, 69, 3, 0.67);
+}
+
+.ds-step-item.active .ds-step-title,
+.ds-step-item.active .ds-step-desc {
+  color: #ffffff;
+}
+
+.ds-step-item.active .ds-step-circle {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--vcn-footer);
 }
 
 .ds-step-item.completed {
@@ -1416,10 +1384,10 @@ useHead({
 /* Card Section */
 .ds-card {
   background: #ffffff;
-  border: 1.5px solid #e1e9da;
+  border: 1.5px solid #b2b8ae;
   border-radius: 20px;
   padding: 32px 38px;
-  box-shadow: 0 12px 36px rgba(29, 69, 3, 0.05);
+  box-shadow: 0 12px 36px rgba(29, 69, 3, 0.67);
 }
 
 .ds-card-title {
@@ -2009,10 +1977,6 @@ useHead({
   }
   .ds-card {
     padding: 28px 24px;
-  }
-  .ds-leaf-left,
-  .ds-leaf-right {
-    display: none;
   }
 }
 

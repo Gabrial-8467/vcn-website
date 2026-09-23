@@ -207,7 +207,7 @@ useHead({
   link: [
     {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@100..900&display=swap'
+      href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap'
     }
   ]
 })
@@ -276,7 +276,7 @@ useHead({
   font-weight: 700;
   color: var(--vcn-white, #fff);
   margin: 0 0 16px 0;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   line-height: 1.1;
 }
 
@@ -286,7 +286,7 @@ useHead({
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
   font-weight: 500;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 /* FILTER BAR */
@@ -317,7 +317,7 @@ useHead({
   border-radius: 24px;
   cursor: pointer;
   color: var(--vcn-darker, #1C3A13);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
 }
@@ -349,7 +349,7 @@ useHead({
   gap: 8px;
   transition: color 0.2s ease;
   padding: 8px 12px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .all-publications-btn:hover {
@@ -395,7 +395,7 @@ useHead({
   letter-spacing: 1.5px;
   color: #6b7280;
   margin-bottom: 12px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .featured-title {
@@ -404,7 +404,7 @@ useHead({
   color: var(--vcn-darker, #1C3A13);
   line-height: 1.35;
   margin: 0 0 16px 0;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .featured-excerpt {
@@ -412,7 +412,7 @@ useHead({
   color: rgba(28, 58, 19, 0.8);
   line-height: 1.65;
   margin: 0 0 28px 0;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .read-article-link {
@@ -424,7 +424,7 @@ useHead({
   color: var(--vcn-dark, #1D4503);
   text-decoration: none;
   width: fit-content;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   transition: all 0.2s ease;
 }
 
@@ -490,7 +490,7 @@ useHead({
   color: #9ca3af;
   display: block;
   margin-bottom: 6px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .news-row-title {
@@ -499,7 +499,7 @@ useHead({
   color: var(--vcn-darker, #1C3A13);
   margin: 0;
   line-height: 1.45;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .external-link-btn {
@@ -564,7 +564,7 @@ useHead({
 .quote-symbol {
   font-size: 90px;
   line-height: 0.1;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   color: rgba(255, 255, 255, 0.12);
   position: absolute;
   top: 45px;
@@ -574,7 +574,7 @@ useHead({
 .quote-text {
   font-size: 16px;
   font-style: italic;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   line-height: 1.7;
   margin: 30px 0 40px 0;
   position: relative;
@@ -597,7 +597,7 @@ useHead({
   justify-content: center;
   font-weight: 400 !important;
   font-size: 16px !important;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .author-meta {
@@ -610,13 +610,13 @@ useHead({
   font-size: 16px;
   color: var(--vcn-white, #fff);
   font-style: normal;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .author-title {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.7);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .widget-inquiry-card {
@@ -637,7 +637,7 @@ useHead({
   font-weight: 400;
   color: var(--vcn-darker, #1C3A13);
   margin-bottom: 12px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .widget-inquiry-card p {
@@ -647,7 +647,7 @@ useHead({
   line-height: 1.6;
   margin-bottom: 25px;
   max-width: 320px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .press-office-btn {
@@ -661,7 +661,7 @@ useHead({
   cursor: pointer;
   text-decoration: none;
   transition: all 0.25s ease;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   box-shadow: 0 4px 6px rgba(29, 69, 3, 0.05);
 }
 
@@ -691,7 +691,7 @@ useHead({
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   transition: color 0.2s ease;
 }
 

@@ -141,7 +141,7 @@ const mediaSrc = computed(() => {
 }
 
 .fs2-title {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-size: clamp(28px, 3.5vw, 44px);
   font-weight: 800;
   color: #0d1f0a;
