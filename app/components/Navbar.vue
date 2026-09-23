@@ -1718,9 +1718,9 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       padding: 10px 20px !important;
     }
 
-    .direct-seller-page .navbar:not(.scrolled) {
-      background: #f7f9f4 !important;
-    }
+    /* .direct-seller-page .navbar:not(.scrolled) {
+      background: #ffffff !important;
+    } */
 
     .my-account-page .navbar:not(.scrolled) {
       background: #ffffff !important;
@@ -2296,13 +2296,15 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
 
   /* Product details page (white background at top) */
   .product-details-page .user-greeting,
-  .my-account-page .user-greeting {
+  .my-account-page .user-greeting,
+  .direct-seller-page .user-greeting {
     color: var(--vcn-footer) !important;
   }
 
   /* Product details page scrolled (dark background) */
   .product-details-page .navbar.scrolled .user-greeting,
-  .my-account-page .navbar.scrolled .user-greeting {
+  .my-account-page .navbar.scrolled .user-greeting,
+  .direct-seller-page .navbar.scrolled .user-greeting {
     color: #ffffff !important;
   }
 
@@ -2454,7 +2456,8 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   body.cart-page .user-avatar,
   body.checkout-page .user-avatar,
   .product-details-page .user-avatar,
-  .my-account-page .user-avatar {
+  .my-account-page .user-avatar,
+  .direct-seller-page .user-avatar {
     background: rgba(29, 69, 3, 0.1);
     color: var(--vcn-primary);
   }
@@ -2463,7 +2466,8 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   body.cart-page .navbar.scrolled .user-avatar,
   body.checkout-page .navbar.scrolled .user-avatar,
   .product-details-page .navbar.scrolled .user-avatar,
-  .my-account-page .navbar.scrolled .user-avatar {
+  .my-account-page .navbar.scrolled .user-avatar,
+  .direct-seller-page .navbar.scrolled .user-avatar {
     background: rgba(255, 255, 255, 0.15);
     color: var(--vcn-white);
   }
