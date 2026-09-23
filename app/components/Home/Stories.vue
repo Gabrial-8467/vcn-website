@@ -255,7 +255,7 @@ watch(storyCards, () => {
 <style scoped>
 .vcn-stories-section {
   background-color: var(--vcn-base-bg);
-  padding: 80px 20px;
+  padding: 80px 0;
   overflow-x: clip;
   background-size: cover;
   background-position: center;
@@ -807,24 +807,8 @@ watch(storyCards, () => {
 /* Responsive Overrides */
 @media (min-width: 1400px) {
   .vcn-stories-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
     padding-top: 25px;
     padding-bottom: 25px;
-  }
-}
-
-@media (max-width: 1399.98px) and (min-width: 1200px) {
-  .vcn-stories-section {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-  }
-}
-
-@media (max-width: 1199.98px) and (min-width: 992px) {
-  .vcn-stories-section {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
   }
 }
 
@@ -840,8 +824,6 @@ watch(storyCards, () => {
 
 @media (max-width: 991.98px) and (min-width: 768px) {
   .vcn-stories-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
     padding-top: 60px;
     padding-bottom: 60px;
   }
@@ -1021,20 +1003,6 @@ watch(storyCards, () => {
   }
 }
 
-@media (max-width: 767.98px) and (min-width: 576px) {
-  .vcn-stories-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 575.98px) and (min-width: 480px) {
-  .vcn-stories-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
 @media (max-width: 576px) {
   .vcn-stories-section {
     padding-top: 40px;
@@ -1131,13 +1099,6 @@ watch(storyCards, () => {
   .vcn-stories-media-item .card-quote {
     font-size: 0.55rem;
     line-height: 1.25;
-  }
-}
-
-@media (max-width: 479.98px) {
-  .vcn-stories-section {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
   }
 }
 

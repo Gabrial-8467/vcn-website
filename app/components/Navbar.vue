@@ -8,20 +8,36 @@
           <img src="/img/logo/logo.png" alt="Logo" class="nav-img" />
         </NuxtLink>
 
-        <!-- HTML -->
-        <div class="d-lg-none d-flex align-items-center">
-          <div class="mobile-cart-wrapper">
-            <NuxtLink to="/cart" class="mobile-cart">
-              Cart
-              <ClientOnly>
-                <span v-if="cartStore.cartCount > 0" class="cart-count-badge">{{ cartStore.cartCount }}</span>
-              </ClientOnly>
-            </NuxtLink>
-          </div>
-          <button class="custom-navbar-toggler" type="button" onclick="toggleMenu()" aria-label="Toggle menu">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
+        <!-- Mobile Action Icons Bar (User, Cart, Menu) -->
+        <div class="d-lg-none mobile-actions-bar">
+
+          <!-- Account / User Icon Button -->
+          <button type="button" class="mobile-action-btn user-icon-btn" @click="handleMobileUserClick" aria-label="Account">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </button>
+
+          <!-- Cart Icon Link -->
+          <NuxtLink to="/cart" class="mobile-action-btn cart-icon-btn" aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <ClientOnly>
+              <span class="mobile-cart-badge">{{ cartStore.cartCount || 0 }}</span>
+            </ClientOnly>
+          </NuxtLink>
+
+          <!-- Hamburger Menu Button -->
+          <button class="mobile-action-btn menu-icon-btn" type="button" onclick="toggleMenu()" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
           </button>
         </div>
 
@@ -389,7 +405,7 @@
 
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, nextTick, watch } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import RegistrationForm from '@/components/RegistrationForm.vue'
 import { useCartStore } from '~/stores/cart'
 import { useAuthCart } from '~/composables/useAuthCart'
@@ -409,6 +425,50 @@ const { authState, loginWithPersistence, logoutWithCleanup, initializeCart } = u
 
 const route = useRoute()
 const router = useRouter()
+
+// Mobile Actions & Search State
+const isSearchOpen = ref(false)
+const searchQuery = ref('')
+const searchInputRef = ref(null)
+
+const handleMobileUserClick = () => {
+  closeMobileMenu()
+  if (authState.value?.isLoggedIn || authState.isLoggedIn) {
+    router.push('/my-account')
+  } else {
+    openForm()
+  }
+}
+
+const toggleSearch = () => {
+  closeMobileMenu()
+  isSearchOpen.value = !isSearchOpen.value
+  if (isSearchOpen.value) {
+    nextTick(() => {
+      searchInputRef.value?.focus()
+    })
+  }
+}
+
+const closeSearch = () => {
+  isSearchOpen.value = false
+  searchQuery.value = ''
+}
+
+const performSearch = () => {
+  if (searchQuery.value.trim()) {
+    const q = searchQuery.value.trim()
+    closeSearch()
+    router.push({ path: '/all-products', query: { search: q } })
+  }
+}
+
+const filteredProducts = computed(() => {
+  if (!searchQuery.value.trim()) return []
+  const q = searchQuery.value.toLowerCase().trim()
+  const allProds = (productStore.products && productStore.products.length > 0) ? productStore.products : shopProducts.value
+  return allProds.filter(p => p.name?.toLowerCase().includes(q) || p.slug?.toLowerCase().includes(q)).slice(0, 5)
+})
 
 // Close mobile menu helper
 const closeMobileMenu = () => {
@@ -694,7 +754,7 @@ body.checkout-page .navbar.scrolled .login-link {
 }
 
 .navbar.scrolled {
-  top: 0px;
+  top: var(--top-header-height, 45px);
 }
 
 .nav-img {
@@ -717,38 +777,87 @@ body.checkout-page .navbar.scrolled .login-link {
   margin: 0;
 }
 
-/* Mobile only elements */
-.mobile-cart-wrapper {
-  background-color: #ffffff !important;
-  border-radius: 30px !important;
-  padding: 10px 14px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin-right: 15px !important;
+/* Mobile Actions Bar - Reference Blur Glass Pill styling applied ONLY to the right-side icons */
+@media (max-width: 991px) {
+  .mobile-actions-bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    z-index: 10002 !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 50px !important;
+    padding: 6px 14px !important;
+  }
+
+  .mobile-action-btn {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    padding: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .mobile-action-btn:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+
+  .mobile-action-btn svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke: #ffffff !important;
+    color: #ffffff !important;
+    display: block !important;
+  }
+
+  .mobile-cart-badge {
+    position: absolute !important;
+    top: -4px !important;
+    right: -6px !important;
+    background: #85A82E !important;
+    color: #000000 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    padding: 0 4px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+  }
+
+  .navbar {
+    padding: 12px 20px !important;
+  }
+
+  .navbar .container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-radius: 0 !important;
+  }
 }
 
-.mobile-cart-wrapper .mobile-cart {
-  color: #1d4503 !important;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600 !important;
-  margin-right: 0 !important;
-  transition: color 0.3s ease;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.mobile-cart-wrapper .mobile-cart:hover {
-  color: #2d5a3f !important;
-}
-
-.mobile-cart-wrapper .cart-count-badge {
-  background: #1d4503 !important;
-  color: #ffffff !important;
-  
+@media (min-width: 992px) {
+  .mobile-actions-bar {
+    display: none !important;
+  }
 }
 
 /* Custom Navbar Toggler */

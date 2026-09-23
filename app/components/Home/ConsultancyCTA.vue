@@ -59,8 +59,6 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
   background-repeat: no-repeat;
   box-sizing: border-box;
   width: 100%;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
 }
 
 .mid-consultation-cta .container {
@@ -68,33 +66,7 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
   padding-right: 0 !important;
 }
 
-@media (min-width: 1400px) {
-  .mid-consultation-cta {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-  }
-}
-
-@media (max-width: 1399.98px) and (min-width: 1200px) {
-  .mid-consultation-cta {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-  }
-}
-
-@media (max-width: 1199.98px) and (min-width: 992px) {
-  .mid-consultation-cta {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-  }
-}
-
 @media (max-width: 991.98px) and (min-width: 768px) {
-  .mid-consultation-cta {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-
   .mid-consultation-cta .row {
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -103,27 +75,6 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
   .mid-consultation-cta .row > [class*="col-"] {
     padding-left: 0 !important;
     padding-right: 0 !important;
-  }
-}
-
-@media (max-width: 767.98px) and (min-width: 576px) {
-  .mid-consultation-cta {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 575.98px) and (min-width: 480px) {
-  .mid-consultation-cta {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 479.98px) {
-  .mid-consultation-cta {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
   }
 }
 

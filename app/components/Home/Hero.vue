@@ -50,50 +50,6 @@ const hero = computed(() =>
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-}
-
-@media (max-width: 991.98px) {
-  .hero-section {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-  }
-}
-
-@media (max-width: 767.98px) {
-  .hero-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-}
-
-@media (max-width: 575.98px) {
-  .hero-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 379.98px) {
-  .hero-section {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-}
-
-@media (min-width: 1200px) {
-  .hero-section {
-    padding-left: 80px !important;
-    padding-right: 80px !important;
-  }
-}
-
-@media (min-width: 1400px) {
-  .hero-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-  }
 }
 
 .hero-container {

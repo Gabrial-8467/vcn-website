@@ -92,7 +92,7 @@ button,
 }
 
 .vcn-container-footer {
-  max-width: 1400px !important;
+  max-width: 1200px !important;
   margin-left: auto !important;
   margin-right: auto !important;
   width: 100% !important;
@@ -203,57 +203,10 @@ body.home-page main {
 
 
 @media(min-width: 1400px) {
-  .vcn-whole-body-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-  }
-}
-
-@media(min-width: 1400px) {
   .hero-content {
     padding-left: 160px !important;
     padding-right: 160px !important;
     max-width: 850px !important;
-  }
-}
-
-@media(min-width: 1400px) {
-  .vcn-cobiotics-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-
-  }
-}
-
-@media(min-width: 1400px) {
-  .vcn-probiotic-info-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-
-  }
-}
-
-@media(min-width: 1400px) {
-  .vcn-human-container {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-
-  }
-}
-
-@media(min-width: 1400px) {
-  .vcn-testimonial-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-
-  }
-}
-
-@media(min-width: 1400px) {
-  .vcn-stories-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-
   }
 }
 
@@ -2351,17 +2304,35 @@ body.home-page main {
   }
 }
 
+/* SITE-WIDE SECTION GUTTERS live at the END of this file (section "SITE-WIDE SECTION GUTTERS (HOME PAGE)") so they win over every earlier/late override. */
+
 /* ========== FOOTER SECTION ========== */
-/* Side gutters match the site-wide "perfect alignment" override used by
-   every section (Stories above the footer included): 20px / 15px mobile. */
+/* Single source of truth for footer layout/alignment.
+   Side gutters and container width intentionally mirror the site-wide
+   alignment used by every content section (incl. Stories above the footer):
+   gutters 160/40/30/20/15/15/10px, content container 1200px centered. */
 .vcn-footer-section {
   background-color: var(--vcn-footer);
   color: rgba(255, 255, 255, 0.8);
-  padding-left: 40px !important;
-  padding-right: 40px !important;
   box-sizing: border-box !important;
   width: 100% !important;
   max-width: 100% !important;
+  overflow-x: clip;
+}
+
+/* Footer grid: rows/columns are flush with the container edge.
+   This site's bootstrap build keeps .row's negative margins while column
+   padding is disabled, so without this every footer row is pulled ~12px
+   beyond the aligned gutter (misalignment) and can overflow tiny screens.
+   Zeroing the gutters makes footer content match every other section. */
+.vcn-footer-section .vcn-container-footer .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.vcn-footer-section .vcn-container-footer [class*="col-"] {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .vcn-container-footer {
@@ -2544,7 +2515,6 @@ body.home-page main {
 /* Footer Links */
 .vcn-footer-links-section {
   margin-top: 0;
-  padding-left: 30px !important;
   border-top: none;
 }
 
@@ -2584,28 +2554,8 @@ body.home-page main {
   transform: translateX(4px);
 }
 
-/* Unified Footer Responsive Media Queries */
-@media (min-width: 1400px) {
-  .vcn-footer-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-  }
-}
-
-@media (max-width: 1399.98px) and (min-width: 1200px) {
-  .vcn-footer-section {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-  }
-}
-
-@media (max-width: 1199.98px) and (min-width: 992px) {
-  .vcn-footer-section {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-  }
-}
-
+/* Footer responsive rules (vertical spacing / layout only).
+   Horizontal gutters are handled by the SITE-WIDE SECTION GUTTERS block. */
 @media (max-width: 992px) {
   .vcn-container-footer {
     padding-left: 0 !important;
@@ -2621,18 +2571,7 @@ body.home-page main {
   }
 }
 
-@media (max-width: 991.98px) and (min-width: 768px) {
-  .vcn-footer-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-}
-
 @media (max-width: 768px) {
-  .vcn-footer-links-section {
-    padding-left: 0 !important;
-  }
-
   .vcn-footer-logo {
     font-size: 1.7rem;
     justify-content: flex-start !important;
@@ -2644,27 +2583,6 @@ body.home-page main {
 
   .vcn-footer-column-title {
     margin-top: 30px;
-  }
-}
-
-@media (max-width: 767.98px) and (min-width: 576px) {
-  .vcn-footer-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 575.98px) and (min-width: 480px) {
-  .vcn-footer-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 479.98px) {
-  .vcn-footer-section {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
   }
 }
 
@@ -14002,5 +13920,127 @@ body.home-page main {
   .cta-form,
   .mid-consultation-form {
     padding-left: 0 !important;
+  }
+}
+
+/* ============================================================
+   SITE-WIDE SECTION GUTTERS (HOME PAGE) — AUTHORITATIVE
+   Single source of truth for horizontal section padding on the
+   home page. Placed LAST so these !important rules beat every
+   earlier and late override (e.g. the "Perfect alignment override"
+   forcing 20px everywhere, and the footer 80/30px overrides below).
+   Sections keep their own vertical padding; only left/right is
+   controlled here. `html body` prefix raises specificity above any
+   lingering single-class override.
+   ============================================================ */
+@media (min-width: 1400px) {
+  html body .hero-section,
+  html body .hero-content,
+  html body .vcn-cobiotics-section,
+  html body .vcn-whole-body-section,
+  html body .vcn-probiotic-info-section,
+  html body .vcn-human-section,
+  html body .vcn-testimonial-section,
+  html body .vcn-stories-section,
+  html body .mid-consultation-cta,
+  html body .vcn-footer-section {
+    padding-left: 160px !important;
+    padding-right: 160px !important;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  html body .hero-section,
+  html body .hero-content,
+  html body .vcn-cobiotics-section,
+  html body .vcn-whole-body-section,
+  html body .vcn-probiotic-info-section,
+  html body .vcn-human-section,
+  html body .vcn-testimonial-section,
+  html body .vcn-stories-section,
+  html body .mid-consultation-cta,
+  html body .vcn-footer-section {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  html body .hero-section,
+  html body .hero-content,
+  html body .vcn-cobiotics-section,
+  html body .vcn-whole-body-section,
+  html body .vcn-probiotic-info-section,
+  html body .vcn-human-section,
+  html body .vcn-testimonial-section,
+  html body .vcn-stories-section,
+  html body .mid-consultation-cta,
+  html body .vcn-footer-section {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  html body .hero-section,
+  html body .hero-content,
+  html body .vcn-cobiotics-section,
+  html body .vcn-whole-body-section,
+  html body .vcn-probiotic-info-section,
+  html body .vcn-human-section,
+  html body .vcn-testimonial-section,
+  html body .vcn-stories-section,
+  html body .mid-consultation-cta,
+  html body .vcn-footer-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  html body .hero-section,
+  html body .hero-content,
+  html body .vcn-cobiotics-section,
+  html body .vcn-whole-body-section,
+  html body .vcn-probiotic-info-section,
+  html body .vcn-human-section,
+  html body .vcn-testimonial-section,
+  html body .vcn-stories-section,
+  html body .mid-consultation-cta,
+  html body .vcn-footer-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 575.98px) {
+  html body .hero-section,
+  html body .hero-content,
+  html body .vcn-cobiotics-section,
+  html body .vcn-whole-body-section,
+  html body .vcn-probiotic-info-section,
+  html body .vcn-human-section,
+  html body .vcn-testimonial-section,
+  html body .vcn-stories-section,
+  html body .mid-consultation-cta,
+  html body .vcn-footer-section {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 479.98px) {
+  html body .hero-section,
+  html body .hero-content,
+  html body .vcn-cobiotics-section,
+  html body .vcn-whole-body-section,
+  html body .vcn-probiotic-info-section,
+  html body .vcn-human-section,
+  html body .vcn-testimonial-section,
+  html body .vcn-stories-section,
+  html body .mid-consultation-cta,
+  html body .vcn-footer-section {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }

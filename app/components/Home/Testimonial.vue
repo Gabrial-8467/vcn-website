@@ -294,7 +294,8 @@ onBeforeUnmount(() => {
 <style scoped>
 .vcn-testimonial-section {
   background: linear-gradient(180deg, #e8f5e0 0%, #f0f8ec 100%);
-  padding: 25px 15px; /* Mobile first padding */
+  padding-top: 25px; /* Horizontal gutters come from style.css section gutters */
+  padding-bottom: 25px;
   position: relative;
   overflow: hidden;
 }
