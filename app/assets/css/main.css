@@ -2,8 +2,8 @@
 @import "@nuxt/ui";
 
 @theme {
-  --font-sans: "Outfit", sans-serif;
-  --font-family-sans: "Outfit", sans-serif;
+  --font-sans: var(--vcn-font, "Outfit", sans-serif);
+  --font-family-sans: var(--vcn-font, "Outfit", sans-serif);
 }
 
 

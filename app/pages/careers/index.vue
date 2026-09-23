@@ -230,7 +230,7 @@ useHead({
 <style scoped>
 /* Main container layout */
 .careers-container {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   background: #ffffff;
   padding: 0;
   display: flex;
@@ -302,7 +302,7 @@ useHead({
 }
 
 .careers-hero-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif) !important;
   font-size: 48px !important;
   font-weight: 400 !important;
   line-height: 1.15;
@@ -372,7 +372,7 @@ useHead({
 }
 
 .section-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif) !important;
   font-size: 48px !important;
   font-weight: 400 !important;
   color: var(--vcn-darker, #1C3A13);
@@ -566,7 +566,7 @@ useHead({
   font-size: 2.8rem;
   line-height: 1;
   color: var(--vcn-badge, #d3fa99);
-  font-family: Georgia, serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-weight: 700;
   display: block;
   margin-bottom: -12px;
@@ -586,7 +586,7 @@ useHead({
 }
 
 .spotlight-name {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif) !important;
   font-size: 48px !important;
   font-weight: 400 !important;
   color: var(--vcn-darker, #1C3A13);
@@ -604,7 +604,7 @@ useHead({
 }
 
 .spotlight-eyebrow {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif) !important;
   font-size: 48px !important;
   font-weight: 400 !important;
   color: var(--vcn-darker, #1C3A13) !important;
@@ -661,7 +661,7 @@ useHead({
 }
 
 .purpose-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif) !important;
   font-size: 48px !important;
   font-weight: 400 !important;
   color: var(--vcn-darker, #1C3A13);
@@ -755,7 +755,7 @@ useHead({
 }
 
 .stats-number {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-size: 2.8rem;
   font-weight: 800;
   color: var(--vcn-darker, #1C3A13);
@@ -786,7 +786,7 @@ useHead({
 }
 
 .cta-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif) !important;
   font-size: 48px !important;
   font-weight: 400 !important;
   margin-bottom: 12px;
@@ -896,7 +896,7 @@ useHead({
 }
 
 .article-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif) !important;
   font-size: 1.25rem !important;
   font-weight: 500 !important;
   color: var(--vcn-darker, #1C3A13);

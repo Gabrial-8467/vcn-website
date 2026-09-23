@@ -181,7 +181,7 @@ const addToCart = async (product) => {
 }
 
 .rp-title {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-size: clamp(28px, 3.5vw, 44px);
   font-weight: 900;
   color: #0e1a0b;
@@ -309,7 +309,7 @@ const addToCart = async (product) => {
   text-decoration: none;
   line-height: 1.3;
   display: block;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   transition: color 0.2s;
 }
 .rp-name:hover { color: #1d4503; }
@@ -344,7 +344,7 @@ const addToCart = async (product) => {
   font-weight: 900;
   color: #0e1a0b;
   letter-spacing: -0.5px;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .rp-mrp {
@@ -384,7 +384,7 @@ const addToCart = async (product) => {
   justify-content: center;
   gap: 6px;
   transition: all 0.2s ease;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .rp-btn-details {

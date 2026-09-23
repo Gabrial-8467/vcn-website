@@ -598,7 +598,7 @@ const guaranteeItems = computed(() => {
 
 <style scoped>
 .pd2-root {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   width: 100%;
 }
 

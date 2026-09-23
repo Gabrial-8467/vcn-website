@@ -104,7 +104,7 @@ const comparisonRows = [
   background: #0E2917;
   color: #ffffff;
   padding: 80px 0 96px;
-  font-family: "Outfit", sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
 }
 
 .cmp-container {

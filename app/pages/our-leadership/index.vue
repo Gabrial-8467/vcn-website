@@ -242,7 +242,7 @@ const closeBio = () => {
 .lp-content-col { padding-left: 0; padding-right: 0; }
 
 .lp-root {
-  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   color: #2c3e50;
   background: #ffffff;
   padding-bottom: 60px;
@@ -506,7 +506,7 @@ const closeBio = () => {
 }
 
 .lp-ct-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--vcn-font, "Outfit", sans-serif) !important;
   font-size: 40px !important;
   font-weight: 400 !important;
   color: #ffffff !important;

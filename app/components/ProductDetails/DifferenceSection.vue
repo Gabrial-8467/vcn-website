@@ -130,7 +130,7 @@ const fallbackIcons = ['/img/productsdetails/Type1&Type2Diabetes.png', '/img/pro
 }
 
 .ds2-title {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--vcn-font, "Outfit", sans-serif);
   font-size: clamp(28px, 4vw, 52px);
   font-weight: 800;
   color: #ffffff;
