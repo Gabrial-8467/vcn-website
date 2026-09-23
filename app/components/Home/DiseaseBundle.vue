@@ -260,67 +260,6 @@ export default {
   padding-right: 0 !important;
 }
 
-.vcn-human-section {
-  box-sizing: border-box;
-  width: 100%;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
-}
-
-@media (min-width: 1400px) {
-  .vcn-human-section {
-    padding-left: 160px !important;
-    padding-right: 160px !important;
-  }
-}
-
-@media (max-width: 1399.98px) and (min-width: 1200px) {
-  .vcn-human-section {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-  }
-}
-
-@media (max-width: 1199.98px) and (min-width: 992px) {
-  .vcn-human-section {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-  }
-}
-
-@media (max-width: 991.98px) and (min-width: 768px) {
-  .vcn-human-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-}
-
-@media (max-width: 767.98px) and (min-width: 576px) {
-  .vcn-human-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 575.98px) and (min-width: 480px) {
-  .vcn-human-section {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-}
-
-@media (max-width: 479.98px) {
-  .vcn-human-section {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-}
-
-.vcn-human-container {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
 /* Ensure the disease bundles overlay does not sit under the fixed navbar on this page.
    This style only affects this component and won't change global layout. */
 .disease-bundles-container {

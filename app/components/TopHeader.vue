@@ -1,6 +1,6 @@
 <template>
   <!-- Top Header -->
-  <div class="top-header" :class="{ 'hide': isHydrated && isHidden }" id="topHeader">
+  <div class="top-header" id="topHeader">
       <NuxtLink to="/all-products" class="vcn-top-header">
         <p>Because Your Health <span class="text-nowrap">Deserves Better</span><span class="arrow">→</span></p>
       </NuxtLink>
@@ -50,13 +50,12 @@ const topHeader = computed(() => {
   return null
 })
 
-const isHidden = ref(false)
 const isHydrated = ref(false)
 
 const updateHeaderHeight = () => {
   const headerEl = document.getElementById('topHeader')
   if (headerEl) {
-    const height = isHidden.value ? 0 : headerEl.offsetHeight
+    const height = headerEl.offsetHeight
     document.documentElement.style.setProperty('--top-header-height', `${height}px`)
   }
 }
@@ -64,19 +63,8 @@ const updateHeaderHeight = () => {
 onMounted(() => {
   isHydrated.value = true
 
-  const handleScroll = () => {
-    const wasHidden = isHidden.value
-    isHidden.value = window.scrollY > 50
-    if (isHidden.value !== wasHidden) {
-      updateHeaderHeight()
-    }
-  }
-
-  // Initial checks
-  handleScroll()
+  // Initial calculation & resize listener
   updateHeaderHeight()
-
-  window.addEventListener('scroll', handleScroll, { passive: true })
   window.addEventListener('resize', updateHeaderHeight, { passive: true })
 
   // Use ResizeObserver to dynamically track layout shifts/text wrapping
@@ -91,7 +79,6 @@ onMounted(() => {
 
   // Cleanup
   onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll)
     window.removeEventListener('resize', updateHeaderHeight)
     if (resizeObserver) {
       resizeObserver.disconnect()

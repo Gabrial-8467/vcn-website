@@ -105,11 +105,4 @@ const offers = computed(() =>
     gap: 12px !important;
   }
 }
-
-@media (max-width: 379.98px) {
-  .vcn-cobiotics-section {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-}
 </style>
