@@ -61,23 +61,6 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
   width: 100%;
 }
 
-.mid-consultation-cta .container {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-@media (max-width: 991.98px) and (min-width: 768px) {
-  .mid-consultation-cta .row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  .mid-consultation-cta .row > [class*="col-"] {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-}
-
 .mid-cta-image-wrapper {
   border-radius: 12px;
   overflow: hidden;
