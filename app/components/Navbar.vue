@@ -27,16 +27,20 @@
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
             <ClientOnly>
-              <span class="mobile-cart-badge">{{ cartStore.cartCount || 0 }}</span>
+              <span v-if="cartStore.cartCount > 0" class="mobile-cart-badge">{{ cartStore.cartCount }}</span>
             </ClientOnly>
           </NuxtLink>
 
           <!-- Hamburger Menu Button -->
           <button class="mobile-action-btn menu-icon-btn" type="button" onclick="toggleMenu()" aria-label="Toggle menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-burger-icon">
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <line x1="3" y1="12" x2="21" y2="12"></line>
               <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-close-icon">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
@@ -295,9 +299,6 @@
             </li>
             <li class="nav-item" v-if="authState.isLoggedIn">
               <NuxtLink class="nav-link" to="#" onclick="toggleAccordion(event, 'accountAccordion')">My Account</NuxtLink>
-            </li>
-            <li class="nav-item" v-else>
-              <NuxtLink class="nav-link" to="/login">Login</NuxtLink>
             </li>
           </ul>
 
@@ -821,12 +822,24 @@ body.checkout-page .navbar.scrolled .login-link {
     display: block !important;
   }
 
+  .menu-icon-btn .menu-close-icon {
+    display: none !important;
+  }
+
+  body.menu-open .menu-icon-btn .menu-burger-icon {
+    display: none !important;
+  }
+
+  body.menu-open .menu-icon-btn .menu-close-icon {
+    display: block !important;
+  }
+
   .mobile-cart-badge {
     position: absolute !important;
     top: -4px !important;
     right: -6px !important;
     background: #85A82E !important;
-    color: #000000 !important;
+    color: #ffffff !important;
     font-size: 10px !important;
     font-weight: 700 !important;
     min-width: 16px !important;
@@ -2238,7 +2251,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
   /* Cart Count Badge */
   .cart-count-badge {
     background: var(--vcn-badge);
-    color: var(--vcn-primary);
+    color: #ffffff;
     border-radius: 50%;
     padding: 2px 6px;
     font-size: 11px;
@@ -2318,6 +2331,10 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       max-height: calc(100vh - var(--top-header-height, 28px) - 80px) !important;
       overflow-y: auto !important;
       -webkit-overflow-scrolling: touch;
+    }
+
+    .navbar-collapse.show {
+      margin-top: calc(var(--top-header-height, 45px) + 20px) !important;
     }
   }
 
