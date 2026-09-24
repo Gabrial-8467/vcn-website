@@ -222,8 +222,8 @@
               <!-- Do you know a VBO? -->
               <div class="auth-field-group">
                 <div class="label-line">
-                  <label class="auth-field-label">Do you know a VCN Business Owner (VBO)? *</label>
-                  <span class="info-badge" title="If someone referred you, select Yes and enter their VBO ID">ⓘ</span>
+                  <label class="auth-field-label">Do you have any Sponsor? *</label>
+                  <span class="info-badge" title="If someone referred you, select Yes and enter their sponsor username ">ⓘ</span>
                 </div>
                 <div class="radio-options-row">
                   <label class="radio-box" :class="{ selected: form.knowsVbo === 'yes' }">
@@ -238,13 +238,13 @@
               </div>
 
               <div v-if="form.knowsVbo === 'yes'" class="auth-field-group animated-vbo-input">
-                <label class="auth-field-label" for="vboId">VBO ID / Referral Code *</label>
+                <label class="auth-field-label" for="vboId">Sponsor Username *</label>
                 <div class="input-with-icon">
                   <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                     <circle cx="9" cy="7" r="4"></circle>
                   </svg>
-                  <input type="text" id="vboId" v-model="form.vboId" placeholder="Enter VBO ID" class="form-input" />
+                  <input type="text" id="vboId" v-model="form.vboId" placeholder="Enter Sponsor Username" class="form-input" />
                 </div>
                 <span v-if="errors.vboId" class="error-msg">{{ errors.vboId }}</span>
               </div>
@@ -645,9 +645,16 @@ const submitForm = async () => {
   position: relative;
   overflow-y: auto;
   max-height: 85vh;
-  scrollbar-width: thin;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   display: flex;
   flex-direction: column;
+}
+
+.reg-modal-right::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .reg-modal-right .close-btn {
@@ -1025,6 +1032,15 @@ const submitForm = async () => {
     flex-direction: column;
     max-width: 500px;
     max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  .registration-modal-card::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   .reg-modal-left {
@@ -1038,6 +1054,25 @@ const submitForm = async () => {
   .form-row-two-col {
     flex-direction: column;
     gap: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .reg-shell--page {
+    padding: 20px 12px;
+  }
+
+  .registration-modal-card {
+    max-width: 100%;
+    border-radius: 20px;
+  }
+
+  .reg-modal-right {
+    padding: 20px 16px;
+  }
+
+  .reg-header h2 {
+    font-size: 20px;
   }
 }
 </style>

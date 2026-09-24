@@ -912,7 +912,7 @@ body.home-page main {
 /* Shop Button */
 .vcn-whole-body-shop-btn {
   display: inline-block;
-  padding: 12px 32px;
+  padding: 12px 42px 12px 24px;
   background-color: var(--vcn-footer);
   color: var(--vcn-white);
   text-decoration: none;
@@ -928,7 +928,7 @@ body.home-page main {
 .vcn-whole-body-shop-btn::after {
   content: "→";
   position: absolute;
-  right: 20px;
+  right: 18px;
   top: 50%;
   transform: translateY(-50%);
   opacity: 0;
@@ -939,11 +939,12 @@ body.home-page main {
   background-color: var(--vcn-white);
   color: var(--vcn-primary);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  padding-right: 44px;
 }
 
 .vcn-whole-body-product-card:hover .vcn-whole-body-shop-btn::after {
   opacity: 1;
-  right: 15px;
+  right: 14px;
 }
 
 /* Product Price */
@@ -1453,7 +1454,7 @@ body.home-page main {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--vcn-darker);
+  background: var(--vcn-footer);
   color: white;
   padding: 14px 28px;
   border-radius: 30px;
@@ -1467,7 +1468,7 @@ body.home-page main {
 }
 
 .vcn-human-cta-button:hover {
-  background: var(--vcn-footer);
+  background: var(--vcn-darker);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(45, 74, 37, 0.3);
 }
@@ -1830,7 +1831,7 @@ body.home-page main {
 }
 
 .view-more-btn {
-  background: var(--vcn-darker);
+  background: var(--vcn-footer);
   color: white;
   border: none;
   padding: 14px 50px;
@@ -1846,7 +1847,7 @@ body.home-page main {
 .view-more-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-  background: var(--vcn-dark);
+  background: var(--vcn-darker);
   color: white;
 }
 

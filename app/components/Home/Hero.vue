@@ -275,7 +275,7 @@ const hero = computed(() =>
     line-height: 1.5;
   }
   .hero-btn {
-    padding: 11px 32px;
+    padding: 11px 44px 11px 24px;
     font-size: 16px;
   }
 }

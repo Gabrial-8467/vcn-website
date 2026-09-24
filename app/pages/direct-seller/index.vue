@@ -1182,7 +1182,7 @@ useHead({
   position: relative;
   min-height: 100vh;
   background-color: #ffffff;
-  padding: 20px 16px 60px;
+  padding: 10px 6px 30px !important;
   overflow-x: hidden;
 }
 
@@ -1223,7 +1223,7 @@ useHead({
   color: var(--vcn-footer);
   margin-bottom: 6px;
   letter-spacing: -0.02em;
-  margin-top: 48px !important;
+  margin-top: 20px;
 }
 
 .ds-main-subtitle {
@@ -1981,15 +1981,27 @@ useHead({
 }
 
 @media (max-width: 767px) {
+  .ds-wrapper {
+    padding-top: 0 !important;
+  }
+  .ds-header-block {
+    margin-bottom: 12px;
+  }
+  .ds-main-title {
+    font-size: 24px;
+    margin-top: 6px !important;
+    margin-bottom: 4px;
+  }
+  .ds-main-subtitle {
+    font-size: 13px;
+  }
+  .ds-stepper-wrapper {
+    margin-bottom: 16px;
+    padding: 0;
+  }
   .ds-form-grid,
   .ds-kyc-grid {
     grid-template-columns: 1fr;
-  }
-  .ds-full-width {
-    grid-column: 1;
-  }
-  .ds-main-title {
-    font-size: 26px;
   }
 
   /* Mobile stepper: circles + connectors with a labeled current step */

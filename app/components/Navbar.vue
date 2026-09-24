@@ -198,184 +198,13 @@
 
         <!-- Sign In Modal (Teleport to body for proper stacking) -->
         <teleport to="body">
-          <!-- Overlay -->
-          <div v-if="isOpen" class="overlay" @click="closeForm"></div>
-
-          <!-- Form Container -->
-          <div v-if="isOpen" class="slide-form-container">
-              <div class="auth-modal-card">
-                <button class="close-btn" @click="closeForm" aria-label="Close modal">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-
-                <!-- Left Column: Brand & Atmospheric Product Sidebar (matches Register form) -->
-                <div class="auth-modal-left">
-                  <div class="brand-logo-wrap">
-                    <img src="/img/logo/logo.png" alt="VCN Logo" class="reg-brand-logo" />
-                    <span class="brand-tagline">PURE AYURVEDIC WELLNESS</span>
-                  </div>
-
-                  <h2 class="sidebar-main-title">
-                    Transform Your Health.<br />
-                    Transform Your Life.
-                  </h2>
-
-                  <div class="sidebar-body-wrap">
-                    <div class="reg-features-list">
-                      <div class="reg-feature-item">
-                        <div class="reg-feature-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
-                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
-                          </svg>
-                        </div>
-                        <div class="reg-feature-text">
-                          <h4>Authentic Ayurvedic Products</h4>
-                          <p>Rooted in tradition, made for a healthier you.</p>
-                        </div>
-                      </div>
-
-                      <div class="reg-feature-item">
-                        <div class="reg-feature-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                          </svg>
-                        </div>
-                        <div class="reg-feature-text">
-                          <h4>Exclusive Offers</h4>
-                          <p>Be the first to know about new launches and deals.</p>
-                        </div>
-                      </div>
-
-                      <div class="reg-feature-item">
-                        <div class="reg-feature-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            <path d="m9 12 2 2 4-4"></path>
-                          </svg>
-                        </div>
-                        <div class="reg-feature-text">
-                          <h4>A Trusted Community</h4>
-                          <p>Join thousands on a journey to better health.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="reg-cursive-footer">
-                    Better Health<br />Brighter You
-                  </div>
-                </div>
-
-                <!-- Right Column: Sign In -->
-                <div class="auth-modal-right">
-                  <div class="auth-header">
-                    <h2>Welcome Back</h2>
-                    <p>Sign in to continue your wellness journey.</p>
-                  </div>
-
-                  <form @submit.prevent="handleLogin" class="auth-form">
-                    <div class="form-group">
-                      <label for="login-identifier">Username, Email, or Mobile Number</label>
-                      <div class="input-with-icon">
-                        <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                          <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        <input type="text" id="login-identifier" v-model="formData.identifier" placeholder="Username, email, or mobile" class="form-input">
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="password">Password</label>
-                      <div class="input-with-icon password-wrapper">
-                        <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
-                        <input :type="showPassword ? 'text' : 'password'" id="password" v-model="formData.password" placeholder="Password" class="form-input">
-                        <button type="button" class="toggle-password" @click="showPassword = !showPassword" aria-label="Toggle password visibility">
-                          <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                            <circle cx="12" cy="12" r="3" />
-                          </svg>
-                          <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-                            <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                            <line x1="2" y1="2" x2="22" y2="22" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="forgot-wrapper">
-                      <NuxtLink to="#" class="forgot-password">Forgot Password</NuxtLink>
-                    </div>
-
-                    <div v-if="loginError" class="login-error-message text-danger mb-3">{{ loginError }}</div>
-
-                    <button type="submit" class="signin-btn" :disabled="isLoggingIn">
-                      <span>{{ isLoggingIn ? 'SIGNING IN...' : 'SIGN IN' }}</span>
-                    </button>
-
-                    <!-- Social Sign In -->
-                    <div class="social-signin-section">
-                      <p class="social-title">Sign in with</p>
-                      <div class="social-icons-wrap">
-                        <button type="button" class="social-circle-btn" aria-label="Sign in with Google">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48">
-                            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
-                            <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
-                            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
-                            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
-                          </svg>
-                        </button>
-                        <button type="button" class="social-circle-btn" aria-label="Sign in with Facebook">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48">
-                            <circle cx="24" cy="24" r="20" fill="#1877F2"/>
-                            <path fill="#FFFFFF" d="M26.62 38V25.38h4.24l.63-4.92h-4.87v-3.14c0-1.42.39-2.39 2.43-2.39h2.6V10.53c-.45-.06-2-.19-3.8-.19-3.76 0-6.33 2.29-6.33 6.51v3.61h-4.24v4.92h4.24V38h5.1z"/>
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-
-                  <!-- Register CTA -->
-                  <div class="auth-register-section">
-                    <div class="register-title-row">
-                      <span class="register-title">New to VCN?</span>
-                      <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                      </svg>
-                    </div>
-
-                    <div class="register-buttons-group">
-                      <button type="button" class="register-outline-btn" @click="openRegistration('preferred-customer')">
-                        PREFERRED CUSTOMER
-                      </button>
-                      <button type="button" class="register-outline-btn" @click="openDirectSeller">
-                        DIRECT SELLER
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- Terms & Privacy Links -->
-                  <div class="auth-footer-links">
-                    <NuxtLink to="/terms-conditions" target="_blank">Terms & Conditions</NuxtLink>
-                    <NuxtLink to="/privacy-policy" target="_blank">Privacy</NuxtLink>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <LoginForm
+            v-if="isOpen"
+            :isModal="true"
+            @close="closeForm"
+            @openRegister="handleOpenRegisterFromModal"
+            @complete="closeForm"
+          />
         </teleport>
 
 
@@ -528,6 +357,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import RegistrationForm from '@/components/RegistrationForm.vue'
+import LoginForm from '@/components/LoginForm.vue'
 import { useCartStore } from '~/stores/cart'
 import { useAuthCart } from '~/composables/useAuthCart'
 import { useApi } from '~/config/api/useApi'
@@ -741,6 +571,15 @@ watch([isOpen, showRegistration], ([newIsOpen, newShowReg]) => {
 const openRegistration = (type) => {
   selectedUserType.value = type
   showRegistration.value = true
+}
+
+const handleOpenRegisterFromModal = (type) => {
+  closeForm()
+  if (type === 'direct-seller') {
+    router.push('/direct-seller')
+  } else {
+    openRegistration(type)
+  }
 }
 
 const openDirectSeller = () => {

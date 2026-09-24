@@ -1035,7 +1035,7 @@ watch(storyCards, () => {
   }
 
   .vcn-stories-card-btn {
-    padding: 10px 40px !important;
+    padding: 10px 46px 10px 20px !important;
   }
 
   .vcn-stories-media-gallery-track {

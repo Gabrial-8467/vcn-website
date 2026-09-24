@@ -35,3 +35,17 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Hide scrollbar visually while retaining scroll functionality */
+.no-scrollbar,
+.hide-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

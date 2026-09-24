@@ -110,6 +110,11 @@ const bgImage = computed(() => getCmsImageUrl(section.value?.backgroundImage, ''
 .view-more-btn {
   display: inline-block;
   text-align: center;
+  background: var(--vcn-footer) !important;
+}
+
+.view-more-btn:hover {
+  background: var(--vcn-darker) !important;
 }
 
 /* Responsive Design */

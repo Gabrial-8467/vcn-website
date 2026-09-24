@@ -260,6 +260,14 @@ export default {
   padding-right: 0 !important;
 }
 
+.vcn-human-cta-button {
+  background: var(--vcn-footer) !important;
+}
+
+.vcn-human-cta-button:hover {
+  background: var(--vcn-darker) !important;
+}
+
 /* Ensure the disease bundles overlay does not sit under the fixed navbar on this page.
    This style only affects this component and won't change global layout. */
 .disease-bundles-container {

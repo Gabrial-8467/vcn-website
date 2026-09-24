@@ -342,8 +342,8 @@ onMounted(async () => {
     }
 
     .vcn-whole-body-shop-btn {
-        padding: 8px 32px !important;
-        /* increased padding so the hover arrow does not overlap the text */
+        padding: 8px 44px 8px 20px !important;
+        /* increased right padding so the hover arrow does not overlap the text */
         font-size: 0.85rem !important;
         /* reduced button font size */
     }
