@@ -956,7 +956,7 @@ const submitForm = async () => {
   background: none;
   border: none;
   padding: 0;
-  font-size: 13px;
+  font-size: 13px !important;
   font-weight: 700;
   color: #1B5E20;
   text-decoration: underline;
@@ -1073,6 +1073,21 @@ const submitForm = async () => {
 
   .reg-header h2 {
     font-size: 20px;
+  }
+
+  .radio-options-row {
+    gap: 8px;
+  }
+
+  .radio-box {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .radio-box input[type="radio"] {
+    width: 14px;
+    height: 14px;
   }
 }
 </style>
