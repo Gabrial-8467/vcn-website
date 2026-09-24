@@ -41,6 +41,6 @@ const handleRegistrationComplete = (data) => {
 <style scoped>
 .registration-page-wrapper {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: #ffffff;
 }
 </style>

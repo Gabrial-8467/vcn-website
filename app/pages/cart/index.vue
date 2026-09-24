@@ -685,6 +685,7 @@ useHead({
     padding: 16px 0 !important;
     margin: 0 !important;
   }
+  
 }
 
 @media (max-width: 767.98px) {
@@ -938,7 +939,7 @@ useHead({
   .cart-page-title {
     font-size: 22px !important;
     margin-bottom: 20px !important;
-    text-align: left !important;
+    text-align: center !important;
   }
 
   .empty-cart-message {
@@ -1233,4 +1234,7 @@ useHead({
     font-size: 15px !important;
   }
 }
+ .cart-page-title {
+    text-align: center !important;
+  }
 </style>

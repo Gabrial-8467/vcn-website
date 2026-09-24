@@ -2,19 +2,35 @@
 /* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Nata+Sans:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap'); */
 
 :root {
-  --vcn-primary: #5E6C1F;
-  --vcn-base-bg: #F6F7EE;
-  --vcn-white: #fff;
-  --vcn-dark: var(--vcn-footer);
-  --vcn-darker: #1C3A13;
-  --vcn-footer: #1D4503;
+  /* Brand Color Palette */
+  --vcn-deep-forest: #0E2917;
+  --vcn-primary-green: #163D24;
+  --vcn-dark-green: #1B5E20;
+  --vcn-medium-green: #2E7D32;
+  --vcn-light-green: #E8F3EA;
+  --vcn-pale-green: #F1F7F2;
+  --vcn-pure-white: #FFFFFF;
+  --vcn-off-white: #FAFAF7;
+  --vcn-primary-text: #172019;
+  --vcn-secondary-text: #667067;
+  --vcn-warm-gold: #C89B3C;
+  --vcn-discount-sale: #D9534F;
+  --vcn-border: #DDE5DE;
+  --vcn-success-color: #3F7D4A;
+
+  --vcn-primary: var(--vcn-primary-green);
+  --vcn-base-bg: var(--vcn-off-white);
+  --vcn-white: var(--vcn-pure-white);
+  --vcn-dark: var(--vcn-deep-forest);
+  --vcn-darker: var(--vcn-dark-green);
+  --vcn-footer: var(--vcn-deep-forest);
 
   --vcn-font: "Outfit", sans-serif;
-  --vcn-badge: #d3fa99;
-  --vcn-light: #d3fA99;
+  --vcn-badge: var(--vcn-light-green);
+  --vcn-light: var(--vcn-light-green);
   --vcn-product: #efefef;
-  --vcn-gradient: linear-gradient(135deg, #5E6C1F, #1D4503);
-  --vcn-mobile: #83b576;
+  --vcn-gradient: linear-gradient(135deg, var(--vcn-primary-green), var(--vcn-deep-forest));
+  --vcn-mobile: var(--vcn-medium-green);
 
   /* Typography Variables */
   --vcn-heading-size: 48px;
@@ -29,6 +45,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Global Modal & Overlay Scroll Lock */
+html.modal-open,
+body.modal-open {
+  overflow: hidden !important;
+  height: 100vh !important;
+  overscroll-behavior: none !important;
+}
+
+.registration-overlay,
+.overlay {
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+.registration-modal-card,
+.slide-form-container,
+.auth-modal-card {
+  overscroll-behavior: contain;
 }
 
 /* Global Font & Typography Overrides */
@@ -10277,6 +10313,7 @@ body.home-page main {
     color: #fff;
   }
 
+
   .comparison-card {
     background: rgba(255, 255, 255, 0.08);
     border-radius: 25px;
@@ -10287,7 +10324,7 @@ body.home-page main {
   }
 
   /* Feature item row */
-  .feature-item {
+  .comparison-card .feature-item {
     padding: 2.1rem 0;
   }
 

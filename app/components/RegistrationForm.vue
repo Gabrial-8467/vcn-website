@@ -1,193 +1,293 @@
 <!-- components/RegistrationForm.vue -->
 <template>
   <ClientOnly>
-    <transition name="slide-right" appear>
-      <div class="registration-container" :class="{ 'is-modal': isModal }" v-if="mounted">
-        <!-- Close Button -->
-        <button class="close-btn" @click="$emit('close')">×</button>
-
-        <!-- STEP 1: WELCOME SCREEN -->
-        <div v-if="step === 'welcome'" class="step-content welcome-step">
-          <h1 class="welcome-title">Welcome!</h1>
-          <p class="welcome-text">
-            Let's start your journey with VCN by getting you onboard.
-          </p>
-          <p class="requirements-text">
-            You must be at least 18 years old and an Indian citizen to register with VCN India.
-          </p>
-          <button class="btn-register" @click="step = 'form'">
-            REGISTER
-          </button>
-        </div>
-
-        <!-- STEP 2: REGISTRATION FORM -->
-        <div v-else-if="step === 'form'" class="step-content form-step">
-          <h2 class="form-title">Let's get you started</h2>
-          <p class="form-subtitle">
-            Please complete all the mandatory steps below to finish your registration.
-          </p>
-
-          <form @submit.prevent="submitForm">
-            <!-- First and Middle Name -->
-            <div class="form-group">
-              <label for="firstName">First and Middle Name <span class="required">*</span></label>
-              <input type="text" id="firstName" v-model="form.firstName" placeholder="As per ID proof"
-                class="form-input" />
-              <span v-if="errors.firstName" class="error">{{ errors.firstName }}</span>
+      <div
+        v-if="mounted"
+        class="reg-shell"
+        :class="isModal ? 'reg-shell--modal' : 'auth-wrapper-main reg-shell--page'"
+        @click.self="isModal && $emit('close')"
+      >
+        <div class="registration-modal-card">
+          <!-- Left Column: Atmospheric Product & Brand Sidebar -->
+          <div class="reg-modal-left">
+            <div class="brand-logo-wrap">
+              <img src="/img/logo/logo.png" alt="VCN Logo" class="reg-brand-logo" />
+              <span class="brand-tagline">PURE AYURVEDIC WELLNESS</span>
             </div>
 
-            <!-- Last Name -->
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input type="text" id="lastName" v-model="form.lastName" placeholder="As per ID proof"
-                class="form-input" />
-            </div>
+            <h2 class="sidebar-main-title">
+              Transform Your Health.<br />
+              Transform Your Life.
+            </h2>
 
-            <!-- Username -->
-            <div class="form-group">
-              <label for="username">Username <span class="required">*</span></label>
-              <input type="text" id="username" v-model="form.username" placeholder="Choose a username"
-                class="form-input" />
-              <span v-if="errors.username" class="error">{{ errors.username }}</span>
-            </div>
+            <div class="sidebar-body-wrap">
+              <div class="reg-features-list">
+                <div class="reg-feature-item">
+                  <div class="reg-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                    </svg>
+                  </div>
+                  <div class="reg-feature-text">
+                    <h4>Authentic Ayurvedic Products</h4>
+                    <p>Rooted in tradition, made for a healthier you.</p>
+                  </div>
+                </div>
 
-            <!-- Email Address -->
-            <div class="form-group">
-              <label for="email">Email Address <span class="required">*</span></label>
-              <input type="email" id="email" v-model="form.email" placeholder="example@mail.com" class="form-input" />
-              <span v-if="errors.email" class="error">{{ errors.email }}</span>
-            </div>
+                <div class="reg-feature-item">
+                  <div class="reg-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  </div>
+                  <div class="reg-feature-text">
+                    <h4>Exclusive Offers</h4>
+                    <p>Be the first to know about new launches and deals.</p>
+                  </div>
+                </div>
 
-            <!-- Mobile Number -->
-            <div class="form-group">
-              <label for="mobile">Mobile Number <span class="required">*</span></label>
-              <div class="mobile-wrap">
-                <span class="code">+91</span>
-                <input type="tel" id="mobile" v-model="form.mobile" placeholder="XXXXXXXXXX" class="form-input"
-                  maxlength="10" @blur="handleMobileBlur" />
+                <div class="reg-feature-item">
+                  <div class="reg-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                      <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                  </div>
+                  <div class="reg-feature-text">
+                    <h4>A Trusted Community</h4>
+                    <p>Join thousands on a journey to better health.</p>
+                  </div>
+                </div>
               </div>
-              <span class="hint">Mobile Number will be used as your login ID</span>
-              <span v-if="errors.mobile" class="error">{{ errors.mobile }}</span>
+
+              <!-- Product Image Floating Right -->
+              <!-- <img src="/img/products/V-VEDARELIEFAURA.jpg" alt="ReliefAura" class="sidebar-product-img" /> -->
             </div>
 
-            <!-- Create Password -->
-            <div class="form-group">
-              <label for="password">Create password <span class="required">*</span></label>
-              <div class="pwd-wrap">
-                <input :type="showPwd ? 'text' : 'password'" id="password" v-model="form.password"
-                  placeholder="Example - My@password1" class="form-input" />
-                <button type="button" class="toggle-pwd" @click="showPwd = !showPwd" aria-label="Toggle password visibility">
-                  <svg v-if="showPwd" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
-                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                    <circle cx="12" cy="12" r="3" />
+            <div class="reg-cursive-footer">
+              Better Health<br />Brighter You
+            </div>
+          </div>
+
+          <!-- Right Column: Registration Form -->
+          <div class="reg-modal-right">
+            <button v-if="isModal" class="close-btn" @click="$emit('close')" aria-label="Close modal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
+            
+           
+
+            <div class="reg-header">
+              <h2>Let's get you started</h2>
+              <p>Please complete all the mandatory steps below to finish your registration.</p>
+            </div>
+
+            <!-- STEP 1: FORM -->
+            <form v-if="step === 'form'" @submit.prevent="submitForm" class="reg-form">
+              
+              <!-- First Name & Last Name 2-col row -->
+              <div class="form-row-two-col">
+                <!-- First and Middle Name -->
+                <div class="auth-field-group">
+                  <label class="auth-field-label" for="firstName">First and Middle Name *</label>
+                  <div class="input-with-icon">
+                    <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <input type="text" id="firstName" v-model="form.firstName" placeholder="As per ID proof" class="form-input" autocomplete="given-name" />
+                  </div>
+                  <span v-if="errors.firstName" class="error-msg">{{ errors.firstName }}</span>
+                </div>
+
+                <!-- Last Name -->
+                <div class="auth-field-group">
+                  <label class="auth-field-label" for="lastName">Last Name *</label>
+                  <div class="input-with-icon">
+                    <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <input type="text" id="lastName" v-model="form.lastName" placeholder="As per ID proof" class="form-input" autocomplete="family-name" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Username -->
+              <div class="auth-field-group">
+                <label class="auth-field-label" for="username">Username *</label>
+                <div class="input-with-icon">
+                  <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
                   </svg>
-                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
-                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-                    <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                    <line x1="2" y1="2" x2="22" y2="22" />
+                  <input type="text" id="username" v-model="form.username" placeholder="Choose a username" class="form-input" autocomplete="username" />
+                </div>
+                <span class="field-hint">This will be your login ID.</span>
+                <span v-if="errors.username" class="error-msg">{{ errors.username }}</span>
+              </div>
+
+              <!-- Email Address -->
+              <div class="auth-field-group">
+                <label class="auth-field-label" for="email">Email Address *</label>
+                <div class="input-with-icon">
+                  <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                   </svg>
-                </button>
+                  <input type="email" id="email" v-model="form.email" placeholder="example@email.com" class="form-input" autocomplete="email" inputmode="email" />
+                </div>
+                <span v-if="errors.email" class="error-msg">{{ errors.email }}</span>
               </div>
-              <span class="hint">Example - My@password1</span>
-              <span v-if="errors.password" class="error">{{ errors.password }}</span>
-            </div>
 
-            <!-- Know an ABO? -->
-            <div class="form-group">
-              <label class="abo-label">
-                Do you know an VCN Business Owner (VBO)? <span class="required">*</span>
-                <span class="info-icon" title="VCN Business Owner">ⓘ</span>
-              </label>
-              <div class="radio-group">
-                <label class="radio-label">
-                  <input type="radio" value="yes" v-model="form.knowABO" @change="handleABOChange" />
-                  <span>Yes</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" value="no" v-model="form.knowABO" @change="handleABOChange" />
-                  <span>No</span>
-                </label>
+              <!-- Mobile Number -->
+              <div class="auth-field-group">
+                <label class="auth-field-label" for="mobile">Mobile Number *</label>
+                <div class="mobile-input-wrap">
+                  <div class="country-code-select">
+                    <span>+91</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m6 9 6 6 6-6"/>
+                    </svg>
+                  </div>
+                  <div class="input-with-icon flex-grow-1">
+                    <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    <input type="tel" id="mobile" v-model="form.mobile" placeholder="Enter your mobile number" class="form-input" maxlength="10" autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" />
+                  </div>
+                </div>
+                <span class="field-hint">Mobile number will be used as your login ID.</span>
+                <span v-if="errors.mobile" class="error-msg">{{ errors.mobile }}</span>
               </div>
-              <span v-if="errors.knowABO" class="error">{{ errors.knowABO }}</span>
-            </div>
 
-            <!-- ABO Number Field (Show if YES) -->
-            <transition name="slide-down">
-              <div v-if="form.knowABO === 'yes'" class="form-group conditional-field">
-                <label for="aboNumber">ABO Number <span class="required">*</span></label>
-                <input type="text" id="aboNumber" v-model="form.aboNumber" placeholder="Enter ABO Number"
-                  class="form-input" />
-                <span v-if="errors.aboNumber" class="error">{{ errors.aboNumber }}</span>
-              </div>
-            </transition>
-
-            <!-- Pincode Field (Show if NO) -->
-            <transition name="slide-down">
-              <div v-if="form.knowABO === 'no'" class="form-group conditional-field">
-                <label for="pincode">Please enter Pincode <span class="required">*</span></label>
-                <div class="pincode-wrap">
-                  <input type="text" id="pincode" v-model="form.pincode" placeholder="Enter Pincode" class="form-input"
-                    maxlength="6" />
-                  <button type="button" class="verify-btn" @click="verifyPincode">
-                    Verify
+              <!-- Create Password -->
+              <div class="auth-field-group">
+                <label class="auth-field-label" for="reg-password">Create password *</label>
+                <div class="input-with-icon password-wrapper">
+                  <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  <input :type="showPwd ? 'text' : 'password'" id="reg-password" v-model="form.password" placeholder="Example - My@password1" class="form-input" autocomplete="new-password" />
+                  <button type="button" class="toggle-pwd" @click="showPwd = !showPwd" aria-label="Toggle password visibility">
+                    <svg v-if="showPwd" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                      <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                      <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                      <line x1="2" y1="2" x2="22" y2="22" />
+                    </svg>
                   </button>
                 </div>
-                <div v-if="pincodeVerified" class="location-success">
-                  ✓ {{ locationText }}
+                <span v-if="errors.password" class="error-msg">{{ errors.password }}</span>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="auth-field-group">
+                <label class="auth-field-label" for="reg-confirm-password">Confirm password *</label>
+                <div class="input-with-icon password-wrapper">
+                  <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  <input :type="showConfirmPwd ? 'text' : 'password'" id="reg-confirm-password" v-model="form.confirmPassword" placeholder="Re-enter your password" class="form-input" autocomplete="new-password" />
+                  <button type="button" class="toggle-pwd" @click="showConfirmPwd = !showConfirmPwd" aria-label="Toggle confirm password visibility">
+                    <svg v-if="showConfirmPwd" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                      <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                      <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                      <line x1="2" y1="2" x2="22" y2="22" />
+                    </svg>
+                  </button>
                 </div>
-                <span v-if="errors.pincode" class="error">{{ errors.pincode }}</span>
-              </div>
-            </transition>
-
-            <!-- OTP Section -->
-            <div v-if="otpSent" class="form-group otp-section">
-              <label class="otp-label">
-                <strong>Mobile verification</strong>
-              </label>
-              <p class="otp-text">
-                VCN verification number sent to +91 {{ form.mobile }}
-              </p>
-
-              <div class="otp-inputs">
-                <input v-for="(digit, index) in 6" :key="index" type="text" maxlength="1" v-model="otp[index]"
-                  @input="(e) => handleOtpInput(e, index)" @keydown.backspace="(e) => handleBackspace(e, index)"
-                  @keydown="(e) => handleKeydown(e, index)" class="otp-box" :ref="(el) => setOtpRef(el, index)" />
+                <span v-if="errors.confirmPassword" class="error-msg">{{ errors.confirmPassword }}</span>
               </div>
 
-              <span v-if="otpError" class="error otp-error">{{ otpError }}</span>
-
-              <div class="resend-section">
-                <span v-if="!canResend" class="resend-timer">
-                  Resend code in {{ countdown }}s
-                </span>
-                <button v-else type="button" class="resend-link" @click="resendOTP">
-                  Resend Code
-                </button>
+              <!-- Do you know a VBO? -->
+              <div class="auth-field-group">
+                <div class="label-line">
+                  <label class="auth-field-label">Do you know a VCN Business Owner (VBO)? *</label>
+                  <span class="info-badge" title="If someone referred you, select Yes and enter their VBO ID">ⓘ</span>
+                </div>
+                <div class="radio-options-row">
+                  <label class="radio-box" :class="{ selected: form.knowsVbo === 'yes' }">
+                    <input type="radio" v-model="form.knowsVbo" value="yes" />
+                    <span>Yes</span>
+                  </label>
+                  <label class="radio-box" :class="{ selected: form.knowsVbo === 'no' }">
+                    <input type="radio" v-model="form.knowsVbo" value="no" />
+                    <span>No</span>
+                  </label>
+                </div>
               </div>
+
+              <div v-if="form.knowsVbo === 'yes'" class="auth-field-group animated-vbo-input">
+                <label class="auth-field-label" for="vboId">VBO ID / Referral Code *</label>
+                <div class="input-with-icon">
+                  <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                  </svg>
+                  <input type="text" id="vboId" v-model="form.vboId" placeholder="Enter VBO ID" class="form-input" />
+                </div>
+                <span v-if="errors.vboId" class="error-msg">{{ errors.vboId }}</span>
+              </div>
+
+              <!-- Terms Checkbox -->
+              <div class="terms-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" v-model="agreeTerms" />
+                  <span>I agree to the <NuxtLink to="/terms-conditions" target="_blank" class="green-link">Terms & Conditions</NuxtLink> and <NuxtLink to="/privacy-policy" target="_blank" class="green-link">Privacy Policy</NuxtLink>.</span>
+                </label>
+                <span v-if="errors.terms" class="error-msg">{{ errors.terms }}</span>
+              </div>
+
+              <div v-if="apiError" class="form-api-error">{{ apiError }}</div>
+
+              <!-- Create Account Button -->
+              <button type="submit" class="create-account-btn" :disabled="isSubmitting">
+                <span>{{ isSubmitting ? 'Creating Account...' : 'Create Account' }}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+
+              <!-- Footer Sign In -->
+              <div class="signin-footer-row">
+                <span>Already have an account?</span>
+                <button type="button" class="signin-link-btn" @click="handleOpenSignIn">Sign In</button>
+              </div>
+            </form>
+
+            <!-- STEP 2: SUCCESS SCREEN -->
+            <div v-else-if="step === 'success'" class="reg-success-content">
+              <div class="success-icon">&#10003;</div>
+              <h2>Registration Successful! 🎉</h2>
+              <p>Welcome to VCN! Your account has been created successfully.</p>
+              <button class="create-account-btn" @click="$emit('complete', form)">
+                CONTINUE TO SHOPPING
+              </button>
             </div>
-
-            <!-- Submit Button -->
-            <div v-if="apiError" class="form-api-error">{{ apiError }}</div>
-            <button type="submit" class="btn-submit" :disabled="isSubmitting">
-              {{ isSubmitting ? 'SUBMITTING...' : 'SUBMIT' }}
-            </button>
-          </form>
-        </div>
-
-        <!-- STEP 3: SUCCESS SCREEN -->
-        <div v-else-if="step === 'success'" class="step-content success-step">
-          <div class="success-icon">✓</div>
-          <h2 class="success-title">Registration Successful! 🎉</h2>
-          <p class="success-text">
-            Welcome to VCN! Your registration has been completed successfully.
-          </p>
-          <button class="btn-continue" @click="$emit('complete', form)">
-            CONTINUE TO SHOPPING
-          </button>
+          </div>
         </div>
       </div>
-    </transition>
   </ClientOnly>
 </template>
 
@@ -206,26 +306,17 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close', 'complete'])
-
 const toast = useToast()
+const { openAuthModal } = useAuthModal()
 
-// State
 const mounted = ref(false)
-const step = ref('welcome')
+const step = ref('form')
 const showPwd = ref(false)
+const showConfirmPwd = ref(false)
 const isSubmitting = ref(false)
-const otpSent = ref(false)
-const otp = ref(['', '', '', '', '', ''])
-const otpRefs = ref([])
-const otpError = ref('')
-const canResend = ref(false)
-const countdown = ref(30)
-const pincodeVerified = ref(false)
-const locationText = ref('')
+const agreeTerms = ref(true)
 const apiError = ref('')
-let countdownInterval = null
 
-// Form Data
 const form = reactive({
   firstName: '',
   lastName: '',
@@ -233,152 +324,56 @@ const form = reactive({
   email: '',
   mobile: '',
   password: '',
-  knowABO: '',
-  aboNumber: '',
-  pincode: ''
+  confirmPassword: '',
+  knowsVbo: 'no',
+  vboId: ''
 })
 
-const errors = reactive({})
+const errors = reactive({
+  firstName: '',
+  username: '',
+  email: '',
+  mobile: '',
+  password: '',
+  confirmPassword: '',
+  vboId: '',
+  terms: ''
+})
 
-// Nuxt: Ensure component mounts on client
 onMounted(() => {
   mounted.value = true
+  if (props.isModal && process.client) {
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+    document.body.classList.add('modal-open')
+    document.documentElement.classList.add('modal-open')
+  }
 })
 
-// Set OTP ref helper (Nuxt compatible)
-const setOtpRef = (el, index) => {
-  if (el) {
-    otpRefs.value[index] = el
+onUnmounted(() => {
+  if (props.isModal && process.client) {
+    document.body.style.overflow = ''
+    document.documentElement.style.overflow = ''
+    document.body.classList.remove('modal-open')
+    document.documentElement.classList.remove('modal-open')
   }
+})
+
+const handleOpenSignIn = () => {
+  emit('close')
+  openAuthModal()
 }
 
-// Handle Mobile Blur
-const handleMobileBlur = () => {
-  const mobileRegex = /^[6-9]\d{9}$/
-  if (mobileRegex.test(form.mobile) && !otpSent.value) {
-    sendOTP()
-  }
-}
-
-// Send OTP
-const sendOTP = () => {
-  console.log('📱 OTP sent to:', form.mobile)
-  otpSent.value = true
-  startCountdown()
-
-  setTimeout(() => {
-    if (otpRefs.value[0]) {
-      otpRefs.value[0].focus()
-    }
-  }, 300)
-}
-
-// Handle ABO Change
-const handleABOChange = () => {
-  errors.knowABO = ''
-  if (form.knowABO === 'yes') {
-    form.pincode = ''
-    pincodeVerified.value = false
-  } else {
-    form.aboNumber = ''
-  }
-}
-
-// Verify Pincode
-const verifyPincode = () => {
-  if (!form.pincode || form.pincode.length !== 6) {
-    errors.pincode = 'Please enter valid 6-digit pincode'
-    pincodeVerified.value = false
-    return
-  }
-
-  const demoLocations = {
-    '144020': 'JALANDHAR, Punjab',
-    '144001': 'JALANDHAR CITY, Punjab',
-    '110001': 'NEW DELHI, Delhi',
-    '400001': 'MUMBAI, Maharashtra',
-    '560001': 'BANGALORE, Karnataka'
-  }
-
-  setTimeout(() => {
-    const location = demoLocations[form.pincode] || 'Sample City, State'
-    locationText.value = location
-    pincodeVerified.value = true
-    errors.pincode = ''
-  }, 500)
-}
-
-// OTP Handlers
-const handleOtpInput = (event, index) => {
-  const value = event.target.value
-
-  if (!/^\d*$/.test(value)) {
-    otp.value[index] = ''
-    return
-  }
-
-  otp.value[index] = value
-  otpError.value = ''
-
-  if (value && index < 5) {
-    if (otpRefs.value[index + 1]) {
-      otpRefs.value[index + 1].focus()
-    }
-  }
-}
-
-const handleBackspace = (event, index) => {
-  if (!otp.value[index] && index > 0) {
-    if (otpRefs.value[index - 1]) {
-      otpRefs.value[index - 1].focus()
-    }
-  }
-}
-
-const handleKeydown = (event, index) => {
-  if (event.key === 'ArrowLeft' && index > 0) {
-    if (otpRefs.value[index - 1]) {
-      otpRefs.value[index - 1].focus()
-    }
-  } else if (event.key === 'ArrowRight' && index < 5) {
-    if (otpRefs.value[index + 1]) {
-      otpRefs.value[index + 1].focus()
-    }
-  }
-}
-
-const resendOTP = () => {
-  console.log('🔄 Resending OTP to:', form.mobile)
-  otp.value = ['', '', '', '', '', '']
-  otpError.value = ''
-  startCountdown()
-
-  setTimeout(() => {
-    if (otpRefs.value[0]) {
-      otpRefs.value[0].focus()
-    }
-  }, 100)
-}
-
-const startCountdown = () => {
-  canResend.value = false
-  countdown.value = 30
-
-  if (countdownInterval) clearInterval(countdownInterval)
-
-  countdownInterval = setInterval(() => {
-    countdown.value--
-    if (countdown.value <= 0) {
-      canResend.value = true
-      clearInterval(countdownInterval)
-    }
-  }, 1000)
-}
-
-// Validation
 const validateForm = () => {
   let isValid = true
-  Object.keys(errors).forEach(key => errors[key] = '')
+  errors.firstName = ''
+  errors.username = ''
+  errors.email = ''
+  errors.mobile = ''
+  errors.password = ''
+  errors.confirmPassword = ''
+  errors.vboId = ''
+  errors.terms = ''
 
   if (!form.firstName.trim()) {
     errors.firstName = 'First and Middle Name is required'
@@ -388,64 +383,50 @@ const validateForm = () => {
   if (!form.username.trim()) {
     errors.username = 'Username is required'
     isValid = false
-  } else if (form.username.trim().length < 3) {
-    errors.username = 'Username must be at least 3 characters'
-    isValid = false
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!form.email.trim() || !emailRegex.test(form.email)) {
-    errors.email = 'Please enter valid email address'
+  if (!form.email.trim()) {
+    errors.email = 'Email Address is required'
     isValid = false
-  }
-
-  const mobileRegex = /^[6-9]\d{9}$/
-  if (!mobileRegex.test(form.mobile)) {
-    errors.mobile = 'Please enter valid 10-digit mobile number'
-    isValid = false
-  }
-
-  if (!form.password || form.password.length < 8) {
-    errors.password = 'Password must be at least 8 characters'
-    isValid = false
-  }
-
-  if (!form.knowABO) {
-    errors.knowABO = 'Please select an option'
-    isValid = false
-  }
-
-  if (form.knowABO === 'yes' && !form.aboNumber.trim()) {
-    errors.aboNumber = 'ABO Number is required'
-    isValid = false
-  }
-
-  if (form.knowABO === 'no') {
-    if (!form.pincode || form.pincode.length !== 6) {
-      errors.pincode = 'Please enter valid 6-digit pincode'
-      isValid = false
-    } else if (!pincodeVerified.value) {
-      errors.pincode = 'Please verify your pincode'
+  } else {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(form.email)) {
+      errors.email = 'Please enter a valid email address'
       isValid = false
     }
   }
 
-  const otpValue = otp.value.join('')
-  if (otpSent.value && otpValue.length !== 6) {
-    otpError.value = 'Please enter complete 6-digit OTP'
+  const mobileRegex = /^[6-9]\d{9}$/
+  if (!form.mobile.trim() || !mobileRegex.test(form.mobile)) {
+    errors.mobile = 'Please enter valid 10-digit mobile number'
+    isValid = false
+  }
+
+  if (!form.password || form.password.length < 6) {
+    errors.password = 'Password must be at least 6 characters'
+    isValid = false
+  }
+
+  if (form.confirmPassword && form.confirmPassword !== form.password) {
+    errors.confirmPassword = 'Passwords do not match'
+    isValid = false
+  }
+
+  if (form.knowsVbo === 'yes' && !form.vboId.trim()) {
+    errors.vboId = 'Please enter VBO ID'
+    isValid = false
+  }
+
+  if (!agreeTerms.value) {
+    errors.terms = 'You must agree to the Terms & Conditions and Privacy Policy'
     isValid = false
   }
 
   return isValid
 }
 
-// Form Submit
 const submitForm = async () => {
-  if (!validateForm()) {
-    const firstError = document.querySelector('.error')
-    firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    return
-  }
+  if (!validateForm()) return
 
   isSubmitting.value = true
   apiError.value = ''
@@ -454,11 +435,12 @@ const submitForm = async () => {
   const payload = {
     firstName: form.firstName,
     lastName: form.lastName,
+    username: form.username,
     email: form.email,
     phone: form.mobile,
     password: form.password,
-    confirmPassword: form.password,
-    sponsorUsername: form.aboNumber,
+    confirmPassword: form.confirmPassword || form.password,
+    sponsorUsername: form.knowsVbo === 'yes' ? form.vboId : undefined,
     desiredMembershipType: membershipType,
     placementPreference: 'LEFT'
   }
@@ -487,514 +469,575 @@ const submitForm = async () => {
     isSubmitting.value = false
   }
 }
-
-onUnmounted(() => {
-  if (countdownInterval) clearInterval(countdownInterval)
-})
 </script>
 
 <style scoped>
-.registration-container {
+/* ===== Shell ===== */
+.reg-shell--modal {
   position: fixed;
   top: 0;
-  right: 0;
-  width: 100%;
-  max-width: 450px;
+  left: 0;
+  width: 100vw;
   height: 100vh;
-  background: white;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 10000 !important;
-  overflow-y: auto;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
-.registration-container:not(.is-modal) {
-  position: relative;
-  top: auto;
-  right: auto;
+.reg-shell--page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* Page mode: full two-column card (brand sidebar + form), same as login page */
+.reg-shell--page .registration-modal-card {
+  max-width: 860px;
+}
+
+.registration-modal-card {
+  display: flex;
+  flex-direction: row;
+  background: #ffffff;
   width: 100%;
-  max-width: 620px;
-  height: auto;
-  min-height: 85vh;
-  margin: 0 auto;
-  padding: 20px 0 40px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  overflow: visible;
+  max-width: 860px;
+  max-height: 85vh;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  position: relative;
 }
 
-.close-btn {
+/* ===== Left Column (Brand & Atmospheric Product Backdrop) ===== */
+.reg-modal-left {
+  width: 42%;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(14, 24, 12, 0.88) 0%, rgba(26, 38, 20, 0.94) 100%), url('/img/bg/bg-1.png');
+  background-size: cover;
+  background-position: center;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.brand-logo-wrap {
+  margin-bottom: 8px;
+}
+
+.reg-brand-logo {
+  height: 42px !important;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.brand-tagline {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #C89B3C;
+  text-transform: uppercase;
+  display: block;
+}
+
+.sidebar-main-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 16px 0 16px 0;
+  letter-spacing: -0.3px;
+}
+
+.sidebar-body-wrap {
+  position: relative;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.reg-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  z-index: 2;
+  width: 62%;
+}
+
+.reg-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.reg-feature-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 50%;
+  background-color: #E8F3EA;
+  color: #2E7D32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.reg-feature-text h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 2px 0;
+  line-height: 1.25;
+}
+
+.reg-feature-text p {
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.sidebar-product-img {
   position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 28px;
-  background: none;
+  right: -15px;
+  bottom: -10px;
+  height: 250px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.reg-cursive-footer {
+  font-family: 'Playfair Display', 'Georgia', cursive, serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.2;
+  opacity: 0.9;
+  position: relative;
+  z-index: 2;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+/* ===== Right Column (Form Area) ===== */
+.reg-modal-right {
+  flex: 1;
+  background-color: #FAFAF7;
+  padding: 30px 34px 28px;
+  position: relative;
+  overflow-y: auto;
+  max-height: 85vh;
+  scrollbar-width: thin;
+  display: flex;
+  flex-direction: column;
+}
+
+.reg-modal-right .close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  color: var(--vcn-primary);
+  color: #333;
+  transition: all 0.2s ease;
   z-index: 10;
 }
 
-.close-btn:hover {
-  color: var(--vcn-primary);
+.reg-modal-right .close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.06);
 }
 
-.step-content {
-  padding: 60px 25px 30px;
-}
-
-/* WELCOME STEP */
-.welcome-step {
-  text-align: center;
+.step-progress-row {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 120px);
-}
-
-.welcome-title {
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--vcn-primary);
-  margin-bottom: 20px;
-}
-
-.welcome-text {
-  font-size: 18px;
-  color: var(--vcn-primary);
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
-
-.requirements-text {
-  font-size: 15px;
-  color: var(--vcn-primary);
-  margin-bottom: 50px;
-  line-height: 1.6;
-  max-width: 400px;
-}
-
-.btn-register {
-  padding: 16px 80px;
-  border: 2px solid var(--vcn-primary);
-  background: white;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  color: var(--vcn-primary);
-}
-
-.btn-register:hover {
-  background: var(--vcn-primary);
-  color: white;
-}
-
-/* FORM STEP */
-.form-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--vcn-primary);
-  margin-bottom: 10px;
-}
-
-.form-subtitle {
-  font-size: 14px;
-  color: var(--vcn-primary);
-  margin-bottom: 30px;
-  line-height: 1.5;
-}
-
-.form-group {
-  margin-bottom: 24px;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
+  justify-content: flex-end;
+  gap: 10px;
   margin-bottom: 8px;
-  color: var(--vcn-primary);
-  font-size: 14px;
-  font-weight: 500;
+  padding-right: 32px;
 }
 
-.required {
-  color: #e74c3c;
-}
-
-.info-icon {
-  color: #999;
-  cursor: help;
-  margin-left: 4px;
-  font-size: 13px;
-}
-
-.form-input {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: all 0.3s;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: var(--vcn-primary);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-}
-
-.hint {
-  display: block;
-  margin-top: 6px;
+.step-text {
   font-size: 12px;
-  color: #999;
+  font-weight: 600;
+  color: #1B5E20;
 }
 
-.error {
-  display: block;
-  margin-top: 6px;
-  font-size: 12px;
-  color: #e74c3c;
-}
-
-.form-api-error {
-  margin-bottom: 15px;
-  font-size: 13px;
-  color: #e74c3c;
-  text-align: center;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-
-/* Mobile Input */
-.mobile-wrap {
+.step-bars {
   display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.mobile-wrap .code {
-  padding: 14px 12px;
-  background: #f5f5f5;
-  border: 1px solid #ddd;
-  border-right: none;
-  border-radius: 8px 0 0 8px;
-  font-size: 15px;
-  color: var(--vcn-primary);
+.step-bar {
+  width: 24px;
+  height: 6px;
+  border-radius: 4px;
+  background-color: #E8F3EA;
 }
 
-.mobile-wrap .form-input {
-  border-radius: 0 8px 8px 0;
+.step-bar.active {
+  background-color: #1B5E20;
+}
+
+.reg-header {
+  margin-bottom: 20px;
+  padding-right: 30px;
+}
+
+.reg-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0E2917;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.4px;
+}
+
+.reg-header p {
+  font-size: 12.5px !important;
+  color: #667067;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ===== Form inputs ===== */
+.form-row-two-col {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row-two-col .auth-field-group {
   flex: 1;
 }
 
-/* Password */
-.pwd-wrap {
+.auth-field-group {
+  margin-bottom: 14px;
+}
+
+.auth-field-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #172019;
+  margin-bottom: 5px;
+}
+
+.input-with-icon {
   position: relative;
-}
-
-.pwd-wrap .form-input {
-  padding-right: 45px;
-}
-
-.toggle-pwd {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #888888;
-  padding: 0;
+}
+
+.input-with-icon .field-icon {
+  position: absolute;
+  left: 12px;
+  color: #667067;
+  pointer-events: none;
   transition: color 0.2s ease;
 }
 
-.toggle-pwd:hover {
-  color: var(--vcn-primary);
+.input-with-icon .form-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px 0 38px;
+  border: 1px solid #DDE5DE;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #172019;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
 }
 
-/* Radio Group */
-.radio-group {
-  display: flex;
-  gap: 24px;
+.input-with-icon .form-input:focus {
+  outline: none;
+  border-color: #1B5E20;
+  box-shadow: 0 0 0 3px rgba(75, 104, 31, 0.12);
 }
 
-.radio-label {
+.mobile-input-wrap {
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
-  font-size: 15px;
-  color: var(--vcn-primary);
 }
 
-.radio-label input[type="radio"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
-/* Conditional Fields */
-.conditional-field {
-  animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.slide-down-enter-active,
-.slide-down-leave-active {
-  transition: all 0.3s ease;
-}
-
-.slide-down-enter-from,
-.slide-down-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* Pincode */
-.pincode-wrap {
+.country-code-select {
   display: flex;
-  gap: 10px;
-}
-
-.pincode-wrap .form-input {
-  flex: 1;
-}
-
-.verify-btn {
-  padding: 14px 20px;
-  background: #45663c;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  align-items: center;
+  gap: 4px;
+  height: 44px;
+  padding: 0 10px;
+  background-color: #ffffff;
+  border: 1px solid #DDE5DE;
+  border-radius: 10px;
+  font-size: 13.5px;
   font-weight: 600;
+  color: #172019;
   cursor: pointer;
-  white-space: nowrap;
+  user-select: none;
 }
 
-.verify-btn:hover {
-  background: #45663c;
+.password-wrapper .form-input {
+  padding-right: 40px;
 }
 
-.location-success {
-  margin-top: 8px;
-  color: #27ae60;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-/* OTP Section */
-.otp-section {
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 10px;
-  border: 1px solid #eee;
-}
-
-.otp-label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 15px;
-}
-
-.otp-text {
-  font-size: 13px;
-  color: var(--vcn-primary);
-  margin-bottom: 15px;
-}
-
-.otp-inputs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.otp-box {
-  width: 45px;
-  height: 55px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  font-size: 20px;
-  font-weight: 600;
-  text-align: center;
-  transition: all 0.3s;
-}
-
-.otp-box:focus {
-  outline: none;
-  border-color: var(--vcn-primary);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-}
-
-.otp-error {
-  text-align: center;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.resend-section {
-  text-align: center;
-}
-
-.resend-timer {
-  font-size: 13px;
-  color: var(--vcn-primary);
-}
-
-.resend-link {
+.password-wrapper .toggle-pwd {
+  position: absolute;
+  right: 8px;
   background: none;
   border: none;
-  color: var(--vcn-primary);
-  font-size: 13px;
   cursor: pointer;
+  color: #667067;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.field-hint {
+  font-size: 11.5px;
+  color: #667067;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ===== VBO Radio & Terms ===== */
+.label-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.info-badge {
+  font-size: 14px;
+  color: #1B5E20;
+  cursor: help;
+  font-weight: 700;
+}
+
+.radio-options-row {
+  display: flex;
+  gap: 12px;
+}
+
+.radio-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #DDE5DE;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #172019;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.radio-box.selected {
+  border-color: #1B5E20;
+  background-color: #F1F7F2;
+  color: #0E2917;
+}
+
+.radio-box input[type="radio"] {
+  accent-color: #0E2917;
+  width: 16px;
+  height: 16px;
+}
+
+.terms-group {
+  margin: 14px 0 16px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #667067;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  accent-color: #0E2917;
+  cursor: pointer;
+}
+
+.green-link {
+  color: #0E2917;
+  font-weight: 700;
   text-decoration: underline;
 }
 
-.resend-link:hover {
-  color: #0056b3;
+.green-link:hover {
+  color: #0E2917;
 }
 
-/* Submit Button */
-.btn-submit {
+/* ===== Create Account Button ===== */
+.create-account-btn {
   width: 100%;
-  padding: 16px;
-  background: var(--vcn-primary);
-  color: white;
+  height: 48px;
+  background-color: #0E2917;
+  color: #ffffff;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 30px;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+  margin: 18px 0 16px 0;
 }
 
-.btn-submit:hover:not(:disabled) {
-  background: var(--vcn-primary);
+.create-account-btn:hover:not(:disabled) {
+  background-color: #0E2917;
 }
 
-.btn-submit:disabled {
-  opacity: 0.6;
+.create-account-btn:disabled {
+  opacity: 0.65;
   cursor: not-allowed;
 }
 
-/* SUCCESS STEP */
-.success-step {
-  text-align: center;
+.signin-footer-row {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 120px);
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #667067;
+  padding-top: 12px;
+  border-top: 1px solid #E8F3EA;
+}
+
+.signin-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1B5E20;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.signin-link-btn:hover {
+  color: #0E2917;
+}
+
+.error-msg {
+  display: block;
+  font-size: 11.5px;
+  color: #D9534F;
+  margin-top: 4px;
+}
+
+.form-api-error {
+  margin-bottom: 14px;
+  font-size: 12.5px;
+  color: #D9534F;
+  text-align: center;
+  background: #F1F7F2;
+  border: 1px solid #E8F3EA;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* Success step */
+.reg-success-content {
+  text-align: center;
+  padding: 30px 10px 10px;
 }
 
 .success-icon {
-  width: 80px;
-  height: 80px;
-  background: #27ae60;
-  color: white;
+  width: 60px;
+  height: 60px;
+  background-color: #1B5E20;
+  color: #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 48px;
+  font-size: 30px;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin: 0 auto 16px;
 }
 
-.success-title {
-  font-size: 26px;
+.reg-success-content h2 {
+  font-size: 22px;
+  color: #0E2917;
+  margin-bottom: 6px;
   font-weight: 700;
-  color: var(--vcn-primary);
-  margin-bottom: 15px;
 }
 
-.success-text {
-  font-size: 16px;
-  color: var(--vcn-primary);
-  margin-bottom: 40px;
-  line-height: 1.6;
-  max-width: 350px;
+.reg-success-content p {
+  font-size: 13.5px;
+  color: #667067;
+  margin-bottom: 20px;
 }
 
-.btn-continue {
-  padding: 16px 60px;
-  background: var(--vcn-primary);
-  color: white;
-  border: none;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
+/* Transitions disabled */
+.fade-enter-active,
+.fade-leave-active,
+.animated-vbo-input {
+  transition: none !important;
+  animation: none !important;
 }
 
-.btn-continue:hover {
-  background: var(--vcn-primary);
-}
-
-/* Slide Animation */
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: transform 0.4s ease-in-out;
-}
-
-.slide-right-enter-from,
-.slide-right-leave-to {
-  transform: translateX(100%);
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .registration-container {
-    max-width: 100%;
-  }
-
-  .welcome-title {
-    font-size: 28px;
-  }
-
-  .welcome-text {
-    font-size: 16px;
-  }
-
-  .btn-register {
-    padding: 14px 60px;
-    font-size: 15px;
-  }
-
-  .otp-box {
-    width: 40px;
-    height: 50px;
-    font-size: 18px;
-  }
-
-  .pincode-wrap {
+/* Responsive breakpoint for small screens */
+@media (max-width: 820px) {
+  .registration-modal-card {
     flex-direction: column;
+    max-width: 500px;
+    max-height: 90vh;
   }
 
-  .verify-btn {
-    width: 100%;
+  .reg-modal-left {
+    display: none !important;
+  }
+
+  .reg-modal-right {
+    padding: 24px 22px 24px;
+  }
+
+  .form-row-two-col {
+    flex-direction: column;
+    gap: 0;
   }
 }
 </style>

@@ -198,80 +198,183 @@
         <!-- Sign In Modal (Teleport to body for proper stacking) -->
         <teleport to="body">
           <!-- Overlay -->
-          <transition name="fade">
-            <div v-if="isOpen" class="overlay" @click="closeForm"></div>
-          </transition>
+          <div v-if="isOpen" class="overlay" @click="closeForm"></div>
 
-          <!-- Slide In Form -->
-          <transition name="slide-right">
-            <div v-if="isOpen" class="slide-form-container">
-              <button class="close-btn" @click="closeForm">&times;</button>
+          <!-- Form Container -->
+          <div v-if="isOpen" class="slide-form-container">
+              <div class="auth-modal-card">
+                <button class="close-btn" @click="closeForm" aria-label="Close modal">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
 
-              <div class="form-content">
-                <h2>Sign In</h2>
-
-                <form @submit.prevent="handleLogin">
-                  <div class="form-group">
-                    <label for="login-identifier">Username, Email, or Mobile Number</label>
-                    <input type="text" id="login-identifier" v-model="formData.identifier" placeholder="Username, email, or mobile" class="form-input">
+                <!-- Left Column: Brand & Atmospheric Product Sidebar (matches Register form) -->
+                <div class="auth-modal-left">
+                  <div class="brand-logo-wrap">
+                    <img src="/img/logo/logo.png" alt="VCN Logo" class="reg-brand-logo" />
+                    <span class="brand-tagline">PURE AYURVEDIC WELLNESS</span>
                   </div>
 
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="password-wrapper">
-                      <input :type="showPassword ? 'text' : 'password'" id="password" v-model="formData.password"
-                        placeholder="Password" class="form-input">
-                      <button type="button" class="toggle-password" @click="showPassword = !showPassword" aria-label="Toggle password visibility">
-                        <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
-                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                        <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
-                          <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                          <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-                          <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                          <line x1="2" y1="2" x2="22" y2="22" />
-                        </svg>
-                      </button>
+                  <h2 class="sidebar-main-title">
+                    Transform Your Health.<br />
+                    Transform Your Life.
+                  </h2>
+
+                  <div class="sidebar-body-wrap">
+                    <div class="reg-features-list">
+                      <div class="reg-feature-item">
+                        <div class="reg-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                          </svg>
+                        </div>
+                        <div class="reg-feature-text">
+                          <h4>Authentic Ayurvedic Products</h4>
+                          <p>Rooted in tradition, made for a healthier you.</p>
+                        </div>
+                      </div>
+
+                      <div class="reg-feature-item">
+                        <div class="reg-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                          </svg>
+                        </div>
+                        <div class="reg-feature-text">
+                          <h4>Exclusive Offers</h4>
+                          <p>Be the first to know about new launches and deals.</p>
+                        </div>
+                      </div>
+
+                      <div class="reg-feature-item">
+                        <div class="reg-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="m9 12 2 2 4-4"></path>
+                          </svg>
+                        </div>
+                        <div class="reg-feature-text">
+                          <h4>A Trusted Community</h4>
+                          <p>Join thousands on a journey to better health.</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <NuxtLink to="#" class="forgot-password">Forgot Password</NuxtLink>
+                  <div class="reg-cursive-footer">
+                    Better Health<br />Brighter You
+                  </div>
+                </div>
 
-                  <div v-if="loginError" class="login-error-message text-danger mb-3">{{ loginError }}</div>
-
-                  <button type="submit" class="signin-btn" :disabled="isLoggingIn">
-                    {{ isLoggingIn ? 'SIGNING IN...' : 'SIGN IN' }}
-                  </button>
-
-                  <div class="social-login">
-                    <p>Sign in with</p>
-                    <div class="social-icons">
-                      <button type="button" class="social-btn google">
-                        <img src="/img/icons/login_google.svg" alt="Google">
-                      </button>
-                      <button type="button" class="social-btn facebook">
-                        <img src="/img/icons/login_facebook.svg" alt="Facebook">
-                      </button>
-                    </div>
+                <!-- Right Column: Sign In -->
+                <div class="auth-modal-right">
+                  <div class="auth-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to continue your wellness journey.</p>
                   </div>
 
-                  <div class="register-section">
-                    <h3>Register <span class="info-icon">ⓘ</span></h3>
-                    <button type="button" class="register-btn" @click="openRegistration('preferred-customer')">
-                      PREFERRED CUSTOMER
+                  <form @submit.prevent="handleLogin" class="auth-form">
+                    <div class="form-group">
+                      <label for="login-identifier">Username, Email, or Mobile Number</label>
+                      <div class="input-with-icon">
+                        <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <input type="text" id="login-identifier" v-model="formData.identifier" placeholder="Username, email, or mobile" class="form-input">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <div class="input-with-icon password-wrapper">
+                        <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <input :type="showPassword ? 'text' : 'password'" id="password" v-model="formData.password" placeholder="Password" class="form-input">
+                        <button type="button" class="toggle-password" @click="showPassword = !showPassword" aria-label="Toggle password visibility">
+                          <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                          <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                            <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                            <line x1="2" y1="2" x2="22" y2="22" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="forgot-wrapper">
+                      <NuxtLink to="#" class="forgot-password">Forgot Password</NuxtLink>
+                    </div>
+
+                    <div v-if="loginError" class="login-error-message text-danger mb-3">{{ loginError }}</div>
+
+                    <button type="submit" class="signin-btn" :disabled="isLoggingIn">
+                      <span>{{ isLoggingIn ? 'SIGNING IN...' : 'SIGN IN' }}</span>
                     </button>
-                    <button type="button" class="register-btn" @click="openDirectSeller">DIRECT SELLER / VCN BUSINESS OWNER</button>
+
+                    <!-- Social Sign In -->
+                    <div class="social-signin-section">
+                      <p class="social-title">Sign in with</p>
+                      <div class="social-icons-wrap">
+                        <button type="button" class="social-circle-btn" aria-label="Sign in with Google">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48">
+                            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+                            <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+                            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+                            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+                          </svg>
+                        </button>
+                        <button type="button" class="social-circle-btn" aria-label="Sign in with Facebook">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48">
+                            <circle cx="24" cy="24" r="20" fill="#1877F2"/>
+                            <path fill="#FFFFFF" d="M26.62 38V25.38h4.24l.63-4.92h-4.87v-3.14c0-1.42.39-2.39 2.43-2.39h2.6V10.53c-.45-.06-2-.19-3.8-.19-3.76 0-6.33 2.29-6.33 6.51v3.61h-4.24v4.92h4.24V38h5.1z"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+
+                  <!-- Register CTA -->
+                  <div class="auth-register-section">
+                    <div class="register-title-row">
+                      <span class="register-title">New to VCN?</span>
+                      <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                      </svg>
+                    </div>
+
+                    <div class="register-buttons-group">
+                      <button type="button" class="register-outline-btn" @click="openRegistration('preferred-customer')">
+                        PREFERRED CUSTOMER
+                      </button>
+                      <button type="button" class="register-outline-btn" @click="openDirectSeller">
+                        DIRECT SELLER
+                      </button>
+                    </div>
                   </div>
 
-                  <div class="footer-links">
-                    <NuxtLink to="/terms-conditions" @click="showRegistration = true">Terms & Conditions</NuxtLink>
-                    <NuxtLink to="/privacy-policy">Privacy</NuxtLink>
+                  <!-- Terms & Privacy Links -->
+                  <div class="auth-footer-links">
+                    <NuxtLink to="/terms-conditions" target="_blank">Terms & Conditions</NuxtLink>
+                    <NuxtLink to="/privacy-policy" target="_blank">Privacy</NuxtLink>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-          </transition>
         </teleport>
 
 
@@ -601,6 +704,22 @@ const handleLogout = async () => {
 const showRegistration = ref(false)
 const selectedUserType = ref('preferred-customer')
 
+watch([isOpen, showRegistration], ([newIsOpen, newShowReg]) => {
+  if (process.client) {
+    if (newIsOpen || newShowReg) {
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
+      document.body.classList.add('modal-open')
+      document.documentElement.classList.add('modal-open')
+    } else {
+      document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+      document.body.classList.remove('modal-open')
+      document.documentElement.classList.remove('modal-open')
+    }
+  }
+}, { immediate: true })
+
 const openRegistration = (type) => {
   selectedUserType.value = type
   showRegistration.value = true
@@ -614,7 +733,6 @@ const openDirectSeller = () => {
 const handleRegistrationComplete = (data) => {
   console.log('✅ Registered:', data)
   showRegistration.value = false
-  // Optional: Redirect ya toast show karo
 }
 
 // Shop dropdown products
@@ -2018,115 +2136,238 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
     z-index: 9998;
   }
 
   /* Slide Form Container */
   .slide-form-container {
     position: fixed;
-    top: 0;
-    right: 0;
-    width: 100%;
-    max-width: 450px;
-    height: 100vh;
-    max-height: 100vh;
-    background-color: white;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 860px;
+    max-height: 85vh;
     z-index: 9999;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   }
 
-  /* Close Button */
-  .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 40px !important;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--vcn-primary);
-    z-index: 10000;
-  }
-
-  .close-btn:hover {
-    color: var(--vcn-primary);
-  }
-
-  /* Form Content */
-  .form-content {
-    padding: 80px 30px 30px;
-  }
-
-  .form-content h2 {
-    margin-bottom: 30px;
-    color: var(--vcn-primary);
-    font-size: 28px;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--vcn-primary);
-    font-size: 14px;
-  }
-
-  .form-input {
+  /* Auth Modal Card (Two Column Layout) */
+  .auth-modal-card {
+    display: flex;
+    flex-direction: row;
+    background: var(--vcn-pure-white);
+    border-radius: 24px;
+    overflow: hidden;
+    max-height: 85vh;
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--vcn-primary);
-    border-radius: 8px;
-    font-size: 14px;
-    transition: border-color 0.3s;
-  }
-
-  .form-input:focus {
-    outline: none;
-    border-color: var(--vcn-primary);
-  }
-
-  .password-wrapper {
     position: relative;
   }
 
+  /* Left Column - Brand & Atmospheric Product Sidebar (matches Register form) */
+  .auth-modal-left {
+    width: 42%;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, rgba(14, 24, 12, 0.88) 0%, rgba(26, 38, 20, 0.94) 100%), url('/img/bg/bg-1.png');
+    background-size: cover;
+    background-position: center;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+  }
+
+  .brand-logo-wrap {
+    margin-bottom: 8px;
+  }
+
+  .auth-modal-left .reg-brand-logo {
+    height: 42px !important;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .brand-tagline {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #C89B3C;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .sidebar-main-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin: 16px 0 16px 0;
+    letter-spacing: -0.3px;
+  }
+
+  .sidebar-body-wrap {
+    position: relative;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+
+  .auth-modal-left .reg-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    z-index: 2;
+    width: 62%;
+  }
+
+  .auth-modal-left .reg-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .auth-modal-left .reg-feature-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 50%;
+    background-color: #E8F3EA;
+    color: #2E7D32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .auth-modal-left .reg-feature-text h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 2px 0;
+    line-height: 1.25;
+  }
+
+  .auth-modal-left .reg-feature-text p {
+    font-size: 11px !important;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .auth-modal-left .reg-cursive-footer {
+    font-family: 'Playfair Display', 'Georgia', cursive, serif;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.2;
+    opacity: 0.9;
+    position: relative;
+    z-index: 2;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  }
+
+  .auth-header {
+    margin-bottom: 16px;
+  }
+
+  .auth-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--vcn-dark-green);
+    margin: 0 0 4px 0;
+    letter-spacing: -0.5px;
+  }
+
+  .auth-form .form-group {
+    margin-bottom: 12px;
+  }
+
+  .auth-form label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--vcn-primary-text);
+    margin-bottom: 4px;
+  }
+
+  .input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-with-icon .field-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--vcn-secondary-text);
+    pointer-events: none;
+  }
+
+  .input-with-icon .form-input {
+    width: 100%;
+    padding: 9px 12px 9px 38px;
+    border: 1px solid var(--vcn-border);
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: var(--vcn-primary-text);
+    background-color: var(--vcn-pure-white);
+    transition: all 0.2s ease;
+  }
+
+  .input-with-icon .form-input:focus {
+    outline: none;
+    border-color: var(--vcn-primary-green);
+    box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.12);
+  }
+
   .password-wrapper .form-input {
-    padding-right: 45px;
+    padding-right: 40px;
   }
 
   .toggle-password {
     position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 12px;
     background: none;
     border: none;
     cursor: pointer;
+    color: var(--vcn-secondary-text);
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #888888;
-    padding: 0;
     transition: color 0.2s ease;
   }
 
   .toggle-password:hover {
-    color: var(--vcn-primary);
+    color: var(--vcn-primary-green);
+  }
+
+  .forgot-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -2px;
+    margin-bottom: 14px;
   }
 
   .forgot-password {
-    display: block;
-    text-align: right;
-    margin-bottom: 20px;
-    color: var(--vcn-primary);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--vcn-dark-green);
     text-decoration: none;
-    font-size: 14px;
+    transition: opacity 0.2s;
   }
 
   .forgot-password:hover {
@@ -2135,104 +2376,224 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
 
   .signin-btn {
     width: 100%;
-    padding: 14px;
-    background-color: var(--vcn-primary);
-    color: white;
+    padding: 11px 20px;
+    background-color: var(--vcn-primary-green);
+    color: var(--vcn-pure-white);
     border: none;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-bottom: 25px;
-  }
-
-  .signin-btn:hover {
-    background-color: var(--vcn-primary);
-  }
-
-  .social-login {
-    text-align: center;
-    margin-bottom: 25px;
-  }
-
-  .social-login p {
-    margin-bottom: 10px;
-    color: var(--vcn-primary);
-  }
-
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-  }
-
-  .social-btn {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 1px solid var(--vcn-primary);
-    background: white;
+    border-radius: 30px;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s;
+    gap: 8px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-bottom: 16px;
   }
 
-  .social-btn:hover {
-    transform: scale(1.1);
+  .signin-btn:hover {
+    background-color: var(--vcn-dark-green);
   }
 
-  .register-section {
-    margin-bottom: 25px;
+  .signin-btn:active {
+    transform: scale(0.99);
   }
 
-  .register-section h3 {
-    margin-bottom: 15px;
-    color: var(--vcn-primary);
-    font-size: 20px;
+  .social-signin-section {
+    margin-top: 10px;
+    margin-bottom: 18px;
+    text-align: center;
   }
 
-  .info-icon {
-    font-size: 14px;
-    color: var(--vcn-primary);
-  }
-
-  .register-btn {
-    width: 100%;
-    padding: 12px;
+  .social-title {
+    font-size: 13px;
+    color: var(--vcn-dark-green);
+    font-weight: 600;
     margin-bottom: 10px;
-    border: 2px solid var(--vcn-primary);
-    background: white;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    color: var(--vcn-primary);
   }
 
-  .register-btn:hover {
-    background-color: #f5f5f5;
-  }
-
-  .footer-links {
+  .social-icons-wrap {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    gap: 14px;
   }
 
-  .footer-links a {
-    color: #666;
-    text-decoration: none;
+  .social-circle-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--vcn-border);
+    background-color: var(--vcn-pure-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .social-circle-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--vcn-primary-green);
+    box-shadow: 0 4px 14px rgba(14, 41, 23, 0.12);
+  }
+
+  .auth-register-section {
+    margin-top: 6px;
+    margin-bottom: 18px;
+  }
+
+  .register-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--vcn-dark-green);
+    margin-bottom: 12px;
+  }
+
+  .register-title-row .info-icon {
+    color: var(--vcn-dark-green);
+    cursor: pointer;
+  }
+
+  .register-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .register-outline-btn {
+    width: 100%;
+    padding: 11px 16px;
+    border: 1.5px solid var(--vcn-primary-green);
+    border-radius: 30px;
+    background-color: transparent;
+    color: var(--vcn-primary-green);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .register-outline-btn:hover {
+    background-color: var(--vcn-light-green);
+    color: var(--vcn-dark-green);
+    border-color: var(--vcn-dark-green);
+  }
+
+  .auth-footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--vcn-border);
+  }
+
+  .auth-footer-links a {
     font-size: 12px;
+    color: var(--vcn-secondary-text);
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
 
-  .footer-links a:hover {
+  .auth-footer-links a:hover {
+    color: var(--vcn-primary-green);
     text-decoration: underline;
+  }
+
+  /* Right Column - Sign In (form area, matches Register form) */
+  .auth-modal-right {
+    flex: 1;
+    background-color: #FAFAF7;
+    padding: 30px 34px 28px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 85vh;
+    scrollbar-width: thin;
+  }
+
+  .auth-modal-card .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--vcn-primary-text);
+    transition: background-color 0.2s ease;
+    z-index: 10;
+  }
+
+  .auth-modal-card .close-btn:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .auth-header p {
+    font-size: 13px;
+    color: var(--vcn-secondary-text);
+    margin: 4px 0 0 0;
+    line-height: 1.4;
+  }
+
+  .register-now-btn {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 1.5px solid var(--vcn-primary-green);
+    color: var(--vcn-primary-green);
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    margin-bottom: 16px;
+  }
+
+  .register-now-btn:hover {
+    background-color: var(--vcn-primary-green);
+    color: var(--vcn-pure-white);
+  }
+
+  .partner-footer {
+    text-align: left;
+  }
+
+  .partner-footer p {
+    font-size: 12px;
+    color: var(--vcn-secondary-text);
+    margin: 0 0 2px 0;
+  }
+
+  .partner-link {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--vcn-primary-green);
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+
+  .partner-link:hover {
+    color: var(--vcn-dark-green);
   }
 
   /* Cart Count Badge */
@@ -2263,25 +2624,13 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     gap: 5px;
   }
 
-  /* Transitions */
+  /* Modal transitions disabled */
   .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.3s ease;
-  }
-
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
-  }
-
+  .fade-leave-active,
   .slide-right-enter-active,
   .slide-right-leave-active {
-    transition: transform 0.4s ease-in-out;
-  }
-
-  .slide-right-enter-from,
-  .slide-right-leave-to {
-    transform: translateX(100%);
+    transition: none !important;
+    animation: none !important;
   }
 
   /* Responsive Styles for all devices */
@@ -2321,25 +2670,116 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     }
   }
 
-  /* Portrait Tablets / Large Phones (max-width: 768px) */
-  @media (max-width: 768px) {
-    .navbar {
-      padding: 12px 20px !important;
+  /* Phones & Tablets responsive modal styles */
+  @media (max-width: 820px) {
+    .slide-form-container {
+      width: 92%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      scrollbar-width: thin;
+    }
+
+    .auth-modal-card {
+      flex-direction: column;
+      max-height: none;
+      border-radius: 20px;
+    }
+
+    .auth-modal-left {
+      display: none;
+    }
+
+    .auth-modal-right {
+      width: 100%;
+      padding: 24px 22px 28px;
+      max-height: none;
+      overflow: visible;
+      background-color: #FAFAF7;
     }
   }
 
-  /* Phones (max-width: 576px) */
   @media (max-width: 576px) {
     .navbar {
       padding: 10px 15px !important;
     }
 
     .slide-form-container {
-      max-width: 100%;
+      width: 92%;
+      max-width: 420px;
+      max-height: 90vh;
+      border-radius: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
     }
 
-    .form-content {
-      padding: 60px 20px 20px;
+    .auth-modal-card {
+      border-radius: 20px;
+      min-height: auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+      overscroll-behavior: contain;
+    }
+
+    .auth-modal-card .close-btn {
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+    }
+
+    .auth-modal-left {
+      display: none;
+    }
+
+    .auth-modal-right {
+      display: block !important;
+      width: 100%;
+      padding: 20px 18px;
+      background-color: #FAFAF7;
+    }
+
+    /* Terms & Privacy links pinned at the bottom of the form column */
+    .auth-footer-links {
+      width: 100%;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--vcn-border);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .auth-header h2 {
+      font-size: 22px;
+    }
+
+    .social-icons-wrap {
+      gap: 10px;
+    }
+
+    .social-circle-btn {
+      width: 40px;
+      height: 40px;
+    }
+
+    .register-outline-btn {
+      font-size: 11.5px;
+      padding: 10px 12px;
+      background-color: var(--vcn-pure-white);
     }
   }
 
@@ -2651,5 +3091,10 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     margin-top: -10px;
     margin-bottom: 15px;
     text-align: left;
+  }
+  .register-title{
+   
+    color: var(--vcn-primary-green);
+
   }
 </style>
