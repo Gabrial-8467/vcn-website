@@ -109,7 +109,7 @@
               </NuxtLink>
 
               <NuxtLink to="/direct-seller" class="auth-register-btn">
-                DIRECT SELLER / VCN BUSINESS OWNER
+                DIRECT SELLER
               </NuxtLink>
             </div>
 

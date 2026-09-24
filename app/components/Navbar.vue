@@ -11,15 +11,12 @@
         <!-- Mobile Action Icons Bar (User, Cart, Menu) -->
         <div class="d-lg-none mobile-actions-bar">
 
-          <!-- Account / User Icon Button -->
-          <button type="button" class="mobile-action-btn user-icon-btn" @click="handleMobileUserClick" aria-label="Account">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
+          <!-- Account / Login Button -->
+          <button type="button" class="mobile-action-btn user-icon-btn" @click="handleMobileUserClick" :aria-label="authState.isLoggedIn ? 'My Account' : 'Login'">
+            <span class="mobile-login-text">{{ authState.isLoggedIn ? (authState.user?.userName || 'Hi, User') : 'Login' }}</span>
           </button>
 
-          <!-- Cart Icon Link -->
+          <!-- Cart Link -->
           <NuxtLink to="/cart" class="mobile-action-btn cart-icon-btn" aria-label="Cart">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="9" cy="21" r="1"></circle>
@@ -27,16 +24,20 @@
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
             <ClientOnly>
-              <span class="mobile-cart-badge">{{ cartStore.cartCount || 0 }}</span>
+              <span v-if="cartStore.cartCount > 0" class="mobile-cart-badge">{{ cartStore.cartCount }}</span>
             </ClientOnly>
           </NuxtLink>
 
           <!-- Hamburger Menu Button -->
           <button class="mobile-action-btn menu-icon-btn" type="button" onclick="toggleMenu()" aria-label="Toggle menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-burger-icon">
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <line x1="3" y1="12" x2="21" y2="12"></line>
               <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-close-icon">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
@@ -399,8 +400,25 @@
             <li class="nav-item" v-if="authState.isLoggedIn">
               <NuxtLink class="nav-link" to="#" onclick="toggleAccordion(event, 'accountAccordion')">My Account</NuxtLink>
             </li>
-            <li class="nav-item" v-else>
-              <NuxtLink class="nav-link" to="/login">Login</NuxtLink>
+            <li class="nav-item nav-menu-actions">
+              <NuxtLink to="/cart" class="mobile-action-btn nav-menu-cart-btn" aria-label="Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <ClientOnly>
+                  <span v-if="cartStore.cartCount > 0" class="mobile-cart-badge">{{ cartStore.cartCount }}</span>
+                </ClientOnly>
+              </NuxtLink>
+            </li>
+            <li class="nav-item nav-menu-actions">
+              <button class="mobile-action-btn nav-menu-close-btn" type="button" onclick="toggleMenu()" aria-label="Close menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
             </li>
           </ul>
 
@@ -939,12 +957,77 @@ body.checkout-page .navbar.scrolled .login-link {
     display: block !important;
   }
 
+  .mobile-login-text {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+    position: relative !important;
+    padding-bottom: 2px !important;
+  }
+
+  .mobile-login-text::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-action-btn:hover .mobile-login-text::after {
+    transform: scaleX(1);
+  }
+
+  .menu-icon-btn .menu-close-icon {
+    display: none !important;
+  }
+
+  body.menu-open .menu-icon-btn .menu-burger-icon {
+    display: none !important;
+  }
+
+  body.menu-open .menu-icon-btn .menu-close-icon {
+    display: block !important;
+  }
+
+  /* Hide the top actions bar when menu opens (cart/X now live inside the menu) */
+  body.menu-open .mobile-actions-bar {
+    display: none !important;
+  }
+
+  /* Cart & close buttons inline with the other menu links */
+  .nav-menu-actions {
+    display: flex !important;
+    align-items: center !important;
+    margin-left: auto !important;
+  }
+
+  .nav-menu-cart-btn,
+  .nav-menu-close-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+    padding: 4px 9px !important;
+    margin: 0 !important;
+  }
+
+  .nav-menu-cart-btn:hover,
+  .nav-menu-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+
   .mobile-cart-badge {
     position: absolute !important;
     top: -4px !important;
     right: -6px !important;
-    background: #85A82E !important;
-    color: #000000 !important;
+    background: #85a82e !important;
+    color: #ffffff !important;
     font-size: 10px !important;
     font-weight: 700 !important;
     min-width: 16px !important;
@@ -1678,10 +1761,28 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
     padding: 8px 12px;
     margin-right: 5px;
     white-space: nowrap;
+    position: relative;
+  }
+
+  .login-link::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    bottom: 2px;
+    width: calc(100% - 24px);
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
   }
 
   .login-link:hover {
     color: white;
+  }
+
+  .login-link:hover::after {
+    transform: scaleX(1);
   }
 }
 
@@ -2040,7 +2141,7 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
 
     .navbar-btn {
       background: white !important;
-      color: var(--vcn-primary) !important;
+      color: #0E2917 !important;
       padding: 10px 24px;
       border-radius: 40px;
       font-weight: 600;
@@ -2598,8 +2699,8 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
 
   /* Cart Count Badge */
   .cart-count-badge {
-    background: var(--vcn-badge);
-    color: var(--vcn-primary);
+    background: #85a82e;
+    color: #ffffff;
     border-radius: 50%;
     padding: 2px 6px;
     font-size: 11px;
@@ -2667,6 +2768,10 @@ body.checkout-page .navbar .desktop-nav .dropdown-footer {
       max-height: calc(100vh - var(--top-header-height, 28px) - 80px) !important;
       overflow-y: auto !important;
       -webkit-overflow-scrolling: touch;
+    }
+
+    .navbar-collapse.show {
+      margin-top: 0 !important;
     }
   }
 
