@@ -451,22 +451,8 @@ const submitForm = async () => {
     const response = await authApi.register(payload)
 
     if (response && response.success) {
-      // Auto-login user after successful registration
-      const { loginWithPersistence } = useAuthCart()
-      const loginIdentifier = form.username.trim() || form.email.trim() || form.mobile.trim()
-      if (loginIdentifier && form.password) {
-        try {
-          await loginWithPersistence({
-            identifier: loginIdentifier,
-            password: form.password
-          })
-        } catch (loginErr) {
-          console.error('Auto-login after registration failed:', loginErr)
-        }
-      }
-
       toast.success({
-        message: response.message || 'Registration successful! You are now logged in.'
+        message: response.message || 'Registration successful!'
       })
       step.value = 'success'
     } else {
