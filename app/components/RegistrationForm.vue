@@ -433,16 +433,17 @@ const submitForm = async () => {
 
   const membershipType = props.userType === 'abo' ? 'ABO' : 'PREFERRED_CUSTOMER'
   const payload = {
-    firstName: form.firstName,
-    lastName: form.lastName,
-    username: form.username,
-    email: form.email,
-    phone: form.mobile,
+    firstName: form.firstName.trim(),
+    lastName: form.lastName.trim(),
+    userName: form.username.trim(),
+    email: form.email.trim(),
+    phone: form.mobile.trim(),
     password: form.password,
     confirmPassword: form.confirmPassword || form.password,
-    sponsorUsername: form.knowsVbo === 'yes' ? form.vboId : undefined,
+    sponsorUsername: form.knowsVbo === 'yes' ? form.vboId.trim() : undefined,
     desiredMembershipType: membershipType,
-    placementPreference: 'LEFT'
+    placementPreference: 'LEFT',
+    termsAccepted: agreeTerms.value === true
   }
 
   try {

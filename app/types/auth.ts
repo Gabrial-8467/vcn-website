@@ -12,7 +12,8 @@ export interface RegisterPayload {
   confirmPassword: string
   sponsorUsername?: string
   sponsorId?: string
-  username?: string
+  userName: string
+  termsAccepted: boolean
   desiredMembershipType: string
   placementPreference?: string
 }
