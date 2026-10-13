@@ -264,7 +264,11 @@ const addToCart = async (product) => {
 
 .rp-img {
   width: 100%;
-  height: 100%;
+  /* public/css/style.css sets `img { height: auto !important }` globally, which
+     overrides a plain `height: 100%` and lets the image grow past the 210px
+     wrap. Matching !important + higher specificity restores containment so
+     object-fit can letterbox the whole product inside the box. */
+  height: 100% !important;
   object-fit: contain;
   padding: 20px;
   transition: transform 0.4s ease;
