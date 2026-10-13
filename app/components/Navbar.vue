@@ -186,7 +186,7 @@
             </div>
           </template>
           <template v-else>
-            <NuxtLink to="#" class="login-link" @click.prevent="openForm">Login</NuxtLink>
+            <NuxtLink to="/login" class="login-link">Login</NuxtLink>
           </template>
           <NuxtLink to="/cart" class="navbar-btn">
             Cart
@@ -195,19 +195,6 @@
             </ClientOnly>
           </NuxtLink>
         </div>
-
-        <!-- Sign In Modal (Teleport to body for proper stacking) -->
-        <teleport to="body">
-          <LoginForm
-            v-if="isOpen"
-            :isModal="true"
-            @close="closeForm"
-            @openRegister="handleOpenRegisterFromModal"
-            @complete="closeForm"
-          />
-        </teleport>
-
-
 
         <!-- Mobile Full Screen Menu -->
         <div class="navbar-collapse" id="navbarContent">
@@ -342,22 +329,11 @@
       </div>
     </nav>
   </header>
-  <!-- Registration Modal (Teleport to body for proper stacking) -->
-  <!-- Navbar template ke end mein -->
-  <teleport to="body">
-    <!-- Overlay -->
-    <div v-if="showRegistration" class="registration-overlay" @click="showRegistration = false"></div>
-
-    <RegistrationForm v-if="showRegistration" :userType="selectedUserType" @close="showRegistration = false"
-      @complete="handleRegistrationComplete" />
-  </teleport>
 </template>
 
 
 <script setup>
-import { ref, reactive, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
-import RegistrationForm from '@/components/RegistrationForm.vue'
-import LoginForm from '@/components/LoginForm.vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useCartStore } from '~/stores/cart'
 import { useAuthCart } from '~/composables/useAuthCart'
 import { useApi } from '~/config/api/useApi'
@@ -372,7 +348,7 @@ const cartStore = useCartStore()
 const { getFromEndpoint } = useApi()
 
 // Auth cart composable
-const { authState, loginWithPersistence, logoutWithCleanup, initializeCart } = useAuthCart()
+const { authState, logoutWithCleanup, initializeCart } = useAuthCart()
 
 const route = useRoute()
 const router = useRouter()
@@ -387,7 +363,7 @@ const handleMobileUserClick = () => {
   if (authState.value?.isLoggedIn || authState.isLoggedIn) {
     router.push('/my-account')
   } else {
-    openForm()
+    router.push('/login')
   }
 }
 
@@ -488,58 +464,7 @@ onMounted(() => {
   }
 })
 
-// Registration form state
-const { isOpen, openAuthModal, closeAuthModal } = useAuthModal()
-const showPassword = ref(false)
-const formData = reactive({
-  identifier: '',
-  password: ''
-})
-
-const openForm = () => {
-  openAuthModal()
-  document.body.style.overflow = 'hidden'
-}
-
-const closeForm = () => {
-  closeAuthModal()
-  document.body.style.overflow = ''
-  // Reset form
-  formData.identifier = ''
-  formData.password = ''
-}
-
-const isLoggingIn = ref(false)
-const loginError = ref('')
-
-const handleLogin = async () => {
-  if (!formData.identifier || !formData.password) {
-    loginError.value = 'Please enter both identifier and password.'
-    return
-  }
-
-  isLoggingIn.value = true
-  loginError.value = ''
-
-  try {
-    const result = await loginWithPersistence({
-      identifier: formData.identifier,
-      password: formData.password
-    })
-
-    if (result.success) {
-      closeForm()
-    } else {
-      loginError.value = result.error || 'Login failed. Please check your credentials.'
-    }
-  } catch (err) {
-    console.error('Login submit error:', err)
-    loginError.value = 'An unexpected error occurred during login.'
-  } finally {
-    isLoggingIn.value = false
-  }
-}
-
+// Logout handler
 const handleLogout = async () => {
   try {
     await logoutWithCleanup()
@@ -547,49 +472,6 @@ const handleLogout = async () => {
   } catch (err) {
     console.error('Logout error:', err)
   }
-}
-
-const showRegistration = ref(false)
-const selectedUserType = ref('preferred-customer')
-
-watch([isOpen, showRegistration], ([newIsOpen, newShowReg]) => {
-  if (process.client) {
-    if (newIsOpen || newShowReg) {
-      document.body.style.overflow = 'hidden'
-      document.documentElement.style.overflow = 'hidden'
-      document.body.classList.add('modal-open')
-      document.documentElement.classList.add('modal-open')
-    } else {
-      document.body.style.overflow = ''
-      document.documentElement.style.overflow = ''
-      document.body.classList.remove('modal-open')
-      document.documentElement.classList.remove('modal-open')
-    }
-  }
-}, { immediate: true })
-
-const openRegistration = (type) => {
-  selectedUserType.value = type
-  showRegistration.value = true
-}
-
-const handleOpenRegisterFromModal = (type) => {
-  closeForm()
-  if (type === 'direct-seller') {
-    router.push('/direct-seller')
-  } else {
-    openRegistration(type)
-  }
-}
-
-const openDirectSeller = () => {
-  closeForm()
-  router.push('/direct-seller')
-}
-
-const handleRegistrationComplete = (data) => {
-  console.log('✅ Registered:', data)
-  showRegistration.value = false
 }
 
 // Shop dropdown products
