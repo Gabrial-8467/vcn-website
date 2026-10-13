@@ -238,9 +238,9 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
               </div>
               <div class="col-md-5">
                 <div class="ab-welcome-card-featured">
-                  <div class="card-glow"></div>
-                  <h4 class="card-featured-title">{{ about.welcomeExtras.philosophyTitle }}</h4>
-                  <p class="card-featured-text">
+                  <div class="ab-card-glow"></div>
+                  <h4 class="ab-card-featured-title">{{ about.welcomeExtras.philosophyTitle }}</h4>
+                  <p class="ab-card-featured-text">
                     {{ about.welcomeExtras.philosophyText }}
                   </p>
                 </div>
@@ -273,7 +273,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
           <div class="ab-mission-block">
             <div class="row g-0 align-items-center">
               <div class="col-md-6 ab-mission-text">
-                <span class="ab-tag tag-light">{{ about.mission.tag }}</span>
+                <span class="ab-tag ab-tag-light">{{ about.mission.tag }}</span>
                 <h2 class="ab-mission-h">{{ about.heading }}</h2>
                 <p v-if="about.description[2]" class="ab-mission-p">{{ about.description[2] }}</p>
                 <p v-else class="ab-mission-p">{{ about.mission.fallbackText }}</p>
@@ -334,7 +334,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
           <div class="ab-leadership-teaser">
             <div class="row align-items-center g-4">
               <div class="col-lg-8">
-                <span class="ab-tag tag-light">{{ about.leadership.tag }}</span>
+                <span class="ab-tag ab-tag-light">{{ about.leadership.tag }}</span>
                 <h3 class="teaser-heading">{{ about.leadership.heading }}</h3>
                 <p class="teaser-text">
                   {{ about.leadership.text }}
@@ -369,14 +369,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
           <div class="ab-split-cta">
             <div class="row g-4">
               <div v-for="(card, i) in moreAbout.ctaCards" :key="i" class="col-md-6">
-                <div class="cta-banner" :class="i === 0 ? 'cta-primary' : 'cta-accent'">
-                  <div class="cta-shape"></div>
-                  <div class="cta-inner">
-                    <div class="cta-icon">
+                <div class="ab-cta-banner" :class="i === 0 ? 'ab-cta-primary' : 'ab-cta-accent'">
+                  <div class="ab-cta-shape"></div>
+                  <div class="ab-cta-inner">
+                    <div class="ab-cta-icon">
                       <i class="bi" :class="card.icon"></i>
                     </div>
-                    <h3 class="cta-title">{{ card.title }}</h3>
-                    <NuxtLink to="/all-products" class="cta-button">
+                    <h3 class="ab-cta-title">{{ card.title }}</h3>
+                    <NuxtLink to="/all-products" class="ab-cta-button">
                       {{ card.buttonText }} <i class="bi bi-arrow-up-right"></i>
                     </NuxtLink>
                   </div>
@@ -572,7 +572,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   text-transform: uppercase;
 }
 
-.tag-light {
+.ab-tag-light {
   color: var(--vcn-badge, #d3fa99);
 }
 
@@ -595,13 +595,13 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   background: var(--vcn-base-bg, #F6F7EE);
   border: 1px solid rgba(29, 69, 3, 0.08);
   border-radius: 18px;
-  padding: 32px;
+  padding: 15px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(29, 69, 3, 0.03);
+  box-shadow: 0 10px 25px rgba(29, 69, 3, 0.07);
 }
 
-.card-glow {
+.ab-card-glow {
   position: absolute;
   top: -40px;
   right: -40px;
@@ -613,14 +613,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   pointer-events: none;
 }
 
-.card-featured-title {
+.ab-card-featured-title {
   font-size: 22px !important;
   font-weight: 600 !important;
   color: var(--vcn-dark, #1D4503) !important;
   margin-bottom: 14px !important;
 }
 
-.card-featured-text {
+.ab-card-featured-text {
   font-size: 15px !important;
   line-height: 1.75 !important;
   color: var(--vcn-darker, #1C3A13);
@@ -646,15 +646,15 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   background: var(--vcn-white, #fff);
   border: 1px solid rgba(29, 69, 3, 0.06);
   border-radius: 16px;
-  padding: 36px;
+  padding: 10px;
   height: 100%;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 4px 15px rgba(29, 69, 3, 0.02);
+  box-shadow: 0 4px 15px rgba(29, 69, 3, 0.07);
 }
 
 .value-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 36px rgba(29, 69, 3, 0.07);
+  box-shadow: 0 16px 36px rgba(29, 69, 3, 0.13);
   border-color: rgba(29, 69, 3, 0.12);
 }
 
@@ -845,14 +845,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   border: 1px solid rgba(29, 69, 3, 0.06);
   border-radius: 14px;
   padding: 24px;
-  box-shadow: 0 4px 15px rgba(29, 69, 3, 0.02);
+  box-shadow: 0 4px 15px rgba(29, 69, 3, 0.07);
   width: 100%;
   transition: transform 0.25s;
 }
 
 .timeline-card-wrapper:hover .timeline-card {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(29, 69, 3, 0.05);
+  box-shadow: 0 10px 25px rgba(29, 69, 3, 0.13);
 }
 
 .timeline-year {
@@ -906,15 +906,15 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   background: var(--vcn-white, #fff);
   border: 1px solid rgba(29, 69, 3, 0.08);
   border-radius: 16px;
-  padding: 36px;
+  padding: 10px;
   height: 100%;
   transition: all 0.25s;
-  box-shadow: 0 4px 15px rgba(29, 69, 3, 0.01);
+  box-shadow: 0 4px 15px rgba(29, 69, 3, 0.07);
 }
 
 .strength-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(29, 69, 3, 0.06);
+  box-shadow: 0 14px 30px rgba(29, 69, 3, 0.13);
   border-color: rgba(29, 69, 3, 0.15);
 }
 
@@ -1032,14 +1032,14 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   font-weight: 500;
   text-align: center;
   transition: all 0.25s;
-  box-shadow: 0 4px 12px rgba(29, 69, 3, 0.01);
+  box-shadow: 0 4px 12px rgba(29, 69, 3, 0.07);
 }
 
 .quick-nav-card:hover {
   transform: translateY(-4px);
   border-color: var(--vcn-primary, #5E6C1F);
   color: var(--vcn-primary, #5E6C1F);
-  box-shadow: 0 10px 22px rgba(94, 108, 31, 0.08);
+  box-shadow: 0 10px 22px rgba(94, 108, 31, 0.13);
 }
 
 .quick-nav-icon {
@@ -1057,7 +1057,7 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   padding: 0 40px 60px 40px;
 }
 
-.cta-banner {
+.ab-cta-banner {
   position: relative;
   border-radius: 20px;
   padding: 44px 36px;
@@ -1067,20 +1067,21 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   flex-direction: column;
   justify-content: center;
   z-index: 1;
+  box-shadow: 0 10px 28px rgba(29, 69, 3, 0.07);
 }
 
-.cta-primary {
+.ab-cta-primary {
   background: linear-gradient(135deg, var(--vcn-darker, #1C3A13) 0%, var(--vcn-dark, #1D4503) 100%);
   color: var(--vcn-white, #fff);
 }
 
-.cta-accent {
+.ab-cta-accent {
   background: var(--vcn-base-bg, #F6F7EE);
   color: var(--vcn-darker, #1C3A13);
   border: 1px solid rgba(29, 69, 3, 0.08);
 }
 
-.cta-shape {
+.ab-cta-shape {
   position: absolute;
   right: -30px;
   bottom: -30px;
@@ -1092,16 +1093,16 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   z-index: -1;
 }
 
-.cta-primary .cta-shape {
+.ab-cta-primary .ab-cta-shape {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.cta-inner {
+.ab-cta-inner {
   position: relative;
   z-index: 2;
 }
 
-.cta-icon {
+.ab-cta-icon {
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -1113,25 +1114,28 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   margin-bottom: 20px;
 }
 
-.cta-primary .cta-icon {
+.ab-cta-primary .ab-cta-icon {
   background: rgba(255, 255, 255, 0.08);
   color: var(--vcn-badge, #d3fa99);
 }
 
-.cta-accent .cta-icon {
+.ab-cta-accent .ab-cta-icon {
   background: rgba(29, 69, 3, 0.06);
   color: var(--vcn-dark, #1D4503);
 }
 
-.cta-title {
+.ab-cta-title {
   font-size: 26px !important;
   font-weight: 600 !important;
   line-height: 1.3 !important;
   margin-bottom: 24px !important;
   max-width: 280px;
+  /* Follows the banner theme defined below (.ab-cta-primary / .ab-cta-accent).
+     Kept local to this page so no global stylesheet can override it. */
+  color: inherit;
 }
 
-.cta-button {
+.ab-cta-button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1144,22 +1148,22 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   width: fit-content;
 }
 
-.cta-primary .cta-button {
+.ab-cta-primary .ab-cta-button {
   background: var(--vcn-white, #fff);
   color: var(--vcn-darker, #1C3A13);
 }
 
-.cta-primary .cta-button:hover {
+.ab-cta-primary .ab-cta-button:hover {
   background: var(--vcn-badge, #d3fa99);
   color: var(--vcn-darker, #1C3A13);
 }
 
-.cta-accent .cta-button {
+.ab-cta-accent .ab-cta-button {
   background: var(--vcn-dark, #1D4503);
   color: var(--vcn-white, #fff);
 }
 
-.cta-accent .cta-button:hover {
+.ab-cta-accent .ab-cta-button:hover {
   background: var(--vcn-badge, #d3fa99);
   color: var(--vcn-darker, #1C3A13);
 }
@@ -1184,14 +1188,22 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
   color: var(--vcn-darker, #1C3A13) !important;
 }
 
-:deep(.mobile-dropdown-item:hover),
+:deep(.mobile-dropdown-item:hover) {
+  background: rgba(29, 69, 3, 0.05) !important;
+  color: var(--vcn-dark, #1D4503) !important;
+}
+
 :deep(.mobile-dropdown-item.active-item) {
   background: rgba(29, 69, 3, 0.05) !important;
   color: var(--vcn-dark, #1D4503) !important;
 }
 
 /* Gutters reset override for custom page elements */
-.row[class*='g-'] > [class^="col-"],
+.row[class*='g-'] > [class^="col-"] {
+  padding-right: calc(var(--bs-gutter-x) * .5) !important;
+  padding-left: calc(var(--bs-gutter-x) * .5) !important;
+}
+
 .row[class*='g-'] > [class*=" col-"] {
   padding-right: calc(var(--bs-gutter-x) * .5) !important;
   padding-left: calc(var(--bs-gutter-x) * .5) !important;
@@ -1232,19 +1244,40 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
     border-right: none;
   }
 
-  .metric-item:nth-child(3),
+  .metric-item:nth-child(3) {
+    border-bottom: none;
+  }
+
   .metric-item:nth-child(4) {
     border-bottom: none;
   }
 
-  .ab-welcome-section,
-  .ab-values-section,
-  .ab-mission-block,
-  .ab-timeline-section,
-  .ab-strengths-section,
-  .ab-quick-nav,
+  .ab-welcome-section {
+    padding: 40px 0px !important;
+  }
+
+  .ab-values-section {
+    padding: 40px 0px !important;
+  }
+
+  .ab-mission-block {
+    padding: 40px 12px !important;
+  }
+
+  .ab-timeline-section {
+    padding: 40px 10px !important;
+  }
+
+  .ab-strengths-section {
+    padding: 40px 0px !important;
+  }
+
+  .ab-quick-nav {
+    padding: 40px 0px !important;
+  }
+
   .ab-split-cta {
-    padding: 40px 20px !important;
+    padding: 40px 0px !important;
   }
 
   .ab-mission-text {
@@ -1286,7 +1319,12 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
 
   .ab-badge {
     padding: 4px 10px;
-    font-size: 10px;
+    font-size: 11px;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    letter-spacing: 0.5px;
   }
 
   .ab-hero-title {
@@ -1298,20 +1336,36 @@ useHead({ bodyAttrs: { class: 'product-details-page' } })
     margin-bottom: 20px;
   }
 
-  .cta-banner {
+  .ab-cta-banner {
     padding: 32px 24px;
   }
 
-  .cta-title {
+  .ab-cta-title {
     font-size: 22px !important;
   }
 }
 </style>
 
 <style>
-/* Unscoped global overrides for sticky sidebar layout container context */
-.product-detail-section,
-.product-detail-section .container,
+/* Unscoped global overrides for sticky sidebar layout container context.
+   NOTE: blog, careers, book-consultancy, blog-details and share-and-earn rely on
+   these rules and do not define them themselves. Do not scope or remove them. */
+.product-detail-section {
+  overflow: visible !important;
+  transform: none !important;
+  filter: none !important;
+  contain: none !important;
+  will-change: auto !important;
+}
+
+.product-detail-section .container {
+  overflow: visible !important;
+  transform: none !important;
+  filter: none !important;
+  contain: none !important;
+  will-change: auto !important;
+}
+
 .product-detail-section .row {
   overflow: visible !important;
   transform: none !important;
