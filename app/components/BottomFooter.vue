@@ -51,6 +51,7 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
 
         <!-- Bottom Divider & Copyright -->
         <div class="vcn-awaken-bottom">
+          <div class="vcn-bottom-divider" aria-hidden="true"></div>
           <ClientOnly>
             <div class="vcn-awaken-copyright vcn-loaded" id="awakenCopyright">
               {{ footer?.copyrightText || '© 2025 Falcon Marketing Pvt. Ltd. All rights reserved.' }}
@@ -298,6 +299,7 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   height: 1px;
   background: rgba(255, 255, 255, 0.16);
   margin-bottom: 14px;
+  display: none !important;
 }
 
 .bottom-footer-wrapper .vcn-awaken-copyright {
