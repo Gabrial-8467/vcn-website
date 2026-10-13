@@ -23,8 +23,8 @@ const handleMyAccountClick = (event) => {
     return
   }
 
-  // On desktop open the slide-in login panel; on small screens let the
-  // normal navigation happen (my-account page redirects to /login).
+  // On desktop send the user straight to the dedicated login page;
+  // on small screens let normal navigation happen (my-account redirects to /login).
   if (process.client && window.innerWidth >= 992) {
     event.preventDefault()
     openAuthModal()

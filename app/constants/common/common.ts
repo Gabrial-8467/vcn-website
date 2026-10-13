@@ -203,7 +203,15 @@ export const COMMON_DATA = {
     },
 
     bottomFooter: {
-        image: "/img/gif/Makes-Life-Better-2.gif",
+        image: "/img/bg/vcn-awaken-bg.png",
+        kicker: "A HEALTHIER WAY FORWARD",
+        titlePrefix: "Make Life ",
+        titleAccent: "Better.",
+        description: "Everyday wellness, inspired by nature.\nThoughtfully crafted solutions for a healthier, happier you.",
+        primaryButtonText: "Explore Our Wellness Range",
+        primaryButtonLink: "/all-products",
+        secondaryLinkText: "Our philosophy",
+        secondaryLinkUrl: "/about-us",
         copyrightText: "© 2025 Falcon Marketing Pvt. Ltd. All rights reserved."
     },
 

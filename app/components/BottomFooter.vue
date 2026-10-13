@@ -1,311 +1,448 @@
-
 <script setup>
+import { computed } from 'vue'
 import { useCmsStore } from '~/stores/cms'
 
-
-
 const cmsStore = useCmsStore()
-
-const footer = computed(() => cmsStore.bottomFooterData)
-
-
+const footer = computed(() => cmsStore.bottomFooterData || {})
 </script>
+
 <template>
   <!-- Awaken Within Section -->
   <div class="bottom-footer-wrapper">
     <section class="vcn-awaken-section" id="awakenSection">
-      <div class="vcn-awaken-gif-container vcn-loaded" id="awakenGif">
-        <img :src="footer.image" alt="Awaken Within" class="vcn-awaken-gif" />
+      <!-- Background subtle overlay for mobile / narrow screen legibility -->
+      <div class="vcn-awaken-gradient-tint"></div>
+
+      <div class="vcn-awaken-container">
+        <!-- Content Area -->
+        <div class="vcn-awaken-content">
+          <!-- Kicker / Tagline -->
+          <div class="vcn-awaken-kicker">
+            <span class="vcn-kicker-text">{{ footer?.kicker || 'A HEALTHIER WAY FORWARD' }}</span>
+            <span class="vcn-kicker-line" aria-hidden="true"></span>
+          </div>
+
+          <!-- Headline -->
+          <h2 class="vcn-awaken-title">
+            <span class="vcn-title-prefix">{{ footer?.titlePrefix || 'Make Life ' }}</span>
+            <span class="vcn-accent-italic">{{ footer?.titleAccent || 'Better.' }}</span>
+          </h2>
+
+          <!-- Description -->
+          <p class="vcn-awaken-desc">
+            {{ footer?.description || 'Everyday wellness, inspired by nature.\nThoughtfully crafted solutions for a healthier, happier you.' }}
+          </p>
+
+          <!-- CTAs -->
+          <div class="vcn-awaken-actions">
+            <NuxtLink :to="footer?.primaryButtonLink || '/all-products'" class="vcn-btn-wellness">
+              <span>{{ footer?.primaryButtonText || 'Explore Our Wellness Range' }}</span>
+              <span class="vcn-arrow" aria-hidden="true">&rarr;</span>
+            </NuxtLink>
+
+            <span class="vcn-actions-divider" aria-hidden="true"></span>
+
+            <NuxtLink :to="footer?.secondaryLinkUrl || '/about-us'" class="vcn-link-philosophy">
+              <span class="vcn-link-text">{{ footer?.secondaryLinkText || 'Our philosophy' }}</span>
+              <span class="vcn-arrow" aria-hidden="true">&rarr;</span>
+            </NuxtLink>
+          </div>
+        </div>
+
+        <!-- Bottom Divider & Copyright -->
+        <div class="vcn-awaken-bottom">
+          <div class="vcn-bottom-divider" aria-hidden="true"></div>
+          <ClientOnly>
+            <div class="vcn-awaken-copyright vcn-loaded" id="awakenCopyright">
+              {{ footer?.copyrightText || '© 2025 Falcon Marketing Pvt. Ltd. All rights reserved.' }}
+            </div>
+          </ClientOnly>
+        </div>
       </div>
-      <ClientOnly>
-        <div class="vcn-awaken-copyright vcn-loaded" id="awakenCopyright">{{ footer.copyrightText }}</div>
-      </ClientOnly>
+
+      <!-- Hidden compatibility anchor for site.client.js observer -->
+      <div id="awakenGif" class="vcn-loaded" style="display: none;" aria-hidden="true"></div>
     </section>
   </div>
 </template>
 
 <style scoped>
-/* Bottom Footer Wrapper - Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+/* Bottom Footer Wrapper */
 .bottom-footer-wrapper {
   position: relative !important;
   width: 100% !important;
   max-width: 100vw !important;
-  height: calc(50vh + 5px) !important;
-  min-height: calc(50vh + 5px) !important;
-  max-height: calc(50vh + 5px) !important;
-  overflow: hidden !important;
-  transform: translate3d(0, 0, 0) !important;
-  isolation: isolate !important;
-  background-image: url("/img/bg/footer-bg.png") !important;
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
   margin: 0 !important;
   padding: 0 !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  background-color: #061a10 !important;
+  background-image: url("/img/bg/vcn-awaken-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: right center !important;
+  background-size: cover !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  box-sizing: border-box !important;
 }
 
-/* Awaken Section - Override Global Styles */
+/* Awaken Section */
 .bottom-footer-wrapper .vcn-awaken-section {
   position: relative !important;
-  height: 100% !important;
   width: 100% !important;
-  max-width: 100% !important;
+  min-height: 380px !important;
   display: flex !important;
   flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 10px 20px 5px 20px !important;
+  justify-content: space-between !important;
+  padding: 48px 0 20px 0 !important;
   margin: 0 !important;
-  overflow: hidden !important;
-  transform: translate3d(0, 0, 0) !important;
+  box-sizing: border-box !important;
   background: transparent !important;
 }
 
-/* GIF Container - Override Global Styles */
-.bottom-footer-wrapper .vcn-awaken-gif-container {
-  position: relative !important;
-  flex: 1 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: scale(1) !important;
-  z-index: 10 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  min-height: 0 !important;
-  overflow: hidden !important;
-  transform: translate3d(0, 0, 0) !important;
+/* Gradient Tint for responsive readability */
+.vcn-awaken-gradient-tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 26, 16, 0.88) 0%,
+    rgba(6, 26, 16, 0.65) 42%,
+    rgba(6, 26, 16, 0.15) 75%,
+    rgba(6, 26, 16, 0) 100%
+  );
 }
 
-/* GIF Image - Override Global Styles */
-.bottom-footer-wrapper .vcn-awaken-gif {
-  height: 100% !important;
-  width: auto !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
-  display: block !important;
-  margin: 0 auto !important;
-  border: none !important;
-  border-radius: 0 !important;
-  transform: scale(6.2) !important;
-  transform-origin: center center !important;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+/* Container */
+.vcn-awaken-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 310px;
+  box-sizing: border-box;
 }
 
-/* Copyright Text - Override Global Styles */
+/* Content Column */
+.vcn-awaken-content {
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Kicker / Tagline */
+.vcn-awaken-kicker {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.vcn-kicker-text {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(220, 232, 216, 0.78);
+  white-space: nowrap;
+}
+
+.vcn-kicker-line {
+  display: inline-block;
+  width: 64px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.32);
+  margin-left: 14px;
+}
+
+/* Title */
+.vcn-awaken-title {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 1.12;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.015em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.vcn-title-prefix {
+  color: #ffffff;
+}
+
+.vcn-accent-italic {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 600;
+  color: #c8df63;
+  margin-left: 4px;
+}
+
+/* Description */
+.vcn-awaken-desc {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15.5px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(228, 238, 226, 0.84);
+  margin: 0 0 24px 0;
+  max-width: 440px;
+  white-space: pre-line;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* Actions Row */
+.vcn-awaken-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Primary Wellness Button */
+.vcn-btn-wellness {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #e2eccd;
+  color: #122417;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 11px 24px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.vcn-btn-wellness .vcn-arrow {
+  font-size: 15px;
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+
+.vcn-btn-wellness:hover {
+  background-color: #ecf6d7;
+  color: #0b1a10;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.vcn-btn-wellness:hover .vcn-arrow {
+  transform: translateX(4px);
+}
+
+/* Divider between actions */
+.vcn-actions-divider {
+  display: inline-block;
+  width: 1px;
+  height: 22px;
+  background-color: rgba(255, 255, 255, 0.28);
+  margin: 0 8px;
+}
+
+/* Secondary Philosophy Link */
+.vcn-link-philosophy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.vcn-link-philosophy .vcn-link-text {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.vcn-link-philosophy .vcn-arrow {
+  font-size: 14px;
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+
+.vcn-link-philosophy:hover {
+  color: #c8df63;
+}
+
+.vcn-link-philosophy:hover .vcn-arrow {
+  transform: translateX(4px);
+}
+
+/* Bottom Divider & Copyright */
+.vcn-awaken-bottom {
+  width: 100%;
+  margin-top: 36px;
+}
+
+.vcn-bottom-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  margin-bottom: 14px;
+}
+
 .bottom-footer-wrapper .vcn-awaken-copyright {
   position: relative !important;
-  color: rgba(255, 255, 255, 0.9) !important;
-  font-size: 0.9rem !important;
+  color: rgba(255, 255, 255, 0.62) !important;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 12.5px !important;
   font-weight: 400 !important;
+  letter-spacing: 0.015em !important;
   text-align: center !important;
-  margin-top: 15px !important;
-  margin-bottom: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
   opacity: 1 !important;
   visibility: visible !important;
-  z-index: 20 !important;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
-  transition: all 0.3s ease !important;
+  transition: color 0.3s ease !important;
 }
 
-/* Tall/Square Screens Responsiveness Fixes */
-@media (min-width: 768px) and (min-height: 900px) {
+/* Responsive Breakpoints */
+@media (max-width: 1200px) {
+  .vcn-awaken-title {
+    font-size: 48px;
+  }
+
+  .vcn-awaken-desc {
+    font-size: 15px;
+  }
+
+  .vcn-awaken-container {
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 991px) {
   .bottom-footer-wrapper {
-    height: 450px !important;
-    min-height: 450px !important;
-    max-height: 450px !important;
+    background-position: 70% center !important;
+  }
+
+  .vcn-awaken-gradient-tint {
+    background: linear-gradient(
+      90deg,
+      rgba(6, 26, 16, 0.92) 0%,
+      rgba(6, 26, 16, 0.78) 55%,
+      rgba(6, 26, 16, 0.4) 100%
+    );
+  }
+
+  .vcn-awaken-title {
+    font-size: 42px;
+  }
+
+  .vcn-awaken-container {
+    padding: 0 24px;
   }
 }
 
-@media (min-width: 1200px) and (max-aspect-ratio: 1.35) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(4.2) !important;
-  }
-}
-
-/* Laptop Screens (1200px - 1399px) */
-@media (max-width: 1399px) and (min-width: 1200px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(4.8) !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.85rem !important;
-    margin-top: 12px !important;
-  }
-}
-
-/* Tablet Landscape (992px - 1199px) */
-@media (max-width: 1199px) and (min-width: 992px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(3.8) !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.8rem !important;
-    margin-top: 10px !important;
-  }
-}
-
-/* Tablet Portrait (768px - 991px) */
-@media (max-width: 991px) and (min-width: 768px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(3.0) !important;
-  }
-
+@media (max-width: 767px) {
   .bottom-footer-wrapper .vcn-awaken-section {
-    padding: 0 15px !important;
+    padding: 36px 0 16px 0 !important;
+    min-height: auto !important;
+  }
+
+  .bottom-footer-wrapper {
+    background-position: 65% center !important;
+  }
+
+  .vcn-awaken-gradient-tint {
+    background: linear-gradient(
+      180deg,
+      rgba(6, 26, 16, 0.88) 0%,
+      rgba(6, 26, 16, 0.82) 60%,
+      rgba(6, 26, 16, 0.92) 100%
+    );
+  }
+
+  .vcn-awaken-container {
+    padding: 0 20px;
+    min-height: auto;
+  }
+
+  .vcn-awaken-content {
+    max-width: 100%;
+  }
+
+  .vcn-awaken-kicker {
+    margin-bottom: 8px;
+  }
+
+  .vcn-kicker-text {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .vcn-kicker-line {
+    width: 40px;
+    margin-left: 10px;
+  }
+
+  .vcn-awaken-title {
+    font-size: 34px;
+    margin-bottom: 12px;
+  }
+
+  .vcn-awaken-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .vcn-awaken-actions {
+    gap: 12px;
+  }
+
+  .vcn-btn-wellness {
+    padding: 10px 20px;
+    font-size: 13.5px;
+  }
+
+  .vcn-actions-divider {
+    display: none;
+  }
+
+  .vcn-awaken-bottom {
+    margin-top: 28px;
   }
 
   .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.8rem !important;
-    margin-top: 15px !important;
+    font-size: 11.5px !important;
   }
 }
 
-/* Mobile Large (600px - 767px) */
-@media (max-width: 767px) and (min-width: 600px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(1.8) !important;
+@media (max-width: 480px) {
+  .vcn-awaken-title {
+    font-size: 29px;
   }
 
-  .bottom-footer-wrapper .vcn-awaken-section {
-    padding: 0 15px !important;
+  .vcn-btn-wellness {
+    width: 100%;
+    justify-content: center;
   }
 
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.75rem !important;
-    margin-top: 12px !important;
+  .vcn-link-philosophy {
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
   }
-}
-
-/* Mobile Medium (480px - 599px) */
-@media (max-width: 599px) and (min-width: 480px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(1.6) !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-section {
-    padding: 0 10px !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.7rem !important;
-    margin-top: 10px !important;
-  }
-}
-
-/* Mobile Small (400px - 479px) */
-@media (max-width: 479px) and (min-width: 400px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(1.4) !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-section {
-    padding: 0 10px !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.65rem !important;
-    margin-top: 8px !important;
-  }
-}
-
-/* Mobile Extra Small (320px - 399px) */
-@media (max-width: 399px) and (min-width: 320px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(1.2) !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-section {
-    padding: 0 8px !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.6rem !important;
-    margin-top: 8px !important;
-  }
-}
-
-/* Mobile Ultra Small (below 320px) */
-@media (max-width: 319px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(1.0) !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-section {
-    padding: 0 5px !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.55rem !important;
-    margin-top: 6px !important;
-  }
-}
-
-/* Landscape Orientation for Mobile Devices */
-@media (max-height: 600px) and (orientation: landscape) and (max-width: 1024px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(1.5) !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-section {
-    padding: 0 10px !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.65rem !important;
-    margin-top: 10px !important;
-  }
-}
-
-/* Very Short Screens */
-@media (max-height: 400px) {
-  .bottom-footer-wrapper .vcn-awaken-gif {
-    transform: scale(1.3) !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-section {
-    padding: 0 10px !important;
-  }
-
-  .bottom-footer-wrapper .vcn-awaken-copyright {
-    font-size: 0.6rem !important;
-    margin-top: 8px !important;
-  }
-}
-
-/* Ensure visibility on all devices */
-.bottom-footer-wrapper * {
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* Force display for debugging */
-.bottom-footer-wrapper {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  z-index: 1 !important;
-}
-
-/* Animation states */
-.bottom-footer-wrapper .vcn-awaken-gif-container.vcn-loaded {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: scale(1) !important;
-}
-
-.bottom-footer-wrapper .vcn-awaken-copyright.vcn-loaded {
-  opacity: 1 !important;
-  visibility: visible !important;
 }
 </style>
