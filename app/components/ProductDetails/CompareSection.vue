@@ -12,12 +12,14 @@
       <!-- Comparison Table Card -->
       <div class="cmp-card">
         <div class="cmp-table">
-          
-          <!-- Table Header -->
+
+          <!-- Table Header (desktop only — stacked cards carry their own labels) -->
           <div class="cmp-row cmp-row-header">
             <div class="cmp-col cmp-col-feature">FEATURE</div>
             <div class="cmp-col cmp-col-vcn">
-              <span class="cmp-vcn-check">✓</span>
+              <svg class="cmp-hdr-check" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
               <div class="cmp-vcn-title">
                 <strong>VCN</strong>
                 <span>{{ productName }}</span>
@@ -29,15 +31,22 @@
           <!-- Table Rows -->
           <div v-for="(row, i) in comparisonRows" :key="i" class="cmp-row">
             <div class="cmp-col cmp-col-feature">
-              <span>{{ row.feature }}</span>
+              <span class="cmp-col-text">{{ row.feature }}</span>
             </div>
             <div class="cmp-col cmp-col-vcn">
-              <span class="cmp-icon-check">✓</span>
-              <span>{{ row.vcn }}</span>
+              <span class="cmp-col-tag">VCN</span>
+              <svg class="cmp-icon cmp-icon-check" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span class="cmp-col-text">{{ row.vcn }}</span>
             </div>
             <div class="cmp-col cmp-col-ordinary">
-              <span class="cmp-icon-cross">×</span>
-              <span>{{ row.ordinary }}</span>
+              <span class="cmp-col-tag">Ordinary</span>
+              <svg class="cmp-icon cmp-icon-cross" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="18" x2="6" y1="6" y2="18" />
+                <line x1="6" x2="18" y1="6" y2="18" />
+              </svg>
+              <span class="cmp-col-text">{{ row.ordinary }}</span>
             </div>
           </div>
 
@@ -161,7 +170,7 @@ const comparisonRows = [
 
 .cmp-row {
   display: grid;
-  grid-template-columns: 1.2fr 1.5fr 1.3fr;
+  grid-template-columns: 1.1fr 1.35fr 1.25fr;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   align-items: center;
 }
@@ -186,6 +195,8 @@ const comparisonRows = [
   gap: 10px;
   font-size: 14px;
   line-height: 1.4;
+  /* Allow long words to wrap instead of forcing the grid column wider */
+  min-width: 0;
 }
 
 .cmp-col-feature {
@@ -203,15 +214,17 @@ const comparisonRows = [
 }
 
 .cmp-row-header .cmp-col-vcn {
-  background: rgba(142, 243, 117, 0.15);
+  background: rgba(142, 243, 117, 0.18);
   color: #8EF375;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.cmp-vcn-check {
-  font-size: 16px;
+.cmp-hdr-check {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
   color: #8EF375;
 }
 
@@ -219,6 +232,7 @@ const comparisonRows = [
   display: flex;
   flex-direction: column;
   line-height: 1.2;
+  min-width: 0;
 }
 
 .cmp-vcn-title strong {
@@ -230,36 +244,138 @@ const comparisonRows = [
   font-size: 11px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
+  overflow-wrap: break-word;
 }
 
 .cmp-col-ordinary {
   color: rgba(255, 255, 255, 0.55);
 }
 
+.cmp-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
 .cmp-icon-check {
   color: #8EF375;
-  font-weight: 900;
-  font-size: 16px;
-  flex-shrink: 0;
 }
 
 .cmp-icon-cross {
   color: rgba(255, 255, 255, 0.35);
-  font-weight: 900;
-  font-size: 16px;
-  flex-shrink: 0;
 }
 
-@media (max-width: 768px) {
-  .cmp-section {
-    padding: 56px 0;
-  }
+.cmp-col-text {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* Per-cell label — only used by the stacked mobile cards */
+.cmp-col-tag {
+  display: none;
+}
+
+/* ── Tablet: tighten density, keep the 3-column table ── */
+@media (max-width: 991.98px) {
   .cmp-col {
     padding: 14px 16px;
     font-size: 12.5px;
   }
+}
+
+/* ── Mobile: stack each feature into its own card ── */
+@media (max-width: 767.98px) {
+  .cmp-section {
+    padding: 56px 0;
+  }
+
+  .cmp-container {
+    padding: 0 16px;
+  }
+
+  .cmp-header {
+    margin-bottom: 32px;
+  }
+
+  .cmp-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  /* The table header is redundant once each row carries its own labels */
+  .cmp-row-header {
+    display: none;
+  }
+
+  .cmp-table {
+    gap: 12px;
+  }
+
   .cmp-row {
-    grid-template-columns: 1fr 1fr 1fr;
+    display: block;
+    grid-template-columns: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+  }
+
+  .cmp-col {
+    padding: 12px 14px;
+    align-items: flex-start;
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  /* Feature name becomes the card heading */
+  .cmp-col-feature {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 13.5px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
+  }
+
+  /* Highlight becomes a left accent bar rather than a full column fill */
+  .cmp-col-vcn {
+    border-left: 3px solid #8EF375;
+    border-right: none;
+    background: rgba(142, 243, 117, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .cmp-col-ordinary {
+    border-left: 3px solid rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  .cmp-col-tag {
+    display: block;
+    flex-shrink: 0;
+    width: 62px;
+    padding-top: 1px;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .cmp-col-vcn .cmp-col-tag {
+    color: #8EF375;
+  }
+
+  .cmp-col-ordinary .cmp-col-tag {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .cmp-icon {
+    width: 14px;
+    height: 14px;
+    margin-top: 2px;
   }
 }
 </style>

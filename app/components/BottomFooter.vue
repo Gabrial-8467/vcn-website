@@ -375,7 +375,7 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   }
 
   .vcn-awaken-container {
-    padding: 0 20px;
+    padding: 0 10px;
     min-height: auto;
   }
 
