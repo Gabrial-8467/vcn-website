@@ -1,177 +1,201 @@
 <template>
   <div class="checkout-container">
-    <div class="row g-4">
-      <!-- Left Side - Checkout Steps -->
+    <div class="checkout-inner">
+      <div class="row g-4">
+      <!-- Left Side - Checkout Wizard -->
       <div class="col-lg-7">
-        <!-- Step 1: Account Creation -->
-        <div class="checkout-step-card" id="accountStepCard" v-if="!isLoggedIn">
-          <div class="checkout-step-header">
-            <div class="step-indicator">
-              <span class="step-count-badge">{{ checkout.accountStep.step }}</span>
+        <!-- Signed in as -->
+        <div v-if="isLoggedIn" class="checkout-signed-in">
+          <span class="checkout-signed-in-icon">✓</span>
+          <span>Signed in as <strong>{{ userName || userEmail || 'you' }}</strong></span>
+        </div>
+
+        <!-- Wizard Progress -->
+        <div class="checkout-stepper">
+          <div
+            v-for="(s, idx) in steps"
+            :key="s.key"
+            class="checkout-step-item"
+            :class="{ active: currentStepIndex === idx, done: currentStepIndex > idx }"
+          >
+            <div class="checkout-step-dot">
+              <svg v-if="currentStepIndex > idx" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span v-else>{{ idx + 1 }}</span>
             </div>
-            <h2 class="step-title-text">{{ checkout.accountStep.title }}</h2>
-          </div>
-
-          <div class="checkout-step-body" id="accountStepContent" v-if="!isLoggedIn && !accountCompleted">
-            <button class="secondary-action-btn w-100" onclick="proceedWithGoogle()">
-              <span class="google-icon-text me-2">{{ checkout.accountStep.i }}</span> {{checkout.accountStep.googleButton}}
-            </button>
-
-            <div class="divider-text">
-              <span>{{ checkout.accountStep.divider }}</span>
-            </div>
-
-            <a class="primary-action-btn w-100 mb-3" onclick="displayEmailForm()">
-              {{ checkout.accountStep.emailButton }}
-            </a>
-
-            <div id="emailSignupForm" class="hide-element">
-              <div class="mb-3">
-                <input type="email" class="form-control form-input-field" id="userEmailInput" :placeholder="checkout.accountStep.emailPlaceholder" />
-              </div>
-              <div class="mb-3">
-                <input type="password" class="form-control form-input-field" id="userPasswordInput"
-                  :placeholder="checkout.accountStep.passwordPlaceholder" />
-              </div>
-              <a class=" primary-action-btn w-100" onclick="submitAccountInfo()">
-                {{ checkout.accountStep.continueButton }}
-              </a>
-            </div>
-
-            <p class="mb-3">
-              {{ checkout.accountStep.haveAccountText }} <NuxtLink to="/login" class="link-text">{{ checkout.accountStep.signInButton }}</NuxtLink>
-            </p>
-
-            <div class="info-box">
-              <div class="info-box-left">
-                <div class="info-box-title">
-                  <svg width="30px" height="30px" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M17 33C25.8366 33 33 25.8366 33 17C33 8.16344 25.8366 1 17 1C8.16345 1 1 8.16344 1 17C1 25.8366 8.16345 33 17 33Z"
-                      stroke="#1C3A13"></path>
-                    <path
-                      d="M10.5275 2.39896V5.85604C10.5275 8.9446 11.3742 11.4541 15.8535 10.6337C19.3018 10.0019 25.9001 7.36523 25.9001 12.1209C25.9001 20.1055 3.63965 9.88346 3.63965 17.7891C3.63965 27.3224 30.4672 12.3622 30.4672 21.3866C30.4672 29.924 13.6994 16.8152 13.6994 29.2528V32.7274"
-                      stroke="#1C3A13"></path>
-                  </svg>
-                  {{checkout.learnSection.title}}
-                </div>
-                <p class="info-box-description">
-                  {{ checkout.learnSection.description }}
-                </p>
-              </div>
-              <div class="info-box-right">
-                <input type="checkbox" id="newsletterCheckbox" checked />
-                <div class="info-box-right-text">
-                  {{ checkout.learnSection.checkboxText }}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="checkout-step-body" id="accountStepCompleted" v-else>
-            <p class="completion-message">
-              <span class="step-check-icon">✓</span>
-              <template v-if="isLoggedIn">
-                Welcome{{ userName ? `, ${userName}` : '' }}! You're already signed in.
-              </template>
-              <template v-else>
-                {{ checkout.accountStep.completedMessage }}
-              </template>
-            </p>
-            <p v-if="isLoggedIn && userEmail" class="completion-message">{{ userEmail }}</p>
+            <span class="checkout-step-label">{{ s.label }}</span>
+            <span v-if="idx < steps.length - 1" class="checkout-step-line"></span>
           </div>
         </div>
 
-        <!-- Step 2: Shipping Details -->
-        <div class="checkout-step-card" id="shippingStepCard">
-          <div class="checkout-step-header">
-            <div class="step-indicator">
-              <span class="step-count-badge">{{ isLoggedIn ? '1 of 2' : checkout.shippingStep.step }}</span>
-            </div>
+        <!-- STEP 1: Shipping -->
+        <div class="checkout-panel" v-show="currentStep === 'shipping'">
+          <div class="checkout-panel-header">
             <h2 class="step-title-text">{{ checkout.shippingStep.title }}</h2>
+            <p class="checkout-panel-sub">Where should we deliver your order?</p>
           </div>
 
-          <div class="checkout-step-body" id="shippingStepContent">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <input type="text" class="form-control form-input-field" id="firstNameInput" :placeholder="checkout.shippingStep.firstNamePlaceholder" />
+          <div class="row g-3">
+            <div class="col-md-6">
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.firstName }"
+                v-model="form.firstName" :placeholder="checkout.shippingStep.firstNamePlaceholder" />
+              <span v-if="errors.firstName" class="checkout-error">{{ errors.firstName }}</span>
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.lastName }"
+                v-model="form.lastName" :placeholder="checkout.shippingStep.lastNamePlaceholder" />
+              <span v-if="errors.lastName" class="checkout-error">{{ errors.lastName }}</span>
+            </div>
+            <div class="col-12">
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.address }"
+                v-model="form.address" :placeholder="checkout.shippingStep.addressPlaceholder" />
+              <span v-if="errors.address" class="checkout-error">{{ errors.address }}</span>
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.city }"
+                v-model="form.city" :placeholder="checkout.shippingStep.cityPlaceholder" />
+              <span v-if="errors.city" class="checkout-error">{{ errors.city }}</span>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.state }"
+                v-model="form.state" :placeholder="checkout.shippingStep.statePlaceholder" />
+              <span v-if="errors.state" class="checkout-error">{{ errors.state }}</span>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.zip }" maxlength="6"
+                v-model="form.zip" @input="form.zip = form.zip.replace(/\D/g, '').slice(0, 6)"
+                :placeholder="checkout.shippingStep.zipPlaceholder" />
+              <span v-if="errors.zip" class="checkout-error">{{ errors.zip }}</span>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-left">
+              <div class="info-box-title">
+                <svg width="30px" height="30px" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M17 33C25.8366 33 33 25.8366 33 17C33 8.16344 25.8366 1 17 1C8.16345 1 1 8.16344 1 17C1 25.8366 8.16345 33 17 33Z"
+                    stroke="#1C3A13"></path>
+                  <path
+                    d="M10.5275 2.39896V5.85604C10.5275 8.9446 11.3742 11.4541 15.8535 10.6337C19.3018 10.0019 25.9001 7.36523 25.9001 12.1209C25.9001 20.1055 3.63965 9.88346 3.63965 17.7891C3.63965 27.3224 30.4672 12.3622 30.4672 21.3866C30.4672 29.924 13.6994 16.8152 13.6994 29.2528V32.7274"
+                    stroke="#1C3A13"></path>
+                </svg>
+                {{ checkout.learnSection.title }}
               </div>
-              <div class="col-md-6">
-                <input type="text" class="form-control form-input-field" id="lastNameInput" :placeholder="checkout.shippingStep.lastNamePlaceholder" />
-              </div>
-              <div class="col-12">
-                <input type="text" class="form-control form-input-field" id="addressInput" :placeholder="checkout.shippingStep.addressPlaceholder" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="form-control form-input-field" id="cityInput" :placeholder="checkout.shippingStep.cityPlaceholder" />
-              </div>
-              <div class="col-md-3">
-                <input type="text" class="form-control form-input-field" id="stateInput" :placeholder="checkout.shippingStep.statePlaceholder" />
-              </div>
-              <div class="col-md-3">
-                <input type="text" class="form-control form-input-field" id="zipInput" :placeholder="checkout.shippingStep.zipPlaceholder" />
-              </div>
-              <div class="col-12">
-                <a class="primary-action-btn w-100" onclick="submitShippingInfo()">
-                  {{checkout.shippingStep.continueButton}}
-                </a>
+              <p class="info-box-description">
+                {{ checkout.learnSection.description }}
+              </p>
+            </div>
+            <div class="info-box-right">
+              <input type="checkbox" id="newsletterCheckbox" v-model="newsletterOptIn" />
+              <div class="info-box-right-text">
+                {{ checkout.learnSection.checkboxText }}
               </div>
             </div>
           </div>
 
-          <div class="checkout-step-body hide-element" id="shippingStepCompleted">
-            <p class="completion-message">
-              <span class="step-check-icon">✓</span>
-              {{ checkout.shippingStep.completedMessage }}
-            </p>
+          <button type="button" class="primary-action-btn w-100 mt-3" @click="continueToPayment">
+            {{ checkout.shippingStep.continueButton }}
+          </button>
+        </div>
+
+        <!-- STEP 2: Payment -->
+        <div class="checkout-panel" v-show="currentStep === 'payment'">
+          <div class="checkout-panel-header">
+            <h2 class="step-title-text">{{ checkout.paymentStep.title }}</h2>
+            <p class="checkout-panel-sub">Your payment details are encrypted and secure.</p>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="checkout-field-label">Card Number</label>
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.cardNumber }"
+                :value="form.cardNumber" @input="formatCardNumber"
+                :placeholder="checkout.paymentStep.cardNumberPlaceholder" inputmode="numeric" />
+              <span v-if="errors.cardNumber" class="checkout-error">{{ errors.cardNumber }}</span>
+            </div>
+            <div class="col-6">
+              <label class="checkout-field-label">Expiry</label>
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.expiry }"
+                :value="form.expiry" @input="formatExpiry" :placeholder="checkout.paymentStep.expiryPlaceholder" inputmode="numeric" />
+              <span v-if="errors.expiry" class="checkout-error">{{ errors.expiry }}</span>
+            </div>
+            <div class="col-6">
+              <label class="checkout-field-label">CVV</label>
+              <input type="password" class="form-control form-input-field" :class="{ 'is-invalid': errors.cvv }"
+                v-model="form.cvv" @input="form.cvv = form.cvv.replace(/\D/g, '').slice(0, 4)"
+                :placeholder="checkout.paymentStep.cvvPlaceholder" inputmode="numeric" />
+              <span v-if="errors.cvv" class="checkout-error">{{ errors.cvv }}</span>
+            </div>
+            <div class="col-12">
+              <label class="checkout-field-label">Name on Card</label>
+              <input type="text" class="form-control form-input-field" :class="{ 'is-invalid': errors.cardName }"
+                v-model="form.cardName" :placeholder="checkout.paymentStep.cardNamePlaceholder" />
+              <span v-if="errors.cardName" class="checkout-error">{{ errors.cardName }}</span>
+            </div>
+          </div>
+
+          <div class="checkout-panel-actions">
+            <button type="button" class="back-action-btn" @click="goToStep('shipping')">Back</button>
+            <button type="button" class="primary-action-btn" @click="continueToReview">
+              Continue to Review
+            </button>
           </div>
         </div>
 
-        <!-- Step 3: Payment Details -->
-        <div class="checkout-step-card" id="paymentStepCard">
-          <div class="checkout-step-header">
-            <div class="step-indicator">
-              <span class="step-count-badge">{{ isLoggedIn ? '2 of 2' : checkout.paymentStep.step }}</span>
-            </div>
-            <h2 class="step-title-text">{{ checkout.paymentStep.title }}</h2>
+        <!-- STEP 3: Review & Place Order -->
+        <div class="checkout-panel" v-show="currentStep === 'review'">
+          <div class="checkout-panel-header">
+            <h2 class="step-title-text">Review &amp; Place Order</h2>
+            <p class="checkout-panel-sub">Confirm your details before placing the order.</p>
           </div>
 
-          <div class="checkout-step-body" id="paymentStepContent">
-            <div class="row g-3">
-              <div class="col-12">
-                <input type="text" class="form-control form-input-field" id="cardNumberInput"
-                  :placeholder="checkout.paymentStep.cardNumberPlaceholder" />
-              </div>
-              <div class="col-6">
-                <input type="text" class="form-control form-input-field" id="expiryInput" :placeholder="checkout.paymentStep.expiryPlaceholder" />
-              </div>
-              <div class="col-6">
-                <input type="text" class="form-control form-input-field" id="cvvInput" :placeholder="checkout.paymentStep.cvvPlaceholder" />
-              </div>
-              <div class="col-12">
-                <input type="text" class="form-control form-input-field" id="cardNameInput"
-                  :placeholder="checkout.paymentStep.cardNamePlaceholder" />
-              </div>
-              <div class="col-12">
-                <a class="primary-action-btn w-100 final-order-btn" onclick="submitPaymentInfo()">
-                  {{checkout.paymentStep.placeOrderButton}} <span id="finalOrderTotal">₹{{ cartStore?.cartTotal?.toFixed(2) || '0.00' }}</span>
-                </a>
-              </div>
+          <div class="review-block">
+            <div class="review-block-head">
+              <h4>Shipping Address</h4>
+              <button type="button" class="review-edit" @click="goToStep('shipping')">Edit</button>
             </div>
+            <p class="review-line">{{ form.firstName }} {{ form.lastName }}</p>
+            <p class="review-line">{{ form.address }}</p>
+            <p class="review-line">{{ form.city }}, {{ form.state }} - {{ form.zip }}</p>
           </div>
 
-          <div class="checkout-step-body hide-element" id="paymentStepCompleted">
-            <p class="completion-message">
-              <span class="step-check-icon">✓</span>
-              {{ checkout.paymentStep.completedMessage }}
-            </p>
+          <div class="review-block">
+            <div class="review-block-head">
+              <h4>Payment Method</h4>
+              <button type="button" class="review-edit" @click="goToStep('payment')">Edit</button>
+            </div>
+            <p class="review-line">Card ending in {{ cardLast4 || '••••' }}</p>
+            <p class="review-line">Expires {{ form.expiry || '••/••' }}</p>
+          </div>
+
+          <div class="checkout-panel-actions">
+            <button type="button" class="back-action-btn" @click="goToStep('payment')">Back</button>
+            <button type="button" class="primary-action-btn final-order-btn" :disabled="isPlacingOrder" @click="placeOrder">
+              {{ isPlacingOrder ? 'Placing Order...' : checkout.paymentStep.placeOrderButton }}
+              <span>₹{{ cartStore?.cartTotal?.toFixed(2) || '0.00' }}</span>
+            </button>
           </div>
         </div>
       </div>
 
       <!-- Right Side - Cart Summary -->
       <div class="col-lg-5">
-        <div class="card cart-summary-card">
+        <!-- Mobile summary toggle -->
+        <button type="button" class="summary-toggle" @click="summaryOpen = !summaryOpen">
+          <span class="summary-toggle-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="21" r="1"></circle>
+              <circle cx="19" cy="21" r="1"></circle>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+            </svg>
+            {{ summaryOpen ? 'Hide' : 'Show' }} order summary
+          </span>
+          <span class="summary-toggle-total">₹{{ cartStore?.cartTotal?.toFixed(2) || '0.00' }}</span>
+        </button>
+
+        <div class="card cart-summary-card" :class="{ 'is-open': summaryOpen }">
           <div class="card-body p-4">
             <h3 class="cart-summary-title">{{ checkout.cartSummary.title }}</h3>
 
@@ -249,6 +273,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -258,7 +283,7 @@ import { useAuthCart } from '~/composables/useAuthCart'
 import { onMounted } from 'vue'
 import { navigateTo } from '#app'
 import { useHead } from '#app'
-import { computed, ref } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { useCmsStore } from '~/stores/cms'
 
 const cmsStore = useCmsStore()
@@ -390,29 +415,52 @@ const checkout = computed(() => {
 const cartStore = useCartStore()
 const { authState, checkAuthStatus, initializeCart } = useAuthCart()
 
-const accountCompleted = ref(false)
 const isLoggedIn = computed(() => authState.value.isLoggedIn)
 const userName = computed(() => authState.value.user?.userName || '')
 const userEmail = computed(() => authState.value.user?.email || '')
 
-// Checkout form functions
-const displayEmailForm = () => {
-  const form = document.getElementById('emailSignupForm')
-  if (form) {
-    form.classList.remove('hide-element')
-  }
-}
+// ===== Wizard steps =====
+const steps = [
+  { key: 'shipping', label: 'Shipping' },
+  { key: 'payment', label: 'Payment' },
+  { key: 'review', label: 'Review' }
+]
+const currentStep = ref('shipping')
+const currentStepIndex = computed(() => steps.findIndex(s => s.key === currentStep.value))
+const summaryOpen = ref(false)
+const newsletterOptIn = ref(true)
+const isPlacingOrder = ref(false)
 
-// Validation helper functions
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
-}
+// ===== Form state =====
+const form = reactive({
+  firstName: '',
+  lastName: '',
+  address: '',
+  city: '',
+  state: '',
+  zip: '',
+  cardNumber: '',
+  expiry: '',
+  cvv: '',
+  cardName: ''
+})
 
-const validatePassword = (password) => {
-  return password.length >= 8 && /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)
-}
+const errors = reactive({
+  firstName: '',
+  lastName: '',
+  address: '',
+  city: '',
+  state: '',
+  zip: '',
+  cardNumber: '',
+  expiry: '',
+  cvv: '',
+  cardName: ''
+})
 
+const cardLast4 = computed(() => form.cardNumber.replace(/\s/g, '').slice(-4))
+
+// ===== Validation helpers =====
 const validateCardNumber = (cardNumber) => {
   const cleaned = cardNumber.replace(/\s/g, '')
   return /^\d{13,19}$/.test(cleaned) && luhnCheck(cleaned)
@@ -454,390 +502,173 @@ const validateExpiry = (expiry) => {
   return true
 }
 
-const validateCVV = (cvv) => {
-  return /^\d{3,4}$/.test(cvv)
+const validateCVV = (cvv) => /^\d{3,4}$/.test(cvv)
+const validateZip = (zip) => /^\d{6}$/.test(zip)
+
+// ===== Input formatting =====
+const formatCardNumber = (e) => {
+  const value = e.target.value.replace(/\D/g, '').slice(0, 19)
+  form.cardNumber = value.match(/.{1,4}/g)?.join(' ') || value
 }
 
-const validateZip = (zip) => {
-  return /^\d{6}$/.test(zip)
+const formatExpiry = (e) => {
+  let value = e.target.value.replace(/\D/g, '').slice(0, 4)
+  if (value.length >= 3) {
+    value = value.slice(0, 2) + '/' + value.slice(2)
+  }
+  form.expiry = value
 }
 
-const showError = (elementId, message) => {
-  const element = document.getElementById(elementId)
-  if (element) {
-    element.classList.add('is-invalid')
-    element.classList.remove('is-valid')
-
-    // Remove existing error message
-    const existingError = element.parentNode.querySelector('.error-message')
-    if (existingError) existingError.remove()
-
-    // Add error message
-    const errorDiv = document.createElement('div')
-    errorDiv.className = 'error-message text-danger small mt-1'
-    errorDiv.textContent = message
-    element.parentNode.appendChild(errorDiv)
+// ===== Step navigation =====
+const goToStep = (key) => {
+  currentStep.value = key
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 }
 
-const clearError = (elementId) => {
-  const element = document.getElementById(elementId)
-  if (element) {
-    element.classList.remove('is-invalid')
-    element.classList.add('is-valid')
-
-    const errorMessage = element.parentNode.querySelector('.error-message')
-    if (errorMessage) errorMessage.remove()
-  }
+const clearErrors = () => {
+  Object.keys(errors).forEach(key => { errors[key] = '' })
 }
 
-const clearAllErrors = () => {
-  document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'))
-  document.querySelectorAll('.is-valid').forEach(el => el.classList.remove('is-valid'))
-  document.querySelectorAll('.error-message').forEach(el => el.remove())
-}
-
-const submitAccountInfo = () => {
-  clearAllErrors()
-
-  const email = document.getElementById('userEmailInput')?.value?.trim()
-  const password = document.getElementById('userPasswordInput')?.value
-
+const validateShipping = () => {
+  clearErrors()
+  const v = checkout.value.validation
   let isValid = true
 
-  // Email validation
-if (!email) {
-  showError(
-    'userEmailInput',
-    checkout.value.validation.emailRequired
-  )
-  isValid = false
-} else if(!validateEmail(email)) {
-  showError(
-    'userEmailInput',
-    checkout.value.validation.invalidEmail
-  )
-  isValid = false
-}
-
-  // Password validation
-  if (!password) {
-    showError('userPasswordInput', checkout.value.validation.passwordRequired)
+  if (!form.firstName.trim()) {
+    errors.firstName = v.firstNameRequired
     isValid = false
-  } else if (password.length < 8) {
-    showError('userPasswordInput', checkout.value.validation.passwordMinLength)
+  } else if (form.firstName.trim().length < 2) {
+    errors.firstName = v.firstNameMinLength
     isValid = false
-  } else if (!validatePassword(password)) {
-    showError('userPasswordInput', checkout.value.validation.passwordFormat)
-    isValid = false
-  } else {
-    clearError('userPasswordInput')
   }
 
-  if (!isValid) return
-
-  // Hide account step content and show completed state
-  accountCompleted.value = true
-
-  // Enable shipping step
-  const shippingCard = document.getElementById('shippingStepCard')
-  if (shippingCard) {
-    shippingCard.classList.remove('step-disabled')
-    const shippingContent = document.getElementById('shippingStepContent')
-    if (shippingContent) shippingContent.classList.remove('hide-element')
+  if (!form.lastName.trim()) {
+    errors.lastName = v.lastNameRequired
+    isValid = false
+  } else if (form.lastName.trim().length < 2) {
+    errors.lastName = v.lastNameMinLength
+    isValid = false
   }
+
+  if (!form.address.trim()) {
+    errors.address = v.addressRequired
+    isValid = false
+  } else if (form.address.trim().length < 10) {
+    errors.address = v.addressInvalid
+    isValid = false
+  }
+
+  if (!form.city.trim()) {
+    errors.city = v.cityRequired
+    isValid = false
+  }
+
+  if (!form.state.trim()) {
+    errors.state = v.stateRequired
+    isValid = false
+  } else if (form.state.trim().length < 2) {
+    errors.state = v.stateInvalid
+    isValid = false
+  }
+
+  if (!form.zip.trim()) {
+    errors.zip = v.zipRequired
+    isValid = false
+  } else if (!validateZip(form.zip)) {
+    errors.zip = v.zipInvalid
+    isValid = false
+  }
+
+  return isValid
 }
 
-const submitShippingInfo = () => {
-  clearAllErrors()
-
-  const firstName = document.getElementById('firstNameInput')?.value?.trim()
-  const lastName = document.getElementById('lastNameInput')?.value?.trim()
-  const address = document.getElementById('addressInput')?.value?.trim()
-  const city = document.getElementById('cityInput')?.value?.trim()
-  const state = document.getElementById('stateInput')?.value?.trim()
-  const zip = document.getElementById('zipInput')?.value?.trim()
-
+const validatePayment = () => {
+  clearErrors()
+  const v = checkout.value.validation
   let isValid = true
 
-  // First Name validation
-  if (!firstName) {
-    showError('firstNameInput',checkout.value.validation.firstNameRequired)
+  if (!form.cardNumber.trim()) {
+    errors.cardNumber = v.cardNumberRequired
     isValid = false
-  } else if (firstName.length < 2) {
-    showError('firstNameInput', checkout.value.validation.firstNameMinLength)
+  } else if (!validateCardNumber(form.cardNumber)) {
+    errors.cardNumber = v.cardNumberInvalid
     isValid = false
-  } else {
-    clearError('firstNameInput')
   }
 
-  // Last Name validation
-  if (!lastName) {
-    showError('lastNameInput', checkout.value.validation.lastNameRequired)
+  if (!form.expiry.trim()) {
+    errors.expiry = v.expiryRequired
     isValid = false
-  } else if (lastName.length < 2) {
-    showError('lastNameInput', checkout.value.validation.lastNameMinLength)
+  } else if (!validateExpiry(form.expiry)) {
+    errors.expiry = v.expiryInvalid
     isValid = false
-  } else {
-    clearError('lastNameInput')
   }
 
-  // Address validation
-  if (!address) {
-    showError('addressInput', checkout.value.validation.addressRequired)
+  if (!form.cvv.trim()) {
+    errors.cvv = v.cvvRequired
     isValid = false
-  } else if (address.length < 10) {
-    showError('addressInput', checkout.value.validation.addressInvalid)
+  } else if (!validateCVV(form.cvv)) {
+    errors.cvv = v.cvvInvalid
     isValid = false
-  } else {
-    clearError('addressInput')
   }
 
-  // City validation
-  if (!city) {
-    showError('cityInput', checkout.value.validation.cityRequired)
+  if (!form.cardName.trim()) {
+    errors.cardName = v.cardNameRequired
     isValid = false
-  } else {
-    clearError('cityInput')
+  } else if (form.cardName.trim().length < 3) {
+    errors.cardName = v.cardNameInvalid
+    isValid = false
   }
 
-  // State validation
-  if (!state) {
-    showError('stateInput', checkout.value.validation.stateRequired)
-    isValid = false
-  } else if (state.length < 2) {
-    showError('stateInput', checkout.value.validation.stateInvalid)
-    isValid = false
-  } else {
-    clearError('stateInput')
-  }
-
-  // ZIP validation
-  if (!zip) {
-    showError('zipInput', checkout.value.validation.zipRequired)
-    isValid = false
-  } else if (!validateZip(zip)) {
-    showError('zipInput', checkout.value.validation.zipInvalid)
-    isValid = false
-  } else {
-    clearError('zipInput')
-  }
-
-  if (!isValid) return
-
-  // Hide shipping content and show completed state
-  const shippingContent = document.getElementById('shippingStepContent')
-  const shippingCompleted = document.getElementById('shippingStepCompleted')
-  const paymentCard = document.getElementById('paymentStepCard')
-
-  if (shippingContent) shippingContent.classList.add('hide-element')
-  if (shippingCompleted) shippingCompleted.classList.remove('hide-element')
-
-  // Enable payment step
-  if (paymentCard) {
-    paymentCard.classList.remove('step-disabled')
-    const paymentContent = document.getElementById('paymentStepContent')
-    if (paymentContent) paymentContent.classList.remove('hide-element')
-  }
+  return isValid
 }
 
-const submitPaymentInfo = () => {
-  clearAllErrors()
+const continueToPayment = () => {
+  if (validateShipping()) goToStep('payment')
+}
 
-  const cardNumber = document.getElementById('cardNumberInput')?.value?.trim()
-  const expiry = document.getElementById('expiryInput')?.value?.trim()
-  const cvv = document.getElementById('cvvInput')?.value?.trim()
-  const cardName = document.getElementById('cardNameInput')?.value?.trim()
+const continueToReview = () => {
+  if (validatePayment()) goToStep('review')
+}
 
-  let isValid = true
-
-  // Card Number validation
-  if (!cardNumber) {
-    showError('cardNumberInput',checkout.value.validation.cardNumberRequired)
-    isValid = false
-  } else if (!validateCardNumber(cardNumber)) {
-    showError('cardNumberInput', checkout.value.validation.cardNumberInvalid)
-    isValid = false
-  } else {
-    clearError('cardNumberInput')
+const placeOrder = () => {
+  if (isPlacingOrder.value) return
+  if (!validateShipping()) {
+    goToStep('shipping')
+    return
+  }
+  if (!validatePayment()) {
+    goToStep('payment')
+    return
   }
 
-  // Expiry validation
-  if (!expiry) {
-    showError('expiryInput', checkout.value.validation.expiryRequired)
-    isValid = false
-  } else if (!validateExpiry(expiry)) {
-    showError('expiryInput', checkout.value.validation.expiryInvalid)
-    isValid = false
-  } else {
-    clearError('expiryInput')
-  }
-
-  // CVV validation
-  if (!cvv) {
-    showError('cvvInput', checkout.value.validation.cvvRequired)
-    isValid = false
-  } else if (!validateCVV(cvv)) {
-    showError('cvvInput', checkout.value.validation.cvvInvalid)
-    isValid = false
-  } else {
-    clearError('cvvInput')
-  }
-
-  // Card Name validation
-  if (!cardName) {
-    showError('cardNameInput', checkout.value.validation.cardNameRequired)
-    isValid = false
-  } else if (cardName.length < 3) {
-    showError('cardNameInput', checkout.value.validation.cardNameInvalid)
-    isValid = false
-  } else {
-    clearError('cardNameInput')
-  }
-
-  if (!isValid) return
+  isPlacingOrder.value = true
 
   // Simulate order placement
-  alert('Order placed successfully!')
-  // Redirect to order confirmation or home
+  alert(checkout.value.alerts.orderSuccess)
   navigateTo('/order-confirmation')
-}
-
-const proceedWithGoogle = () => {
-  alert('Google sign-in would open here')
-}
-
-// Real-time validation event listeners
-const addValidationListeners = () => {
-  // Email field validation
-  const emailInput = document.getElementById('userEmailInput')
-  if (emailInput) {
-    emailInput.addEventListener('blur', () => {
-      const email = emailInput.value?.trim()
-      if (email && !validateEmail(email)) {
-        showError('userEmailInput', 'Please enter a valid email address')
-      } else if (email) {
-        clearError('userEmailInput')
-      }
-    })
-  }
-
-  // Password field validation
-  const passwordInput = document.getElementById('userPasswordInput')
-  if (passwordInput) {
-    passwordInput.addEventListener('blur', () => {
-      const password = passwordInput.value
-      if (password && password.length < 8) {
-        showError('userPasswordInput', 'Password must be at least 8 characters')
-      } else if (password && !validatePassword(password)) {
-        showError('userPasswordInput', 'Password must contain uppercase, lowercase, and number')
-      } else if (password) {
-        clearError('userPasswordInput')
-      }
-    })
-  }
-
-  // Card number formatting and validation
-  const cardNumberInput = document.getElementById('cardNumberInput')
-  if (cardNumberInput) {
-    cardNumberInput.addEventListener('input', (e) => {
-      let value = e.target.value.replace(/\s/g, '')
-      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value
-      e.target.value = formattedValue
-    })
-
-    cardNumberInput.addEventListener('blur', () => {
-      const cardNumber = cardNumberInput.value?.trim()
-      if (cardNumber && !validateCardNumber(cardNumber)) {
-        showError('cardNumberInput', 'Please enter a valid card number')
-      } else if (cardNumber) {
-        clearError('cardNumberInput')
-      }
-    })
-  }
-
-  // Expiry date formatting and validation
-  const expiryInput = document.getElementById('expiryInput')
-  if (expiryInput) {
-    expiryInput.addEventListener('input', (e) => {
-      let value = e.target.value.replace(/\D/g, '')
-      if (value.length >= 2) {
-        value = value.slice(0, 2) + '/' + value.slice(2, 4)
-      }
-      e.target.value = value
-    })
-
-    expiryInput.addEventListener('blur', () => {
-      const expiry = expiryInput.value?.trim()
-      if (expiry && !validateExpiry(expiry)) {
-        showError('expiryInput', 'Please enter a valid expiry date (MM/YY)')
-      } else if (expiry) {
-        clearError('expiryInput')
-      }
-    })
-  }
-
-  // CVV validation
-  const cvvInput = document.getElementById('cvvInput')
-  if (cvvInput) {
-    cvvInput.addEventListener('input', (e) => {
-      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4)
-    })
-
-    cvvInput.addEventListener('blur', () => {
-      const cvv = cvvInput.value?.trim()
-      if (cvv && !validateCVV(cvv)) {
-        showError('cvvInput', 'Please enter a valid CVV')
-      } else if (cvv) {
-        clearError('cvvInput')
-      }
-    })
-  }
-
-  // ZIP code validation
-  const zipInput = document.getElementById('zipInput')
-  if (zipInput) {
-    zipInput.addEventListener('input', (e) => {
-      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6)
-    })
-
-    zipInput.addEventListener('blur', () => {
-      const zip = zipInput.value?.trim()
-      if (zip && !validateZip(zip)) {
-        showError('zipInput', 'Please enter a valid 6-digit ZIP code')
-      } else if (zip) {
-        clearError('zipInput')
-      }
-    })
-  }
 }
 
 onMounted(async () => {
   checkAuthStatus()
+
+  // Require authentication before checkout
+  if (!isLoggedIn.value) {
+    navigateTo('/login?redirect=/checkout')
+    return
+  }
+
   await initializeCart()
   if (import.meta.client && window.localStorage) {
     await cartStore.loadCart()
   }
 
-  if (isLoggedIn.value) {
-    const shippingCard = document.getElementById('shippingStepCard')
-    if (shippingCard) shippingCard.classList.remove('step-disabled')
-    const shippingContent = document.getElementById('shippingStepContent')
-    if (shippingContent) shippingContent.classList.remove('hide-element')
-  }
-
-  // Expose functions to window for onclick handlers
-  if (import.meta.client) {
-    window.displayEmailForm = displayEmailForm
-    window.submitAccountInfo = submitAccountInfo
-    window.submitShippingInfo = submitShippingInfo
-    window.submitPaymentInfo = submitPaymentInfo
-    window.proceedWithGoogle = proceedWithGoogle
-
-    // Add validation listeners after DOM is ready
-    setTimeout(() => {
-      addValidationListeners()
-    }, 100)
+  // Prefill name from logged-in user
+  if (userName.value) {
+    const parts = userName.value.trim().split(' ')
+    if (!form.firstName) form.firstName = parts[0] || ''
+    if (!form.lastName && parts.length > 1) form.lastName = parts.slice(1).join(' ')
   }
 })
 
@@ -847,3 +678,679 @@ useHead({
   }
 })
 </script>
+
+<style scoped>
+/* ===== Page shell (mirrors the footer's gutters + 1200px container) ===== */
+:global(body.checkout-page) {
+  background-color: #F7F8F4;
+}
+
+.checkout-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 32px 15px 80px;
+}
+
+.checkout-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Align the two main columns exactly like the footer: kill bootstrap's
+   negative row margins (this build keeps them but has column padding off)
+   so the outer edges sit flush with the footer container. */
+.checkout-inner > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Restore inter-column gaps for the inner form rows (bootstrap column
+   padding is disabled site-wide, so gaps must be re-added here). */
+.checkout-panel .row {
+  --bs-gutter-x: 1.5rem;
+}
+
+.checkout-panel .row > [class*="col-"] {
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+}
+
+/* Footer-matching horizontal gutters (single source of truth) */
+@media (min-width: 1400px) {
+  .checkout-container {
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  .checkout-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .checkout-container {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .checkout-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .checkout-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 575.98px) {
+  .checkout-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 479.98px) {
+  .checkout-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Gap between the wizard and the summary on desktop */
+@media (min-width: 992px) {
+  .checkout-inner > .row > .col-lg-7 {
+    padding-right: 28px;
+  }
+}
+
+/* ===== Signed in chip ===== */
+.checkout-signed-in {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #3f4a40;
+  background: #fff;
+  border: 1px solid #E6EAE3;
+  border-radius: 999px;
+  padding: 7px 14px 7px 8px;
+  margin-bottom: 22px;
+}
+
+.checkout-signed-in strong {
+  font-weight: 700;
+  color: #0E2917;
+}
+
+.checkout-signed-in-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1B5E20;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+/* ===== Stepper ===== */
+.checkout-stepper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 26px;
+  padding: 0 2px;
+}
+
+.checkout-step-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 10px;
+}
+
+.checkout-step-item:last-child {
+  flex: 0 0 auto;
+}
+
+.checkout-step-dot {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  background: #fff;
+  color: #8a938b;
+  border: 1px solid #E1E7DE;
+  transition: all 0.25s ease;
+}
+
+.checkout-step-item.active .checkout-step-dot {
+  background: #0E2917;
+  color: #fff;
+  border-color: #0E2917;
+}
+
+.checkout-step-item.done .checkout-step-dot {
+  background: #1B5E20;
+  color: #fff;
+  border-color: #1B5E20;
+}
+
+.checkout-step-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #8a938b;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.checkout-step-item.active .checkout-step-label {
+  color: #0E2917;
+}
+
+.checkout-step-item.done .checkout-step-label {
+  color: #1B5E20;
+}
+
+.checkout-step-line {
+  flex: 1;
+  height: 2px;
+  background: #E4E9E1;
+  margin: 0 14px;
+  border-radius: 2px;
+}
+
+.checkout-step-item.done .checkout-step-line {
+  background: #1B5E20;
+}
+
+/* ===== Panels ===== */
+.checkout-panel {
+  background: #fff;
+  border: 1px solid #E9EDE6;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 1px 2px rgba(14, 41, 23, 0.04), 0 26px 50px -42px rgba(14, 41, 23, 0.4);
+  animation: panel-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.checkout-panel-header {
+  margin-bottom: 22px;
+}
+
+.checkout-panel .step-title-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0E2917;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.checkout-panel-sub {
+  font-size: 13px;
+  color: #8a938b;
+  margin: 6px 0 0;
+}
+
+.checkout-field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3f4a40;
+  margin-bottom: 6px;
+}
+
+.checkout-error {
+  display: block;
+  font-size: 11.5px;
+  color: #D9534F;
+  margin-top: 5px;
+}
+
+/* Cleaner form inputs (override global heavy style) */
+.checkout-panel .form-input-field {
+  padding: 12px 14px;
+  border: 1px solid #DDE6D8;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #172019;
+  background: #fff;
+  box-shadow: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.checkout-panel .form-input-field::placeholder {
+  color: #a4ada1;
+}
+
+.checkout-panel .form-input-field:hover {
+  border-color: #c6d2bf;
+  box-shadow: none;
+}
+
+.checkout-panel .form-input-field:focus {
+  border-color: #1B5E20;
+  box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.12);
+  outline: none;
+}
+
+.checkout-panel .form-input-field.is-invalid {
+  border-color: #D9534F;
+  box-shadow: 0 0 0 4px rgba(217, 83, 79, 0.1);
+}
+
+/* ===== Buttons ===== */
+.checkout-container .primary-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 52px;
+  padding: 0 24px;
+  background: #0E2917;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.checkout-container .primary-action-btn:hover {
+  background: #1B5E20;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -12px rgba(14, 41, 23, 0.6);
+}
+
+.checkout-container .primary-action-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.checkout-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.checkout-panel-actions .primary-action-btn {
+  flex: 1;
+  width: auto;
+}
+
+.checkout-panel > .primary-action-btn {
+  margin-top: 22px;
+}
+
+.back-action-btn {
+  background: transparent;
+  border: 1px solid #DDE6D8;
+  color: #0E2917;
+  border-radius: 12px;
+  height: 52px;
+  padding: 0 24px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.back-action-btn:hover {
+  background: #F1F7F2;
+  border-color: #1B5E20;
+}
+
+/* ===== Review ===== */
+.review-block {
+  border: 1px solid #E9EDE6;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  background: #FAFBF8;
+}
+
+.review-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.review-block-head h4 {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #8a938b;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.review-edit {
+  background: none;
+  border: none;
+  color: #1B5E20;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.review-edit:hover {
+  text-decoration: underline;
+}
+
+.review-line {
+  font-size: 13.5px;
+  color: #172019;
+  margin: 0 0 3px;
+  line-height: 1.45;
+}
+
+.review-line:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== Cart summary ===== */
+.summary-toggle {
+  display: none;
+}
+
+.cart-summary-card {
+  border: 1px solid #E9EDE6;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(14, 41, 23, 0.04), 0 26px 50px -42px rgba(14, 41, 23, 0.4);
+}
+
+.cart-summary-card .cart-summary-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0E2917;
+  margin-bottom: 18px;
+  letter-spacing: -0.2px;
+}
+
+.cart-summary-card .product-wrapper {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #EEF2EB;
+}
+
+.cart-summary-card .product-image-container {
+  width: 62px;
+  height: 62px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #F1F7F2;
+}
+
+.cart-summary-card .product-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cart-summary-card .product-name-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #172019;
+  margin-bottom: 2px;
+}
+
+.cart-summary-card .product-delivery-info {
+  font-size: 12px;
+  color: #8a938b;
+}
+
+.cart-summary-card .price-display-text {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0E2917;
+}
+
+.cart-summary-card .summary-divider {
+  border: none;
+  border-top: 1px solid #EEF2EB;
+  margin: 14px 0;
+}
+
+.cart-summary-card .summary-row {
+  font-size: 14px;
+  color: #667067;
+  margin-bottom: 10px;
+}
+
+.cart-summary-card .summary-value {
+  color: #172019;
+  font-weight: 600;
+}
+
+.cart-summary-card .summary-free-text {
+  color: #1B5E20;
+  font-weight: 600;
+}
+
+.cart-summary-card .total-row {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0E2917;
+  margin-bottom: 14px;
+}
+
+.cart-summary-card .summary-footer-note {
+  font-size: 11.5px;
+  color: #8a938b;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+/* ===== Promo ===== */
+.cart-summary-card .cart-promo-section {
+  background: #FAFBF8;
+  border: 1px solid #EEF2EB;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.cart-summary-card .cart-promo-label {
+  font-size: 12px;
+  color: #8a938b;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.cart-summary-card .cart-promo-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.cart-summary-card .cart-promo-input {
+  flex: 1;
+  border: 1px solid #DDE6D8;
+  border-radius: 9px;
+  padding: 10px 12px;
+  font-size: 13px;
+  background: #fff;
+}
+
+.cart-summary-card .cart-promo-input:focus {
+  outline: none;
+  border-color: #1B5E20;
+  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+}
+
+.cart-summary-card .cart-promo-apply-btn {
+  border: none;
+  border-radius: 9px;
+  padding: 0 18px;
+  background: #0E2917;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cart-summary-card .cart-promo-apply-btn:hover {
+  background: #1B5E20;
+}
+
+/* ===== Info box ===== */
+.checkout-panel .info-box {
+  border: 1px solid #EEF2EB;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.checkout-panel .info-box-left {
+  background: #F7FAF5;
+  border-right: 1px solid #EEF2EB;
+  padding: 18px;
+}
+
+.checkout-panel .info-box-right {
+  padding: 18px;
+}
+
+.checkout-panel .info-box-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #0E2917;
+  margin: 0 0 8px;
+}
+
+.checkout-panel .info-box-description {
+  font-size: 12px;
+  color: #667067;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.checkout-panel .info-box-right-text {
+  font-size: 12px;
+  color: #667067;
+  line-height: 1.5;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Responsive ===== */
+@media (min-width: 992px) {
+  .cart-summary-card {
+    position: sticky;
+    top: 120px;
+  }
+}
+
+@media (max-width: 991px) {
+  .checkout-container {
+    padding-top: 20px;
+  }
+
+  .summary-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #E9EDE6;
+    border-radius: 14px;
+    padding: 15px 18px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0E2917;
+    cursor: pointer;
+  }
+
+  .summary-toggle-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .summary-toggle-total {
+    font-weight: 700;
+    color: #1B5E20;
+  }
+
+  .cart-summary-card {
+    display: none;
+  }
+
+  .cart-summary-card.is-open {
+    display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  .checkout-container {
+    padding-top: 16px;
+    padding-bottom: 64px;
+  }
+
+  .checkout-panel {
+    padding: 22px 18px;
+  }
+
+  .checkout-panel .step-title-text {
+    font-size: 20px;
+  }
+
+  .checkout-step-label {
+    display: none;
+  }
+
+  .checkout-step-line {
+    margin: 0 6px;
+  }
+
+  .checkout-panel-actions {
+    flex-direction: column-reverse;
+  }
+
+  .checkout-panel-actions .primary-action-btn {
+    flex: none;
+    width: 100%;
+  }
+
+  .back-action-btn {
+    width: 100%;
+  }
+}
+</style>
