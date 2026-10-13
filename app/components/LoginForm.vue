@@ -277,14 +277,14 @@ const navigateToRegister = (type) => {
   overflow: hidden;
 }
 
-.auth-brand::before {
+/* .auth-brand::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 20px 20px;
   pointer-events: none;
-}
+} */
 
 .auth-brand > * {
   position: relative;
