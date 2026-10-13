@@ -75,7 +75,11 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   width: 100% !important;
   max-width: 100vw !important;
   margin: 0 !important;
-  padding: 0 !important;
+  /* Horizontal gutters come from the site-wide section gutters block in
+     public/css/style.css (which uses !important) so they always match
+     .vcn-footer-section. Do NOT add !important here — the scoped attribute
+     selector would out-rank the gutters block. */
+  padding: 0;
   background-color: #061a10 !important;
   background-image: url("/img/bg/vcn-awaken-bg.png") !important;
   background-repeat: no-repeat !important;
@@ -119,10 +123,14 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
 .vcn-awaken-container {
   position: relative;
   z-index: 2;
+  /* Mirrors .vcn-container-footer so this block lines up with the footer
+     content above it at every breakpoint. */
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -326,10 +334,6 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   .vcn-awaken-desc {
     font-size: 15px;
   }
-
-  .vcn-awaken-container {
-    padding: 0 32px;
-  }
 }
 
 @media (max-width: 991px) {
@@ -348,10 +352,6 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
 
   .vcn-awaken-title {
     font-size: 42px;
-  }
-
-  .vcn-awaken-container {
-    padding: 0 24px;
   }
 }
 
@@ -375,7 +375,6 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   }
 
   .vcn-awaken-container {
-    padding: 0 20px;
     min-height: auto;
   }
 

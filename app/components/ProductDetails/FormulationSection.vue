@@ -219,7 +219,7 @@ const mediaSrc = computed(() => {
   position: relative;
   width: 100%;
   max-width: 480px;
-  background: #F6F7EE;
+ 
   border-radius: 32px;
   overflow: hidden;
   display: flex;
