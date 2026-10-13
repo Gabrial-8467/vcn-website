@@ -150,14 +150,14 @@ const addToCart = async (product) => {
 }
 
 .rp-container {
-  max-width: 1280px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 24px;
 }
 
 @media (max-width: 768px) {
-  .rp-section { padding: 56px 0 72px; }
-  .rp-container { padding: 0 20px; }
+  .rp-section { padding: 50px 0 64px; }
+  .rp-container { padding: 0 16px; }
 }
 
 /* ─── Header ─────────────────────────────────────────────── */

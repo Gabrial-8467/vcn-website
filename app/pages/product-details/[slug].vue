@@ -6,6 +6,9 @@
     <ProductDetailsBenefitsSection />
     <ProductDetailsCompareSection />
     <ProductDetailsProducts />
+    <ProductDetailsReviewSection
+      :product-id="productStore.selectedProduct?.id || productStore.selectedProductPage?.productId"
+    />
   </div>
 </template>
 
@@ -59,6 +62,7 @@ useHead({
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
+  scroll-behavior: smooth;
 }
 
 .product-details-responsive-page :deep(*),
@@ -72,6 +76,8 @@ useHead({
 .product-details-responsive-page :deep(.vcn-new-product) {
   width: 100%;
   max-width: 100%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .product-details-responsive-page :deep(.row > *),

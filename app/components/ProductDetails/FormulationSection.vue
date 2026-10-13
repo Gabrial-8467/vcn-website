@@ -23,13 +23,12 @@
         </div>
       </div>
 
-      <!-- Right: GIF + video -->
+      <!-- Right: GIF media -->
       <div class="fs2-right">
         <div class="fs2-media-card">
           <div class="fs2-gif-wrap">
             <img :src="mediaSrc" :alt="title" class="fs2-gif" />
           </div>
-          <video src="" class="fs2-video" autoplay muted loop playsinline></video>
           <div class="fs2-media-badge">
             <span class="fs2-mb-text">{{ mediaBadgeText }}</span>
           </div>
@@ -109,21 +108,27 @@ const mediaSrc = computed(() => {
 }
 
 .fs2-container {
-  max-width: 1280px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 24px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  gap: 56px;
   align-items: center;
 }
 
 @media (max-width: 991px) {
   .fs2-container {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
-  .fs2-section { padding: 56px 0; }
+  .fs2-section { padding: 52px 0; }
+}
+
+@media (max-width: 768px) {
+  .fs2-container {
+    padding: 0 16px;
+  }
 }
 
 /* Left */
@@ -219,13 +224,15 @@ const mediaSrc = computed(() => {
   position: relative;
   width: 100%;
   max-width: 480px;
- 
+  background: linear-gradient(145deg, #F9FAF5 0%, #EFF5E7 100%);
+  border: 1.5px solid #E4EBD8;
   border-radius: 32px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 460px;
+  min-height: 440px;
+  box-shadow: 0 16px 40px -16px rgba(29, 69, 3, 0.08);
 }
 
 .fs2-gif-wrap {
@@ -243,10 +250,6 @@ const mediaSrc = computed(() => {
   height: auto;
   filter: drop-shadow(0 20px 48px rgba(0,0,0,0.18));
   display: block;
-}
-
-.fs2-video {
-  display: none;
 }
 
 .fs2-media-badge {

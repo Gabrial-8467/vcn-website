@@ -122,7 +122,7 @@
             </div>
             <span class="pd2-tax-sub">{{ taxNotice }}</span>
           </div>
-
+      
           <!-- Quantity Stepper & CTAs -->
           <div class="pd2-action-row">
             <div class="pd2-qty-stepper">
@@ -599,7 +599,7 @@ const guaranteeItems = computed(() => {
   align-items: start;
   width: 100%;
   min-height: 720px;
-  padding-top:40px;
+  padding-top: 0;
 }
 
 @media (max-width: 991px) {
@@ -685,6 +685,7 @@ const guaranteeItems = computed(() => {
   gap: 18px;
   width: 100%;
   max-width: 780px;
+  
 }
 
 /* Horizontal thumbnail row */
@@ -775,43 +776,50 @@ const guaranteeItems = computed(() => {
     min-height: 0;
   }
   .pd2-hero-left {
-    /* must stay positioned: the corner badges anchor to this panel */
     position: relative;
     height: auto;
-    padding: 10px 14px 34px;
+    padding: 16px 16px 24px;
     background: #FFFFFF;
   }
   .pd2-hero-left::before { display: none; }
   .pd2-hero-right { min-height: 0; }
   .pd2-gallery {
     max-width: 520px;
-    gap: 14px;
+    gap: 16px;
   }
   .pd2-stage {
     width: 100%;
-    padding: 0;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 10px 0;
   }
-  .pd2-thumb { width: 62px; height: 62px; border-radius: 15px; }
+  .pd2-thumb { width: 64px; height: 64px; border-radius: 16px; flex-shrink: 0; }
+  .pd2-thumb-row {
+    justify-content: flex-start;
+    padding: 6px 4px;
+    -webkit-overflow-scrolling: touch;
+  }
   .pd2-float-badge {
-    background: rgba(242, 247, 233, 0.92);
+    background: rgba(242, 247, 233, 0.95);
     border-color: #D7E8BF;
-    box-shadow: none;
-    backdrop-filter: none;
+    box-shadow: 0 4px 12px rgba(29, 69, 3, 0.08);
+    backdrop-filter: blur(8px);
   }
-  /* TL badge overlays the image corner; BR badge sits below the thumb strip */
-  .pd2-float-badge--tl { top: 12px; left: 14px; }
-  .pd2-float-badge--br { bottom: 4px; right: 6px; }
+  /* Badges frame the top corners cleanly without overlapping the thumbnails at bottom */
+  .pd2-float-badge--tl { top: 14px; left: 14px; }
+  .pd2-float-badge--br { top: 14px; right: 14px; bottom: auto; }
 }
 
 @media (max-width: 575.98px) {
-  .pd2-hero-left { padding: 8px 12px 30px; }
-  .pd2-float-badge { padding: 6px 11px; border-radius: 12px; }
-  .pd2-fb-num { font-size: 17px; }
-  .pd2-fb-label { font-size: 9px; }
-  .pd2-float-badge--tl { top: 10px; left: 12px; }
-  .pd2-float-badge--br { bottom: 3px; right: 5px; }
-  .pd2-thumb { width: 54px; height: 54px; border-radius: 13px; }
-  .pd2-thumb-row { gap: 9px; }
+  .pd2-hero-left { padding: 12px 12px 20px; }
+  .pd2-stage { max-width: 340px; }
+  .pd2-float-badge { padding: 5px 10px; border-radius: 10px; gap: 6px; }
+  .pd2-fb-num { font-size: 16px; }
+  .pd2-fb-label { font-size: 8.5px; }
+  .pd2-float-badge--tl { top: 10px; left: 10px; }
+  .pd2-float-badge--br { top: 10px; right: 10px; bottom: auto; }
+  .pd2-thumb { width: 56px; height: 56px; border-radius: 14px; }
+  .pd2-thumb-row { gap: 10px; }
 }
 
 /* ── RIGHT PANEL (Dark Green Background) ── */
@@ -867,11 +875,11 @@ const guaranteeItems = computed(() => {
 
 /* Title & Description */
 .pd2-product-name {
-  font-size: clamp(36px, 4vw, 48px);
+  font-size: clamp(26px, 3.6vw, 42px);
   font-weight: 800;
   color: #ffffff;
-  margin: 0 0 16px 0;
-  line-height: 1.1;
+  margin: 0 0 14px 0;
+  line-height: 1.15;
   letter-spacing: -0.5px;
 }
 
@@ -940,8 +948,8 @@ const guaranteeItems = computed(() => {
 
 .pd2-pack-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
 }
 
 .pd2-pack-card {
@@ -1211,13 +1219,15 @@ const guaranteeItems = computed(() => {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #0E2917;
+  background: rgba(14, 41, 23, 0.96);
   border-top: 1px solid rgba(255,255,255,0.15);
-  padding: 12px 24px;
+  padding: 10px 20px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
   z-index: 99;
   transform: translateY(100%);
-  transition: transform 0.3s ease;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.35);
+  backdrop-filter: blur(12px);
 }
 
 .pd2-sticky-bar.visible {
@@ -1230,106 +1240,217 @@ const guaranteeItems = computed(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .pd2-sticky-left {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .pd2-sticky-img {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   background: #ffffff;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 2px;
+  flex-shrink: 0;
 }
 
 .pd2-sticky-info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .pd2-sticky-name {
   font-weight: 700;
   font-size: 14px;
   color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
 }
 
 .pd2-sticky-size {
   font-size: 12px;
   color: rgba(255,255,255,0.6);
+  white-space: nowrap;
 }
 
 .pd2-sticky-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
+  flex-shrink: 0;
 }
 
 .pd2-sticky-price {
   font-weight: 900;
-  font-size: 20px;
+  font-size: 19px;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 .pd2-sticky-btn {
   background: #ffffff;
   color: #0E2917;
   border: none;
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: 20px;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13.5px;
   cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.pd2-sticky-btn:hover {
+  background: #E2F5DB;
+  transform: translateY(-1px);
 }
 
 /* Lightbox Modal */
 .pd2-lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.88);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .pd2-lb-close {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  background: none;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.15);
   border: none;
   color: #ffffff;
-  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.pd2-lb-close:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.pd2-lb-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 90vw;
+  max-height: 90vh;
 }
 
 .pd2-lb-main {
-  max-width: 80vw;
-  max-height: 80vh;
+  max-width: 85vw;
+  max-height: 75vh;
+  object-fit: contain;
+}
+
+.pd2-lb-thumbs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 4px;
+}
+
+.pd2-lb-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: #ffffff;
+  padding: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pd2-lb-thumb.active {
+  border-color: #8EF375;
+}
+
+.pd2-lb-thumb img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
 @media (max-width: 576px) {
   .pd2-hero-right {
-    padding: 32px 20px;
+    padding: 28px 18px;
   }
   .pd2-pack-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
   .pd2-action-row {
-    flex-wrap: wrap;
-  }
-  .pd2-btn-buy, .pd2-btn-cart {
-    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
   }
   .pd2-qty-stepper {
+    width: auto;
+    height: 48px;
+    padding: 4px 10px;
+  }
+  .pd2-btn-cart {
     width: 100%;
-    justify-content: space-between;
+    height: 48px;
+    padding: 0 14px;
+    font-size: 13.5px;
+    justify-content: center;
+  }
+  .pd2-btn-buy {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+  }
+  .pd2-trust-strip {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 10px;
+    padding: 14px 0;
+  }
+  .pd2-sticky-bar {
+    padding: 8px 12px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .pd2-sticky-name {
+    max-width: 110px;
+    font-size: 13px;
+  }
+  .pd2-sticky-price {
+    font-size: 16px;
+  }
+  .pd2-sticky-btn {
+    padding: 7px 12px;
+    font-size: 12.5px;
+  }
+  .pd2-sticky-left {
+    gap: 8px;
+  }
+  .pd2-sticky-right {
+    gap: 8px;
   }
 }
 </style>
