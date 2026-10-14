@@ -224,15 +224,11 @@ const mediaSrc = computed(() => {
   position: relative;
   width: 100%;
   max-width: 480px;
-  background: linear-gradient(145deg, #F9FAF5 0%, #EFF5E7 100%);
-  border: 1.5px solid #E4EBD8;
-  border-radius: 32px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 440px;
-  box-shadow: 0 16px 40px -16px rgba(29, 69, 3, 0.08);
 }
 
 .fs2-gif-wrap {
@@ -254,11 +250,12 @@ const mediaSrc = computed(() => {
 
 .fs2-media-badge {
   position: absolute;
-  bottom: 24px;
+  bottom: 8px;
   right: 24px;
   background: #1C3A13;
   border-radius: 14px;
   padding: 14px 18px;
+  z-index: 3;
 }
 .fs2-mb-text {
   font-size: 13px;

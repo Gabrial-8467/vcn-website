@@ -542,6 +542,7 @@ a, .nav-link, .dropdown-item, .login-link, .navbar-brand {
 .shop-all-link .arrow {
   text-decoration: none !important;
   display: inline-block;
+  padding: 10px;
 }
 
 .shop-all-link:hover {

@@ -126,25 +126,49 @@
           <!-- Quantity Stepper & CTAs -->
           <div class="pd2-action-row">
             <div class="pd2-qty-stepper">
-              <button type="button" class="pd2-qty-btn" @click="decrementQty">−</button>
+              <button
+                type="button"
+                class="pd2-qty-btn"
+                :disabled="quantity <= 1"
+                @click="decrementQty"
+                aria-label="Decrease quantity"
+              >−</button>
               <span class="pd2-qty-val">{{ quantity }}</span>
-              <button type="button" class="pd2-qty-btn" @click="incrementQty">+</button>
+              <button
+                type="button"
+                class="pd2-qty-btn"
+                @click="incrementQty"
+                aria-label="Increase quantity"
+              >+</button>
             </div>
+
+            <button
+              type="button"
+              class="pd2-btn-cart"
+              :class="{ 'is-added': isAdded }"
+              @click="handleAddToCart"
+            >
+              <template v-if="isAdded">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Added!</span>
+              </template>
+              <template v-else>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+                <span>{{ heroCtaSecondary }}</span>
+              </template>
+            </button>
 
             <button type="button" class="pd2-btn-buy" @click="handleBuyNow">
               {{ heroCtaPrimary }}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="5" y1="12" x2="19" y2="12"/>
                 <polyline points="12 5 19 12 12 19"/>
               </svg>
-            </button>
-
-            <button type="button" class="pd2-btn-cart" @click="handleAddToCart">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 01-8 0"/>
-              </svg>
-              {{ heroCtaSecondary }}
             </button>
           </div>
 
@@ -274,6 +298,8 @@ const selectedImage = ref(null)
 
 const selectedPackIndex = ref(0)
 const quantity = ref(1)
+const isAdded = ref(false)
+let addedTimer = null
 const openAccordion = ref('uses')
 
 const productSlug = computed(() => route.params.slug)
@@ -379,6 +405,10 @@ onBeforeUnmount(() => {
     cancelAnimationFrame(stickyBarFrame)
     stickyBarFrame = null
   }
+  if (addedTimer) {
+    clearTimeout(addedTimer)
+    addedTimer = null
+  }
 })
 
 const fetchReviews = async () => {
@@ -416,7 +446,7 @@ const selectPack = (index) => {
   selectedPackIndex.value = index
 }
 
-const incrementQty = () => { quantity.value++ }
+const incrementQty = () => { if (quantity.value < 99) quantity.value++ }
 const decrementQty = () => { if (quantity.value > 1) quantity.value-- }
 
 // ── Packs & pricing (variant-driven, fallback only) ──
@@ -427,6 +457,7 @@ const packs = computed(() => {
       const price = parseFloat(v.sellingPrice)
       const mrp = parseFloat(v.mrp)
       return {
+        id: v.id,
         sku: v.sku || 'Standard Pack',
         price: isFinite(price) ? price.toFixed(0) : '849',
         mrp: isFinite(mrp) && mrp > 0 ? mrp.toFixed(0) : null,
@@ -435,8 +466,8 @@ const packs = computed(() => {
     })
   }
   return [
-    { sku: '500ml', price: '849', mrp: '999', badge: 15 },
-    { sku: '1000ml (Pack of 2)', price: '1499', mrp: '1998', badge: 25 }
+    { id: 1, sku: '500ml', price: '849', mrp: '999', badge: 15 },
+    { id: 2, sku: '1000ml (Pack of 2)', price: '1499', mrp: '1998', badge: 25 }
   ]
 })
 
@@ -547,7 +578,7 @@ const handleAddToCart = () => {
   cartStore.addToCart({
     id: product.value?.id || 11,
     productId: product.value?.id || 11,
-    variantId: selectedPackIndex.value + 1,
+    variantId: currentPack.value?.id || (selectedPackIndex.value + 1),
     name: productName.value,
     variantName: currentPack.value.sku,
     price: currentPrice.value,
@@ -555,6 +586,12 @@ const handleAddToCart = () => {
     image: displayImage.value,
     quantity: quantity.value
   })
+
+  isAdded.value = true
+  if (addedTimer) clearTimeout(addedTimer)
+  addedTimer = setTimeout(() => {
+    isAdded.value = false
+  }, 1800)
 }
 
 const handleBuyNow = async () => {
@@ -1116,30 +1153,55 @@ const guaranteeItems = computed(() => {
 }
 
 .pd2-qty-stepper {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(255,255,255,0.25);
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 26px;
-  padding: 4px 12px;
+  padding: 0 4px;
   height: 48px;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .pd2-qty-btn {
   background: none;
   border: none;
   color: #ffffff;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  line-height: 1;
   cursor: pointer;
   padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 100%;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+
+.pd2-qty-btn:active {
+  transform: scale(0.92);
+}
+
+.pd2-qty-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .pd2-qty-val {
   font-size: 15px;
   font-weight: 700;
   color: #ffffff;
-  min-width: 20px;
+  min-width: 22px;
   text-align: center;
+  line-height: 1;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pd2-btn-buy {
@@ -1149,13 +1211,14 @@ const guaranteeItems = computed(() => {
   color: #0E2917;
   border: none;
   border-radius: 24px;
-  font-size: 15px;
-  font-weight: 800;
+  font-size: 15px !important;
+  font-weight: 800 !important;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  white-space: nowrap;
   transition: all 0.2s ease;
 }
 
@@ -1169,20 +1232,29 @@ const guaranteeItems = computed(() => {
   padding: 0 20px;
   background: transparent;
   color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 24px;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 14px !important;
+  font-weight: 700 !important;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  white-space: nowrap;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .pd2-btn-cart:hover {
   border-color: #ffffff;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pd2-btn-cart.is-added {
+  border-color: #8EF375;
+  color: #8EF375;
+  background: rgba(142, 243, 117, 0.12);
 }
 
 /* Trust Badges Strip */
@@ -1468,26 +1540,34 @@ const guaranteeItems = computed(() => {
   .pd2-action-row {
     display: grid;
     grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "qty cart"
+      "buy buy";
     gap: 10px;
     margin-bottom: 24px;
   }
   .pd2-qty-stepper {
+    grid-area: qty;
     width: auto;
     height: 48px;
-    padding: 4px 10px;
+    padding: 0 4px;
   }
   .pd2-btn-cart {
+    grid-area: cart;
     width: 100%;
     height: 48px;
     padding: 0 14px;
-    font-size: 13.5px;
+    font-size: 14px !important;
+    font-weight: 700 !important;
     justify-content: center;
   }
   .pd2-btn-buy {
+    grid-area: buy;
     grid-column: 1 / -1;
     width: 100%;
     height: 50px;
-    font-size: 15px;
+    font-size: 15px !important;
+    font-weight: 800 !important;
   }
   .pd2-trust-strip {
     grid-template-columns: repeat(2, 1fr);

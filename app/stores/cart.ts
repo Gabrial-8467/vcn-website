@@ -43,8 +43,10 @@ export const useCartStore = defineStore('cart', {
       const productId = String(product.id)
       const existingItem = this.items.find((item: CartItem) => String(item.id) === productId)
 
+      const qtyToAdd = typeof product.quantity === 'number' && product.quantity > 0 ? product.quantity : 1
+
       if (existingItem) {
-        existingItem.quantity += 1
+        existingItem.quantity += qtyToAdd
         this.saveCart()
 
         // If we have cartItemId, update quantity on backend
@@ -62,7 +64,7 @@ export const useCartStore = defineStore('cart', {
           price: product.price,
           mrp: product.mrp || null,
           image: product.image,
-          quantity: 1,
+          quantity: qtyToAdd,
           subscription: product.subscription || 'One-time purchase',
           variantId: product.variantId
         }
@@ -72,7 +74,7 @@ export const useCartStore = defineStore('cart', {
         // Sync with backend if variantId is provided
         if (product.variantId) {
           
-          const response = await this.syncItemWithBackend(product.variantId, 1)
+          const response = await this.syncItemWithBackend(product.variantId, qtyToAdd)
           // Update item with cartItemId from backend if available
           if (response?.cartItemId) {
             newItem.cartItemId = response.cartItemId

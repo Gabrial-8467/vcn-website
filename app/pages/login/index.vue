@@ -61,7 +61,6 @@ const handleOpenRegister = (type) => {
   align-items: center;
   justify-content: center;
   padding: 72px 20px;
-  background: var(--vcn-off-white, #FAFAF7);
 }
 
 /* Match the site/footer section gutters so the card lines up with the footer */
