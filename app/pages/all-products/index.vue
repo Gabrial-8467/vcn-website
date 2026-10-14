@@ -18,7 +18,7 @@
 
       <!-- Products grid -->
       <div v-else class="row g-4">
-        <div v-for="product in [products[0]]" :key="product.id || product.name" class="col-lg-8 px-3 mx-auto md:px-3"
+        <div v-for="product in [products[0]]" :key="product.id || product.name" class="col-lg-9 px-3 mx-auto md:px-3"
           v-if="products.length > 0">
           <div class="vcn-product-card row align-items-center h-100">
 
@@ -370,7 +370,6 @@ const addToCart = async (product) => {
   padding-left: 125px !important;
   padding-right: 155px !important;
 }
-
 
 .featured-thumbnails {
   display: flex;
@@ -739,14 +738,43 @@ h1.vcn-breadcrumb-title {
   padding: 10px !important;
 }
 
-.vcn-container {
-  max-width: 1400px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: 100% !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  box-sizing: border-box !important;
+@media (min-width: 1200px) {
+
+  /* Unify container widths and centering */
+  section.vcn-product-section .container,
+  section.vcn-new-product .container,
+  header .container,
+  footer .container {
+    max-width: 1140px;
+    /* Standard Bootstrap 1200px container width, or adjust to your preference */
+    padding-left: 40px !important;
+    padding-right: 74px !important;
+  }
+}
+
+@media (max-width: 1399px) {
+  .vcn-container {
+    padding-left: 59px !important;
+    padding-right: 92px !important;
+  }
+
+  .vcn-breadcrumb-title {
+    padding-left: 0 !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vcn-container {
+    padding-left: 0px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (max-width: 1650) {
+  .vcn-container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
 }
 
 /* Specific override for the breadcrumb content which had fixed margins */
@@ -758,9 +786,9 @@ h1.vcn-breadcrumb-title {
   align-items: center;
 }
 
-/* .row {
+.row {
   padding-left: 15px !important;
-} */
+}
 
 @media (max-width: 768px) {
   /* 2. Center and pad the product card for mobile readability */
