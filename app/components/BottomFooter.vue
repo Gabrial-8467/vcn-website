@@ -73,9 +73,11 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
 .bottom-footer-wrapper {
   position: relative !important;
   width: 100% !important;
-  max-width: 100vw !important;
+  max-width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   background-color: #061a10 !important;
   background-image: url("/img/bg/vcn-awaken-bg.png") !important;
   background-repeat: no-repeat !important;
@@ -90,11 +92,15 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
 .bottom-footer-wrapper .vcn-awaken-section {
   position: relative !important;
   width: 100% !important;
+  max-width: 100% !important;
   min-height: 380px !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
-  padding: 48px 0 20px 0 !important;
+  padding-top: 48px !important;
+  padding-bottom: 20px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   margin: 0 !important;
   box-sizing: border-box !important;
   background: transparent !important;
@@ -102,10 +108,18 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
 
 /* Gradient Tint for responsive readability */
 .vcn-awaken-gradient-tint {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
   background: linear-gradient(
     90deg,
     rgba(6, 26, 16, 0.88) 0%,
@@ -120,14 +134,23 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 310px;
   box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .vcn-awaken-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
 
 /* Content Column */
@@ -326,10 +349,6 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   .vcn-awaken-desc {
     font-size: 15px;
   }
-
-  .vcn-awaken-container {
-    padding: 0 32px;
-  }
 }
 
 @media (max-width: 991px) {
@@ -348,10 +367,6 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
 
   .vcn-awaken-title {
     font-size: 42px;
-  }
-
-  .vcn-awaken-container {
-    padding: 0 24px;
   }
 }
 
@@ -375,7 +390,6 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   }
 
   .vcn-awaken-container {
-    padding: 0 10px;
     min-height: auto;
   }
 

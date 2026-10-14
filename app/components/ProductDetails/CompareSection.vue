@@ -117,7 +117,7 @@ const comparisonRows = [
 }
 
 .cmp-container {
-  max-width: 1080px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -325,18 +325,20 @@ const comparisonRows = [
   .cmp-col {
     padding: 12px 14px;
     align-items: flex-start;
-    font-size: 13px;
-    gap: 8px;
+    font-size: 13.5px;
+    gap: 10px;
+    line-height: 1.45;
   }
 
   /* Feature name becomes the card heading */
   .cmp-col-feature {
     color: #ffffff;
     font-weight: 700;
-    font-size: 13.5px;
+    font-size: 14px;
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 10px;
+    padding-bottom: 11px;
+    background: rgba(255, 255, 255, 0.02);
   }
 
   /* Highlight becomes a left accent bar rather than a full column fill */
@@ -348,34 +350,40 @@ const comparisonRows = [
   }
 
   .cmp-col-ordinary {
-    border-left: 3px solid rgba(255, 255, 255, 0.18);
+    border-left: 3px solid rgba(255, 255, 255, 0.2);
     background: rgba(0, 0, 0, 0.15);
   }
 
   .cmp-col-tag {
-    display: block;
+    display: inline-flex;
+    align-items: center;
     flex-shrink: 0;
-    width: 62px;
-    padding-top: 1px;
     font-size: 9.5px;
     font-weight: 800;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    line-height: 1.4;
+    padding: 2px 7px;
+    border-radius: 6px;
+    line-height: 1.3;
+    margin-top: 1px;
   }
 
   .cmp-col-vcn .cmp-col-tag {
+    background: rgba(142, 243, 117, 0.18);
     color: #8EF375;
+    border: 1px solid rgba(142, 243, 117, 0.3);
   }
 
   .cmp-col-ordinary .cmp-col-tag {
-    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .cmp-icon {
     width: 14px;
     height: 14px;
-    margin-top: 2px;
+    margin-top: 3px;
   }
 }
 </style>

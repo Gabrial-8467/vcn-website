@@ -6,44 +6,23 @@
     ═══════════════════════════════════════════════ -->
     <section class="pd2-hero">
 
-      <!-- LEFT panel: Light Product Media & Badges -->
+      <!-- LEFT panel: Product Media Gallery -->
       <div class="pd2-hero-left">
-        <!-- Top-left badge -->
+        <!-- Accent badge (top-left) -->
         <div class="pd2-float-badge pd2-float-badge--tl">
           <span class="pd2-fb-num">{{ badgeNumber }}</span>
           <span class="pd2-fb-label">{{ badgeLabelText }}</span>
         </div>
 
-        <!-- Main image stage -->
-        <div class="pd2-img-stage">
-          <!-- Mobile swiper -->
-          <div class="d-block d-md-none pd2-mobile-swiper-wrap">
-            <div class="swiper product-images-swiper">
-              <div class="swiper-wrapper">
-                <div v-if="backendVideoUrl" class="swiper-slide">
-                  <div class="pd2-mobile-slide">
-                    <video :src="backendVideoUrl" autoplay loop muted playsinline class="pd2-mobile-media" />
-                  </div>
-                </div>
-                <div v-for="(img, i) in allProductImages" :key="i" class="swiper-slide">
-                  <div class="pd2-mobile-slide">
-                    <img :src="img" :alt="productName" class="pd2-mobile-media" @error="handleImageError($event)" @click="openProductPreview(img)" />
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-pagination product-images-swiper-pagination pd2-mob-dots"></div>
-            </div>
-          </div>
-
-          <!-- Desktop: main media -->
-          <div class="d-none d-md-block pd2-desktop-img">
-            <div class="pd2-glow-bg"></div>
+        <div class="pd2-gallery">
+          <!-- Main media stage -->
+          <div class="pd2-stage">
             <video v-if="backendVideoUrl && !selectedImage" :src="backendVideoUrl" autoplay loop muted playsinline class="pd2-main-media" />
             <img v-else :src="displayImage" :alt="productName" class="pd2-main-media" @error="handleImageError($event)" @click="openProductPreview(displayImage)" />
           </div>
 
-          <!-- Desktop: bottom thumbnail row -->
-          <div class="d-none d-md-flex pd2-thumb-row" v-if="allProductImages.length > 1">
+          <!-- Horizontal thumbnail row -->
+          <div class="pd2-thumb-row" v-if="allProductImages.length > 1 || backendVideoUrl">
             <button
               v-if="backendVideoUrl"
               type="button"
@@ -66,7 +45,7 @@
           </div>
         </div>
 
-        <!-- Bottom-right badge -->
+        <!-- Quality badge (bottom-right) -->
         <div class="pd2-float-badge pd2-float-badge--br">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -143,7 +122,7 @@
             </div>
             <span class="pd2-tax-sub">{{ taxNotice }}</span>
           </div>
-
+      
           <!-- Quantity Stepper & CTAs -->
           <div class="pd2-action-row">
             <div class="pd2-qty-stepper">
@@ -448,12 +427,21 @@ const badgeLabelText = computed(() => {
 })
 
 // ── Media extraction (backend media objects → URLs) ──
+const toWebpUrl = (url) => {
+  if (!url || typeof url !== 'string') return url
+  if (!/\.jpe?g($|\?)/i.test(url)) return url
+  return url
+    .replace(/\/images\/(original|large|medium|thumb)\//i, '/images/webp/')
+    .replace(/\.jpe?g($|\?)/i, '.webp$1')
+}
+
 const getMediaImageUrl = (image) => {
   if (!image) return null
-  if (typeof image === 'string') return image
+  if (typeof image === 'string') return toWebpUrl(image)
   const media = image?.media || image
   if (!media || media.type === 'VIDEO' || media.mimeType?.startsWith('video/')) return null
-  return media.variants?.large || media.variants?.medium || media.webpUrl || media.fileUrl || null
+  const url = media.variants?.webp || media.webpUrl || media.variants?.large || media.variants?.medium || media.fileUrl || null
+  return toWebpUrl(url)
 }
 
 const getMediaVideoUrl = (item) => {
@@ -604,11 +592,14 @@ const guaranteeItems = computed(() => {
 
 /* ── HERO SPLIT LAYOUT ── */
 .pd2-hero {
+  /* Offset = thin top bar + fixed navbar (matches About/Sidebar sticky offset) */
+  --pd2-sticky-top: calc(var(--top-header-height, 45px) + 76px);
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: start;
   width: 100%;
   min-height: 720px;
-  padding-top:40px;
+  padding-top: 0;
 }
 
 @media (max-width: 991px) {
@@ -617,39 +608,50 @@ const guaranteeItems = computed(() => {
   }
 }
 
-/* ── LEFT PANEL (Light Background) ── */
+/* ── LEFT PANEL (Floating product on spotlight + vertical thumbs) ── */
 .pd2-hero-left {
-  background: #FAFAF7;
-  position: relative;
+  position: sticky;
+  top: var(--pd2-sticky-top);
+  align-self: start;
+  height: calc(100vh - var(--pd2-sticky-top));
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 40px;
+  padding: 40px 32px;
+  background: linear-gradient(180deg, #FBFDF7 0%, #F1F7E9 100%);
+  overflow: hidden;
 }
 
+.pd2-hero-left::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(80%, 660px);
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.6) 44%, rgba(255, 255, 255, 0) 72%);
+  pointer-events: none;
+}
+
+/* Floating badges */
 .pd2-float-badge {
   position: absolute;
-  background: rgba(220, 245, 200, 0.6);
-  border: 1px solid #789938;
-  border-radius: 12px;
-  padding: 8px 16px;
-  display: flex;
+  z-index: 6;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  backdrop-filter: blur(4px);
-  z-index: 5;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(120, 153, 56, 0.35);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 28px -16px rgba(29, 69, 3, 0.55);
 }
 
-.pd2-float-badge--tl {
-  top: 32px;
-  left: 32px;
-}
-
-.pd2-float-badge--br {
-  bottom: 32px;
-  right: 32px;
-}
+.pd2-float-badge--tl { top: 26px; left: 26px; }
+.pd2-float-badge--br { bottom: 26px; right: 26px; }
 
 .pd2-fb-num {
   font-size: 20px;
@@ -661,91 +663,163 @@ const guaranteeItems = computed(() => {
 .pd2-fb-label {
   font-size: 10px;
   font-weight: 800;
-  color: #123319;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
+  color: #123319;
 }
 
-.pd2-float-badge--br svg {
-  color: #123319;
-}
+.pd2-float-badge--br svg { color: #1D4503; }
 .pd2-float-badge--br span {
   font-size: 11px;
   font-weight: 700;
   color: #123319;
 }
 
-/* Image stage */
-.pd2-img-stage {
+/* Gallery: big stage on top + horizontal thumbnails below */
+.pd2-gallery {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 18px;
   width: 100%;
-  max-width: 460px;
+  max-width: 780px;
+  
 }
 
-.pd2-desktop-img {
-  position: relative;
-  width: 100%;
+/* Horizontal thumbnail row */
+.pd2-thumb-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-}
-
-.pd2-glow-bg {
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(240,248,235,0.8) 50%, rgba(255,255,255,0) 100%);
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.pd2-main-media {
-  position: relative;
-  z-index: 2;
-  max-height: 420px;
-  width: auto;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-
-.pd2-main-media:hover {
-  transform: scale(1.03);
-}
-
-.pd2-thumb-row {
-  display: flex;
   gap: 12px;
-  margin-top: 24px;
-  z-index: 2;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2px;
 }
+
+.pd2-thumb-row::-webkit-scrollbar { display: none; }
 
 .pd2-thumb {
-  width: 56px;
-  height: 56px;
-  border-radius: 8px;
-  border: 1px solid #D5E0D0;
+  flex: 0 0 auto;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  border-radius: 18px;
   background: #ffffff;
-  padding: 4px;
+  border: 1.5px solid #E4EAD9;
   cursor: pointer;
   overflow: hidden;
-  transition: all 0.2s;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.pd2-thumb:hover {
+  border-color: #A8DE6A;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -12px rgba(29, 69, 3, 0.5);
 }
 
 .pd2-thumb.active {
-  border-color: #123319;
-  border-width: 2px;
-  box-shadow: 0 4px 12px rgba(18,51,25,0.15);
+  border-color: #1D4503;
+  box-shadow: 0 8px 20px -8px rgba(29, 69, 3, 0.55);
 }
 
 .pd2-thumb img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.pd2-thumb-play {
+  font-size: 16px;
+  line-height: 1;
+  color: #1D4503;
+}
+
+/* Stage — borderless, product floats with a soft shadow.
+   Sized by the smaller of column width and available viewport height
+   (minus thumb row + panel padding) so it never clips. */
+.pd2-stage {
+  position: relative;
+  width: min(100%, calc(100vh - var(--pd2-sticky-top) - 190px));
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.pd2-main-media {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  cursor: zoom-in;
+  /* filter: drop-shadow(0 34px 46px rgba(29, 69, 3, 0.24)); */
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.pd2-main-media:hover {
+  transform: scale(1.06) translateY(-4px);
+}
+
+/* Stack on mobile/tablet — normal page flow, image starts right under the navbar */
+@media (max-width: 991.98px) {
+  .pd2-hero {
+    padding-top: 0;
+    min-height: 0;
+  }
+  .pd2-hero-left {
+    position: relative;
+    height: auto;
+    padding: 16px 16px 24px;
+    background: #FFFFFF;
+  }
+  .pd2-hero-left::before { display: none; }
+  .pd2-hero-right { min-height: 0; }
+  .pd2-gallery {
+    max-width: 520px;
+    gap: 16px;
+  }
+  .pd2-stage {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 10px 0;
+  }
+  .pd2-thumb { width: 64px; height: 64px; border-radius: 16px; flex-shrink: 0; }
+  .pd2-thumb-row {
+    justify-content: flex-start;
+    padding: 6px 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pd2-float-badge {
+    background: rgba(242, 247, 233, 0.95);
+    border-color: #D7E8BF;
+    box-shadow: 0 4px 12px rgba(29, 69, 3, 0.08);
+    backdrop-filter: blur(8px);
+  }
+  /* Badges frame the top corners cleanly without overlapping the thumbnails at bottom */
+  .pd2-float-badge--tl { top: 14px; left: 14px; }
+  .pd2-float-badge--br { top: 14px; right: 14px; bottom: auto; }
+}
+
+@media (max-width: 575.98px) {
+  .pd2-hero-left { padding: 12px 12px 20px; }
+  .pd2-stage { max-width: 340px; }
+  .pd2-float-badge { padding: 5px 10px; border-radius: 10px; gap: 6px; }
+  .pd2-fb-num { font-size: 16px; }
+  .pd2-fb-label { font-size: 8.5px; }
+  .pd2-float-badge--tl { top: 10px; left: 10px; }
+  .pd2-float-badge--br { top: 10px; right: 10px; bottom: auto; }
+  .pd2-thumb { width: 56px; height: 56px; border-radius: 14px; }
+  .pd2-thumb-row { gap: 10px; }
 }
 
 /* ── RIGHT PANEL (Dark Green Background) ── */
@@ -755,6 +829,7 @@ const guaranteeItems = computed(() => {
   padding: 48px 56px;
   display: flex;
   align-items: center;
+  min-height: calc(100vh - var(--pd2-sticky-top));
 }
 
 .pd2-hero-right-inner {
@@ -800,11 +875,11 @@ const guaranteeItems = computed(() => {
 
 /* Title & Description */
 .pd2-product-name {
-  font-size: clamp(36px, 4vw, 48px);
+  font-size: clamp(26px, 3.6vw, 42px);
   font-weight: 800;
   color: #ffffff;
-  margin: 0 0 16px 0;
-  line-height: 1.1;
+  margin: 0 0 14px 0;
+  line-height: 1.15;
   letter-spacing: -0.5px;
 }
 
@@ -873,8 +948,8 @@ const guaranteeItems = computed(() => {
 
 .pd2-pack-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
 }
 
 .pd2-pack-card {
@@ -1144,13 +1219,15 @@ const guaranteeItems = computed(() => {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #0E2917;
+  background: rgba(14, 41, 23, 0.96);
   border-top: 1px solid rgba(255,255,255,0.15);
-  padding: 12px 24px;
+  padding: 10px 20px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
   z-index: 99;
   transform: translateY(100%);
-  transition: transform 0.3s ease;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.35);
+  backdrop-filter: blur(12px);
 }
 
 .pd2-sticky-bar.visible {
@@ -1163,106 +1240,217 @@ const guaranteeItems = computed(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .pd2-sticky-left {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .pd2-sticky-img {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   background: #ffffff;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 2px;
+  flex-shrink: 0;
 }
 
 .pd2-sticky-info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .pd2-sticky-name {
   font-weight: 700;
   font-size: 14px;
   color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
 }
 
 .pd2-sticky-size {
   font-size: 12px;
   color: rgba(255,255,255,0.6);
+  white-space: nowrap;
 }
 
 .pd2-sticky-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
+  flex-shrink: 0;
 }
 
 .pd2-sticky-price {
   font-weight: 900;
-  font-size: 20px;
+  font-size: 19px;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 .pd2-sticky-btn {
   background: #ffffff;
   color: #0E2917;
   border: none;
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: 20px;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13.5px;
   cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.pd2-sticky-btn:hover {
+  background: #E2F5DB;
+  transform: translateY(-1px);
 }
 
 /* Lightbox Modal */
 .pd2-lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.88);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .pd2-lb-close {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  background: none;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.15);
   border: none;
   color: #ffffff;
-  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.pd2-lb-close:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.pd2-lb-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 90vw;
+  max-height: 90vh;
 }
 
 .pd2-lb-main {
-  max-width: 80vw;
-  max-height: 80vh;
+  max-width: 85vw;
+  max-height: 75vh;
+  object-fit: contain;
+}
+
+.pd2-lb-thumbs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 4px;
+}
+
+.pd2-lb-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: #ffffff;
+  padding: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pd2-lb-thumb.active {
+  border-color: #8EF375;
+}
+
+.pd2-lb-thumb img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
 @media (max-width: 576px) {
   .pd2-hero-right {
-    padding: 32px 20px;
+    padding: 28px 18px;
   }
   .pd2-pack-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
   .pd2-action-row {
-    flex-wrap: wrap;
-  }
-  .pd2-btn-buy, .pd2-btn-cart {
-    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
   }
   .pd2-qty-stepper {
+    width: auto;
+    height: 48px;
+    padding: 4px 10px;
+  }
+  .pd2-btn-cart {
     width: 100%;
-    justify-content: space-between;
+    height: 48px;
+    padding: 0 14px;
+    font-size: 13.5px;
+    justify-content: center;
+  }
+  .pd2-btn-buy {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+  }
+  .pd2-trust-strip {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 10px;
+    padding: 14px 0;
+  }
+  .pd2-sticky-bar {
+    padding: 8px 12px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .pd2-sticky-name {
+    max-width: 110px;
+    font-size: 13px;
+  }
+  .pd2-sticky-price {
+    font-size: 16px;
+  }
+  .pd2-sticky-btn {
+    padding: 7px 12px;
+    font-size: 12.5px;
+  }
+  .pd2-sticky-left {
+    gap: 8px;
+  }
+  .pd2-sticky-right {
+    gap: 8px;
   }
 }
 </style>

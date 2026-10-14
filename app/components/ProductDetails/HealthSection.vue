@@ -138,14 +138,14 @@ const handleIconError = (event) => {
 }
 
 .hs2-inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 24px;
 }
 
 @media (max-width: 768px) {
-  .hs2-section { padding: 52px 0 60px; }
-  .hs2-inner { padding: 0 20px; }
+  .hs2-section { padding: 48px 0 56px; }
+  .hs2-inner { padding: 0 16px; }
 }
 
 /* ─── Header row ──────────────────────────────────────────── */
@@ -154,7 +154,7 @@ const handleIconError = (event) => {
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 44px;
+  margin-bottom: 40px;
   flex-wrap: wrap;
 }
 
@@ -174,13 +174,13 @@ const handleIconError = (event) => {
 
 .hs2-heading {
   font-family: var(--vcn-font, "Outfit", sans-serif);
-  font-size: clamp(26px, 3.5vw, 40px);
+  font-size: clamp(24px, 3.5vw, 38px);
   font-weight: 900;
   color: #0e1a0b;
-  line-height: 1.15;
-  letter-spacing: -0.8px;
+  line-height: 1.18;
+  letter-spacing: -0.6px;
   margin: 0;
-  max-width: 580px;
+  max-width: 620px;
 }
 
 /* Make <em> inside heading green */
@@ -190,18 +190,19 @@ const handleIconError = (event) => {
 }
 
 .hs2-subtext {
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 14.5px;
+  line-height: 1.65;
   color: #5a6b50;
   margin: 0;
-  max-width: 300px;
+  max-width: 320px;
   text-align: right;
   align-self: flex-end;
 }
 
 @media (max-width: 768px) {
-  .hs2-top-row { flex-direction: column; align-items: flex-start; margin-bottom: 32px; gap: 8px; }
-  .hs2-subtext { text-align: left; max-width: 100%; }
+  .hs2-top-row { flex-direction: column; align-items: flex-start; margin-bottom: 28px; gap: 10px; }
+  .hs2-heading :deep(br) { display: none; }
+  .hs2-subtext { text-align: left; max-width: 100%; align-self: flex-start; }
 }
 
 /* ─── Cards grid ──────────────────────────────────────────── */
