@@ -253,7 +253,7 @@ body:has(.pd2-sticky-bar) .bottom-footer-wrapper {
 
 @media (max-width: 576px) {
   body:has(.pd2-sticky-bar) .bottom-footer-wrapper {
-    padding-bottom: 92px !important;
+    padding-bottom: 65px !important;
   }
 }
 </style>

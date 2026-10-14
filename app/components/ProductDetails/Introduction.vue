@@ -813,6 +813,13 @@ const guaranteeItems = computed(() => {
   }
   .pd2-hero-left {
     position: relative;
+    /* `top` was declared for the desktop `position: sticky` offset. Once the
+       panel becomes `relative` that same offset shifts it DOWN by
+       --pd2-sticky-top (~107px) instead of pinning it to the viewport. It then
+       paints over the first ~107px of the stacked .pd2-hero-right below it —
+       exactly the rating row and the product name — and, being positioned,
+       covers them. Reset it so the panel really sits in normal flow. */
+    top: auto;
     height: auto;
     padding: 16px 16px 24px;
     background: #FFFFFF;
