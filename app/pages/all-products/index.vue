@@ -18,7 +18,7 @@
 
       <!-- Products grid -->
       <div v-else class="row g-4">
-        <div v-for="product in [products[0]]" :key="product.id || product.name" class="col-lg-9 px-3 mx-auto md:px-3"
+        <div v-for="product in [products[0]]" :key="product.id || product.name" class="col-lg-8 px-3 mx-auto md:px-3"
           v-if="products.length > 0">
           <div class="vcn-product-card row align-items-center h-100">
 
@@ -758,9 +758,9 @@ h1.vcn-breadcrumb-title {
   align-items: center;
 }
 
-.row {
+/* .row {
   padding-left: 15px !important;
-}
+} */
 
 @media (max-width: 768px) {
   /* 2. Center and pad the product card for mobile readability */
