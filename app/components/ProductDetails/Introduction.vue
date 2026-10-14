@@ -4,7 +4,7 @@
     <!-- ══════════════════════════════════════════════
          HERO — Split layout (Left: Light Media, Right: Dark Green Purchase Panel)
     ═══════════════════════════════════════════════ -->
-    <section class="pd2-hero">
+    <section class="pd2-hero" ref="heroSection">
 
       <!-- LEFT panel: Product Media Gallery -->
       <div class="pd2-hero-left">
@@ -269,6 +269,7 @@ const totalReviews = ref(142)
 const isPreviewOpen = ref(false)
 const previewImage = ref('')
 const showStickyBar = ref(false)
+const heroSection = ref(null)
 const selectedImage = ref(null)
 
 const selectedPackIndex = ref(0)
@@ -327,21 +328,56 @@ watch(() => route.params.slug, (newSlug) => {
   if (newSlug) loadProduct(newSlug)
 }, { immediate: true })
 
+// Buy bar visibility is driven by the intro/hero section scrolling out of the
+// window instead of a fixed scroll offset — the hero height varies per product
+// and per viewport, so a hardcoded pixel threshold fires too early or far too
+// late. The bar appears once half of the hero has left the top of the window,
+// which resolves to the same scroll distance on desktop, tablet and phone.
+//
+// An IntersectionObserver cannot express this reliably. `threshold: 0.5` fails
+// because on a phone the hero is ~2.7 screens tall, so its visible ratio never
+// drops below ~0.45 and the bar would be stuck on. A `rootMargin` of
+// "-halfHero" fails for the same reason: on a phone that margin (894px)
+// exceeds the viewport height (667px), which collapses the observed root to an
+// empty rect and pins the bar on in Firefox. Comparing the hero's rect against
+// the scroll position avoids both failure modes.
+let stickyBarFrame = null
+
+const updateStickyBar = () => {
+  stickyBarFrame = null
+  if (!heroSection.value) return
+  const rect = heroSection.value.getBoundingClientRect()
+  showStickyBar.value = -rect.top >= rect.height / 2
+}
+
+// Coalesced to one measurement per frame, and passive so scrolling never blocks.
 const handleScroll = () => {
-  showStickyBar.value = window.scrollY > 480
+  if (stickyBarFrame !== null) return
+  stickyBarFrame = requestAnimationFrame(updateStickyBar)
 }
 
 onMounted(async () => {
+  if (process.client) {
+    // Run once up front so the bar is correct on first paint and on a reload
+    // that restores a scrolled position.
+    updateStickyBar()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    // Mobile browsers resize the viewport constantly as the URL bar collapses.
+    window.addEventListener('resize', handleScroll, { passive: true })
+  }
+
   await initializeCart()
   await cartStore.loadCart()
-  if (process.client) {
-    window.addEventListener('scroll', handleScroll, { passive: true })
-  }
 })
 
 onBeforeUnmount(() => {
   if (process.client) {
     window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('resize', handleScroll)
+  }
+  if (stickyBarFrame !== null) {
+    cancelAnimationFrame(stickyBarFrame)
+    stickyBarFrame = null
   }
 })
 
@@ -1252,10 +1288,14 @@ const guaranteeItems = computed(() => {
 }
 
 .pd2-sticky-img {
-  width: 42px;
-  height: 42px;
+  width: 60px;
+  /* public/css/style.css sets `img, video { height: auto !important }`, which
+     silently overrides this component's height and leaves the thumbnail at its
+     intrinsic ratio (~47x36). The scoped selector has higher specificity than
+     the global tag selector, so !important here wins without touching that
+     shared stylesheet. */
+  height: 60px !important;
   object-fit: contain;
-  background: #ffffff;
   border-radius: 8px;
   padding: 2px;
   flex-shrink: 0;
@@ -1270,7 +1310,8 @@ const guaranteeItems = computed(() => {
 
 .pd2-sticky-name {
   font-weight: 700;
-  font-size: 14px;
+  /* Fluid: 15px on a 320px phone, ~17px on a tablet, 19px from ~1000px up. */
+  font-size: clamp(15px, 0.5vw + 13px, 19px);
   color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
@@ -1279,7 +1320,8 @@ const guaranteeItems = computed(() => {
 }
 
 .pd2-sticky-size {
-  font-size: 12px;
+  /* Fluid: 13px on a 320px phone, 17px on desktop. */
+  font-size: clamp(13px, 0.4vw + 11.4px, 17px);
   color: rgba(255,255,255,0.6);
   white-space: nowrap;
 }
@@ -1293,7 +1335,8 @@ const guaranteeItems = computed(() => {
 
 .pd2-sticky-price {
   font-weight: 900;
-  font-size: 19px;
+  /* Fluid: 18px on a 320px phone, 22px on desktop. */
+  font-size: clamp(18px, 0.4vw + 16.4px, 22px);
   color: #ffffff;
   white-space: nowrap;
 }
@@ -1302,10 +1345,14 @@ const guaranteeItems = computed(() => {
   background: #ffffff;
   color: #0E2917;
   border: none;
-  padding: 9px 18px;
-  border-radius: 20px;
+  padding: 11px 20px;
+  border-radius: 22px;
   font-weight: 800;
-  font-size: 13.5px;
+  /* public/css/style.css sets `font-size: var(--vcn-btn-size) !important` on
+     every button/[class*="btn"] site-wide, which pins this at 16px. The scoped
+     selector has higher specificity, so !important here wins without touching
+     that shared stylesheet. */
+  font-size: clamp(15px, 0.55vw + 12.9px, 21px) !important;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
@@ -1437,14 +1484,9 @@ const guaranteeItems = computed(() => {
   }
   .pd2-sticky-name {
     max-width: 110px;
-    font-size: 13px;
-  }
-  .pd2-sticky-price {
-    font-size: 16px;
   }
   .pd2-sticky-btn {
-    padding: 7px 12px;
-    font-size: 12.5px;
+    padding: 9px 14px;
   }
   .pd2-sticky-left {
     gap: 8px;

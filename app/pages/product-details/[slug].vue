@@ -230,3 +230,30 @@ useHead({
   }
 }
 </style>
+
+<!-- Unscoped: the sticky buy bar (ProductDetails/Introduction.vue) is
+     position: fixed at the bottom of the viewport and stays visible for the
+     whole page, so it covers the last screenful of the bottom footer — the
+     copyright line in particular. Reserve space beneath the footer so its
+     content ends above the bar and both stay visible.
+
+     Scoped with :has(.pd2-sticky-bar) rather than this page's
+     `product-details-page` body class, because that class is left behind on
+     the body after navigating to another route, which would apply the padding
+     to the footer on unrelated pages. The bar element only exists while this
+     page is mounted, so the rule switches itself off on the way out.
+
+     The shared BottomFooter component (used by every page) is untouched; the
+     !important matches its own `padding: 0 !important`, and the higher
+     specificity selector wins. -->
+<style>
+body:has(.pd2-sticky-bar) .bottom-footer-wrapper {
+  padding-bottom: 100px !important;
+}
+
+@media (max-width: 576px) {
+  body:has(.pd2-sticky-bar) .bottom-footer-wrapper {
+    padding-bottom: 92px !important;
+  }
+}
+</style>

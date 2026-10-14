@@ -334,7 +334,8 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
   letter-spacing: 0.015em !important;
   text-align: center !important;
   margin: 0 !important;
-  padding: 0 !important;
+  padding-top: 12px !important;
+  padding-bottom: 5px !important;
   opacity: 1 !important;
   visibility: visible !important;
   transition: color 0.3s ease !important;
