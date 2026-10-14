@@ -839,7 +839,7 @@ const guaranteeItems = computed(() => {
   .pd2-thumb { width: 64px; height: 64px; border-radius: 16px; flex-shrink: 0; }
   .pd2-thumb-row {
     justify-content: flex-start;
-    padding: 6px 4px;
+    padding: 0px 30px;
     -webkit-overflow-scrolling: touch;
   }
   .pd2-float-badge {
@@ -854,7 +854,7 @@ const guaranteeItems = computed(() => {
 }
 
 @media (max-width: 575.98px) {
-  .pd2-hero-left { padding: 12px 12px 20px; }
+  .pd2-hero-left { padding: 12px 12px 20px; margin-top:30px; }
   .pd2-stage { max-width: 340px; }
   .pd2-float-badge { padding: 5px 10px; border-radius: 10px; gap: 6px; }
   .pd2-fb-num { font-size: 16px; }
@@ -873,6 +873,7 @@ const guaranteeItems = computed(() => {
   display: flex;
   align-items: center;
   min-height: calc(100vh - var(--pd2-sticky-top));
+  margin-top: 31px;
 }
 
 .pd2-hero-right-inner {
