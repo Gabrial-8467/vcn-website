@@ -740,12 +740,14 @@ const guaranteeItems = computed(() => {
 
 .pd2-thumb {
   flex: 0 0 auto;
-  width: 76px;
-  height: 76px;
+  width: 101px;
+  height: 101px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 7px;
+  /* No padding: the thumbnail image fills the whole tile edge to edge so no
+     white gap is left around it. */
+  padding: 0;
   border-radius: 18px;
   background: #ffffff;
   border: 1.5px solid #E4EAD9;
@@ -767,8 +769,14 @@ const guaranteeItems = computed(() => {
 
 .pd2-thumb img {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  /* public/css/style.css sets `img, video { height: auto !important }`, which
+     collapses the image to its intrinsic ratio inside the tile and leaves white
+     bands above and below. The scoped selector outranks the global tag
+     selector, so !important here wins without touching that shared file. */
+  height: 100% !important;
+  /* cover, not contain: fills the tile completely instead of letterboxing the
+     product and leaving white bands on the sides. */
+  object-fit: cover;
 }
 
 .pd2-thumb-play {
@@ -779,10 +787,11 @@ const guaranteeItems = computed(() => {
 
 /* Stage — borderless, product floats with a soft shadow.
    Sized by the smaller of column width and available viewport height
-   (minus thumb row + panel padding) so it never clips. */
+   (minus thumb row + panel padding) so it never clips. The 215px tracks the
+   101px thumb row; it was 190px back when the thumbs were 76px. */
 .pd2-stage {
   position: relative;
-  width: min(100%, calc(100vh - var(--pd2-sticky-top) - 190px));
+  width: min(100%, calc(100vh - var(--pd2-sticky-top) - 215px));
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
@@ -823,6 +832,7 @@ const guaranteeItems = computed(() => {
     height: auto;
     padding: 16px 16px 24px;
     background: #FFFFFF;
+    margin-top: 30px;
   }
   .pd2-hero-left::before { display: none; }
   .pd2-hero-right { min-height: 0; }
@@ -836,7 +846,7 @@ const guaranteeItems = computed(() => {
     margin: 0 auto;
     padding: 10px 0;
   }
-  .pd2-thumb { width: 64px; height: 64px; border-radius: 16px; flex-shrink: 0; }
+  .pd2-thumb { width: 89px; height: 89px; border-radius: 16px; flex-shrink: 0; }
   .pd2-thumb-row {
     justify-content: flex-start;
     padding: 0px 30px;
