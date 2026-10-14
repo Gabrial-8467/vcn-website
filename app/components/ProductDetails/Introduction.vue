@@ -1191,8 +1191,6 @@ const guaranteeItems = computed(() => {
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
   padding: 18px 0;
-  border-top: 1px solid rgba(255,255,255,0.12);
-  border-bottom: 1px solid rgba(255,255,255,0.12);
   margin-bottom: 28px;
 }
 
