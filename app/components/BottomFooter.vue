@@ -148,7 +148,7 @@ const footer = computed(() => cmsStore.bottomFooterData || {})
 
 @media (max-width: 768px) {
   .vcn-awaken-container {
-    padding-left: 16px;
+    padding-left: 10px;
     padding-right: 16px;
   }
 }
